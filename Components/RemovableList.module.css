@@ -1,0 +1,56 @@
+.listItem {
+  margin-bottom: 10px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  /* padding: 10px; */
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  padding: 10px 50px 30px 120px;
+  height: 140px;
+  align-items: center;
+  background-color: #222;
+}
+
+@media (min-width: 768px) {
+  .listItem {
+    width: 260px;
+  }
+}
+
+.listItem .remove svg {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  width: 25px;
+}
+
+.listItem p {
+  font-weight: bold;
+  font-size: 26px;
+  color: #fff;
+}
+
+.listItem .riderNumber {
+  color: rgb(221, 72, 72);
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 20px;
+}
+
+.listItem .riderPic {
+  height: 100px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.riderPic__img {
+  width: 250px;
+  position: absolute;
+  left: -60px;
+  display: block;
+  top: 10px;
+}
