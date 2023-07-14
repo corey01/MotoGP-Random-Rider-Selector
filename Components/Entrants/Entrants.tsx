@@ -1,6 +1,7 @@
+"use client";
 import { useState } from "react";
 
-import RemovableList from "../RemovableList";
+import Entrant from "./Entrant";
 
 const Entrants = ({
   entrants,
@@ -23,14 +24,20 @@ const Entrants = ({
   return (
     <div className="panel">
       {entrants.map((e) => (
-        <RemovableList value={e} removeEvent={handleRemoveEntrant} key={e} />
+        <Entrant value={e} removeEvent={handleRemoveEntrant} key={e} />
       ))}
       <div className="addInput">
-        <input onChange={handleInput} type="text" placeholder="Name" name="name" value={inputVal} />
+        <input
+          onChange={handleInput}
+          type="text"
+          placeholder="Name"
+          name="name"
+          value={inputVal}
+        />
         <button
           onClick={() => {
             handleAddNewEntrant(inputVal);
-              setInput("")
+            setInput("");
           }}
         >
           Add

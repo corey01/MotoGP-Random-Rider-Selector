@@ -26,7 +26,7 @@
   width: 25px;
 }
 
-.listItem p {
+.listItem .details {
   font-weight: bold;
   font-size: 26px;
   color: #fff;
@@ -53,4 +53,14 @@
   left: -60px;
   display: block;
   top: 10px;
+}
+
+.listItem .team {
+  display: block;
+  font-size: 0.8rem;
+}
+
+.riderName {
+  font-size: 34px;
+  line-height: 0.5;
 }

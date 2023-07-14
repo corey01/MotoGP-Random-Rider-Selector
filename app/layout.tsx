@@ -1,20 +1,18 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import { inter } from "./fonts";
+import "./globals.css";
 
 export const metadata = {
-  title: 'MotoGP',
-}
+  title: "MotoGP Rider Selector",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body className={inter.className}>{children}</body>
     </html>
-  )
+  );
 }

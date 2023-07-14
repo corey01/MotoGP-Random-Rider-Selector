@@ -1,0 +1,50 @@
+.listItem {
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  /* border: 1px solid #000; */
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  height: 140px;
+  align-items: center;
+  background-color: #222;
+}
+
+@media (min-width: 768px) {
+  .listItem {
+    width: 260px;
+  }
+}
+
+.listItem .remove svg {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  width: 25px;
+}
+
+.listItem .details {
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 26px;
+  color: #fff;
+}
+
+.listItem .entrantPic {
+  height: 140px;
+  width: 140px;
+  position: relative;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.riderPic__img {
+  width: 160px;
+}
+
+.listItem .team {
+  display: block;
+  font-size: 0.8rem;
+}
