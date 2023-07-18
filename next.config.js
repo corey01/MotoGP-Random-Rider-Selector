@@ -22,11 +22,11 @@ const nextConfig = {
     disableStaticImages: true,
     unoptimized: true,
     path: "/MotoGP-Random-Rider-Selector/",
+    responsive: {
+      adapter: require("responsive-loader/sharp"),
+    },
   },
 
-  responsive: {
-    adapter: require("responsive-loader/sharp"),
-  },
   basePath: "/MotoGP-Random-Rider-Selector",
   assetPrefix: "/MotoGP-Random-Rider-Selector",
 };
