@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { isInDefaultEntrants } from "@/utils/entrants";
+import { getEntrantImage } from "@/utils/entrants";
 import style from "./Entrant.module.css";
+import Image from "next/image";
 
 const Entrant = ({
   value,
@@ -13,14 +14,12 @@ const Entrant = ({
 }) => {
   return (
     <div className={style.listItem} key={value}>
-      <img
+      <Image
         alt=""
+        width={140}
+        height={140}
         className={style.entrantPic}
-        src={
-          isInDefaultEntrants(value)
-            ? `/entrants/${value}.jpg`
-            : `/entrants/placeholder.png`
-        }
+        src={getEntrantImage(value)}
       />
       <div className={style.details}>
         {value}{" "}

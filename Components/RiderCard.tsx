@@ -4,6 +4,7 @@
 import { Rider } from "@/models/rider";
 import style from "./RemovableList.module.css";
 import { motoGP } from "@/app/fonts";
+import Image from "next/image";
 
 const RiderCard = ({
   rider,
@@ -12,12 +13,22 @@ const RiderCard = ({
   rider: Rider;
   removeEvent: (a: string) => void;
 }) => {
+  const getImageUrl = () => {
+    const endUrl = rider.pictures.profile.main.split("/");
+
+    return require(`/public/riders/${
+      endUrl[endUrl.length - 1]
+    }?resize&size=500&webp`);
+  };
+
   return (
     <div className={style.listItem}>
       <img
         alt=""
         className={style.riderPic__img}
-        src={rider.pictures.profile.main}
+        src={getImageUrl()}
+        width={250}
+        height={375}
       />
       <div className={style.details}>
         <span className={`${motoGP.className} ${style.riderName}`}>

@@ -1,35 +1,52 @@
 /* eslint-disable @next/next/no-img-element */
 import { SelectedRider } from "@/models/rider";
 import style from "./ResultsCard.module.css";
-import { isInDefaultEntrants } from "@/utils/entrants";
+import { getEntrantImage, isInDefaultEntrants } from "@/utils/entrants";
+import Image from "next/image";
 
 const ResultsCard = ({
   selected: { entrant, rider },
 }: {
   selected: SelectedRider;
-}) => (
-  <div className={style.card}>
-    <div className={style.cardBody}>
-      <div style={{ color: rider.teamColor }} className={style.floatingBadge}>
-        {rider.number}
+}) => {
+  const getRiderPortrait = () => {
+    const endUrl = rider.pictures.portrait.split("/");
+
+    return require(`/public/riders/portrait/${
+      endUrl[endUrl.length - 1]
+    }?resize&size=400&webp`);
+  };
+
+  return (
+    <div className={style.card}>
+      <div className={style.cardBody}>
+        <div style={{ color: rider.teamColor }} className={style.floatingBadge}>
+          {rider.number}
+        </div>
+        <Image
+          alt=""
+          width={140}
+          height={140}
+          className={style.entrantPic}
+          src={getEntrantImage(entrant)}
+        />
+        <div className={style.equal}>=</div>
+        <Image
+          width={140}
+          height={140}
+          alt=""
+          className={style.riderPic}
+          src={getRiderPortrait()}
+        />
       </div>
-      <img
-        alt=""
-        className={style.entrantPic}
-        src={`/entrants/${
-          isInDefaultEntrants(entrant) ? entrant + ".jpg" : "placeholder.png"
-        }`}
-      />
-      <div className={style.equal}>=</div>
-      <img alt="" className={style.riderPic} src={rider.pictures.portrait} />
+      <div className={style.details}>
+        <span>{entrant}</span>
+        <span>
+          {rider.name} {rider.surname} {rider.shortNickname}
+        </span>
+      </div>
     </div>
-    <div className={style.details}>
-      <span>{entrant}</span>
-      <span>
-        {rider.name} {rider.surname} {rider.shortNickname}
-      </span>
-    </div>
-  </div>
-);
+  );
+};
 
 export default ResultsCard;
