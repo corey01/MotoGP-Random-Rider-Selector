@@ -1,4 +1,9 @@
+import { Rider } from "@/models/rider";
 import { getRiderDataLocal } from "./getRiderDataLocal";
+
+interface RiderData {
+  riders: Rider[];
+}
 
 export async function getRiderData() {
   // const res = await fetch(
@@ -15,7 +20,7 @@ export async function getRiderData() {
   // console.log("done get");
   // const jsonRes = await res.json();
 
-  const jsonRes = getRiderDataLocal();
+  const jsonRes = await getRiderDataLocal();
 
-  return jsonRes;
+  return jsonRes as RiderData;
 }
