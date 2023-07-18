@@ -21,11 +21,14 @@ const nextConfig = {
   images: {
     disableStaticImages: true,
     unoptimized: true,
+    path: "/MotoGP-Random-Rider-Selector/",
   },
 
   responsive: {
     adapter: require("responsive-loader/sharp"),
   },
+  basePath: "/MotoGP-Random-Rider-Selector",
+  assetPrefix: "/MotoGP-Random-Rider-Selector",
 };
 
 module.exports = withOptimisedImages({
