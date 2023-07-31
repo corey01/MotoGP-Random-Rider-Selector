@@ -30,7 +30,7 @@ const NextRace = ({ season }: { season: Season }) => {
         {race.circuit.circuitName} - {race.circuit.circuitCountry}
       </p>
       <p>
-        {format(startDate, "eeee do")} -{format(endDate, "eeee do MMM y")}
+        {format(startDate, "eeee do")} - {format(endDate, "eeee do MMM y")}
       </p>
       {!isActiveNow && <p>{formatDistanceToNow(startDate) + " away!"}</p>}
     </div>

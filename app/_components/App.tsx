@@ -7,9 +7,7 @@ import Entrants from "./Entrants/Entrants";
 import { Rider, SelectedRider } from "@/models/rider";
 import Results from "./Results/Results";
 import { defaultEntrants } from "@/utils/entrants";
-import { motoGP } from "@/app/fonts";
-import { Race, Season } from "@/models/race";
-import NextRace from "./NextRace/NextRace";
+import { Season } from "@/models/race";
 import Header from "./Header";
 
 interface HomeProps {
