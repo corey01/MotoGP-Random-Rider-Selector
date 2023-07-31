@@ -1,7 +1,6 @@
 "use client";
 
-import style from "./RiderList.module.css";
-import RemovableList from "../RemovableList";
+import style from "./RiderList.module.scss";
 import RiderCard from "../RiderCard";
 import { Rider } from "@/models/rider";
 
@@ -14,7 +13,7 @@ const RiderList = ({
   handleRemoveRider: (rider: string) => void;
   handleResetAllRiders: () => void;
 }) => (
-  <div className="panel">
+  <div className={style.panel}>
     {riderList.map((rider) => (
       <RiderCard rider={rider} removeEvent={handleRemoveRider} key={rider.id} />
     ))}

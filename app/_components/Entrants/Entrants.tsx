@@ -23,11 +23,11 @@ const Entrants = ({
   };
 
   return (
-    <div className={style.Entrants}>
+    <div className={`${style.Entrants} panel`}>
       {entrants.map((e) => (
         <Entrant value={e} removeEvent={handleRemoveEntrant} key={e} />
       ))}
-      <div className="addInput">
+      <div className={style.addInput}>
         <input
           onChange={handleInput}
           onFocus={() => {
