@@ -4,7 +4,6 @@
 import { Rider } from "@/models/rider";
 import style from "./RemovableList.module.css";
 import { motoGP } from "@/app/fonts";
-import Image from "next/image";
 
 const RiderCard = ({
   rider,

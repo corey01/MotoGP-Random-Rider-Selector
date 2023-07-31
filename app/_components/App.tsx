@@ -8,12 +8,16 @@ import { Rider, SelectedRider } from "@/models/rider";
 import Results from "./Results/Results";
 import { defaultEntrants } from "@/utils/entrants";
 import { motoGP } from "@/app/fonts";
+import { Race, Season } from "@/models/race";
+import NextRace from "./NextRace/NextRace";
+import Header from "./Header";
 
 interface HomeProps {
   allRiders: Rider[];
+  season: Season;
 }
 
-export default function Home({ allRiders }: HomeProps) {
+export default function Home({ allRiders, season }: HomeProps) {
   const [page, setPage] = useState("riders");
   const [riders, setRiders] = useState<Rider[]>([]);
   const [entrants, setEntrants] = useState(() => defaultEntrants);
@@ -77,7 +81,7 @@ export default function Home({ allRiders }: HomeProps) {
 
   return (
     <main>
-      <h1 className={motoGP.className}> MotoGP Random Rider Selector</h1>
+      <Header season={season} />
 
       {selectedRiders.length ? (
         <Results handleReset={resetResults} selectedRiders={selectedRiders} />

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import riderData from "../../utils/riderData.json";
+import riderData from "../../../utils/riderData.json";
 
 export async function GET() {
   const riders = riderData.map((rider) => {

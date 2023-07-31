@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { SelectedRider } from "@/models/rider";
 import style from "./ResultsCard.module.css";
-import { getEntrantImage, isInDefaultEntrants } from "@/utils/entrants";
+import { getEntrantImage } from "@/utils/entrants";
 import Image from "next/image";
 
 const ResultsCard = ({
