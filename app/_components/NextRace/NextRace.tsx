@@ -18,8 +18,6 @@ const NextRace = ({ season }: { season: Season }) => {
   const startDate = new Date(race.date_start);
   const endDate = new Date(race.date_end);
 
-  console.log(race);
-
   return (
     <div className={style.NextRace}>
       <h2>

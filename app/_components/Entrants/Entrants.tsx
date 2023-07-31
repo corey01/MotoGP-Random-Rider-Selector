@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import style from "./Entrants.module.scss";
 
 import Entrant from "./Entrant";
 
@@ -15,27 +16,36 @@ const Entrants = ({
   handleAddNewEntrant: (newEntrant: string) => void;
 }) => {
   const [inputVal, setInput] = useState("");
+  const [error, setError] = useState("");
 
   const handleInput = (e: any) => {
-    if (e?.target?.value) {
-      setInput(e.target.value);
-    }
+    setInput(e.target.value);
   };
+
   return (
-    <div className="panel">
+    <div className={style.Entrants}>
       {entrants.map((e) => (
         <Entrant value={e} removeEvent={handleRemoveEntrant} key={e} />
       ))}
       <div className="addInput">
         <input
           onChange={handleInput}
+          onFocus={() => {
+            if (error) setError("");
+          }}
           type="text"
           placeholder="Name"
           name="name"
           value={inputVal}
+          className={`${style.input} ${error ? style.inputError : null}`}
         />
+        {error && <p className={style.error}>{error}</p>}
         <button
           onClick={() => {
+            if (inputVal.length < 4) {
+              setError("Please enter a name");
+              return;
+            }
             handleAddNewEntrant(inputVal);
             setInput("");
           }}

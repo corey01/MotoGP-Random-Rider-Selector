@@ -1,0 +1,21 @@
+.Entrants {
+  .error {
+    color: red;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 2px;
+  }
+
+  .input {
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  .inputError {
+    border: 1px solid red;
+
+    &:placeholder {
+      color: red;
+    }
+  }
+}
