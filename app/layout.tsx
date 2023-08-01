@@ -1,3 +1,4 @@
+import Header from "./_components/Header";
 import { inter } from "./fonts";
 import "./globals.css";
 
@@ -12,7 +13,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <main>
+          <Header />
+          {children}
+        </main>
+      </body>
     </html>
   );
 }

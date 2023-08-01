@@ -1,0 +1,43 @@
+.tile {
+  width: 100%;
+  background-color: black;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  color: #fff;
+  position: relative;
+  // height: 100px;
+  display: flex;
+  padding: 10px;
+  overflow: hidden;
+
+  .contentBox {
+    flex: 1;
+    h2 {
+      font-size: 22px;
+    }
+  }
+
+  .location {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0;
+    .flag {
+      position: relative;
+      width: 18px;
+      top: 3px;
+    }
+  }
+
+  .imageContainer {
+    width: 120px;
+
+    img {
+      width: 150px;
+      height: 150px;
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}

@@ -1,13 +1,14 @@
-import { Season } from "@/models/race";
 import { motoGP } from "../fonts";
-import NextRace from "./NextRace/NextRace";
+import Link from "next/link";
+import style from "./Header.module.scss";
 
-const Header = ({ season }: { season: Season }) => {
+const Header = () => {
   return (
-    <>
-      <h1 className={motoGP.className}> MotoGP Random Rider Selector</h1>
-      <NextRace season={season} />
-    </>
+    <div className={style.header}>
+      <Link href="/">
+        <h1 className={motoGP.className}> MotoGP Random Rider Selector</h1>
+      </Link>
+    </div>
   );
 };
 

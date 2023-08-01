@@ -1,6 +1,7 @@
 import { Race, Season } from "@/models/race";
 import { format, formatDistanceToNow } from "date-fns";
 import style from "./NextRace.module.scss";
+import Link from "next/link";
 
 const NextRace = ({ season }: { season: Season }) => {
   let race: Race;
@@ -20,10 +21,10 @@ const NextRace = ({ season }: { season: Season }) => {
 
   return (
     <div className={style.NextRace}>
-      <h2>
-        {isActiveNow ? "Ongoing Race: " : "Next Race: "}
-        {race.name}
-      </h2>
+      <Link href="/calendar">
+        <h2>{isActiveNow ? "Ongoing Race" : "Next Race"}</h2>
+      </Link>
+      <p>{race.name}</p>
       <p>
         {race.circuit.circuitName} - {race.circuit.circuitCountry}
       </p>

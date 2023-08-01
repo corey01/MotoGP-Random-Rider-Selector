@@ -2,7 +2,7 @@
 "use client";
 
 import { Rider } from "@/models/rider";
-import style from "./RemovableList.module.css";
+import style from "./Riders.module.scss";
 import { motoGP } from "@/app/fonts";
 
 const RiderCard = ({

@@ -9,6 +9,7 @@ import Results from "./Results/Results";
 import { defaultEntrants } from "@/utils/entrants";
 import { Season } from "@/models/race";
 import Header from "./Header";
+import NextRace from "./NextRace/NextRace";
 
 interface HomeProps {
   allRiders: Rider[];
@@ -78,9 +79,8 @@ export default function Home({ allRiders, season }: HomeProps) {
   };
 
   return (
-    <main>
-      <Header season={season} />
-
+    <>
+      <NextRace season={season} />
       {selectedRiders.length ? (
         <Results handleReset={resetResults} selectedRiders={selectedRiders} />
       ) : (
@@ -121,6 +121,6 @@ export default function Home({ allRiders, season }: HomeProps) {
           </div>
         </>
       )}
-    </main>
+    </>
   );
 }

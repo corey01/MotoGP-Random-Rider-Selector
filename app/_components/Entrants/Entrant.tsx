@@ -2,7 +2,7 @@
 "use client";
 
 import { getEntrantImage } from "@/utils/entrants";
-import style from "./Entrant.module.css";
+import style from "./Entrant.module.scss";
 import Image from "next/image";
 
 const Entrant = ({
