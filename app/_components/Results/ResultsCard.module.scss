@@ -54,7 +54,6 @@
   margin-left: auto;
   margin-right: 0;
   padding: 6px;
-  // display: flex;
   background-color: #242424;
 
   p {
@@ -62,4 +61,8 @@
     font-weight: 800;
     color: #fff;
   }
+}
+
+.expanded {
+  text-align: right;
 }

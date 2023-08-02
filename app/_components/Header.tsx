@@ -10,7 +10,6 @@ const Header = () => {
 
   const isCalendarPage = pathname.includes("/calendar");
 
-  console.log(isCalendarPage);
   return (
     <div className={style.header}>
       <nav className={style.headerNav}>

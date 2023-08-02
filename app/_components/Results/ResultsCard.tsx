@@ -47,7 +47,7 @@ const ResultsCard = ({
           </span>
         </div>
         {isExpanded && (
-          <div>
+          <div className={style.expanded}>
             <p>Team: {rider.sponsoredTeam}</p>
             <p>
               From: {rider.from.birthCity}, {rider.from.countryName}

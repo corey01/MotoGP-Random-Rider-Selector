@@ -14,18 +14,19 @@ const ResultsPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   let resultsData: SelectedRider[] = [];
-  const res = searchParams.forEach((riderID, name) => {
+  searchParams.forEach((riderID, name) => {
     resultsData.push({
       entrant: name,
       rider: getRiderById(riderID)!,
     });
   });
-  return (
-    <Results
-      handleReset={() => router.push("/")}
-      selectedRiders={resultsData}
-    />
-  );
+
+  const handleReset = () => {
+    localStorage.removeItem("savedResults");
+    router.push("/");
+  };
+
+  return <Results handleReset={handleReset} selectedRiders={resultsData} />;
 };
 
 export default ResultsPage;

@@ -10,6 +10,11 @@ import { Season } from "@/models/race";
 import NextRace from "./NextRace/NextRace";
 import { useRouter } from "next/navigation";
 import LoadingOverlay from "./Loading/Overlay";
+import {
+  formatDistance,
+  millisecondsToHours,
+  millisecondsToMinutes,
+} from "date-fns";
 
 interface HomeProps {
   allRiders: Rider[];
@@ -58,6 +63,29 @@ export default function Home({ allRiders, season }: HomeProps) {
     setRiders(allRiders);
   }, [allRiders]);
 
+  const handleStorage = () => {
+    const savedResults = localStorage.getItem("savedResults");
+
+    if (savedResults) {
+      setLoading(true);
+      const decodedResults = JSON.parse(savedResults);
+      if (decodedResults.generatedDate) {
+        const timeDistanceInSeconds = millisecondsToHours(
+          Date.now() - decodedResults.generatedDate
+        );
+        if (timeDistanceInSeconds >= 60) {
+          localStorage.removeItem("savedResults");
+        } else {
+          router.push(`/results/${decodedResults.results}`);
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleStorage();
+  }, []);
+
   const pickRiders = () => {
     setLoading(true);
     const tempRidersArray = [...riders];
@@ -72,6 +100,12 @@ export default function Home({ allRiders, season }: HomeProps) {
       return acc + startsWithAmpersand + entrant + "=" + rider;
     }, "?");
 
+    const resultObject = {
+      generatedDate: Date.now(),
+      results,
+    };
+    window.localStorage.setItem("abc", "def");
+    window.localStorage.setItem("savedResults", JSON.stringify(resultObject));
     router.push(`/results/${results}`);
   };
 
