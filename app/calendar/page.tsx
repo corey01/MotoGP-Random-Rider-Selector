@@ -1,3 +1,6 @@
+"use client";
+// remove useClient call
+
 import { getSeasonDataLocal } from "@/utils/getSeasonDataLocal";
 import Tile from "../_components/CalendarTile/CalendarTile";
 
@@ -8,6 +11,7 @@ const CalendarPage = async () => {
   const sortedFutureRaces = season.future.sort((a, b) => {
     return new Date(a.date_start).valueOf() - new Date(b.date_start).valueOf();
   });
+  console.log(sortedFutureRaces);
 
   const races = [...currentRace, ...sortedFutureRaces];
   return (

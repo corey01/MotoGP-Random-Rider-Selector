@@ -1,6 +1,7 @@
+import { Rider } from "@/models/rider";
 import riderData from "../utils/riderData.json";
 
-export async function getRiderDataLocal() {
+export function getRiderDataLocal(): Rider[] {
   const riders = riderData.map((rider) => {
     const {
       id,
@@ -39,7 +40,5 @@ export async function getRiderDataLocal() {
     };
   });
 
-  // return riders;
-
-  return { riders };
+  return riders;
 }

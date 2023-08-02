@@ -16,10 +16,21 @@ export interface Race {
     simpleCircuitPath: string;
     fullCircuitPath: string;
   };
+  broadcasts: Broadcast[];
 }
 
 export interface Season {
   past: Race[];
   current: Race[];
   future: Race[];
+}
+
+interface Broadcast {
+  date_end: string;
+  date_start: string;
+  eventName: string;
+  kind: string;
+  name: string;
+  status: string;
+  type: string;
 }

@@ -6,7 +6,7 @@ const Home = async () => {
   const allRiders = await getRiderData();
   const season = await getSeasonDataLocal();
 
-  return <App allRiders={allRiders.riders} season={season} />;
+  return <App allRiders={allRiders} season={season} />;
 };
 
 export default Home;

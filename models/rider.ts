@@ -9,18 +9,16 @@ export interface Rider {
   pictures: {
     profile: {
       main: string;
-      secondary?: string;
+      secondary?: string | null;
     };
     bike: {
-      main: string;
-      secondary?: null;
+      main: string | null;
     };
     helmet: {
-      main: string;
-      secondary?: null;
+      main: string | null;
     };
-    number: string;
-    portrait: string;
+    number: string | null;
+    portrait: string | null;
   };
   from: {
     countryName: string;

@@ -20,7 +20,5 @@ export async function getRiderData() {
   // console.log("done get");
   // const jsonRes = await res.json();
 
-  const jsonRes = await getRiderDataLocal();
-
-  return jsonRes as RiderData;
+  return getRiderDataLocal();
 }
