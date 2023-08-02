@@ -67,22 +67,28 @@ const Tile = ({ race, isCurrent }: { race: Race; isCurrent: boolean }) => {
         <div className={style.expanded}>
           <table className={style.allEvents}>
             <thead>
-              <th>Class</th>
-              <th>Type</th>
-              <th>When</th>
-            </thead>
-            {race.broadcasts.map((broadcast) => (
-              <tr
-                key={broadcast.date_start + broadcast.eventName}
-                className={
-                  broadcast.eventName === "MotoGP" ? style.highlight : undefined
-                }
-              >
-                <td>{broadcast.eventName}</td>
-                <td>{broadcast.name}</td>
-                <td>{localRaceTime(broadcast.date_start)}</td>
+              <tr className={style.headerRow}>
+                <th>Class</th>
+                <th>Type</th>
+                <th>When</th>
               </tr>
-            ))}
+            </thead>
+            <tbody>
+              {race.broadcasts.map((broadcast) => (
+                <tr
+                  key={broadcast.date_start + broadcast.eventName}
+                  className={
+                    broadcast.eventName === "MotoGP"
+                      ? style.highlight
+                      : undefined
+                  }
+                >
+                  <td>{broadcast.eventName}</td>
+                  <td>{broadcast.name}</td>
+                  <td>{localRaceTime(broadcast.date_start)}</td>
+                </tr>
+              ))}
+            </tbody>
           </table>
           <button onClick={() => setExpanded(false)}>
             Close expanded view
