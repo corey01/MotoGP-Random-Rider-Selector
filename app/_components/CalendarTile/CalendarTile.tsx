@@ -42,12 +42,12 @@ const Tile = ({ race }: { race: Race }) => {
           </p>
           <p>{format(new Date(race.date_start), "do MMMM y")}</p>
           <p>
-            Sprint Race:
+            <span className={style.innerTitle}>Sprint Race</span>
             <br />
             {localRaceTime(sprint?.date_start!)}
           </p>
           <p>
-            Main Race:
+            <span className={style.innerTitle}>Main Race</span>
             <br />
             {localRaceTime(gpRace?.date_start!)}
           </p>
