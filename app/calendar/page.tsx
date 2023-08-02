@@ -16,9 +16,9 @@ const CalendarPage = async () => {
   return (
     <div className={style.Calendar}>
       <NextRace season={season} />
-      <h1>Upcoming Races</h1>
+      <h1>Upcoming Grand{races.length > 1 && "s"} Prix</h1>
 
-      <p>Note: All times shown in GMT</p>
+      <p className={style.timeNote}>Note: All times shown in GMT</p>
       {races.map((race) => {
         return (
           <Tile
