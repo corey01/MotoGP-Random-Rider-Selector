@@ -10,7 +10,7 @@ const ResultsCard = ({
   selected: SelectedRider;
 }) => {
   const getRiderPortrait = () => {
-    const endUrl = rider.pictures.portrait.split("/");
+    const endUrl = rider.pictures.portrait!.split("/");
 
     return require(`/public/riders/portrait/${
       endUrl[endUrl.length - 1]
