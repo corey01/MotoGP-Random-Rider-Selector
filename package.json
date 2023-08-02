@@ -19,6 +19,7 @@
     "eslint-config-next": "13.4.4",
     "imagemin-mozjpeg": "9.0.0",
     "imagemin-optipng": "^8.0.0",
+    "imagemin-svgo": "^10.0.1",
     "jimp": "^0.22.10",
     "next": "^13.4.10-canary.8",
     "next-optimized-images": "^2.6.2",

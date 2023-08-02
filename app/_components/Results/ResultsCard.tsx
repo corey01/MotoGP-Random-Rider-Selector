@@ -1,14 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import { SelectedRider } from "@/models/rider";
-import style from "./ResultsCard.module.css";
+import style from "./ResultsCard.module.scss";
 import { getEntrantImage } from "@/utils/entrants";
 import Image from "next/image";
+import { useState } from "react";
 
 const ResultsCard = ({
   selected: { entrant, rider },
 }: {
   selected: SelectedRider;
 }) => {
+  const [isExpanded, setExpanded] = useState<boolean>(false);
+
   const getRiderPortrait = () => {
     const endUrl = rider.pictures.portrait!.split("/");
 
@@ -18,11 +21,8 @@ const ResultsCard = ({
   };
 
   return (
-    <div className={style.card}>
+    <div className={style.card} onClick={() => setExpanded(!isExpanded)}>
       <div className={style.cardBody}>
-        <div style={{ color: rider.teamColor }} className={style.floatingBadge}>
-          {rider.number}
-        </div>
         <Image
           alt=""
           width={140}
@@ -40,10 +40,21 @@ const ResultsCard = ({
         />
       </div>
       <div className={style.details}>
-        <span>{entrant}</span>
-        <span>
-          {rider.name} {rider.surname} {rider.shortNickname}
-        </span>
+        <div className={style.detailsTop}>
+          <span>{entrant}</span>
+          <span>
+            {rider.name} {rider.surname} #{rider.number}
+          </span>
+        </div>
+        {isExpanded && (
+          <div>
+            <p>Team: {rider.sponsoredTeam}</p>
+            <p>
+              From: {rider.from.birthCity}, {rider.from.countryName}
+            </p>
+            <p>Age: {rider.yearsOld} years old</p>
+          </div>
+        )}
       </div>
     </div>
   );

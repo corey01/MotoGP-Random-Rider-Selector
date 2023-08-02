@@ -1,0 +1,24 @@
+.Calendar {
+  h1 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .buttonBar {
+    display: flex;
+    justify-content: center;
+  }
+
+  .home {
+    width: auto;
+    border-radius: 6px;
+    padding: 8px;
+    background-color: #242424;
+
+    a {
+      text-decoration: none;
+      color: #fff;
+    }
+  }
+}

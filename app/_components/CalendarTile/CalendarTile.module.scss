@@ -17,6 +17,13 @@
     }
   }
 
+  .seeMore {
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
   .location {
     font-size: 18px;
     font-weight: 600;
@@ -38,6 +45,47 @@
       right: -10px;
       top: 50%;
       transform: translateY(-50%);
+    }
+  }
+}
+
+.expanded {
+  margin-top: -15px;
+  padding: 20px 15px 5px;
+  background-color: grey;
+  flex: 1;
+  width: 100%;
+  margin-bottom: 10px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+
+  .allEvents {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+
+    thead {
+      border-bottom: 2px solid black;
+
+      th {
+        padding-bottom: 3px;
+      }
+    }
+
+    .highlight {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    tr {
+      border-bottom: 1px solid black;
+
+      td {
+        padding: 6px 0;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
     }
   }
 }

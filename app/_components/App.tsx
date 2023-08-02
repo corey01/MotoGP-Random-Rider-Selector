@@ -9,6 +9,7 @@ import { defaultEntrants } from "@/utils/entrants";
 import { Season } from "@/models/race";
 import NextRace from "./NextRace/NextRace";
 import { useRouter } from "next/navigation";
+import LoadingOverlay from "./Loading/Overlay";
 
 interface HomeProps {
   allRiders: Rider[];
@@ -19,6 +20,8 @@ export default function Home({ allRiders, season }: HomeProps) {
   const [page, setPage] = useState("riders");
   const [riders, setRiders] = useState<Rider[]>([]);
   const [entrants, setEntrants] = useState(() => defaultEntrants);
+  const [loading, setLoading] = useState<boolean>(false);
+
   const router = useRouter();
 
   const handleRemoveRider = (riderToRemove: string) => {
@@ -56,6 +59,7 @@ export default function Home({ allRiders, season }: HomeProps) {
   }, [allRiders]);
 
   const pickRiders = () => {
+    setLoading(true);
     const tempRidersArray = [...riders];
     const results = entrants.reduce((acc, entrant, idx) => {
       const startsWithAmpersand = idx === 0 ? "" : "&";
@@ -73,9 +77,10 @@ export default function Home({ allRiders, season }: HomeProps) {
 
   return (
     <>
+      {loading && <LoadingOverlay />}
       <NextRace season={season} />
 
-      <button className="pickButton" onClick={pickRiders}>
+      <button disabled={loading} className="pickButton" onClick={pickRiders}>
         Pick Riders!
       </button>
       <div className="panelContainer">
