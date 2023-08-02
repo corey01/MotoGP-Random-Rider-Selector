@@ -3,9 +3,6 @@ import ResultsCard from "./ResultsCard";
 import style from "./ResultsCard.module.scss";
 import { useState } from "react";
 import ReturnModal from "../Modals/ReturnModal";
-// import ShareIcon from "../Icons/Share";
-// import ShareIcon from "../../share.svg";
-import Image from "next/image";
 
 interface ResultsProps {
   handleReset: () => void;
@@ -39,12 +36,7 @@ const Results = ({ handleReset, selectedRiders }: ResultsProps) => {
         <ResultsCard selected={selected} key={`res-${selected.rider.id}`} />
       ))}
       <button className={style.shareButton} onClick={generateShareLink}>
-        <p>Share Results</p>{" "}
-        {/* <Image
-          alt=" "
-          width={26}
-          src={require("/public/share.png?resize&webp")}
-        /> */}
+        <p>Share Results</p>
       </button>
       <p>
         Something wrong? Need to change the riders or people entering?
