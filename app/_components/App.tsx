@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import RiderList from "./RiderList";
 import Entrants from "./Entrants/Entrants";
@@ -63,7 +63,7 @@ export default function Home({ allRiders, season }: HomeProps) {
     setRiders(allRiders);
   }, [allRiders]);
 
-  const handleStorage = () => {
+  const handleStorage = useCallback(() => {
     const savedResults = localStorage.getItem("savedResults");
 
     if (savedResults) {
@@ -75,16 +75,17 @@ export default function Home({ allRiders, season }: HomeProps) {
         );
         if (timeDistanceInHours >= 24) {
           localStorage.removeItem("savedResults");
+          setLoading(false);
         } else {
           router.push(`/results/${decodedResults.results}`);
         }
       }
     }
-  };
+  }, [router]);
 
   useEffect(() => {
     handleStorage();
-  }, []);
+  }, [handleStorage]);
 
   const pickRiders = () => {
     setLoading(true);
