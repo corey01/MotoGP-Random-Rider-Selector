@@ -90,9 +90,9 @@ const Tile = ({ race, isCurrent }: { race: Race; isCurrent: boolean }) => {
               ))}
             </tbody>
           </table>
-          <button onClick={() => setExpanded(false)}>
+          <p className={style.closeViewLink} onClick={() => setExpanded(false)}>
             Close expanded view
-          </button>
+          </p>
         </div>
       )}
     </>
