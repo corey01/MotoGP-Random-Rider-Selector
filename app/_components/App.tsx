@@ -70,10 +70,10 @@ export default function Home({ allRiders, season }: HomeProps) {
       setLoading(true);
       const decodedResults = JSON.parse(savedResults);
       if (decodedResults.generatedDate) {
-        const timeDistanceInSeconds = millisecondsToHours(
+        const timeDistanceInHours = millisecondsToHours(
           Date.now() - decodedResults.generatedDate
         );
-        if (timeDistanceInSeconds >= 60) {
+        if (timeDistanceInHours >= 24) {
           localStorage.removeItem("savedResults");
         } else {
           router.push(`/results/${decodedResults.results}`);
