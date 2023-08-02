@@ -3,7 +3,7 @@ import { inter } from "./fonts";
 import "./globals.css";
 
 export const metadata = {
-  title: "MotoGP Rider Selector",
+  title: "MotoGP Sweepstake Generator",
 };
 
 export default function RootLayout({

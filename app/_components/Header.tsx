@@ -22,7 +22,12 @@ const Header = () => {
           </li>
         </ul>
       </nav>
-      <h1 className={motoGP.className}> MotoGP Random Rider Selector</h1>
+      <h1 className={motoGP.className}>
+        {" "}
+        MotoGP
+        <br />
+        Sweepstake Generator
+      </h1>
     </div>
   );
 };
