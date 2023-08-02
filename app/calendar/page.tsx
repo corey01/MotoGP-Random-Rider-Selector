@@ -2,6 +2,7 @@ import { getSeasonDataLocal } from "@/utils/getSeasonDataLocal";
 import Tile from "../_components/CalendarTile/CalendarTile";
 import style from "./Calendar.module.scss";
 import Link from "next/link";
+import NextRace from "../_components/NextRace/NextRace";
 
 const CalendarPage = async () => {
   const season = await getSeasonDataLocal();
@@ -14,12 +15,19 @@ const CalendarPage = async () => {
   const races = [...currentRace, ...sortedFutureRaces];
   return (
     <div className={style.Calendar}>
+      <NextRace season={season} />
       <h1>Upcoming Races</h1>
 
       <p>Note: All times shown in GMT</p>
-      {races.map((race) => (
-        <Tile key={race.name} race={race} />
-      ))}
+      {races.map((race) => {
+        return (
+          <Tile
+            key={race.name}
+            race={race}
+            isCurrent={race.name === currentRace[0]?.name}
+          />
+        );
+      })}
 
       <div className={style.buttonBar}>
         <button className={style.home}>

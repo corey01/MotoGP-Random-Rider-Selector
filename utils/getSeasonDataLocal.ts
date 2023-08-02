@@ -29,5 +29,6 @@ export async function getSeasonDataLocal() {
       [key]: [...allSeasonsObject[key], season],
     };
   }, defaultSeasonObject);
+
   return season;
 }

@@ -6,9 +6,9 @@ import Image from "next/image";
 import { format } from "date-fns";
 import { motoGP } from "@/app/fonts";
 import { localRaceTime } from "@/utils/datesTimes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const Tile = ({ race }: { race: Race }) => {
+const Tile = ({ race, isCurrent }: { race: Race; isCurrent: boolean }) => {
   const [expanded, setExpanded] = useState(false);
 
   const sprint = race.broadcasts?.find(
@@ -21,14 +21,11 @@ const Tile = ({ race }: { race: Race }) => {
       eventName === "MotoGP" && name === "Race" && kind === "RACE"
   );
 
-  useEffect(() => {
-    console.log("expanded changed");
-  }, [expanded]);
-
   return (
     <>
-      <div className={style.tile}>
+      <div className={`${style.tile} ${isCurrent ? style.current : undefined}`}>
         <div className={style.contentBox}>
+          {isCurrent && <p className={style.ongoing}>Ongoing Grand Prix</p>}
           <h2 className={motoGP.className}>{race.name}</h2>
           <p className={style.location}>
             {race.url}{" "}

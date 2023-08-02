@@ -20,7 +20,7 @@ const NextRace = ({ season }: { season: Season }) => {
   const endDate = new Date(race.date_end);
 
   return (
-    <div className={style.NextRace}>
+    <div className={`${style.NextRace} ${isActiveNow ? style.ongoing : ""}`}>
       <h2>{isActiveNow ? "Ongoing Race" : "Next Race"}</h2>
       <p>{race.name}</p>
       <p>

@@ -1,13 +1,42 @@
 .NextRace {
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 5px;
   line-height: 1.2;
   font-size: 12px;
+  position: relative;
+  margin-top: 31px;
+  margin-bottom: 31px;
 
   h2 {
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 4px;
+  }
+
+  &::before {
+    position: absolute;
+    content: "";
+    width: 150px;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.2);
+    left: 50%;
+    transform: translateX(-50%);
+    top: -15px;
+  }
+  &::after {
+    position: absolute;
+    content: "";
+    width: 150px;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.2);
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -15px;
+  }
+
+  &.ongoing {
+    h2 {
+      color: rgb(0, 0, 151);
+      font-weight: 800;
+    }
   }
 }
