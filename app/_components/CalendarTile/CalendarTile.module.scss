@@ -80,7 +80,17 @@
       border-bottom: 1px solid black;
 
       td {
-        padding: 6px 0;
+        padding: 6px 4px;
+        text-align: center;
+        vertical-align: middle;
+
+        &:first-child {
+          padding-left: 2px;
+        }
+
+        &:last-child {
+          padding-right: 2px;
+        }
       }
 
       &:last-child {
