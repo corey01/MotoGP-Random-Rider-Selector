@@ -1,16 +1,24 @@
+"use client";
+
 import Link from "next/link";
 import { motoGP } from "../fonts";
 import style from "./Header.module.scss";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
+  const pathname = usePathname();
+
+  const isCalendarPage = pathname.includes("/calendar");
+
+  console.log(isCalendarPage);
   return (
     <div className={style.header}>
       <nav className={style.headerNav}>
         <ul>
-          <li>
+          <li className={!isCalendarPage ? style.active : undefined}>
             <Link href="/">Home</Link>
           </li>
-          <li>
+          <li className={isCalendarPage ? style.active : undefined}>
             <Link href="/calendar">Calendar</Link>
           </li>
         </ul>

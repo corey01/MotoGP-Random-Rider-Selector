@@ -41,8 +41,16 @@ const Tile = ({ race }: { race: Race }) => {
             />
           </p>
           <p>{format(new Date(race.date_start), "do MMMM y")}</p>
-          <p>Sprint Race: {localRaceTime(sprint?.date_start!)}</p>
-          <p>Main Race: {localRaceTime(gpRace?.date_start!)}</p>
+          <p>
+            Sprint Race:
+            <br />
+            {localRaceTime(sprint?.date_start!)}
+          </p>
+          <p>
+            Main Race:
+            <br />
+            {localRaceTime(gpRace?.date_start!)}
+          </p>
           <p className={style.seeMore} onClick={() => setExpanded(!expanded)}>
             {expanded ? "See less -" : "See full lineup +"}
           </p>

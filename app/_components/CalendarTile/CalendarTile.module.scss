@@ -15,13 +15,18 @@
     h2 {
       font-size: 22px;
     }
+
+    p {
+      font-size: 12px;
+      margin: 6px 0;
+    }
   }
 
   .seeMore {
     cursor: pointer;
     font-weight: 800;
     font-size: 14px;
-    margin-top: 6px;
+    margin-bottom: 0;
   }
 
   .location {
@@ -58,6 +63,7 @@
   margin-bottom: 10px;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
+  font-size: 12px;
 
   .allEvents {
     border-collapse: collapse;

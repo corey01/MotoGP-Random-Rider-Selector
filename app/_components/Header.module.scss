@@ -21,6 +21,10 @@
         font-size: 14px;
         font-weight: 400;
 
+        a {
+          color: rgba(0, 0, 0, 0.6);
+        }
+
         &:first-child:before {
           content: none;
         }
@@ -36,6 +40,10 @@
           width: 1px;
           height: 20px;
         }
+      }
+
+      li.active a {
+        color: #000;
       }
     }
   }

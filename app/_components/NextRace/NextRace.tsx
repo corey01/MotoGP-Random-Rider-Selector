@@ -21,17 +21,20 @@ const NextRace = ({ season }: { season: Season }) => {
 
   return (
     <div className={style.NextRace}>
-      <Link href="/calendar">
-        <h2>{isActiveNow ? "Ongoing Race" : "Next Race"}</h2>
-      </Link>
+      <h2>{isActiveNow ? "Ongoing Race" : "Next Race"}</h2>
       <p>{race.name}</p>
       <p>
         {race.circuit.circuitName} - {race.circuit.circuitCountry}
       </p>
       <p>
-        {format(startDate, "eeee do")} - {format(endDate, "eeee do MMM y")}
+        {format(startDate, "eee do")} - {format(endDate, "eee do MMM yy")}
       </p>
-      {!isActiveNow && <p>{formatDistanceToNow(startDate) + " away!"}</p>}
+      {!isActiveNow && (
+        <p>
+          Starts in{" "}
+          {formatDistanceToNow(new Date(race.broadcasts[0].date_start)) + "!"}
+        </p>
+      )}
     </div>
   );
 };

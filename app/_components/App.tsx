@@ -81,7 +81,7 @@ export default function Home({ allRiders, season }: HomeProps) {
       <NextRace season={season} />
 
       <button disabled={loading} className="pickButton" onClick={pickRiders}>
-        Pick Riders!
+        Randomly Assign Riders Now!
       </button>
       <div className="panelContainer">
         {page === "riders" && (
