@@ -54,9 +54,12 @@ const Tile = ({
   const handleToggle = () => {
     setExpanded((cur) => {
       if (!cur) {
-        router.push("/calendar" + "?" + createQueryString("active", race.name));
+        router.push(
+          "/calendar" + "?" + createQueryString("active", race.name),
+          { scroll: false }
+        );
       } else {
-        router.push("/calendar");
+        router.push("/calendar", { scroll: false });
       }
       return !cur;
     });
