@@ -55,7 +55,7 @@ export default function Home({ allRiders, season }: HomeProps) {
 
   const handleAddNewEntrant = (entrant: string) => {
     setEntrants((prevEntrants) => {
-      return [...prevEntrants, entrant];
+      return [...prevEntrants, entrant.trim()];
     });
   };
 
@@ -105,7 +105,6 @@ export default function Home({ allRiders, season }: HomeProps) {
       generatedDate: Date.now(),
       results,
     };
-    window.localStorage.setItem("abc", "def");
     window.localStorage.setItem("savedResults", JSON.stringify(resultObject));
     router.push(`/results/${results}`);
   };

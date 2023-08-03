@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Rider } from "../../models/rider";
 import Results from "../_components/Results/Results";
 import { useRouter } from "next/navigation";
+import { useCallback, useEffect } from "react";
 
 interface SelectedRider {
   entrant: string;
@@ -20,6 +21,23 @@ const ResultsPage = () => {
       rider: getRiderById(riderID)!,
     });
   });
+
+  const setStorageOnArrive = useCallback(() => {
+    const previous = localStorage.getItem("savedResults");
+    if (previous) localStorage.removeItem("savedResults");
+
+    localStorage.setItem(
+      "savedResults",
+      JSON.stringify({
+        generatedDate: Date.now(),
+        results: "?" + searchParams.toString(),
+      })
+    );
+  }, [searchParams]);
+
+  useEffect(() => {
+    setStorageOnArrive();
+  }, [setStorageOnArrive]);
 
   const handleReset = () => {
     localStorage.removeItem("savedResults");
