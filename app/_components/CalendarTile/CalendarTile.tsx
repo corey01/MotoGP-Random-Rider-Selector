@@ -6,10 +6,30 @@ import Image from "next/image";
 import { format } from "date-fns";
 import { motoGP } from "@/app/fonts";
 import { localRaceTime } from "@/utils/datesTimes";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Expanded } from "./Expanded";
 
-const Tile = ({ race, isCurrent }: { race: Race; isCurrent: boolean }) => {
-  const [expanded, setExpanded] = useState(false);
+const Tile = ({
+  race,
+  isCurrent,
+  isActive = false,
+}: {
+  race: Race;
+  isCurrent: boolean;
+  isActive: boolean;
+}) => {
+  const router = useRouter();
+  const searchParams = useSearchParams()!;
+  const [expanded, setExpanded] = useState(() => isActive);
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isActive) {
+      ref.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [isActive]);
 
   const sprint = race.broadcasts?.find(
     ({ name, kind, eventName }) =>
@@ -21,9 +41,33 @@ const Tile = ({ race, isCurrent }: { race: Race; isCurrent: boolean }) => {
       eventName === "MotoGP" && name === "Race" && kind === "RACE"
   );
 
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const handleToggle = () => {
+    setExpanded((cur) => {
+      if (!cur) {
+        router.push("/calendar" + "?" + createQueryString("active", race.name));
+      } else {
+        router.push("/calendar");
+      }
+      return !cur;
+    });
+  };
+
   return (
     <>
-      <div className={`${style.tile} ${isCurrent ? style.current : undefined}`}>
+      <div
+        ref={ref}
+        className={`${style.tile} ${isCurrent ? style.current : undefined}`}
+      >
         <div className={style.contentBox}>
           {isCurrent && <p className={style.ongoing}>Ongoing Grand Prix</p>}
           <h2 className={motoGP.className}>{race.name}</h2>
@@ -48,7 +92,7 @@ const Tile = ({ race, isCurrent }: { race: Race; isCurrent: boolean }) => {
             <br />
             {localRaceTime(gpRace?.date_start!)}
           </p>
-          <p className={style.seeMore} onClick={() => setExpanded(!expanded)}>
+          <p className={style.seeMore} onClick={handleToggle}>
             {expanded ? "See less -" : "See full lineup +"}
           </p>
         </div>
@@ -63,38 +107,7 @@ const Tile = ({ race, isCurrent }: { race: Race; isCurrent: boolean }) => {
         </div>
       </div>
 
-      {expanded && (
-        <div className={style.expanded}>
-          <table className={style.allEvents}>
-            <thead>
-              <tr className={style.headerRow}>
-                <th>Class</th>
-                <th>Type</th>
-                <th>When</th>
-              </tr>
-            </thead>
-            <tbody>
-              {race.broadcasts.map((broadcast) => (
-                <tr
-                  key={broadcast.date_start + broadcast.eventName}
-                  className={
-                    broadcast.eventName === "MotoGP"
-                      ? style.highlight
-                      : undefined
-                  }
-                >
-                  <td>{broadcast.eventName}</td>
-                  <td>{broadcast.name}</td>
-                  <td>{localRaceTime(broadcast.date_start)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className={style.closeViewLink} onClick={() => setExpanded(false)}>
-            Close expanded view
-          </p>
-        </div>
-      )}
+      {expanded && <Expanded race={race} handleToggle={handleToggle} />}
     </>
   );
 };
