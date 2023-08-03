@@ -15,6 +15,9 @@ export async function getSeasonDataLocal() {
       hours: 23,
       minutes: 59,
     });
+
+    // Leaving the following comment to help when debugging date issues
+    // const now = new Date("2023-08-06T22:00:00+01:00");
     const now = new Date();
 
     if (season.status === "FINISHED" || endDate < now) {
@@ -28,7 +31,6 @@ export async function getSeasonDataLocal() {
         key = "future";
       }
     }
-
     return {
       ...allSeasonsObject,
       [key]: [...allSeasonsObject[key], season],
