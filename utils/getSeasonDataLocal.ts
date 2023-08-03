@@ -18,6 +18,7 @@ export async function getSeasonDataLocal() {
 
     // Leaving the following comment to help when debugging date issues
     // const now = new Date("2023-08-06T22:00:00+01:00");
+    // 6th august 2023 at 10pm, GMT
     const now = new Date();
 
     if (season.status === "FINISHED" || endDate < now) {
