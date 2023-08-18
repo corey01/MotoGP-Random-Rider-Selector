@@ -1,3 +1,5 @@
+"use client";
+
 import App from "@/app/_components/App";
 import { getRiderData } from "@/utils/getRiderData";
 import { getSeasonDataLocal } from "@/utils/getSeasonDataLocal";

@@ -1,10 +1,10 @@
 import { getRiderDataLocal } from "./getRiderDataLocal";
 
 export const getSelectedRidersByID = async (ids: string[]) => {
-  const riders = getRiderDataLocal();
+  const { allRiders } = getRiderDataLocal();
 
   const selectedRiders = ids.map((id) => {
-    const riderResults = riders.filter((riders) => riders.id === id);
+    const riderResults = allRiders.filter((rider) => rider.id === id);
 
     return riderResults[0];
   });
@@ -13,7 +13,7 @@ export const getSelectedRidersByID = async (ids: string[]) => {
 };
 
 export const getRiderById = (id: string) => {
-  const riders = getRiderDataLocal();
+  const { allRiders } = getRiderDataLocal();
 
-  return riders.find((rider) => rider.id === id);
+  return allRiders.find((rider) => rider.id === id);
 };

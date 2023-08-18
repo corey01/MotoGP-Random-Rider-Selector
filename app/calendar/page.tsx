@@ -1,3 +1,5 @@
+"use client";
+
 import { Calendar } from "./../_components/Calendar/Calendar";
 import { getSeasonDataLocal } from "@/utils/getSeasonDataLocal";
 

@@ -1,6 +1,6 @@
 import { Season } from "@/models/race";
 import seasonData from "../utils/seasonData.json";
-import { add, format } from "date-fns";
+import { add } from "date-fns";
 
 const defaultSeasonObject = {
   past: [],

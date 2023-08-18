@@ -15,32 +15,42 @@ import {
   millisecondsToHours,
   millisecondsToMinutes,
 } from "date-fns";
+import { RiderDataResponse } from "@/utils/getRiderDataLocal";
 
 interface HomeProps {
-  allRiders: Rider[];
+  allRiders: RiderDataResponse;
   season: Season;
 }
 
 export default function Home({ allRiders, season }: HomeProps) {
   const [page, setPage] = useState("riders");
   const [riders, setRiders] = useState<Rider[]>([]);
+  const [guestRiders, setGuestRiders] = useState<Rider[]>([]);
   const [entrants, setEntrants] = useState(() => defaultEntrants);
   const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
 
-  const handleRemoveRider = (riderToRemove: string) => {
+  const handleRemoveRider = (riderToRemove: Rider) => {
+    if (riderToRemove.riderType === "guest") {
+      setGuestRiders((prev) => [...prev, riderToRemove]);
+    }
     setRiders((prevRiders) => {
-      return prevRiders.filter((r) => r.id !== riderToRemove);
+      return prevRiders.filter((r) => r.id !== riderToRemove.id);
     });
   };
 
   useEffect(() => {
-    setRiders(allRiders);
+    setRiders(allRiders.standardRiders);
+  }, [allRiders]);
+
+  useEffect(() => {
+    setGuestRiders(allRiders.guestRiders);
   }, [allRiders]);
 
   const handleResetAllRiders = () => {
-    setRiders(allRiders);
+    setRiders(allRiders.standardRiders);
+    setGuestRiders(allRiders.guestRiders);
   };
 
   const handleRemoveEntrant = (entrantToRemove: string) => {
@@ -59,9 +69,12 @@ export default function Home({ allRiders, season }: HomeProps) {
     });
   };
 
-  useEffect(() => {
-    setRiders(allRiders);
-  }, [allRiders]);
+  const handleAddRider = (rider: Rider) => {
+    setGuestRiders((prev) => {
+      return prev.filter((val) => val.id !== rider.id);
+    });
+    setRiders((prev) => [...prev, rider]);
+  };
 
   const handleStorage = useCallback(() => {
     const savedResults = localStorage.getItem("savedResults");
@@ -121,8 +134,10 @@ export default function Home({ allRiders, season }: HomeProps) {
         {page === "riders" && (
           <RiderList
             riderList={riders}
+            guestRiders={guestRiders}
             handleRemoveRider={handleRemoveRider}
             handleResetAllRiders={handleResetAllRiders}
+            handleAddRider={handleAddRider}
           />
         )}
         {page === "entrants" && (

@@ -28,6 +28,7 @@ export interface Rider {
   birthDate: string;
   yearsOld: number;
   id: string;
+  riderType: string;
 }
 
 export interface SelectedRider {

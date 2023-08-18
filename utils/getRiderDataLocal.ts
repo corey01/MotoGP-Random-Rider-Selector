@@ -1,8 +1,46 @@
 import { Rider } from "@/models/rider";
 import riderData from "../utils/riderData.json";
 
-export function getRiderDataLocal(): Rider[] {
-  const riders = riderData.map((rider) => {
+export interface RiderDataResponse {
+  allRiders: Rider[];
+  standardRiders: Rider[];
+  guestRiders: Rider[];
+}
+
+const guestRiderNames = [
+  ["dani", "pedrosa"],
+  ["stefan", "bradl"],
+  ["danilo", "petrucci"],
+  ["lorenzo", "savadori"],
+  ["michele", "pirro"],
+  ["jonas", "folger"],
+];
+
+const isGuestRider = (surname: string, name: string) => {
+  let value = false;
+
+  const surnameMatch = guestRiderNames.find((val, idx) => {
+    if (val[1] === surname.toLowerCase()) return val;
+  });
+
+  if (surnameMatch?.[0] === name.toLowerCase()) {
+    value = true;
+  }
+
+  return value;
+};
+
+function partition(array: Rider[], isValid: (arg: Rider) => Boolean) {
+  return array.reduce<[Rider[], Rider[]]>(
+    ([pass, fail], elem) => {
+      return isValid(elem) ? [[...pass, elem], fail] : [pass, [...fail, elem]];
+    },
+    [[], []]
+  );
+}
+
+export function getRiderDataLocal(): RiderDataResponse {
+  const allRiders = riderData.map((rider) => {
     const {
       id,
       name,
@@ -37,8 +75,14 @@ export function getRiderDataLocal(): Rider[] {
       birthDate,
       yearsOld,
       id,
+      riderType: isGuestRider(surname, name) ? "guest" : "standard",
     };
   });
 
-  return riders;
+  const [guestRiders, standardRiders] = partition(
+    allRiders,
+    (rider) => rider.riderType === "guest"
+  );
+
+  return { allRiders, guestRiders, standardRiders };
 }
