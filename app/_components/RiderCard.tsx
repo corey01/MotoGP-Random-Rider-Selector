@@ -33,10 +33,22 @@ const RiderCard = ({
     addEvent(rider);
   };
 
-  const displayGuest = !inGuestArray && rider.riderType === "guest";
+  const isGuest = rider.riderType === "guest";
+  const highlightGuest = !inGuestArray && rider.riderType === "guest";
 
   return (
-    <div className={classNames(style.listItem, displayGuest && style.guest)}>
+    <div
+      className={classNames(
+        style.listItem,
+        isGuest && style.guest,
+        highlightGuest && style.highlightGuest
+      )}
+    >
+      <img
+        src={rider.pictures.bike.main || rider.teamPicture}
+        alt=""
+        className={style.bikeImage}
+      />
       <img
         alt=""
         className={style.riderPic__img}
@@ -47,7 +59,7 @@ const RiderCard = ({
       <div className={style.details}>
         <span className={`${motoGP.className} ${style.riderName}`}>
           {rider.name} {rider.surname}{" "}
-          {displayGuest && (
+          {highlightGuest && (
             <>
               <br />
               <span className={style.displayGuestTitle}>(guest)</span>

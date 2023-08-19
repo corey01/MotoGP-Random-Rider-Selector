@@ -9,6 +9,19 @@
   height: 140px;
   align-items: center;
   background-color: #222;
+
+  .bikeImage {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 2em;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 0;
+    opacity: 0.4;
+  }
 }
 
 @media (min-width: 950px) {
@@ -30,6 +43,8 @@
   font-size: 26px;
   color: #fff;
   max-width: 160px;
+  position: static;
+  z-index: 1;
 }
 
 .listItem .riderNumber {
@@ -80,10 +95,16 @@
   height: 35px;
 }
 
-.guest {
+.highlightGuest {
   background-color: rgb(1, 1, 63);
 
   .displayGuestTitle {
     font-size: 0.5em;
+  }
+}
+
+.listItem.guest {
+  .bikeImage {
+    left: 5em !important;
   }
 }

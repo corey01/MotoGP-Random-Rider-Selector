@@ -103,16 +103,18 @@ export default function Home({ allRiders, season }: HomeProps) {
   const pickRiders = () => {
     setLoading(true);
     const tempRidersArray = [...riders];
-    const results = entrants.reduce((acc, entrant, idx) => {
-      const startsWithAmpersand = idx === 0 ? "" : "&";
-      const riderIdx = Math.floor(Math.random() * tempRidersArray.length);
+    const results = entrants
+      .sort(() => Math.random() - 0.5)
+      .reduce((acc, entrant, idx) => {
+        const startsWithAmpersand = idx === 0 ? "" : "&";
+        const riderIdx = Math.floor(Math.random() * tempRidersArray.length);
 
-      const rider = tempRidersArray[riderIdx].id;
+        const rider = tempRidersArray[riderIdx].id;
 
-      tempRidersArray.splice(riderIdx, 1);
+        tempRidersArray.splice(riderIdx, 1);
 
-      return acc + startsWithAmpersand + entrant + "=" + rider;
-    }, "?");
+        return acc + startsWithAmpersand + entrant + "=" + rider;
+      }, "?");
 
     const resultObject = {
       generatedDate: Date.now(),

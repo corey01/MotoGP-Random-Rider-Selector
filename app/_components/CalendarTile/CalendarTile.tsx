@@ -13,23 +13,30 @@ import { Expanded } from "./Expanded";
 const Tile = ({
   race,
   isCurrent,
-  isActive = false,
-}: {
+}: // isActive = false,
+{
   race: Race;
   isCurrent: boolean;
-  isActive: boolean;
+  // isActive: boolean;
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams()!;
-  const [expanded, setExpanded] = useState(() => isActive);
+  // const [expanded, setExpanded] = useState(() => isActive);
+  const [expanded, setExpanded] = useState(false);
 
   const ref = useRef<HTMLDivElement>(null);
 
+  // useEffect(() => {
+  //   if (isActive) {
+  //     ref.current?.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // }, [isActive]);
+
   useEffect(() => {
-    if (isActive) {
+    if (expanded) {
       ref.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [isActive]);
+  }, [expanded]);
 
   const sprint = race.broadcasts?.find(
     ({ name, kind, eventName }) =>
@@ -52,17 +59,18 @@ const Tile = ({
   );
 
   const handleToggle = () => {
-    setExpanded((cur) => {
-      if (!cur) {
-        router.push(
-          "/calendar" + "?" + createQueryString("active", race.name),
-          { scroll: false }
-        );
-      } else {
-        router.push("/calendar", { scroll: false });
-      }
-      return !cur;
-    });
+    setExpanded((cur) => !cur);
+    // setExpanded((cur) => {
+    //   if (!cur) {
+    //     router.push(
+    //       "/calendar" + "?" + createQueryString("active", race.name),
+    //       { scroll: false }
+    //     );
+    //   } else {
+    //     router.push("/calendar", { scroll: false });
+    //   }
+    //   return !cur;
+    // });
   };
 
   return (

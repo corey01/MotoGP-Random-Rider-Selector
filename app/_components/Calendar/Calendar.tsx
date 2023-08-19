@@ -17,9 +17,9 @@ export function Calendar({
   races: Race[];
   currentRaceName?: string;
 }) {
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
-  const active = searchParams.get("active");
+  // const active = searchParams.get("active");
 
   return (
     <div className={style.Calendar}>
@@ -33,7 +33,7 @@ export function Calendar({
             key={race.name}
             race={race}
             isCurrent={race.name === currentRaceName}
-            isActive={!!active && active === race.name}
+            // isActive={!!active && active === race.name}
           />
         );
       })}

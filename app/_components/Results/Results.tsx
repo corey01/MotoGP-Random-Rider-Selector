@@ -17,7 +17,7 @@ const Results = ({ handleReset, selectedRiders }: ResultsProps) => {
 
     try {
       navigator.share({
-        title: "Check out who you're backing for the next GP race!",
+        title: "Check out who you're backing for the Grand Prix!",
         url,
       });
     } catch (error) {
@@ -29,6 +29,8 @@ const Results = ({ handleReset, selectedRiders }: ResultsProps) => {
     handleReset();
     setReturnModalOpen(false);
   };
+
+  console.log(selectedRiders);
 
   return (
     <div className={style.results}>
