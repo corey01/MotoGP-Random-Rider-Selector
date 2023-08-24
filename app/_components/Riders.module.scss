@@ -9,6 +9,7 @@
   height: 140px;
   align-items: center;
   background-color: #222;
+  position: relative;
 
   .bikeImage {
     position: absolute;
@@ -21,6 +22,10 @@
     object-fit: contain;
     z-index: 0;
     opacity: 0.4;
+
+    &.altBikeImage {
+      left: 5em !important;
+    }
   }
 }
 
@@ -103,8 +108,38 @@
   }
 }
 
-.listItem.guest {
-  .bikeImage {
-    left: 5em !important;
+.resultsCard {
+  display: block;
+
+  .entrantTitle {
+    font-size: 28px;
+  }
+
+  .riderName {
+    font-size: 26px;
+    line-height: 22px;
+  }
+
+  .details {
+    margin-right: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .entrantPic__img {
+    height: 140px;
+    width: 100px;
+    position: absolute;
+    overflow: hidden;
+    object-fit: cover;
+    top: 0;
+    right: 0;
+  }
+
+  .riderNumber {
+    position: relative;
+    inset: 0;
   }
 }

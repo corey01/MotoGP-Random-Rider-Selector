@@ -3,6 +3,8 @@ import ResultsCard from "./ResultsCard";
 import style from "./ResultsCard.module.scss";
 import { useState } from "react";
 import ReturnModal from "../Modals/ReturnModal";
+import RiderCard from "../RiderCard";
+import ResultsRiderCard from "./ResultsRiderCard";
 
 interface ResultsProps {
   handleReset: () => void;
@@ -35,7 +37,10 @@ const Results = ({ handleReset, selectedRiders }: ResultsProps) => {
   return (
     <div className={style.results}>
       {selectedRiders.map((selected) => (
-        <ResultsCard selected={selected} key={`res-${selected.rider.id}`} />
+        <ResultsRiderCard
+          key={`res-${selected.rider.id}`}
+          selected={selected}
+        />
       ))}
       <button className={style.shareButton} onClick={generateShareLink}>
         <p>Share Results</p>

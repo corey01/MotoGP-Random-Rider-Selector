@@ -47,7 +47,10 @@ const RiderCard = ({
       <img
         src={rider.pictures.bike.main || rider.teamPicture}
         alt=""
-        className={style.bikeImage}
+        className={classNames(
+          style.bikeImage,
+          !rider.pictures.bike.main && style.altBikeImage
+        )}
       />
       <img
         alt=""
