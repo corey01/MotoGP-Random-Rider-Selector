@@ -29,10 +29,13 @@ const RiderList = ({
       Reset Rider List
     </button>
     <p className={style.resetInstruct}>
+      Note: Resetting the rider list will restore all removed riders.
+    </p>
+    {/* <p className={style.resetInstruct}>
       Note: Resetting the rider list will restore all removed riders, and remove
       any guest riders.
-    </p>
-    <hr />
+    </p> */}
+    {/* <hr />
     <h3 className={style.guestTitle}>Guest Riders</h3>
     {guestRiders.sort(sortRidersByNumber).map((rider) => (
       <div key={rider.id}>
@@ -44,7 +47,7 @@ const RiderList = ({
           inGuestArray={true}
         />
       </div>
-    ))}
+    ))} */}
   </div>
 );
 

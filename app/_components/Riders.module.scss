@@ -10,6 +10,8 @@
   align-items: center;
   background-color: #222;
   position: relative;
+  width: 100%;
+
 
   .bikeImage {
     position: absolute;
@@ -29,6 +31,11 @@
   }
 }
 
+@media (min-width: 600px) {
+  .listItem {
+    width: 320px;
+  }
+}
 @media (min-width: 950px) {
   .listItem {
     width: 300px;

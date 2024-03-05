@@ -60,17 +60,6 @@ const Tile = ({
 
   const handleToggle = () => {
     setExpanded((cur) => !cur);
-    // setExpanded((cur) => {
-    //   if (!cur) {
-    //     router.push(
-    //       "/calendar" + "?" + createQueryString("active", race.name),
-    //       { scroll: false }
-    //     );
-    //   } else {
-    //     router.push("/calendar", { scroll: false });
-    //   }
-    //   return !cur;
-    // });
   };
 
   return (
@@ -96,12 +85,12 @@ const Tile = ({
           <p>
             <span className={style.innerTitle}>Sprint Race</span>
             <br />
-            {localRaceTime(sprint?.date_start!)}
+            {localRaceTime(sprint?.date_start!, race.country)}
           </p>
           <p>
             <span className={style.innerTitle}>Main Race</span>
             <br />
-            {localRaceTime(gpRace?.date_start!)}
+            {localRaceTime(gpRace?.date_start!, race.country)}
           </p>
           <p className={style.seeMore} onClick={handleToggle}>
             {expanded ? "See less -" : "See full lineup +"}

@@ -22,7 +22,7 @@ const RiderCard = ({
   const getImageUrl = () => {
     const endUrl = rider.pictures.profile.main.split("/");
 
-    return require(`/public/riders/${
+    return require(`/public/riders/24/${
       endUrl[endUrl.length - 1]
     }?resize&size=500&webp`);
   };
@@ -38,11 +38,11 @@ const RiderCard = ({
 
   return (
     <div
-      className={classNames(
+      className={`${classNames(
         style.listItem,
         isGuest && style.guest,
-        highlightGuest && style.highlightGuest
-      )}
+        highlightGuest && style.highlightGuest,
+      )} rider-${rider.name}-${rider.surname}` }
     >
       <img
         src={rider.pictures.bike.main || rider.teamPicture}

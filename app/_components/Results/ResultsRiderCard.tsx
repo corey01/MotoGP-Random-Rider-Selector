@@ -14,7 +14,7 @@ const ResultsRiderCard = ({
   const getImageUrl = () => {
     const endUrl = rider.pictures.profile.main.split("/");
 
-    return require(`/public/riders/${
+    return require(`/public/riders/24/${
       endUrl[endUrl.length - 1]
     }?resize&size=500&webp`);
   };
