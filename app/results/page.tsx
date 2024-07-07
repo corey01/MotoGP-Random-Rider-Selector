@@ -52,10 +52,10 @@ const ResultsPage = () => {
       return;
     }
 
-    const riders = JSON.parse(savedRiderList) as Rider[];
+    const riders = JSON.parse(savedRiderList);
     const previousResults = JSON.parse(previousResultsJson)
     const currentResults = resultsData.map(({rider}) => rider.id);
-    const remainingRiders = riders.filter(({ id } )=> !currentResults.includes(id));
+    const remainingRiders = (riders.riders as Rider[]).filter(({ id } )=> !currentResults.includes(id));
 
     const riderIdx = Math.floor(Math.random() * remainingRiders.length);
     const selectedRider = remainingRiders[riderIdx].id;
