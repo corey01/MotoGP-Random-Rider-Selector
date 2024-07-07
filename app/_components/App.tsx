@@ -52,6 +52,7 @@ export default function Home({ allRiders, season }: HomeProps) {
     setRiders(allRiders.standardRiders);
     setGuestRiders(allRiders.guestRiders);
     localStorage.removeItem('riderList');
+    window.scroll({top: 0, left: 0, behavior: 'smooth' })
   };
 
   const handleRemoveEntrant = (entrantToRemove: string) => {
