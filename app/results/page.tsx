@@ -44,7 +44,32 @@ const ResultsPage = () => {
     router.push("/");
   };
 
-  return <Results handleReset={handleReset} selectedRiders={resultsData} />;
+  const handleAddEntrantAndGenerate = (entrant: string) => {
+    const savedRiderList = localStorage.getItem('riderList');
+    const previousResultsJson = localStorage.getItem('savedResults');
+
+    if(!savedRiderList || !previousResultsJson){
+      return;
+    }
+
+    const riders = JSON.parse(savedRiderList) as Rider[];
+    const previousResults = JSON.parse(previousResultsJson)
+    const currentResults = resultsData.map(({rider}) => rider.id);
+    const remainingRiders = riders.filter(({ id } )=> !currentResults.includes(id));
+
+    const riderIdx = Math.floor(Math.random() * remainingRiders.length);
+    const selectedRider = remainingRiders[riderIdx].id;
+
+    const newResults = previousResults.results + `&${entrant}=${selectedRider}`
+    const resultObject = {
+      generatedDate: Date.now(),
+      results: newResults
+    };
+    localStorage.setItem("savedResults", JSON.stringify(resultObject));
+    router.push(`/results/${newResults}`);
+  }
+
+  return <Results handleReset={handleReset} selectedRiders={resultsData} addEntrant={handleAddEntrantAndGenerate} />;
 };
 
 export default ResultsPage;

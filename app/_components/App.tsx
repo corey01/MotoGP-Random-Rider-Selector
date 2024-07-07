@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import RiderList from "./RiderList";
 import Entrants from "./Entrants/Entrants";
-import { Rider } from "@/models/rider";
+import { Rider, SelectedRider } from "@/models/rider";
 import { defaultEntrants } from "@/utils/entrants";
 import { Season } from "@/models/race";
 import NextRace from "./NextRace/NextRace";
@@ -51,6 +51,7 @@ export default function Home({ allRiders, season }: HomeProps) {
   const handleResetAllRiders = () => {
     setRiders(allRiders.standardRiders);
     setGuestRiders(allRiders.guestRiders);
+    localStorage.removeItem('riderList');
   };
 
   const handleRemoveEntrant = (entrantToRemove: string) => {
@@ -78,6 +79,7 @@ export default function Home({ allRiders, season }: HomeProps) {
 
   const handleStorage = useCallback(() => {
     const savedResults = localStorage.getItem("savedResults");
+    const savedRiderList = localStorage.getItem('riderList');
 
     if (savedResults) {
       setLoading(true);
@@ -94,6 +96,10 @@ export default function Home({ allRiders, season }: HomeProps) {
         }
       }
     }
+
+    if(!savedResults && savedRiderList) {
+      setRiders(JSON.parse(savedRiderList))
+    }
   }, [router]);
 
   useEffect(() => {
@@ -103,6 +109,7 @@ export default function Home({ allRiders, season }: HomeProps) {
   const pickRiders = () => {
     setLoading(true);
     const tempRidersArray = [...riders];
+    localStorage.setItem('riderList', JSON.stringify(riders));
     const results = entrants
       .sort(() => Math.random() - 0.5)
       .reduce((acc, entrant, idx) => {

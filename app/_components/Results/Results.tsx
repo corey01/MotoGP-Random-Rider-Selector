@@ -5,14 +5,17 @@ import { useState } from "react";
 import ReturnModal from "../Modals/ReturnModal";
 import RiderCard from "../RiderCard";
 import ResultsRiderCard from "./ResultsRiderCard";
+import AddEntrantModal from "../Modals/AddEntrantModal";
 
 interface ResultsProps {
   handleReset: () => void;
   selectedRiders: SelectedRider[];
+  addEntrant: (name: string) => void;
 }
 
-const Results = ({ handleReset, selectedRiders }: ResultsProps) => {
+const Results = ({ handleReset, selectedRiders, addEntrant }: ResultsProps) => {
   const [returnModalOpen, setReturnModalOpen] = useState(false);
+  const [addEntrantModalOpen, setEntrantModalOpen] = useState(false);
 
   const generateShareLink = () => {
     const url = window.location.href;
@@ -30,9 +33,14 @@ const Results = ({ handleReset, selectedRiders }: ResultsProps) => {
   const handleResetEvFromModal = () => {
     handleReset();
     setReturnModalOpen(false);
+    setEntrantModalOpen(false);
   };
 
-  console.log(selectedRiders);
+  const handleAddEntrantFromModal = (entrantName: string) => {
+    addEntrant(entrantName);
+    setEntrantModalOpen(false);
+  }
+
 
   return (
     <div className={style.results}>
@@ -58,6 +66,17 @@ const Results = ({ handleReset, selectedRiders }: ResultsProps) => {
         isOpen={returnModalOpen}
         handleClose={() => setReturnModalOpen(false)}
       />
+      <AddEntrantModal
+        confirmAction={handleAddEntrantFromModal}
+        isOpen={addEntrantModalOpen}
+        handleClose={() => setEntrantModalOpen(false)}
+      />
+      <p>
+        Forgotten anyone?
+      </p>
+      <button onClick={() => setEntrantModalOpen(true)} className="pickButton">
+        Add Entrant
+      </button>
     </div>
   );
 };
