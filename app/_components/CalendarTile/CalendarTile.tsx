@@ -97,13 +97,16 @@ const Tile = ({
           </p>
         </div>
         <div className={style.imageContainer}>
-          <Image
+          {race.circuit.simpleCircuitPath && (
+
+            <Image
             src={race.circuit.simpleCircuitPath}
             alt=""
             width={200}
             height={200}
             className={style.track}
-          />
+            />
+          )}
         </div>
       </div>
 

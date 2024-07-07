@@ -3,9 +3,9 @@
     "name": "Qatar Airways Grand Prix of Qatar",
     "country": "QA",
     "url": "Qatar",
-    "status": "NOT-STARTED",
+    "status": "FINISHED",
     "date_start": "2024-03-08T08:00:00+03:00",
-    "date_end": "2024-03-10T20:00:00+03:00",
+    "date_end": "2024-03-10T20:01:00+03:00",
     "circuit": {
       "circuitName": "Lusail International Circuit",
       "circuitCountry": "Qatar",
@@ -22,7 +22,7 @@
         "date_end": "2024-03-08T14:35:00+0300",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -31,7 +31,7 @@
         "date_end": "2024-03-08T15:30:00+0300",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -40,61 +40,61 @@
         "date_end": "2024-03-08T16:30:00+0300",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
         "name": "Practice Nr. 1",
         "date_start": "2024-03-08T18:15:00+0300",
-        "date_end": "2024-03-08T18:50:00+0300",
+        "date_end": "2024-03-08T19:10:00+0300",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
         "name": "Practice Nr. 1",
-        "date_start": "2024-03-08T19:05:00+0300",
-        "date_end": "2024-03-08T19:45:00+0300",
+        "date_start": "2024-03-08T19:20:00+0300",
+        "date_end": "2024-03-08T20:00:00+0300",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "MotoGP",
-        "name": "Practice",
-        "date_start": "2024-03-08T20:00:00+0300",
-        "date_end": "2024-03-08T21:00:00+0300",
-        "type": "SESSION",
-        "kind": "PRACTICE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto3",
-        "name": "Practice Nr. 2",
-        "date_start": "2024-03-09T12:30:00+0300",
-        "date_end": "2024-03-09T13:00:00+0300",
-        "type": "SESSION",
-        "kind": "PRACTICE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto2",
-        "name": "Practice Nr. 2",
-        "date_start": "2024-03-09T13:15:00+0300",
-        "date_end": "2024-03-09T13:45:00+0300",
-        "type": "SESSION",
-        "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
         "name": "Free Practice Nr. 2",
-        "date_start": "2024-03-09T14:00:00+0300",
-        "date_end": "2024-03-09T14:30:00+0300",
+        "date_start": "2024-03-08T20:10:00+0300",
+        "date_end": "2024-03-08T21:10:00+0300",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "Moto3",
+        "name": "Practice Nr. 2",
+        "date_start": "2024-03-09T12:10:00+0300",
+        "date_end": "2024-03-09T12:40:00+0300",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "Moto2",
+        "name": "Practice Nr. 2",
+        "date_start": "2024-03-09T12:55:00+0300",
+        "date_end": "2024-03-09T13:25:00+0300",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoGP",
+        "name": "Practice",
+        "date_start": "2024-03-09T13:40:00+0300",
+        "date_end": "2024-03-09T14:25:00+0300",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -103,7 +103,7 @@
         "date_end": "2024-03-09T14:55:00+0300",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -112,7 +112,7 @@
         "date_end": "2024-03-09T15:20:00+0300",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -121,7 +121,7 @@
         "date_end": "2024-03-09T17:05:00+0300",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -130,7 +130,7 @@
         "date_end": "2024-03-09T17:30:00+0300",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -139,7 +139,7 @@
         "date_end": "2024-03-09T18:00:00+0300",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -148,16 +148,16 @@
         "date_end": "2024-03-09T18:25:00+0300",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-03-09T19:00:00+0300",
-        "date_end": "2024-03-09T19:00:00+0300",
+        "date_end": "2024-03-09T19:45:00+0300",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -166,53 +166,62 @@
         "date_end": "2024-03-10T15:50:00+0300",
         "type": "SESSION",
         "kind": "WARM_UP",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
         "name": "Race",
         "date_start": "2024-03-10T17:00:00+0300",
-        "date_end": "2024-03-10T17:00:00+0300",
+        "date_end": "2024-03-10T17:35:00+0300",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
         "name": "Race",
         "date_start": "2024-03-10T18:15:00+0300",
-        "date_end": "2024-03-10T18:15:00+0300",
+        "date_end": "2024-03-10T18:55:00+0300",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
         "name": "Race",
         "date_start": "2024-03-10T20:00:00+0300",
-        "date_end": "2024-03-10T20:00:00+0300",
+        "date_end": "2024-03-10T21:15:00+0300",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       }
     ]
   },
   {
-    "name": "Grande Prémio de Portugal",
+    "name": "Grande PrÃ©mio Tissot de Portugal",
     "country": "PT",
     "url": "Portugal",
-    "status": "NOT-STARTED",
+    "status": "FINISHED",
     "date_start": "2024-03-22T08:00:00+00:00",
     "date_end": "2024-03-24T20:00:00+00:00",
     "circuit": {
-      "circuitName": "Autódromo Internacional do Algarve",
+      "circuitName": "AutÃ³dromo Internacional do Algarve",
       "circuitCountry": "Portugal",
-      "city": "Portimão",
+      "city": "PortimÃ£o",
       "length": { "miles": 2.85, "kilometers": 4.59 },
       "simpleCircuitPath": "https://photos.motogp.com/events-admin/0/b/0b5cf829-21cf-48dd-a324-1465fc504c24/simple/por2.svg",
       "fullCircuitPath": "https://photos.motogp.com/events-admin/0/b/0b5cf829-21cf-48dd-a324-1465fc504c24/simple/por2.svg"
     },
     "broadcasts": [
+      {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 1",
+        "date_start": "2024-03-22T08:30:00+0000",
+        "date_end": "2024-03-22T08:45:00+0000",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
+      },
       {
         "eventName": "Moto3",
         "name": "Free Practice",
@@ -220,7 +229,7 @@
         "date_end": "2024-03-22T09:35:00+0000",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -229,7 +238,7 @@
         "date_end": "2024-03-22T10:30:00+0000",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -238,7 +247,16 @@
         "date_end": "2024-03-22T11:30:00+0000",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 2",
+        "date_start": "2024-03-22T12:35:00+0000",
+        "date_end": "2024-03-22T12:50:00+0000",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -247,7 +265,7 @@
         "date_end": "2024-03-22T13:50:00+0000",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -256,7 +274,7 @@
         "date_end": "2024-03-22T14:45:00+0000",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -265,7 +283,25 @@
         "date_end": "2024-03-22T16:00:00+0000",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 1",
+        "date_start": "2024-03-22T16:15:00+0000",
+        "date_end": "2024-03-22T16:25:00+0000",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 2 ",
+        "date_start": "2024-03-22T16:35:00+0000",
+        "date_end": "2024-03-22T16:45:00+0000",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -274,7 +310,7 @@
         "date_end": "2024-03-23T09:10:00+0000",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -283,7 +319,7 @@
         "date_end": "2024-03-23T09:55:00+0000",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -292,70 +328,88 @@
         "date_end": "2024-03-23T10:40:00+0000",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-03-23T10:50:00+0000",
         "date_end": "2024-03-23T11:05:00+0000",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-03-23T11:15:00+0000",
         "date_end": "2024-03-23T11:30:00+0000",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.1",
+        "date_start": "2024-03-23T12:15:00+0000",
+        "date_end": "2024-03-23T12:15:00+0000",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-03-23T12:50:00+0000",
         "date_end": "2024-03-23T13:05:00+0000",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-03-23T13:15:00+0000",
         "date_end": "2024-03-23T13:30:00+0000",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-03-23T13:45:00+0000",
         "date_end": "2024-03-23T14:00:00+0000",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-03-23T14:10:00+0000",
         "date_end": "2024-03-23T14:25:00+0000",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-03-23T15:00:00+0000",
-        "date_end": "2024-03-23T15:00:00+0000",
+        "date_end": "2024-03-23T16:00:00+0000",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.2",
+        "date_start": "2024-03-23T16:10:00+0000",
+        "date_end": "2024-03-23T17:00:00+0000",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -364,7 +418,7 @@
         "date_end": "2024-03-24T09:50:00+0000",
         "type": "SESSION",
         "kind": "WARM_UP",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -373,7 +427,7 @@
         "date_end": "2024-03-24T11:00:00+0000",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -382,7 +436,7 @@
         "date_end": "2024-03-24T12:15:00+0000",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -391,7 +445,7 @@
         "date_end": "2024-03-24T14:00:00+0000",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       }
     ]
   },
@@ -399,9 +453,9 @@
     "name": "Red Bull Grand Prix of The Americas",
     "country": "US",
     "url": "Americas",
-    "status": "NOT-STARTED",
+    "status": "FINISHED",
     "date_start": "2024-04-12T08:00:00-05:00",
-    "date_end": "2024-04-14T18:00:00-05:00",
+    "date_end": "2024-04-14T16:30:00-05:00",
     "circuit": {
       "circuitName": "Circuit Of The Americas",
       "circuitCountry": "United States",
@@ -418,7 +472,7 @@
         "date_end": "2024-04-12T09:35:00-0500",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -427,7 +481,7 @@
         "date_end": "2024-04-12T10:30:00-0500",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -436,7 +490,7 @@
         "date_end": "2024-04-12T11:30:00-0500",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -445,7 +499,7 @@
         "date_end": "2024-04-12T13:50:00-0500",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -454,7 +508,7 @@
         "date_end": "2024-04-12T14:45:00-0500",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -463,7 +517,7 @@
         "date_end": "2024-04-12T16:00:00-0500",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -472,7 +526,7 @@
         "date_end": "2024-04-13T09:10:00-0500",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -481,7 +535,7 @@
         "date_end": "2024-04-13T09:55:00-0500",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -490,70 +544,70 @@
         "date_end": "2024-04-13T10:40:00-0500",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-04-13T10:50:00-0500",
         "date_end": "2024-04-13T11:05:00-0500",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-04-13T11:15:00-0500",
         "date_end": "2024-04-13T11:30:00-0500",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-04-13T12:50:00-0500",
         "date_end": "2024-04-13T13:05:00-0500",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-04-13T13:15:00-0500",
         "date_end": "2024-04-13T13:30:00-0500",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-04-13T13:45:00-0500",
         "date_end": "2024-04-13T14:00:00-0500",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-04-13T14:10:00-0500",
         "date_end": "2024-04-13T14:25:00-0500",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-04-13T15:00:00-0500",
         "date_end": "2024-04-13T15:00:00-0500",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -562,7 +616,7 @@
         "date_end": "2024-04-14T09:50:00-0500",
         "type": "SESSION",
         "kind": "WARM_UP",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -571,7 +625,7 @@
         "date_end": "2024-04-14T11:00:00-0500",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -580,7 +634,7 @@
         "date_end": "2024-04-14T12:15:00-0500",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -589,19 +643,19 @@
         "date_end": "2024-04-14T14:00:00-0500",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       }
     ]
   },
   {
-    "name": "Gran Premio de España",
+    "name": "Gran Premio Estrella Galicia 0,0 de EspaÃ±a",
     "country": "ES",
-    "url": "España",
-    "status": "NOT-STARTED",
+    "url": "EspaÃ±a",
+    "status": "FINISHED",
     "date_start": "2024-04-26T08:00:00+02:00",
-    "date_end": "2024-04-28T18:00:00+02:00",
+    "date_end": "2024-04-28T20:00:00+02:00",
     "circuit": {
-      "circuitName": "Circuito de Jerez - Ángel Nieto",
+      "circuitName": "Circuito de Jerez - Ãngel Nieto",
       "circuitCountry": "Spain",
       "city": "Jerez de la Frontera",
       "length": { "miles": 2.75, "kilometers": 4.42 },
@@ -616,7 +670,7 @@
         "date_end": "2024-04-26T09:35:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -625,7 +679,7 @@
         "date_end": "2024-04-26T10:30:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -634,7 +688,7 @@
         "date_end": "2024-04-26T11:30:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -643,7 +697,7 @@
         "date_end": "2024-04-26T13:50:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -652,7 +706,7 @@
         "date_end": "2024-04-26T14:45:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -661,7 +715,7 @@
         "date_end": "2024-04-26T16:00:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -670,7 +724,7 @@
         "date_end": "2024-04-27T09:10:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -679,7 +733,7 @@
         "date_end": "2024-04-27T09:55:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -688,7 +742,7 @@
         "date_end": "2024-04-27T10:40:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -697,7 +751,7 @@
         "date_end": "2024-04-27T11:05:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -706,7 +760,7 @@
         "date_end": "2024-04-27T11:30:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -715,7 +769,7 @@
         "date_end": "2024-04-27T13:05:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -724,7 +778,7 @@
         "date_end": "2024-04-27T13:30:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -733,7 +787,7 @@
         "date_end": "2024-04-27T14:00:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -742,16 +796,16 @@
         "date_end": "2024-04-27T14:25:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-04-27T15:00:00+0200",
         "date_end": "2024-04-27T15:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -760,7 +814,7 @@
         "date_end": "2024-04-28T09:50:00+0200",
         "type": "SESSION",
         "kind": "WARM_UP",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -769,7 +823,7 @@
         "date_end": "2024-04-28T11:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -778,7 +832,7 @@
         "date_end": "2024-04-28T12:15:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -787,15 +841,15 @@
         "date_end": "2024-04-28T14:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       }
     ]
   },
   {
-    "name": "Grand Prix de France",
+    "name": "MichelinÂ® Grand Prix de France",
     "country": "FR",
     "url": "France",
-    "status": "NOT-STARTED",
+    "status": "FINISHED",
     "date_start": "2024-05-10T08:00:00+02:00",
     "date_end": "2024-05-12T20:00:00+02:00",
     "circuit": {
@@ -808,13 +862,22 @@
     },
     "broadcasts": [
       {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 1",
+        "date_start": "2024-05-10T08:30:00+0200",
+        "date_end": "2024-05-10T08:45:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
+      },
+      {
         "eventName": "Moto3",
         "name": "Free Practice",
         "date_start": "2024-05-10T09:00:00+0200",
         "date_end": "2024-05-10T09:35:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -823,7 +886,7 @@
         "date_end": "2024-05-10T10:30:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -832,7 +895,16 @@
         "date_end": "2024-05-10T11:30:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 2",
+        "date_start": "2024-05-10T12:45:00+0200",
+        "date_end": "2024-05-10T13:00:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -841,7 +913,7 @@
         "date_end": "2024-05-10T13:50:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -850,7 +922,7 @@
         "date_end": "2024-05-10T14:45:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -859,7 +931,25 @@
         "date_end": "2024-05-10T16:00:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 1",
+        "date_start": "2024-05-10T17:05:00+0200",
+        "date_end": "2024-05-10T17:15:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 2",
+        "date_start": "2024-05-10T17:25:00+0200",
+        "date_end": "2024-05-10T17:35:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -868,7 +958,7 @@
         "date_end": "2024-05-11T09:10:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -877,7 +967,7 @@
         "date_end": "2024-05-11T09:55:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -886,70 +976,88 @@
         "date_end": "2024-05-11T10:40:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-05-11T10:50:00+0200",
         "date_end": "2024-05-11T11:05:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-05-11T11:15:00+0200",
         "date_end": "2024-05-11T11:30:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.1",
+        "date_start": "2024-05-11T12:15:00+0200",
+        "date_end": "2024-05-11T12:15:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-05-11T12:50:00+0200",
         "date_end": "2024-05-11T13:05:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-05-11T13:15:00+0200",
         "date_end": "2024-05-11T13:30:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-05-11T13:45:00+0200",
         "date_end": "2024-05-11T14:00:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-05-11T14:10:00+0200",
         "date_end": "2024-05-11T14:25:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-05-11T15:00:00+0200",
         "date_end": "2024-05-11T15:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.2",
+        "date_start": "2024-05-11T16:10:00+0200",
+        "date_end": "2024-05-11T16:10:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -958,7 +1066,7 @@
         "date_end": "2024-05-12T09:50:00+0200",
         "type": "SESSION",
         "kind": "WARM_UP",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -967,7 +1075,7 @@
         "date_end": "2024-05-12T11:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -976,7 +1084,7 @@
         "date_end": "2024-05-12T12:15:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -985,7 +1093,7 @@
         "date_end": "2024-05-12T14:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       }
     ]
   },
@@ -993,7 +1101,7 @@
     "name": "Gran Premi Monster Energy de Catalunya",
     "country": "ES",
     "url": "Catalunya",
-    "status": "NOT-STARTED",
+    "status": "FINISHED",
     "date_start": "2024-05-24T08:00:00+02:00",
     "date_end": "2024-05-26T20:00:00+02:00",
     "circuit": {
@@ -1006,13 +1114,22 @@
     },
     "broadcasts": [
       {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 1",
+        "date_start": "2024-05-24T08:30:00+0200",
+        "date_end": "2024-05-24T08:45:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
+      },
+      {
         "eventName": "Moto3",
         "name": "Free Practice",
         "date_start": "2024-05-24T09:00:00+0200",
         "date_end": "2024-05-24T09:35:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1021,7 +1138,7 @@
         "date_end": "2024-05-24T10:30:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1030,7 +1147,16 @@
         "date_end": "2024-05-24T11:30:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 2",
+        "date_start": "2024-05-24T12:25:00+0200",
+        "date_end": "2024-05-24T12:40:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -1039,7 +1165,7 @@
         "date_end": "2024-05-24T13:50:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1048,7 +1174,7 @@
         "date_end": "2024-05-24T14:45:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1057,7 +1183,25 @@
         "date_end": "2024-05-24T16:00:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 1",
+        "date_start": "2024-05-24T16:15:00+0200",
+        "date_end": "2024-05-24T16:25:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 2",
+        "date_start": "2024-05-24T16:35:00+0200",
+        "date_end": "2024-05-24T16:45:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -1066,7 +1210,7 @@
         "date_end": "2024-05-25T09:10:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1075,7 +1219,7 @@
         "date_end": "2024-05-25T09:55:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1084,70 +1228,88 @@
         "date_end": "2024-05-25T10:40:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-05-25T10:50:00+0200",
         "date_end": "2024-05-25T11:05:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-05-25T11:15:00+0200",
         "date_end": "2024-05-25T11:30:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.1",
+        "date_start": "2024-05-25T12:15:00+0200",
+        "date_end": "2024-05-25T12:15:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-05-25T12:50:00+0200",
         "date_end": "2024-05-25T13:05:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-05-25T13:15:00+0200",
         "date_end": "2024-05-25T13:30:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-05-25T13:45:00+0200",
         "date_end": "2024-05-25T14:00:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-05-25T14:10:00+0200",
         "date_end": "2024-05-25T14:25:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-05-25T15:00:00+0200",
         "date_end": "2024-05-25T15:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.2",
+        "date_start": "2024-05-25T16:10:00+0200",
+        "date_end": "2024-05-25T16:10:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1156,7 +1318,7 @@
         "date_end": "2024-05-26T09:50:00+0200",
         "type": "SESSION",
         "kind": "WARM_UP",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -1165,7 +1327,7 @@
         "date_end": "2024-05-26T11:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1174,7 +1336,7 @@
         "date_end": "2024-05-26T12:15:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1183,15 +1345,15 @@
         "date_end": "2024-05-26T14:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       }
     ]
   },
   {
-    "name": "Gran Premio d'Italia",
+    "name": "Gran Premio dâ€™Italia Brembo",
     "country": "IT",
     "url": "Italy",
-    "status": "NOT-STARTED",
+    "status": "FINISHED",
     "date_start": "2024-05-31T08:00:00+02:00",
     "date_end": "2024-06-02T20:00:00+02:00",
     "circuit": {
@@ -1204,13 +1366,22 @@
     },
     "broadcasts": [
       {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 1",
+        "date_start": "2024-05-31T08:30:00+0200",
+        "date_end": "2024-05-31T08:45:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
+      },
+      {
         "eventName": "Moto3",
         "name": "Free Practice",
         "date_start": "2024-05-31T09:00:00+0200",
         "date_end": "2024-05-31T09:35:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1219,7 +1390,7 @@
         "date_end": "2024-05-31T10:30:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1228,7 +1399,16 @@
         "date_end": "2024-05-31T11:30:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 2",
+        "date_start": "2024-05-31T12:40:00+0200",
+        "date_end": "2024-05-31T12:55:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -1237,7 +1417,7 @@
         "date_end": "2024-05-31T13:50:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1246,7 +1426,7 @@
         "date_end": "2024-05-31T14:45:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1255,7 +1435,25 @@
         "date_end": "2024-05-31T16:00:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 1",
+        "date_start": "2024-05-31T17:05:00+0200",
+        "date_end": "2024-05-31T17:15:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 2",
+        "date_start": "2024-05-31T17:25:00+0200",
+        "date_end": "2024-05-31T17:35:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -1264,7 +1462,7 @@
         "date_end": "2024-06-01T09:10:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1273,7 +1471,7 @@
         "date_end": "2024-06-01T09:55:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1282,70 +1480,88 @@
         "date_end": "2024-06-01T10:40:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-06-01T10:50:00+0200",
         "date_end": "2024-06-01T11:05:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-06-01T11:15:00+0200",
         "date_end": "2024-06-01T11:30:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-06-01T12:50:00+0200",
         "date_end": "2024-06-01T13:05:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-06-01T13:15:00+0200",
         "date_end": "2024-06-01T13:30:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-06-01T13:45:00+0200",
         "date_end": "2024-06-01T14:00:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-06-01T14:10:00+0200",
         "date_end": "2024-06-01T14:25:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-06-01T15:00:00+0200",
         "date_end": "2024-06-01T15:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.2",
+        "date_start": "2024-06-01T16:10:00+0200",
+        "date_end": "2024-06-01T16:10:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.1",
+        "date_start": "2024-06-01T18:40:00+0200",
+        "date_end": "2024-06-01T18:40:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1354,25 +1570,34 @@
         "date_end": "2024-06-02T09:50:00+0200",
         "type": "SESSION",
         "kind": "WARM_UP",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Race",
+        "name": "Race PART 1",
         "date_start": "2024-06-02T11:00:00+0200",
         "date_end": "2024-06-02T11:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "Moto3",
+        "name": "Race PART 2",
+        "date_start": "2024-06-02T11:28:00+0200",
+        "date_end": "2024-06-02T11:28:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
         "name": "Race",
-        "date_start": "2024-06-02T12:15:00+0200",
-        "date_end": "2024-06-02T12:15:00+0200",
+        "date_start": "2024-06-02T12:30:00+0200",
+        "date_end": "2024-06-02T12:30:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1381,205 +1606,7 @@
         "date_end": "2024-06-02T14:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
-      }
-    ]
-  },
-  {
-    "name": "Grand Prix of Kazakhstan",
-    "country": "KZ",
-    "url": "Kazakhstan",
-    "status": "NOT-STARTED",
-    "date_start": "2024-06-14T08:00:00+06:00",
-    "date_end": "2024-06-16T20:00:00+06:00",
-    "circuit": {
-      "circuitName": "Sokol International Racetrack",
-      "circuitCountry": "Kazakhstan",
-      "city": "Almaty",
-      "length": { "miles": 2.79, "kilometers": 4.5 },
-      "simpleCircuitPath": "https://photos.motogp.com/events-admin/b/d/bdec1aa1-1bb7-4b7a-829c-d69af1a198e4/simple/kaz2.svg",
-      "fullCircuitPath": "https://photos.motogp.com/events-admin/b/d/bdec1aa1-1bb7-4b7a-829c-d69af1a198e4/simple/kaz2.svg"
-    },
-    "broadcasts": [
-      {
-        "eventName": "Moto3",
-        "name": "Free Practice",
-        "date_start": "2024-06-14T09:00:00+0600",
-        "date_end": "2024-06-14T09:50:00+0600",
-        "type": "SESSION",
-        "kind": "PRACTICE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto2",
-        "name": "Free Practice",
-        "date_start": "2024-06-14T10:05:00+0600",
-        "date_end": "2024-06-14T11:00:00+0600",
-        "type": "SESSION",
-        "kind": "PRACTICE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "MotoGP",
-        "name": "Free Practice Nr. 1",
-        "date_start": "2024-06-14T11:15:00+0600",
-        "date_end": "2024-06-14T12:25:00+0600",
-        "type": "SESSION",
-        "kind": "PRACTICE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto3",
-        "name": "Practice Nr. 1",
-        "date_start": "2024-06-14T13:15:00+0600",
-        "date_end": "2024-06-14T14:05:00+0600",
-        "type": "SESSION",
-        "kind": "PRACTICE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto2",
-        "name": "Practice Nr. 1",
-        "date_start": "2024-06-14T14:20:00+0600",
-        "date_end": "2024-06-14T15:15:00+0600",
-        "type": "SESSION",
-        "kind": "PRACTICE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "MotoGP",
-        "name": "Practice",
-        "date_start": "2024-06-14T15:30:00+0600",
-        "date_end": "2024-06-14T16:40:00+0600",
-        "type": "SESSION",
-        "kind": "PRACTICE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto3",
-        "name": "Practice Nr. 2",
-        "date_start": "2024-06-15T08:40:00+0600",
-        "date_end": "2024-06-15T09:10:00+0600",
-        "type": "SESSION",
-        "kind": "PRACTICE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto2",
-        "name": "Practice Nr. 2",
-        "date_start": "2024-06-15T09:25:00+0600",
-        "date_end": "2024-06-15T09:55:00+0600",
-        "type": "SESSION",
-        "kind": "PRACTICE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "MotoGP",
-        "name": "Free Practice Nr. 2",
-        "date_start": "2024-06-15T10:10:00+0600",
-        "date_end": "2024-06-15T10:40:00+0600",
-        "type": "SESSION",
-        "kind": "PRACTICE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
-        "date_start": "2024-06-15T10:50:00+0600",
-        "date_end": "2024-06-15T11:05:00+0600",
-        "type": "SESSION",
-        "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
-        "date_start": "2024-06-15T11:15:00+0600",
-        "date_end": "2024-06-15T11:30:00+0600",
-        "type": "SESSION",
-        "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
-        "date_start": "2024-06-15T12:50:00+0600",
-        "date_end": "2024-06-15T13:05:00+0600",
-        "type": "SESSION",
-        "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
-        "date_start": "2024-06-15T13:15:00+0600",
-        "date_end": "2024-06-15T13:30:00+0600",
-        "type": "SESSION",
-        "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
-        "date_start": "2024-06-15T13:45:00+0600",
-        "date_end": "2024-06-15T14:00:00+0600",
-        "type": "SESSION",
-        "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
-        "date_start": "2024-06-15T14:10:00+0600",
-        "date_end": "2024-06-15T14:25:00+0600",
-        "type": "SESSION",
-        "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "MotoGP",
-        "name": "Sprint",
-        "date_start": "2024-06-15T15:00:00+0600",
-        "date_end": "2024-06-15T15:00:00+0600",
-        "type": "SESSION",
-        "kind": "RACE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "MotoGP",
-        "name": "Warm Up",
-        "date_start": "2024-06-16T09:40:00+0600",
-        "date_end": "2024-06-16T09:50:00+0600",
-        "type": "SESSION",
-        "kind": "WARM_UP",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto3",
-        "name": "Race",
-        "date_start": "2024-06-16T11:00:00+0600",
-        "date_end": "2024-06-16T11:00:00+0600",
-        "type": "SESSION",
-        "kind": "RACE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto2",
-        "name": "Race",
-        "date_start": "2024-06-16T12:15:00+0600",
-        "date_end": "2024-06-16T12:15:00+0600",
-        "type": "SESSION",
-        "kind": "RACE",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "MotoGP",
-        "name": "Race",
-        "date_start": "2024-06-16T14:00:00+0600",
-        "date_end": "2024-06-16T14:00:00+0600",
-        "type": "SESSION",
-        "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       }
     ]
   },
@@ -1587,9 +1614,9 @@
     "name": "Motul TT Assen",
     "country": "NL",
     "url": "Netherlands",
-    "status": "NOT-STARTED",
+    "status": "FINISHED",
     "date_start": "2024-06-28T08:00:00+02:00",
-    "date_end": "2024-06-30T20:00:00+02:00",
+    "date_end": "2024-06-30T20:01:00+02:00",
     "circuit": {
       "circuitName": "TT Circuit Assen",
       "circuitCountry": "Netherlands",
@@ -1600,13 +1627,22 @@
     },
     "broadcasts": [
       {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 1",
+        "date_start": "2024-06-28T08:30:00+0200",
+        "date_end": "2024-06-28T08:45:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
+      },
+      {
         "eventName": "Moto3",
         "name": "Free Practice",
         "date_start": "2024-06-28T09:00:00+0200",
         "date_end": "2024-06-28T09:35:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1615,7 +1651,7 @@
         "date_end": "2024-06-28T10:30:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1624,7 +1660,16 @@
         "date_end": "2024-06-28T11:30:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 2",
+        "date_start": "2024-06-28T12:25:00+0200",
+        "date_end": "2024-06-28T12:40:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -1633,7 +1678,7 @@
         "date_end": "2024-06-28T13:50:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1642,7 +1687,7 @@
         "date_end": "2024-06-28T14:45:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1651,7 +1696,25 @@
         "date_end": "2024-06-28T16:00:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 1",
+        "date_start": "2024-06-28T17:05:00+0200",
+        "date_end": "2024-06-28T17:15:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 2",
+        "date_start": "2024-06-28T17:25:00+0200",
+        "date_end": "2024-06-28T17:35:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -1660,7 +1723,7 @@
         "date_end": "2024-06-29T09:10:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1669,7 +1732,7 @@
         "date_end": "2024-06-29T09:55:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1678,70 +1741,88 @@
         "date_end": "2024-06-29T10:40:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-06-29T10:50:00+0200",
         "date_end": "2024-06-29T11:05:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-06-29T11:15:00+0200",
-        "date_end": "2024-06-29T11:30:00+0200",
+        "date_end": "2024-06-29T11:40:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.1",
+        "date_start": "2024-06-29T12:15:00+0200",
+        "date_end": "2024-06-29T12:15:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-06-29T12:50:00+0200",
         "date_end": "2024-06-29T13:05:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-06-29T13:15:00+0200",
         "date_end": "2024-06-29T13:30:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-06-29T13:45:00+0200",
         "date_end": "2024-06-29T14:00:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-06-29T14:10:00+0200",
         "date_end": "2024-06-29T14:25:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-06-29T15:00:00+0200",
         "date_end": "2024-06-29T15:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.2",
+        "date_start": "2024-06-29T16:10:00+0200",
+        "date_end": "2024-06-29T16:10:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1750,7 +1831,7 @@
         "date_end": "2024-06-30T09:50:00+0200",
         "type": "SESSION",
         "kind": "WARM_UP",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -1759,7 +1840,7 @@
         "date_end": "2024-06-30T11:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1768,7 +1849,7 @@
         "date_end": "2024-06-30T12:15:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1777,7 +1858,7 @@
         "date_end": "2024-06-30T14:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       }
     ]
   },
@@ -1785,7 +1866,7 @@
     "name": "Liqui Moly Motorrad Grand Prix Deutschland",
     "country": "DE",
     "url": "Germany",
-    "status": "NOT-STARTED",
+    "status": "CURRENT",
     "date_start": "2024-07-05T08:00:00+02:00",
     "date_end": "2024-07-07T20:00:00+02:00",
     "circuit": {
@@ -1798,13 +1879,22 @@
     },
     "broadcasts": [
       {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 1",
+        "date_start": "2024-07-05T08:30:00+0200",
+        "date_end": "2024-07-05T08:45:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
+      },
+      {
         "eventName": "Moto3",
         "name": "Free Practice",
         "date_start": "2024-07-05T09:00:00+0200",
         "date_end": "2024-07-05T09:35:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1813,7 +1903,7 @@
         "date_end": "2024-07-05T10:30:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1822,7 +1912,16 @@
         "date_end": "2024-07-05T11:30:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 2",
+        "date_start": "2024-07-05T12:45:00+0200",
+        "date_end": "2024-07-05T13:00:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -1831,7 +1930,7 @@
         "date_end": "2024-07-05T13:50:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1840,7 +1939,7 @@
         "date_end": "2024-07-05T14:45:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1849,7 +1948,25 @@
         "date_end": "2024-07-05T16:00:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 1",
+        "date_start": "2024-07-05T17:15:00+0200",
+        "date_end": "2024-07-05T17:45:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 2",
+        "date_start": "2024-07-05T17:55:00+0200",
+        "date_end": "2024-07-05T18:05:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -1858,7 +1975,7 @@
         "date_end": "2024-07-06T09:10:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
@@ -1867,7 +1984,7 @@
         "date_end": "2024-07-06T09:55:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1876,70 +1993,88 @@
         "date_end": "2024-07-06T10:40:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-07-06T10:50:00+0200",
         "date_end": "2024-07-06T11:05:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-07-06T11:15:00+0200",
         "date_end": "2024-07-06T11:30:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.1",
+        "date_start": "2024-07-06T12:15:00+0200",
+        "date_end": "2024-07-06T12:50:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-07-06T12:50:00+0200",
         "date_end": "2024-07-06T13:05:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-07-06T13:15:00+0200",
         "date_end": "2024-07-06T13:30:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-07-06T13:45:00+0200",
-        "date_end": "2024-07-06T14:00:00+0200",
+        "date_end": "2024-07-06T14:05:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
-        "date_start": "2024-07-06T14:10:00+0200",
-        "date_end": "2024-07-06T14:25:00+0200",
+        "name": "Qualifying Nr. 2",
+        "date_start": "2024-07-06T14:15:00+0200",
+        "date_end": "2024-07-06T14:29:00+0200",
         "type": "SESSION",
         "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-07-06T15:00:00+0200",
         "date_end": "2024-07-06T15:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.2",
+        "date_start": "2024-07-06T16:10:00+0200",
+        "date_end": "2024-07-06T16:10:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "FINISHED"
       },
       {
         "eventName": "MotoGP",
@@ -1948,7 +2083,7 @@
         "date_end": "2024-07-07T09:50:00+0200",
         "type": "SESSION",
         "kind": "WARM_UP",
-        "status": "NOT-STARTED"
+        "status": "FINISHED"
       },
       {
         "eventName": "Moto3",
@@ -1957,7 +2092,7 @@
         "date_end": "2024-07-07T11:00:00+0200",
         "type": "SESSION",
         "kind": "RACE",
-        "status": "NOT-STARTED"
+        "status": "CURRENT"
       },
       {
         "eventName": "Moto2",
@@ -2078,7 +2213,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-08-03T10:50:00+0100",
         "date_end": "2024-08-03T11:05:00+0100",
         "type": "SESSION",
@@ -2087,7 +2222,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-08-03T11:15:00+0100",
         "date_end": "2024-08-03T11:30:00+0100",
         "type": "SESSION",
@@ -2096,7 +2231,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-08-03T12:50:00+0100",
         "date_end": "2024-08-03T13:05:00+0100",
         "type": "SESSION",
@@ -2105,7 +2240,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-08-03T13:15:00+0100",
         "date_end": "2024-08-03T13:30:00+0100",
         "type": "SESSION",
@@ -2114,7 +2249,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-08-03T13:45:00+0100",
         "date_end": "2024-08-03T14:00:00+0100",
         "type": "SESSION",
@@ -2123,7 +2258,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-08-03T14:10:00+0100",
         "date_end": "2024-08-03T14:25:00+0100",
         "type": "SESSION",
@@ -2132,7 +2267,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-08-03T15:00:00+0100",
         "date_end": "2024-08-03T15:00:00+0100",
         "type": "SESSION",
@@ -2178,7 +2313,7 @@
     ]
   },
   {
-    "name": "Motorrad Grand Prix von Österreich",
+    "name": "Motorrad Grand Prix von Ã–sterreich",
     "country": "AT",
     "url": "Austria",
     "status": "NOT-STARTED",
@@ -2193,6 +2328,15 @@
       "fullCircuitPath": "https://photos.motogp.com/events-admin/5/3/53e027a4-908f-4253-9805-7321bd212fae/simple/aut.svg"
     },
     "broadcasts": [
+      {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 1",
+        "date_start": "2024-08-16T08:30:00+0200",
+        "date_end": "2024-08-16T08:45:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "NOT-STARTED"
+      },
       {
         "eventName": "Moto3",
         "name": "Free Practice",
@@ -2216,6 +2360,15 @@
         "name": "Free Practice Nr. 1",
         "date_start": "2024-08-16T10:45:00+0200",
         "date_end": "2024-08-16T11:30:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "NOT-STARTED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 2",
+        "date_start": "2024-08-16T12:25:00+0200",
+        "date_end": "2024-08-16T12:40:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
         "status": "NOT-STARTED"
@@ -2248,6 +2401,24 @@
         "status": "NOT-STARTED"
       },
       {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 1",
+        "date_start": "2024-08-16T16:15:00+0200",
+        "date_end": "2024-08-16T16:25:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "NOT-STARTED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 2",
+        "date_start": "2024-08-16T16:35:00+0200",
+        "date_end": "2024-08-16T16:45:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "NOT-STARTED"
+      },
+      {
         "eventName": "Moto3",
         "name": "Practice Nr. 2",
         "date_start": "2024-08-17T08:40:00+0200",
@@ -2276,7 +2447,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-08-17T10:50:00+0200",
         "date_end": "2024-08-17T11:05:00+0200",
         "type": "SESSION",
@@ -2285,7 +2456,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-08-17T11:15:00+0200",
         "date_end": "2024-08-17T11:30:00+0200",
         "type": "SESSION",
@@ -2293,8 +2464,17 @@
         "status": "NOT-STARTED"
       },
       {
+        "eventName": "MotoE",
+        "name": "Race Nr.1",
+        "date_start": "2024-08-17T12:15:00+0200",
+        "date_end": "2024-08-17T12:15:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "NOT-STARTED"
+      },
+      {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-08-17T12:50:00+0200",
         "date_end": "2024-08-17T13:05:00+0200",
         "type": "SESSION",
@@ -2303,7 +2483,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-08-17T13:15:00+0200",
         "date_end": "2024-08-17T13:30:00+0200",
         "type": "SESSION",
@@ -2312,7 +2492,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-08-17T13:45:00+0200",
         "date_end": "2024-08-17T14:00:00+0200",
         "type": "SESSION",
@@ -2321,7 +2501,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-08-17T14:10:00+0200",
         "date_end": "2024-08-17T14:25:00+0200",
         "type": "SESSION",
@@ -2330,9 +2510,18 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-08-17T15:00:00+0200",
         "date_end": "2024-08-17T15:00:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "NOT-STARTED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.2",
+        "date_start": "2024-08-17T16:10:00+0200",
+        "date_end": "2024-08-17T16:10:00+0200",
         "type": "SESSION",
         "kind": "RACE",
         "status": "NOT-STARTED"
@@ -2376,14 +2565,14 @@
     ]
   },
   {
-    "name": "Gran Premio de Aragón",
+    "name": "Gran Premio GoPro de AragÃ³n",
     "country": "ES",
     "url": "Spain",
     "status": "NOT-STARTED",
     "date_start": "2024-08-30T08:00:00+02:00",
     "date_end": "2024-09-01T20:00:00+02:00",
     "circuit": {
-      "circuitName": "MotorLand Aragón",
+      "circuitName": "MotorLand AragÃ³n",
       "circuitCountry": "Spain",
       "city": "",
       "length": { "miles": 3.15, "kilometers": 5.08 }
@@ -2472,7 +2661,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-08-31T10:50:00+0200",
         "date_end": "2024-08-31T11:05:00+0200",
         "type": "SESSION",
@@ -2481,7 +2670,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-08-31T11:15:00+0200",
         "date_end": "2024-08-31T11:30:00+0200",
         "type": "SESSION",
@@ -2490,7 +2679,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-08-31T12:50:00+0200",
         "date_end": "2024-08-31T13:05:00+0200",
         "type": "SESSION",
@@ -2499,7 +2688,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-08-31T13:15:00+0200",
         "date_end": "2024-08-31T13:30:00+0200",
         "type": "SESSION",
@@ -2508,7 +2697,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-08-31T13:45:00+0200",
         "date_end": "2024-08-31T14:00:00+0200",
         "type": "SESSION",
@@ -2517,7 +2706,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-08-31T14:10:00+0200",
         "date_end": "2024-08-31T14:25:00+0200",
         "type": "SESSION",
@@ -2526,7 +2715,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-08-31T15:00:00+0200",
         "date_end": "2024-08-31T15:00:00+0200",
         "type": "SESSION",
@@ -2588,6 +2777,15 @@
     },
     "broadcasts": [
       {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 1",
+        "date_start": "2024-09-06T08:30:00+0200",
+        "date_end": "2024-09-06T08:45:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "NOT-STARTED"
+      },
+      {
         "eventName": "Moto3",
         "name": "Free Practice",
         "date_start": "2024-09-06T09:00:00+0200",
@@ -2610,6 +2808,15 @@
         "name": "Free Practice Nr. 1",
         "date_start": "2024-09-06T10:45:00+0200",
         "date_end": "2024-09-06T11:30:00+0200",
+        "type": "SESSION",
+        "kind": "PRACTICE",
+        "status": "NOT-STARTED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Practice Nr. 2",
+        "date_start": "2024-09-06T12:25:00+0200",
+        "date_end": "2024-09-06T12:40:00+0200",
         "type": "SESSION",
         "kind": "PRACTICE",
         "status": "NOT-STARTED"
@@ -2642,6 +2849,24 @@
         "status": "NOT-STARTED"
       },
       {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 1",
+        "date_start": "2024-09-06T16:15:00+0200",
+        "date_end": "2024-09-06T16:25:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "NOT-STARTED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Qualifying Nr. 2",
+        "date_start": "2024-09-06T16:35:00+0200",
+        "date_end": "2024-09-06T16:45:00+0200",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "NOT-STARTED"
+      },
+      {
         "eventName": "Moto3",
         "name": "Practice Nr. 2",
         "date_start": "2024-09-07T08:40:00+0200",
@@ -2670,7 +2895,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-09-07T10:50:00+0200",
         "date_end": "2024-09-07T11:05:00+0200",
         "type": "SESSION",
@@ -2679,7 +2904,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-09-07T11:15:00+0200",
         "date_end": "2024-09-07T11:30:00+0200",
         "type": "SESSION",
@@ -2687,8 +2912,17 @@
         "status": "NOT-STARTED"
       },
       {
+        "eventName": "MotoE",
+        "name": "Race Nr.1",
+        "date_start": "2024-09-07T12:15:00+0200",
+        "date_end": "2024-09-07T12:15:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "NOT-STARTED"
+      },
+      {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-09-07T12:50:00+0200",
         "date_end": "2024-09-07T13:05:00+0200",
         "type": "SESSION",
@@ -2697,7 +2931,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-09-07T13:15:00+0200",
         "date_end": "2024-09-07T13:30:00+0200",
         "type": "SESSION",
@@ -2706,7 +2940,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-09-07T13:45:00+0200",
         "date_end": "2024-09-07T14:00:00+0200",
         "type": "SESSION",
@@ -2715,7 +2949,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-09-07T14:10:00+0200",
         "date_end": "2024-09-07T14:25:00+0200",
         "type": "SESSION",
@@ -2724,9 +2958,18 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-09-07T15:00:00+0200",
         "date_end": "2024-09-07T15:00:00+0200",
+        "type": "SESSION",
+        "kind": "RACE",
+        "status": "NOT-STARTED"
+      },
+      {
+        "eventName": "MotoE",
+        "name": "Race Nr.2",
+        "date_start": "2024-09-07T16:10:00+0200",
+        "date_end": "2024-09-07T16:10:00+0200",
         "type": "SESSION",
         "kind": "RACE",
         "status": "NOT-STARTED"
@@ -2770,26 +3013,26 @@
     ]
   },
   {
-    "name": "Grand Prix of India",
-    "country": "IN",
-    "url": "India",
+    "name": "Grand Prix of Kazakhstan",
+    "country": "KZ",
+    "url": "Kazakhstan",
     "status": "NOT-STARTED",
-    "date_start": "2024-09-20T08:00:00+05:30",
-    "date_end": "2024-09-22T20:00:00+05:30",
+    "date_start": "2024-09-20T08:30:00+06:00",
+    "date_end": "2024-09-22T20:30:00+06:00",
     "circuit": {
-      "circuitName": "Buddh International Circuit",
-      "circuitCountry": "India",
-      "city": "",
-      "length": { "miles": 3.11, "kilometers": 5.01 },
-      "simpleCircuitPath": "https://photos.motogp.com/events-admin/a/7/a7f04599-10af-4f4e-a82f-3fec83e83bd4/simple/ind2.svg",
-      "fullCircuitPath": "https://photos.motogp.com/events-admin/a/7/a7f04599-10af-4f4e-a82f-3fec83e83bd4/simple/ind2.svg"
+      "circuitName": "Sokol International Racetrack",
+      "circuitCountry": "Kazakhstan",
+      "city": "Almaty",
+      "length": { "miles": 2.79, "kilometers": 4.5 },
+      "simpleCircuitPath": "https://photos.motogp.com/events-admin/b/d/bdec1aa1-1bb7-4b7a-829c-d69af1a198e4/simple/kaz2.svg",
+      "fullCircuitPath": "https://photos.motogp.com/events-admin/b/d/bdec1aa1-1bb7-4b7a-829c-d69af1a198e4/simple/kaz2.svg"
     },
     "broadcasts": [
       {
         "eventName": "Moto3",
         "name": "Free Practice",
-        "date_start": "2024-09-20T09:30:00+0530",
-        "date_end": "2024-09-20T10:20:00+0530",
+        "date_start": "2024-09-20T09:00:00+0600",
+        "date_end": "2024-09-20T09:50:00+0600",
         "type": "SESSION",
         "kind": "PRACTICE",
         "status": "NOT-STARTED"
@@ -2797,8 +3040,8 @@
       {
         "eventName": "Moto2",
         "name": "Free Practice",
-        "date_start": "2024-09-20T10:35:00+0530",
-        "date_end": "2024-09-20T11:30:00+0530",
+        "date_start": "2024-09-20T10:05:00+0600",
+        "date_end": "2024-09-20T11:00:00+0600",
         "type": "SESSION",
         "kind": "PRACTICE",
         "status": "NOT-STARTED"
@@ -2806,8 +3049,8 @@
       {
         "eventName": "MotoGP",
         "name": "Free Practice Nr. 1",
-        "date_start": "2024-09-20T11:45:00+0530",
-        "date_end": "2024-09-20T12:55:00+0530",
+        "date_start": "2024-09-20T11:15:00+0600",
+        "date_end": "2024-09-20T12:25:00+0600",
         "type": "SESSION",
         "kind": "PRACTICE",
         "status": "NOT-STARTED"
@@ -2815,8 +3058,8 @@
       {
         "eventName": "Moto3",
         "name": "Practice Nr. 1",
-        "date_start": "2024-09-20T13:45:00+0530",
-        "date_end": "2024-09-20T14:35:00+0530",
+        "date_start": "2024-09-20T13:15:00+0600",
+        "date_end": "2024-09-20T14:05:00+0600",
         "type": "SESSION",
         "kind": "PRACTICE",
         "status": "NOT-STARTED"
@@ -2824,8 +3067,8 @@
       {
         "eventName": "Moto2",
         "name": "Practice Nr. 1",
-        "date_start": "2024-09-20T14:50:00+0530",
-        "date_end": "2024-09-20T15:45:00+0530",
+        "date_start": "2024-09-20T14:20:00+0600",
+        "date_end": "2024-09-20T15:15:00+0600",
         "type": "SESSION",
         "kind": "PRACTICE",
         "status": "NOT-STARTED"
@@ -2833,8 +3076,8 @@
       {
         "eventName": "MotoGP",
         "name": "Practice",
-        "date_start": "2024-09-20T16:00:00+0530",
-        "date_end": "2024-09-20T17:10:00+0530",
+        "date_start": "2024-09-20T15:30:00+0600",
+        "date_end": "2024-09-20T16:40:00+0600",
         "type": "SESSION",
         "kind": "PRACTICE",
         "status": "NOT-STARTED"
@@ -2842,8 +3085,8 @@
       {
         "eventName": "Moto3",
         "name": "Practice Nr. 2",
-        "date_start": "2024-09-21T09:10:00+0530",
-        "date_end": "2024-09-21T09:40:00+0530",
+        "date_start": "2024-09-21T08:40:00+0600",
+        "date_end": "2024-09-21T09:10:00+0600",
         "type": "SESSION",
         "kind": "PRACTICE",
         "status": "NOT-STARTED"
@@ -2851,8 +3094,8 @@
       {
         "eventName": "Moto2",
         "name": "Practice Nr. 2",
-        "date_start": "2024-09-21T09:55:00+0530",
-        "date_end": "2024-09-21T10:25:00+0530",
+        "date_start": "2024-09-21T09:25:00+0600",
+        "date_end": "2024-09-21T09:55:00+0600",
         "type": "SESSION",
         "kind": "PRACTICE",
         "status": "NOT-STARTED"
@@ -2860,71 +3103,71 @@
       {
         "eventName": "MotoGP",
         "name": "Free Practice Nr. 2",
-        "date_start": "2024-09-21T10:40:00+0530",
-        "date_end": "2024-09-21T11:10:00+0530",
+        "date_start": "2024-09-21T10:10:00+0600",
+        "date_end": "2024-09-21T10:40:00+0600",
         "type": "SESSION",
         "kind": "PRACTICE",
         "status": "NOT-STARTED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1",
-        "date_start": "2024-09-21T11:15:00+0530",
-        "date_end": "2024-09-21T11:30:00+0530",
-        "type": "SESSION",
-        "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "MotoGP",
         "name": "Qualifying Nr. 2",
-        "date_start": "2024-09-21T11:45:00+0530",
-        "date_end": "2024-09-21T12:00:00+0530",
-        "type": "SESSION",
-        "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
-        "date_start": "2024-09-21T13:20:00+0530",
-        "date_end": "2024-09-21T13:35:00+0530",
-        "type": "SESSION",
-        "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
-        "date_start": "2024-09-21T13:45:00+0530",
-        "date_end": "2024-09-21T14:00:00+0530",
-        "type": "SESSION",
-        "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
-        "date_start": "2024-09-21T14:15:00+0530",
-        "date_end": "2024-09-21T14:30:00+0530",
-        "type": "SESSION",
-        "kind": "QUALIFYING",
-        "status": "NOT-STARTED"
-      },
-      {
-        "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
-        "date_start": "2024-09-21T14:40:00+0530",
-        "date_end": "2024-09-21T14:55:00+0530",
+        "date_start": "2024-09-21T11:45:00+0600",
+        "date_end": "2024-09-21T12:00:00+0600",
         "type": "SESSION",
         "kind": "QUALIFYING",
         "status": "NOT-STARTED"
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
-        "date_start": "2024-09-21T15:30:00+0530",
-        "date_end": "2024-09-21T15:30:00+0530",
+        "name": "Qualifying Nr. 1",
+        "date_start": "2024-09-21T12:15:00+0600",
+        "date_end": "2024-09-21T12:30:00+0600",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "NOT-STARTED"
+      },
+      {
+        "eventName": "Moto3",
+        "name": "Qualifying Nr. 1",
+        "date_start": "2024-09-21T12:50:00+0600",
+        "date_end": "2024-09-21T13:05:00+0600",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "NOT-STARTED"
+      },
+      {
+        "eventName": "Moto3",
+        "name": "Qualifying Nr. 2",
+        "date_start": "2024-09-21T13:15:00+0600",
+        "date_end": "2024-09-21T13:30:00+0600",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "NOT-STARTED"
+      },
+      {
+        "eventName": "Moto2",
+        "name": "Qualifying Nr. 1",
+        "date_start": "2024-09-21T13:45:00+0600",
+        "date_end": "2024-09-21T14:00:00+0600",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "NOT-STARTED"
+      },
+      {
+        "eventName": "Moto2",
+        "name": "Qualifying Nr. 2",
+        "date_start": "2024-09-21T14:10:00+0600",
+        "date_end": "2024-09-21T14:25:00+0600",
+        "type": "SESSION",
+        "kind": "QUALIFYING",
+        "status": "NOT-STARTED"
+      },
+      {
+        "eventName": "MotoGP",
+        "name": "Tissot Sprint",
+        "date_start": "2024-09-21T15:00:00+0600",
+        "date_end": "2024-09-21T15:00:00+0600",
         "type": "SESSION",
         "kind": "RACE",
         "status": "NOT-STARTED"
@@ -2932,8 +3175,8 @@
       {
         "eventName": "MotoGP",
         "name": "Warm Up",
-        "date_start": "2024-09-22T11:10:00+0530",
-        "date_end": "2024-09-22T11:20:00+0530",
+        "date_start": "2024-09-22T09:40:00+0600",
+        "date_end": "2024-09-22T09:50:00+0600",
         "type": "SESSION",
         "kind": "WARM_UP",
         "status": "NOT-STARTED"
@@ -2941,8 +3184,8 @@
       {
         "eventName": "Moto3",
         "name": "Race",
-        "date_start": "2024-09-22T12:30:00+0530",
-        "date_end": "2024-09-22T12:30:00+0530",
+        "date_start": "2024-09-22T11:00:00+0600",
+        "date_end": "2024-09-22T11:00:00+0600",
         "type": "SESSION",
         "kind": "RACE",
         "status": "NOT-STARTED"
@@ -2950,8 +3193,8 @@
       {
         "eventName": "Moto2",
         "name": "Race",
-        "date_start": "2024-09-22T13:45:00+0530",
-        "date_end": "2024-09-22T13:45:00+0530",
+        "date_start": "2024-09-22T12:15:00+0600",
+        "date_end": "2024-09-22T12:15:00+0600",
         "type": "SESSION",
         "kind": "RACE",
         "status": "NOT-STARTED"
@@ -2959,8 +3202,8 @@
       {
         "eventName": "MotoGP",
         "name": "Race",
-        "date_start": "2024-09-22T15:30:00+0530",
-        "date_end": "2024-09-22T15:30:00+0530",
+        "date_start": "2024-09-22T14:00:00+0600",
+        "date_end": "2024-09-22T14:00:00+0600",
         "type": "SESSION",
         "kind": "RACE",
         "status": "NOT-STARTED"
@@ -3066,7 +3309,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-09-28T10:50:00+0800",
         "date_end": "2024-09-28T11:05:00+0800",
         "type": "SESSION",
@@ -3075,7 +3318,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-09-28T11:15:00+0800",
         "date_end": "2024-09-28T11:30:00+0800",
         "type": "SESSION",
@@ -3084,7 +3327,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-09-28T12:50:00+0800",
         "date_end": "2024-09-28T13:05:00+0800",
         "type": "SESSION",
@@ -3093,7 +3336,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-09-28T13:15:00+0800",
         "date_end": "2024-09-28T13:30:00+0800",
         "type": "SESSION",
@@ -3102,7 +3345,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-09-28T13:45:00+0800",
         "date_end": "2024-09-28T14:00:00+0800",
         "type": "SESSION",
@@ -3111,7 +3354,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-09-28T14:10:00+0800",
         "date_end": "2024-09-28T14:25:00+0800",
         "type": "SESSION",
@@ -3120,7 +3363,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-09-28T15:00:00+0800",
         "date_end": "2024-09-28T15:00:00+0800",
         "type": "SESSION",
@@ -3170,8 +3413,8 @@
     "country": "JP",
     "url": "Japan",
     "status": "NOT-STARTED",
-    "date_start": "2024-10-04T09:00:00+09:00",
-    "date_end": "2024-10-06T18:00:00+09:00",
+    "date_start": "2024-10-04T10:00:00+09:00",
+    "date_end": "2024-10-06T17:00:00+09:00",
     "circuit": {
       "circuitName": "Mobility Resort Motegi",
       "circuitCountry": "Japan",
@@ -3264,7 +3507,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-10-05T10:50:00+0900",
         "date_end": "2024-10-05T11:05:00+0900",
         "type": "SESSION",
@@ -3273,7 +3516,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-10-05T11:15:00+0900",
         "date_end": "2024-10-05T11:30:00+0900",
         "type": "SESSION",
@@ -3282,7 +3525,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-10-05T12:50:00+0900",
         "date_end": "2024-10-05T13:05:00+0900",
         "type": "SESSION",
@@ -3291,7 +3534,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-10-05T13:15:00+0900",
         "date_end": "2024-10-05T13:30:00+0900",
         "type": "SESSION",
@@ -3300,7 +3543,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-10-05T13:45:00+0900",
         "date_end": "2024-10-05T14:00:00+0900",
         "type": "SESSION",
@@ -3309,7 +3552,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-10-05T14:10:00+0900",
         "date_end": "2024-10-05T14:25:00+0900",
         "type": "SESSION",
@@ -3318,7 +3561,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-10-05T15:00:00+0900",
         "date_end": "2024-10-05T15:00:00+0900",
         "type": "SESSION",
@@ -3364,7 +3607,7 @@
     ]
   },
   {
-    "name": "Australian Motorcycle Grand Prix",
+    "name": "Qatar Airways Australian Motorcycle Grand Prix",
     "country": "AU",
     "url": "Australia",
     "status": "NOT-STARTED",
@@ -3462,7 +3705,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-10-19T10:50:00+1100",
         "date_end": "2024-10-19T11:05:00+1100",
         "type": "SESSION",
@@ -3471,7 +3714,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-10-19T11:15:00+1100",
         "date_end": "2024-10-19T11:30:00+1100",
         "type": "SESSION",
@@ -3480,7 +3723,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-10-19T12:50:00+1100",
         "date_end": "2024-10-19T13:05:00+1100",
         "type": "SESSION",
@@ -3489,7 +3732,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-10-19T13:15:00+1100",
         "date_end": "2024-10-19T13:30:00+1100",
         "type": "SESSION",
@@ -3498,7 +3741,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-10-19T13:45:00+1100",
         "date_end": "2024-10-19T14:00:00+1100",
         "type": "SESSION",
@@ -3507,7 +3750,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-10-19T14:10:00+1100",
         "date_end": "2024-10-19T14:25:00+1100",
         "type": "SESSION",
@@ -3516,7 +3759,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-10-19T15:00:00+1100",
         "date_end": "2024-10-19T15:00:00+1100",
         "type": "SESSION",
@@ -3544,8 +3787,8 @@
       {
         "eventName": "Moto2",
         "name": "Race",
-        "date_start": "2024-10-20T12:15:00+1100",
-        "date_end": "2024-10-20T12:15:00+1100",
+        "date_start": "2024-10-20T13:15:00+1100",
+        "date_end": "2024-10-20T13:15:00+1100",
         "type": "SESSION",
         "kind": "RACE",
         "status": "NOT-STARTED"
@@ -3562,7 +3805,7 @@
     ]
   },
   {
-    "name": "OR Thailand Grand Prix ",
+    "name": "PT Grand Prix of Thailand",
     "country": "TH",
     "url": "Thailand",
     "status": "NOT-STARTED",
@@ -3660,7 +3903,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-10-26T10:50:00+0700",
         "date_end": "2024-10-26T11:05:00+0700",
         "type": "SESSION",
@@ -3669,7 +3912,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-10-26T11:15:00+0700",
         "date_end": "2024-10-26T11:30:00+0700",
         "type": "SESSION",
@@ -3678,7 +3921,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-10-26T12:50:00+0700",
         "date_end": "2024-10-26T13:05:00+0700",
         "type": "SESSION",
@@ -3687,7 +3930,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-10-26T13:15:00+0700",
         "date_end": "2024-10-26T13:30:00+0700",
         "type": "SESSION",
@@ -3696,7 +3939,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-10-26T13:45:00+0700",
         "date_end": "2024-10-26T14:00:00+0700",
         "type": "SESSION",
@@ -3705,7 +3948,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-10-26T14:10:00+0700",
         "date_end": "2024-10-26T14:25:00+0700",
         "type": "SESSION",
@@ -3714,7 +3957,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-10-26T15:00:00+0700",
         "date_end": "2024-10-26T15:00:00+0700",
         "type": "SESSION",
@@ -3742,8 +3985,8 @@
       {
         "eventName": "Moto2",
         "name": "Race",
-        "date_start": "2024-10-27T13:15:00+0700",
-        "date_end": "2024-10-27T13:15:00+0700",
+        "date_start": "2024-10-27T12:15:00+0700",
+        "date_end": "2024-10-27T12:15:00+0700",
         "type": "SESSION",
         "kind": "RACE",
         "status": "NOT-STARTED"
@@ -3765,7 +4008,7 @@
     "url": "Malaysia",
     "status": "NOT-STARTED",
     "date_start": "2024-11-01T08:00:00+08:00",
-    "date_end": "2024-11-03T20:00:00+08:00",
+    "date_end": "2024-11-03T20:01:00+08:00",
     "circuit": {
       "circuitName": "Petronas Sepang International Circuit",
       "circuitCountry": "Malaysia",
@@ -3858,7 +4101,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-11-02T10:50:00+0800",
         "date_end": "2024-11-02T11:05:00+0800",
         "type": "SESSION",
@@ -3867,7 +4110,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-11-02T11:15:00+0800",
         "date_end": "2024-11-02T11:30:00+0800",
         "type": "SESSION",
@@ -3876,7 +4119,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-11-02T12:50:00+0800",
         "date_end": "2024-11-02T13:05:00+0800",
         "type": "SESSION",
@@ -3885,7 +4128,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-11-02T13:15:00+0800",
         "date_end": "2024-11-02T13:30:00+0800",
         "type": "SESSION",
@@ -3894,7 +4137,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-11-02T13:45:00+0800",
         "date_end": "2024-11-02T14:00:00+0800",
         "type": "SESSION",
@@ -3903,7 +4146,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-11-02T14:10:00+0800",
         "date_end": "2024-11-02T14:25:00+0800",
         "type": "SESSION",
@@ -3912,7 +4155,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-11-02T15:00:00+0800",
         "date_end": "2024-11-02T15:00:00+0800",
         "type": "SESSION",
@@ -4056,7 +4299,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-11-16T10:50:00+0100",
         "date_end": "2024-11-16T11:05:00+0100",
         "type": "SESSION",
@@ -4065,7 +4308,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-11-16T11:15:00+0100",
         "date_end": "2024-11-16T11:30:00+0100",
         "type": "SESSION",
@@ -4074,7 +4317,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-11-16T12:50:00+0100",
         "date_end": "2024-11-16T13:05:00+0100",
         "type": "SESSION",
@@ -4083,7 +4326,7 @@
       },
       {
         "eventName": "Moto3",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-11-16T13:15:00+0100",
         "date_end": "2024-11-16T13:30:00+0100",
         "type": "SESSION",
@@ -4092,7 +4335,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 1 ",
+        "name": "Qualifying Nr. 1",
         "date_start": "2024-11-16T13:45:00+0100",
         "date_end": "2024-11-16T14:00:00+0100",
         "type": "SESSION",
@@ -4101,7 +4344,7 @@
       },
       {
         "eventName": "Moto2",
-        "name": "Qualifying Nr. 2 ",
+        "name": "Qualifying Nr. 2",
         "date_start": "2024-11-16T14:10:00+0100",
         "date_end": "2024-11-16T14:25:00+0100",
         "type": "SESSION",
@@ -4110,7 +4353,7 @@
       },
       {
         "eventName": "MotoGP",
-        "name": "Sprint",
+        "name": "Tissot Sprint",
         "date_start": "2024-11-16T15:00:00+0100",
         "date_end": "2024-11-16T15:00:00+0100",
         "type": "SESSION",
