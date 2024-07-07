@@ -97,9 +97,23 @@ export default function Home({ allRiders, season }: HomeProps) {
       }
     }
 
-    if(!savedResults && savedRiderList) {
-      setRiders(JSON.parse(savedRiderList))
+    if(savedRiderList){
+      const decodedResults = JSON.parse(savedRiderList);
+
+
+      if (decodedResults.generatedDate) {
+        const timeDistanceInHours = millisecondsToHours(
+          Date.now() - decodedResults.generatedDate
+        );
+        if (timeDistanceInHours >= 24) {
+          localStorage.removeItem("riderList");
+          setLoading(false);
+          return;
+        } 
+      }
+      setRiders(decodedResults.riders)
     }
+
   }, [router]);
 
   useEffect(() => {
@@ -109,7 +123,7 @@ export default function Home({ allRiders, season }: HomeProps) {
   const pickRiders = () => {
     setLoading(true);
     const tempRidersArray = [...riders];
-    localStorage.setItem('riderList', JSON.stringify(riders));
+    localStorage.setItem('riderList', JSON.stringify({riders, generatedDate: Date.now()}));
     const results = entrants
       .sort(() => Math.random() - 0.5)
       .reduce((acc, entrant, idx) => {

@@ -48,7 +48,7 @@ export function getRiderDataLocal(): RiderDataResponse {
       current_career_step: {
         number,
         sponsored_team,
-        team: { color, picture },
+        team: { color, picture, text_color },
         short_nickname: shortNickname,
         pictures,
       },
@@ -64,6 +64,7 @@ export function getRiderDataLocal(): RiderDataResponse {
       number,
       sponsoredTeam: sponsored_team,
       teamColor: color,
+      textColor: text_color,
       teamPicture: picture,
       shortNickname,
       pictures,
