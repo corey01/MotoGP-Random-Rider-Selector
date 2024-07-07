@@ -23,3 +23,9 @@ process this using the get() route in /season/route.ts, this will format the dat
 For Rider Data
 
 https://api.motogp.pulselive.com/motogp/v1/riders
+
+
+
+API Guide:
+
+https://github.com/robschmitt/MotoGP-API
