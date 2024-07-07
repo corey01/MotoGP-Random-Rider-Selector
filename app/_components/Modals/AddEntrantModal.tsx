@@ -32,7 +32,7 @@ const AddEntrantModal = ({
     <div onClick={handleOverlayClick} className={style.Overlay}>
       <div className={style.Modal}>
         <p className={style.title}>Forgotten Someone?</p>
-        <p>Enter the entrant name below and click 'go' to match a rider to the new entrant</p>
+        <p>Enter the entrant name below and click &apos;go&apos; to match a rider to the new entrant</p>
         <input value={name} onChange={e => setName(e.target.value)} />
         <div className={style.buttonBar}>
           <button className="pickButton" onClick={handleSubmit}>
