@@ -4,6 +4,7 @@ export interface Rider {
   number: number;
   sponsoredTeam: string;
   teamColor: string;
+  textColor: string;
   teamPicture: string;
   shortNickname: string;
   pictures: {

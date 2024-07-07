@@ -19,6 +19,8 @@ const ResultsRiderCard = ({
     }?resize&size=500&webp`);
   };
 
+  const riderShortName = `${rider.name.slice(0,1)} ${rider.surname.slice(0,3)}`
+
   return (
     <div className={classNames(style.listItem, style.resultsCard)}>
       <img
@@ -39,11 +41,14 @@ const ResultsRiderCard = ({
           #{rider.number}
         </span>
       </div>
-      <img
-        className={style.entrantPic__img}
-        src={getEntrantImage(entrant)}
-        alt=""
-      />
+      <div className={style.entrantPic__container}>
+        <img
+          className={style.entrantPic__img}
+          src={getEntrantImage(entrant)}
+          alt=""
+          />
+      <div className={`${motoGP.className} ${style.towerName}`}><div style={{backgroundColor: rider.teamColor}} className={style.towerBar} />{riderShortName} <span style={{color: rider.textColor, backgroundColor: rider.teamColor}}>{rider.number}</span></div>
+      </div>
     </div>
   );
 };
