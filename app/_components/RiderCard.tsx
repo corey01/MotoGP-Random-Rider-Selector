@@ -39,6 +39,8 @@ const RiderCard = ({
   const isGuest = rider.riderType === "guest";
   const highlightGuest = !inGuestArray && rider.riderType === "guest";
 
+  const hasBikeImage = !!rider.pictures.bike.main  || rider.teamPicture;
+
   return (
     <div
       className={`${classNames(
@@ -48,11 +50,11 @@ const RiderCard = ({
       )} rider-${rider.name}-${rider.surname}` }
     >
       {
-        rider.pictures.bike.main || rider.teamPicture && (
+        hasBikeImage && (
           
 
       <img
-        src={rider.pictures.bike.main || rider.teamPicture}
+        src={(rider.pictures.bike.main || rider.teamPicture) as string}
         alt=""
         className={classNames(
           style.bikeImage,
