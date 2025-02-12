@@ -17,6 +17,8 @@ const Results = ({ handleReset, selectedRiders, addEntrant }: ResultsProps) => {
   const [returnModalOpen, setReturnModalOpen] = useState(false);
   const [addEntrantModalOpen, setEntrantModalOpen] = useState(false);
 
+  console.log(selectedRiders)
+
   const generateShareLink = () => {
     const url = window.location.href;
 

@@ -3,13 +3,13 @@ export interface Rider {
   surname: string;
   number: number;
   sponsoredTeam: string;
-  teamColor: string;
-  textColor: string;
-  teamPicture: string;
+  teamColor: string | null;
+  textColor: string | null;
+  teamPicture: string | null;
   shortNickname: string;
   pictures: {
     profile: {
-      main: string;
+      main: string | null;
       secondary?: string | null;
     };
     bike: {

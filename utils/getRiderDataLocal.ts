@@ -40,7 +40,7 @@ function partition(array: Rider[], isValid: (arg: Rider) => Boolean) {
 }
 
 export function getRiderDataLocal(): RiderDataResponse {
-  const allRiders = riderData.map((rider) => {
+  const allRiders = riderData.riders.map((rider) => {
     const {
       id,
       name,

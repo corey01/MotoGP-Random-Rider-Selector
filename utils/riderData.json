@@ -1,1319 +1,1588 @@
-[
-  {
-    "id": "66b78301-5826-4986-b11e-fa68a7bd77a7",
-    "name": "Francesco",
-    "surname": "Bagnaia",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 1,
-      "sponsored_team": "Ducati Lenovo Team",
-      "team": {
-        "id": "892fff2f-7402-4fbd-99fb-5fd567d8a80c",
-        "constructor": {
-          "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
-          "name": "Ducati",
-          "legacy_id": 110
-        },
-        "name": "Ducati Lenovo Team",
-        "legacy_id": 15,
-        "color": "#cc0000",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/8/9/892fff2f-7402-4fbd-99fb-5fd567d8a80c/Ducati_Lenovo_Team.png",
-        "published": true
+{
+  "riders": [
+    {
+      "country": {
+        "iso": "ES",
+        "name": "Spain",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
       },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "FB1",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/6/6/66b78301-5826-4986-b11e-fa68a7bd77a7/profile/main/01_Francesco_Bagnaia_Official_Rider_DSC8925.png",
-          "secondary": null
+      "birth_city": "Madrid",
+      "birth_date": "1998-01-29",
+      "start_year": 2015,
+      "years_old": 27,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 1,
+        "sponsored_team": "Aprilia Racing",
+        "team": {
+          "id": "11d18b37-baba-400a-80c2-f8ddf040f97e",
+          "name": "Aprilia Racing",
+          "legacy_id": 21,
+          "type": "Official",
+          "color": "#5f259f",
+          "text_color": "#ffffff",
+          "constructor": {
+            "id": "21fbe597-b587-42e1-b571-a06af5cc2487",
+            "name": "Aprilia",
+            "legacy_id": 7
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/1/1/11d18b37-baba-400a-80c2-f8ddf040f97e/main-picture.png",
+          "published": true
         },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/6/6/66b78301-5826-4986-b11e-fa68a7bd77a7/bike/main/01_Francesco_Bagnaia_Bike_Official_LGZ3790.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/6/6/66b78301-5826-4986-b11e-fa68a7bd77a7/helmet/main/01_Francesco_Bagnaia_Helmet_Official_LGZ3818.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/b/5/b5c727ae-ee04-4358-af67-cff1a312f6cc/number/1.png",
-        "portrait": "https://photos.motogp.com/riders/6/6/66b78301-5826-4986-b11e-fa68a7bd77a7/portrait/01_Francesco_Bagnaia_Official_Rider_DSC8933.jpg"
-      },
-      "type": "Official"
-    },
-    "country": {
-      "iso": "IT",
-      "name": "Italy",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
-    },
-    "birth_city": "Torino",
-    "birth_date": "1997-01-14",
-    "years_old": 27,
-    "published": true,
-    "legacy_id": 8273
-  },
-  {
-    "id": "4a439bde-305a-4995-b3e7-783fa99f784a",
-    "name": "Johann",
-    "surname": "Zarco",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 5,
-      "sponsored_team": "CASTROL Honda LCR",
-      "team": {
-        "id": "77a0174a-c84d-4955-a722-b39e4d8e4ce5",
-        "constructor": {
-          "id": "8e21365c-a465-476a-a66b-5fda45058c2e",
-          "name": "Honda",
-          "legacy_id": 1
-        },
-        "name": "LCR Honda",
-        "legacy_id": 17,
-        "color": "#fafafa",
-        "text_color": "#323232",
-        "picture": "https://photos.motogp.com/teams/7/7/77a0174a-c84d-4955-a722-b39e4d8e4ce5/Honda_LCR.png",
-        "published": true
-      },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "JZ5",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/4/a/4a439bde-305a-4995-b3e7-783fa99f784a/profile/main/05_Johann_Zarco_Official_Rider_DSC7920.png",
-          "secondary": null
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/4/a/4a439bde-305a-4995-b3e7-783fa99f784a/bike/main/05_Johann_Zarco_Bike_Official_LGZ3143.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/4/a/4a439bde-305a-4995-b3e7-783fa99f784a/helmet/main/05_Johann_Zarco_Helmet_Official_LGZ3114.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/0/b/0b1f5c74-5cf4-48e9-a78d-f5d1bee34f2b/number/5.png",
-        "portrait": "https://photos.motogp.com/riders/4/a/4a439bde-305a-4995-b3e7-783fa99f784a/portrait/05_Johann_Zarco_Official_Rider_DSC7926.jpg"
-      },
-      "type": "Official"
-    },
-    "country": {
-      "iso": "FR",
-      "name": "France",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/FR.svg"
-    },
-    "birth_city": "Cannes",
-    "birth_date": "1990-07-16",
-    "years_old": 33,
-    "published": true,
-    "legacy_id": 7236
-  },
-  {
-    "id": "5dfc20db-c3c4-4ecd-9c7c-f6cfd042031a",
-    "name": "Luca",
-    "surname": "Marini",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 10,
-      "sponsored_team": "Repsol Honda Team",
-      "team": {
-        "id": "ce837bd3-bc07-40ef-83cf-6a8025bededf",
-        "constructor": {
-          "id": "8e21365c-a465-476a-a66b-5fda45058c2e",
-          "name": "Honda",
-          "legacy_id": 1
-        },
-        "name": "Repsol Honda Team",
-        "legacy_id": 14,
-        "color": "#ffa00f",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/c/e/ce837bd3-bc07-40ef-83cf-6a8025bededf/FrontalBike_0000_93-Marc-Marquez,-.png",
-        "published": true
-      },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "LM10",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/5/d/5dfc20db-c3c4-4ecd-9c7c-f6cfd042031a/profile/main/10_Luca_Marini_Official_Rider_DSC8257.png",
-          "secondary": null
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/5/d/5dfc20db-c3c4-4ecd-9c7c-f6cfd042031a/bike/main/10_Luca_Marini_Bike_Official_LGZ3241.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/5/d/5dfc20db-c3c4-4ecd-9c7c-f6cfd042031a/helmet/main/10_Luca_Marini_Helmet_Official_LGZ3282.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/e/4/e4448080-4f42-4a70-9a12-5f5c77a4e4e5/number/10.png",
-        "portrait": "https://photos.motogp.com/riders/5/d/5dfc20db-c3c4-4ecd-9c7c-f6cfd042031a/portrait/10_Luca_Marini_Official_Rider_DSC8263.jpg"
-      },
-      "type": "Official"
-    },
-    "country": {
-      "iso": "IT",
-      "name": "Italy",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
-    },
-    "birth_city": "Urbino",
-    "birth_date": "1997-08-10",
-    "years_old": 26,
-    "published": true,
-    "legacy_id": 8431
-  },
-  {
-    "id": "71df6f0d-51c3-4cdb-9f5c-51939e6f33f2",
-    "name": "Maverick",
-    "surname": "Vi\u00f1ales",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 12,
-      "sponsored_team": "Aprilia Racing",
-      "team": {
-        "id": "11d18b37-baba-400a-80c2-f8ddf040f97e",
-        "constructor": {
-          "id": "21fbe597-b587-42e1-b571-a06af5cc2487",
-          "name": "Aprilia",
-          "legacy_id": 7
-        },
-        "name": "Aprilia Racing",
-        "legacy_id": 21,
-        "color": "#5cb33a",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/1/1/11d18b37-baba-400a-80c2-f8ddf040f97e/Aprilia_Racing.png",
-        "published": true
-      },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "MV12",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/7/1/71df6f0d-51c3-4cdb-9f5c-51939e6f33f2/profile/main/12_Maverick_Vinales_Official_Rider_DSC9451.png",
-          "secondary": "https://photos.motogp.com/riders/7/1/71df6f0d-51c3-4cdb-9f5c-51939e6f33f2/profile/secondary/Funny_0014_12-Maverick-Vinales,-Rider-Extras_DS_588.png"
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/7/1/71df6f0d-51c3-4cdb-9f5c-51939e6f33f2/bike/main/12_Maverick_Vinales_Bike_Official_LGZ4212.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/7/1/71df6f0d-51c3-4cdb-9f5c-51939e6f33f2/helmet/main/12_Maverick_Vinales_Helmet_Official_LGZ4232.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/1/3/13e53141-e4b0-4a27-aaa4-bb5aec9cd3ec/number/12.png",
-        "portrait": "https://photos.motogp.com/riders/7/1/71df6f0d-51c3-4cdb-9f5c-51939e6f33f2/portrait/12_Maverick_Vinnales_Official_Rider_DSC9457.jpg"
-      },
-      "type": "Official"
-    },
-    "country": {
-      "iso": "ES",
-      "name": "Spain",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
-    },
-    "birth_city": "Figueres",
-    "birth_date": "1995-01-12",
-    "years_old": 29,
-    "published": true,
-    "legacy_id": 7409
-  },
-  {
-    "id": "bf95d959-6a60-44f1-84b5-ded861e62578",
-    "name": "Fabio",
-    "surname": "Quartararo",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 20,
-      "sponsored_team": "Monster Energy Yamaha MotoGP\u2122",
-      "team": {
-        "id": "141b6f0f-7e53-4d27-9bdb-0ea8fba7e842",
-        "constructor": {
-          "id": "f2e835be-7fab-4782-a26b-de3d583d132c",
-          "name": "Yamaha",
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
           "legacy_id": 3
         },
-        "name": "Monster Energy Yamaha MotoGP\u2122",
-        "legacy_id": 19,
-        "color": "#0c368c",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/1/4/141b6f0f-7e53-4d27-9bdb-0ea8fba7e842/Monster_Yamaha.png",
-        "published": true
-      },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "FQ20",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/b/f/bf95d959-6a60-44f1-84b5-ded861e62578/profile/main/20_Fabio_Quartararo_Official_Rider_DSC8840.png",
-          "secondary": "https://photos.motogp.com/riders/5/e/5eb5ef16-5695-43fa-80de-609e7c6b51ed/profile/secondary/Funny_0013_20-Fabio-Quartararo,-Rider-Extras_DS_9750.png"
+        "in_grid": true,
+        "short_nickname": "JM1",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/5/b/5b9af34e-da94-4ca2-9c4c-6be0fc8b1bbc/2025/profile/main-963022.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
         },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/b/f/bf95d959-6a60-44f1-84b5-ded861e62578/bike/main/20_Fabio_Quartararo_Bike_Official_LGZ3742.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/b/f/bf95d959-6a60-44f1-84b5-ded861e62578/helmet/main/20_Fabio_Quartararo_Helmet_Official_LGZ3836.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/8/4/8434cc35-07c1-4c44-a73b-76286f6091d8/number/20.png",
-        "portrait": "https://photos.motogp.com/riders/b/f/bf95d959-6a60-44f1-84b5-ded861e62578/portrait/20_Fabio_Quartararo_Official_Rider_DSC8846.jpg"
+        "type": "Official"
       },
-      "type": "Official"
+      "retired_year": 2024,
+      "surname": "Martin",
+      "name": "Jorge",
+      "nickname": null,
+      "legacy_id": 8146,
+      "retired": true,
+      "id": "5b9af34e-da94-4ca2-9c4c-6be0fc8b1bbc"
     },
-    "country": {
-      "iso": "FR",
-      "name": "France",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/FR.svg"
-    },
-    "birth_city": "Nice",
-    "birth_date": "1999-04-20",
-    "years_old": 24,
-    "published": true,
-    "legacy_id": 8520
-  },
-  {
-    "id": "4113c5f7-33c5-4246-b05b-3f81f4ddbd8f",
-    "name": "Franco",
-    "surname": "Morbidelli",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 21,
-      "sponsored_team": "Prima Pramac Racing",
-      "team": {
-        "id": "612440fd-90eb-4823-bec9-f9e37520d00f",
-        "constructor": {
-          "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
-          "name": "Ducati",
-          "legacy_id": 110
-        },
-        "name": "Prima Pramac Racing",
-        "legacy_id": 32,
-        "color": "#8234c2",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/6/1/612440fd-90eb-4823-bec9-f9e37520d00f/FrontalBike_0001_89-Jorge-Martin,-Bike_L9919.png",
-        "published": true
+    {
+      "country": {
+        "iso": "FR",
+        "name": "France",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/FR.svg"
       },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "FM21",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/4/1/4113c5f7-33c5-4246-b05b-3f81f4ddbd8f/profile/main/21_Franco_Morbidelli_DS_5306.png",
-          "secondary": null
+      "birth_city": "Cannes",
+      "birth_date": "1990-07-16",
+      "start_year": 2009,
+      "years_old": 34,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 5,
+        "sponsored_team": "CASTROL Honda LCR",
+        "team": {
+          "id": "77a0174a-c84d-4955-a722-b39e4d8e4ce5",
+          "name": "LCR Honda",
+          "legacy_id": 17,
+          "type": "Official",
+          "color": "#fafafa",
+          "text_color": "#262626",
+          "constructor": {
+            "id": "8e21365c-a465-476a-a66b-5fda45058c2e",
+            "name": "Honda",
+            "legacy_id": 1
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/7/7/77a0174a-c84d-4955-a722-b39e4d8e4ce5/main-picture.png",
+          "published": true
         },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/b/6/b6875e34-25ed-4bb2-bd98-65348293eeb6/bike/main/21_Franco_Morbidelli_Bike_LGZ0481.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/b/6/b6875e34-25ed-4bb2-bd98-65348293eeb6/helmet/main/21_Franco_Morbidelli_Helmet_LGZ0500.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/9/0/90bb67c4-6ff3-4596-a4b7-ddc5870efb50/number/21.png",
-        "portrait": "https://photos.motogp.com/riders/4/1/4113c5f7-33c5-4246-b05b-3f81f4ddbd8f/portrait/21_Franco_Morbidelli_DS_5302.jpg"
-      },
-      "type": "Official"
-    },
-    "country": {
-      "iso": "IT",
-      "name": "Italy",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
-    },
-    "birth_city": "Rome",
-    "birth_date": "1994-12-04",
-    "years_old": 29,
-    "published": true,
-    "legacy_id": 7741
-  },
-  {
-    "id": "00db2312-15f2-4333-be5c-4bbff9d17aec",
-    "name": "Enea",
-    "surname": "Bastianini",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 23,
-      "sponsored_team": "Ducati Lenovo Team",
-      "team": {
-        "id": "892fff2f-7402-4fbd-99fb-5fd567d8a80c",
-        "constructor": {
-          "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
-          "name": "Ducati",
-          "legacy_id": 110
-        },
-        "name": "Ducati Lenovo Team",
-        "legacy_id": 15,
-        "color": "#cc0000",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/8/9/892fff2f-7402-4fbd-99fb-5fd567d8a80c/Ducati_Lenovo_Team.png",
-        "published": true
-      },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "EB23",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/0/0/00db2312-15f2-4333-be5c-4bbff9d17aec/profile/main/23_Enea_Bastianini_Official_Rider_DSC9006.png",
-          "secondary": "https://photos.motogp.com/riders/0/0/00db2312-15f2-4333-be5c-4bbff9d17aec/profile/secondary/Funny_0011_23-Enea-Bastianini,-Rider-Extras_DS_822.png"
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/0/0/00db2312-15f2-4333-be5c-4bbff9d17aec/bike/main/23_Enea_Bastianini_Bike_Official_LGZ3853.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/0/0/00db2312-15f2-4333-be5c-4bbff9d17aec/helmet/main/23_Enea_Bastianini_Helmet_Official_LGZ3906.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/a/2/a2b905bb-19ff-4092-b4dd-cfb1f2333439/number/23.png",
-        "portrait": "https://photos.motogp.com/riders/0/0/00db2312-15f2-4333-be5c-4bbff9d17aec/portrait/23_Enea_Bastianini_Official_Rider_DSC9013.jpg"
-      },
-      "type": "Official"
-    },
-    "country": {
-      "iso": "IT",
-      "name": "Italy",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
-    },
-    "birth_city": "Rimini",
-    "birth_date": "1997-12-30",
-    "years_old": 26,
-    "published": true,
-    "legacy_id": 8295
-  },
-  {
-    "id": "eec1f7dc-b115-44f6-82aa-73130e5c92cf",
-    "name": "Raul",
-    "surname": "Fernandez",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 25,
-      "sponsored_team": "Trackhouse Racing",
-      "team": {
-        "id": "8532f5e4-c2f3-417b-8c76-09302a826dd4",
-        "constructor": {
-          "id": "21fbe597-b587-42e1-b571-a06af5cc2487",
-          "name": "Aprilia",
-          "legacy_id": 7
-        },
-        "name": "Trackhouse Racing",
-        "legacy_id": 46,
-        "color": "#0066cc",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/8/5/8532f5e4-c2f3-417b-8c76-09302a826dd4/Trackhouse_Racing.png",
-        "published": true
-      },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "RF25",
-      "current": false,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/e/e/eec1f7dc-b115-44f6-82aa-73130e5c92cf/profile/main/25_Raul_Fernandez_Official_Rider_DSC8180.png",
-          "secondary": "https://photos.motogp.com/riders/9/1/9137bd76-d786-47f4-861e-a102860558d6/profile/secondary/Funny_0010_25-Raul-Fernandez,-Rider-Extras_DS_8871.png"
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/e/e/eec1f7dc-b115-44f6-82aa-73130e5c92cf/bike/main/25_Raul_Fernandez_Official_Bike_LGZ3344.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/e/e/eec1f7dc-b115-44f6-82aa-73130e5c92cf/helmet/main/25_Raul_Fernandez_Helmet_Official_LGZ3228.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/e/b/eb938baa-1e25-41a6-ae24-1682217dd94e/number/25.png",
-        "portrait": "https://photos.motogp.com/riders/e/e/eec1f7dc-b115-44f6-82aa-73130e5c92cf/portrait/25_Raul_Fernandez_Official_Rider_DSC8186.jpg"
-      },
-      "type": "Official"
-    },
-    "country": {
-      "iso": "ES",
-      "name": "Spain",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
-    },
-    "birth_city": "Madrid",
-    "birth_date": "2000-10-23",
-    "years_old": 23,
-    "published": true,
-    "legacy_id": 8269
-  },
-  {
-    "id": "a7b4d63f-45b3-402e-b66c-001ed8a62934",
-    "name": "Takaaki",
-    "surname": "Nakagami",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 30,
-      "sponsored_team": "IDEMITSU Honda LCR ",
-      "team": {
-        "id": "77a0174a-c84d-4955-a722-b39e4d8e4ce5",
-        "constructor": {
-          "id": "8e21365c-a465-476a-a66b-5fda45058c2e",
-          "name": "Honda",
-          "legacy_id": 1
-        },
-        "name": "LCR Honda",
-        "legacy_id": 17,
-        "color": "#fafafa",
-        "text_color": "#323232",
-        "picture": "https://photos.motogp.com/teams/7/7/77a0174a-c84d-4955-a722-b39e4d8e4ce5/Honda_LCR.png",
-        "published": true
-      },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "TN30",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/a/7/a7b4d63f-45b3-402e-b66c-001ed8a62934/profile/main/30_Takaaki_Nakagami_Official_Rider_DSC8004.png",
-          "secondary": "https://photos.motogp.com/riders/4/2/42ab7c62-db82-4d83-8b66-ec78aaa56131/profile/secondary/Funny_0009_30-Takaaki-Nakagami,-Rider-Extras_DS_8749.png"
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/a/7/a7b4d63f-45b3-402e-b66c-001ed8a62934/bike/main/30_Takaaki_Nakagami_Official_Rider_LGZ3172.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/a/7/a7b4d63f-45b3-402e-b66c-001ed8a62934/helmet/main/30_Takaaki_Nakagami_Helmet_Official_LGZ3167.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/6/5/6563f20e-22de-488f-a8c8-a1fd3dd11942/number/30.png",
-        "portrait": "https://photos.motogp.com/riders/a/7/a7b4d63f-45b3-402e-b66c-001ed8a62934/portrait/30_Takaaki_Nakagami_Official_Rider_DSC8011.jpg"
-      },
-      "type": "Official"
-    },
-    "country": {
-      "iso": "JP",
-      "name": "Japan",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/JP.svg"
-    },
-    "birth_city": "Chiba",
-    "birth_date": "1992-02-09",
-    "years_old": 32,
-    "published": true,
-    "legacy_id": 6976
-  },
-  {
-    "id": "ea39a0af-95d3-4a37-81a7-f332efdb9216",
-    "name": "Pedro",
-    "surname": "Acosta",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 31,
-      "sponsored_team": "Red Bull GASGAS Tech3",
-      "team": {
-        "id": "74681b57-3548-4ea5-9fbd-7f2a9ef96c02",
-        "constructor": {
-          "id": "5ecd8db7-d87b-4b3e-87b6-1f72ee457ede",
-          "name": "KTM",
-          "legacy_id": 298
-        },
-        "name": "Red Bull GASGAS Tech3",
-        "legacy_id": 11,
-        "color": "#990726",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/7/4/74681b57-3548-4ea5-9fbd-7f2a9ef96c02/GASGAS.png",
-        "published": true
-      },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "PA31",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/e/a/ea39a0af-95d3-4a37-81a7-f332efdb9216/profile/main/31_Pedro_Acosta_Official_Rider_DSC9096.png",
-          "secondary": null
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/e/a/ea39a0af-95d3-4a37-81a7-f332efdb9216/bike/main/31_Pedro_Acosta_Bike_Official_LGZ3912.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/e/a/ea39a0af-95d3-4a37-81a7-f332efdb9216/helmet/main/31_Pedro_Acosta_Helmet_Official_LGZ3976.jpg",
-          "secondary": null
-        },
-        "number": null,
-        "portrait": "https://photos.motogp.com/riders/e/a/ea39a0af-95d3-4a37-81a7-f332efdb9216/portrait/31_Pedro_Acosta_Official_Rider_DSC9102.jpg"
-      },
-      "type": "Official"
-    },
-    "country": {
-      "iso": "ES",
-      "name": "Spain",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
-    },
-    "birth_city": "Mazarr\u00f3n, Spain",
-    "birth_date": "2004-05-25",
-    "years_old": 19,
-    "published": true,
-    "legacy_id": 8658
-  },
-  {
-    "id": "ade5ef32-01ea-487c-95ca-491544a668ed",
-    "name": "Brad",
-    "surname": "Binder",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 33,
-      "sponsored_team": "Red Bull KTM Factory Racing",
-      "team": {
-        "id": "0b6cc118-a286-4343-9020-fb53c6f77c1a",
-        "constructor": {
-          "id": "5ecd8db7-d87b-4b3e-87b6-1f72ee457ede",
-          "name": "KTM",
-          "legacy_id": 298
-        },
-        "name": "Red Bull KTM Factory Racing",
-        "legacy_id": 23,
-        "color": "#ff6600",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/0/b/0b6cc118-a286-4343-9020-fb53c6f77c1a/KTM_Factory_Racing.png",
-        "published": true
-      },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "BB33",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/a/d/ade5ef32-01ea-487c-95ca-491544a668ed/profile/main/33_Brad_Binder_Official_Rider_DSC8597.png",
-          "secondary": "https://photos.motogp.com/riders/a/d/ade5ef32-01ea-487c-95ca-491544a668ed/profile/secondary/Funny_0008_33-Brad-Binder,-Rider-Extras_DS_931.png"
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/a/d/ade5ef32-01ea-487c-95ca-491544a668ed/bike/main/33_Brad_Binder_Bike_Official_LGZ3488.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/a/d/ade5ef32-01ea-487c-95ca-491544a668ed/helmet/main/33_Brad_Binder_Helmet_Official_LGZ3535.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/6/e/6e05cd51-a9e5-433d-98c7-f3868a75e389/number/33.png",
-        "portrait": "https://photos.motogp.com/riders/e/2/e2cbcd57-0d43-4253-b37f-e16ffc0999c1/portrait/33_Brad_Binder_Rider_DS_9370.jpg"
-      },
-      "type": "Official"
-    },
-    "country": {
-      "iso": "ZA",
-      "name": "South Africa",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/ZA.svg"
-    },
-    "birth_city": "Potchefstroom",
-    "birth_date": "1995-08-11",
-    "years_old": 28,
-    "published": true,
-    "legacy_id": 7646
-  },
-  {
-    "id": "f55f9c34-8621-437b-ae04-ae2418720204",
-    "name": "Joan",
-    "surname": "Mir",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 36,
-      "sponsored_team": "Repsol Honda Team",
-      "team": {
-        "id": "ce837bd3-bc07-40ef-83cf-6a8025bededf",
-        "constructor": {
-          "id": "8e21365c-a465-476a-a66b-5fda45058c2e",
-          "name": "Honda",
-          "legacy_id": 1
-        },
-        "name": "Repsol Honda Team",
-        "legacy_id": 14,
-        "color": "#ffa00f",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/c/e/ce837bd3-bc07-40ef-83cf-6a8025bededf/FrontalBike_0000_93-Marc-Marquez,-.png",
-        "published": true
-      },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "JM36",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/f/5/f55f9c34-8621-437b-ae04-ae2418720204/profile/main/36_Joan_Mir_Official_Rider_DSC8349.png",
-          "secondary": "https://photos.motogp.com/riders/4/5/45c9462f-0be6-4df1-ba1a-ca89bd40514f/profile/secondary/Funny_0007_36-Joan-Mir,-Rider-Extras_DS_9528.png"
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/f/5/f55f9c34-8621-437b-ae04-ae2418720204/bike/main/36_Joan_Mir_Bike_Official_LGZ3288.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/f/5/f55f9c34-8621-437b-ae04-ae2418720204/helmet/main/36_Joan_Mir_Helmet_Official_LGZ3337.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/c/d/cd78607d-6bfb-49be-bb76-113e4170be56/number/36.png",
-        "portrait": "https://photos.motogp.com/riders/f/5/f55f9c34-8621-437b-ae04-ae2418720204/portrait/36_Joan_Mir_Official_Rider_DSC8355.jpg"
-      },
-      "type": "Official"
-    },
-    "country": {
-      "iso": "ES",
-      "name": "Spain",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
-    },
-    "birth_city": "Palma de Mallorca",
-    "birth_date": "1997-09-01",
-    "years_old": 26,
-    "published": true,
-    "legacy_id": 8141
-  },
-  {
-    "id": "eb7f90b1-9373-4089-b2f5-adbc234a3526",
-    "name": "Augusto",
-    "surname": "Fernandez",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 37,
-      "sponsored_team": "Red Bull GASGAS Tech3",
-      "team": {
-        "id": "74681b57-3548-4ea5-9fbd-7f2a9ef96c02",
-        "constructor": {
-          "id": "5ecd8db7-d87b-4b3e-87b6-1f72ee457ede",
-          "name": "KTM",
-          "legacy_id": 298
-        },
-        "name": "Red Bull GASGAS Tech3",
-        "legacy_id": 11,
-        "color": "#990726",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/7/4/74681b57-3548-4ea5-9fbd-7f2a9ef96c02/GASGAS.png",
-        "published": true
-      },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "AF37",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/e/b/eb7f90b1-9373-4089-b2f5-adbc234a3526/profile/main/37_Augusto_Fernandez_Official_Rider_DSC7802.png",
-          "secondary": "https://photos.motogp.com/riders/9/c/9ce061c0-ca08-4680-a5b9-25e08749d72f/profile/secondary/Funny_0006_37-Augusto-Fernandez,-Rider-Extras_DS_8449.png"
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/e/b/eb7f90b1-9373-4089-b2f5-adbc234a3526/bike/main/37_Augusto_Fernandez_Bike_Official_LGZ3022.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/e/b/eb7f90b1-9373-4089-b2f5-adbc234a3526/helmet/main/37_Augusto_Fernandez_Helmet_Official_LGZ3090.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/8/f/8f47d810-852d-4e77-9a8e-03c1319bd5e4/number/37.png",
-        "portrait": "https://photos.motogp.com/riders/e/b/eb7f90b1-9373-4089-b2f5-adbc234a3526/portrait/37_Augusto_Fernandez_Official_Rider_DSC7794.jpg"
-      },
-      "type": "Official"
-    },
-    "country": {
-      "iso": "ES",
-      "name": "Spain",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
-    },
-    "birth_city": "Madrid",
-    "birth_date": "1997-09-23",
-    "years_old": 26,
-    "published": true,
-    "legacy_id": 9973
-  },
-  {
-    "id": "a2f51450-cb43-4d32-8eef-bda9ebb435ed",
-    "name": "Aleix",
-    "surname": "Espargaro",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 41,
-      "sponsored_team": "Aprilia Racing",
-      "team": {
-        "id": "11d18b37-baba-400a-80c2-f8ddf040f97e",
-        "constructor": {
-          "id": "21fbe597-b587-42e1-b571-a06af5cc2487",
-          "name": "Aprilia",
-          "legacy_id": 7
-        },
-        "name": "Aprilia Racing",
-        "legacy_id": 21,
-        "color": "#5cb33a",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/1/1/11d18b37-baba-400a-80c2-f8ddf040f97e/Aprilia_Racing.png",
-        "published": true
-      },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "AE41",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/a/2/a2f51450-cb43-4d32-8eef-bda9ebb435ed/profile/main/41_Aleix_Espargaro_Official_Rider_DSC9418.png",
-          "secondary": null
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/a/2/a2f51450-cb43-4d32-8eef-bda9ebb435ed/bike/main/41_Aleix_Espargaro_Bike__LGZ4178_.png",
-          "secondary": null
-        },
-        "helmet": { "main": null, "secondary": null },
-        "number": "https://photos.motogp.com/riders/1/7/17ee1483-290a-42c7-a581-b382bc2f7faf/number/41.png",
-        "portrait": "https://photos.motogp.com/riders/a/2/a2f51450-cb43-4d32-8eef-bda9ebb435ed/portrait/41_Aleix_Espargaro_Official_Rider_DSC9416_.jpg"
-      },
-      "type": "Official"
-    },
-    "country": {
-      "iso": "ES",
-      "name": "Spain",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
-    },
-    "birth_city": "Granollers",
-    "birth_date": "1989-07-30",
-    "years_old": 34,
-    "published": true,
-    "legacy_id": 6854
-  },
-  {
-    "id": "04bf0ce4-5062-44fc-9745-ec85a8d8f8d3",
-    "name": "Alex",
-    "surname": "Rins",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 42,
-      "sponsored_team": "Monster Energy Yamaha MotoGP\u2122",
-      "team": {
-        "id": "141b6f0f-7e53-4d27-9bdb-0ea8fba7e842",
-        "constructor": {
-          "id": "f2e835be-7fab-4782-a26b-de3d583d132c",
-          "name": "Yamaha",
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
           "legacy_id": 3
         },
-        "name": "Monster Energy Yamaha MotoGP\u2122",
-        "legacy_id": 19,
-        "color": "#0c368c",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/1/4/141b6f0f-7e53-4d27-9bdb-0ea8fba7e842/Monster_Yamaha.png",
-        "published": true
-      },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
-      },
-      "in_grid": true,
-      "short_nickname": "AR42",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/0/4/04bf0ce4-5062-44fc-9745-ec85a8d8f8d3/profile/main/42_Alex_Rins_Official_Rider_DSC8439.png",
-          "secondary": "https://photos.motogp.com/riders/0/4/04bf0ce4-5062-44fc-9745-ec85a8d8f8d3/profile/secondary/Funny_0005_42-Alex-Rins,-Rider-Extras_DS_876.png"
+        "in_grid": true,
+        "short_nickname": "JZ5",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/4/a/4a439bde-305a-4995-b3e7-783fa99f784a/2025/profile/main-429361.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": "https://photos.motogp.com/riders/0/b/0b1f5c74-5cf4-48e9-a78d-f5d1bee34f2b/number/5.png",
+          "portrait": null
         },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/0/4/04bf0ce4-5062-44fc-9745-ec85a8d8f8d3/bike/main/42_Alex_Rins_Bike_Official_LGZ3710.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/7/e/7ebc6682-872a-460e-934a-22a1c2c363b8/helmet/main/42_Alex_Rins_Helmet_LGZ0147.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/2/e/2e07c7da-11af-4fe9-9e50-7872d69a5570/number/42.png",
-        "portrait": "https://photos.motogp.com/riders/0/4/04bf0ce4-5062-44fc-9745-ec85a8d8f8d3/portrait/42_Alex_Rins_Official_Rider_DSC8445.jpg"
+        "type": "Official"
       },
-      "type": "Official"
+      "retired_year": 2024,
+      "surname": "Zarco",
+      "name": "Johann",
+      "nickname": null,
+      "legacy_id": 7236,
+      "retired": true,
+      "id": "4a439bde-305a-4995-b3e7-783fa99f784a"
     },
-    "country": {
-      "iso": "ES",
-      "name": "Spain",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
+    {
+      "country": {
+        "iso": "IT",
+        "name": "Italy",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
+      },
+      "birth_city": "Urbino",
+      "birth_date": "1997-08-10",
+      "start_year": 2016,
+      "years_old": 27,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 10,
+        "sponsored_team": "Honda HRC Castrol",
+        "team": {
+          "id": "ce837bd3-bc07-40ef-83cf-6a8025bededf",
+          "name": "Honda HRC Castrol",
+          "legacy_id": 14,
+          "type": "Official",
+          "color": "#e50000",
+          "text_color": "#ffffff",
+          "constructor": {
+            "id": "8e21365c-a465-476a-a66b-5fda45058c2e",
+            "name": "Honda",
+            "legacy_id": 1
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/c/e/ce837bd3-bc07-40ef-83cf-6a8025bededf/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "LM10",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/5/d/5dfc20db-c3c4-4ecd-9c7c-f6cfd042031a/2025/profile/main-709929.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": 2024,
+      "surname": "Marini",
+      "name": "Luca",
+      "nickname": null,
+      "legacy_id": 8431,
+      "retired": true,
+      "id": "5dfc20db-c3c4-4ecd-9c7c-f6cfd042031a"
     },
-    "birth_city": "Barcelona",
-    "birth_date": "1995-12-08",
-    "years_old": 28,
-    "published": true,
-    "legacy_id": 8150
-  },
-  {
-    "id": "b0c1fea6-2dd5-4e26-8a18-0ac9fe6870e4",
-    "name": "Jack",
-    "surname": "Miller",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 43,
-      "sponsored_team": "Red Bull KTM Factory Racing",
-      "team": {
-        "id": "0b6cc118-a286-4343-9020-fb53c6f77c1a",
-        "constructor": {
-          "id": "5ecd8db7-d87b-4b3e-87b6-1f72ee457ede",
-          "name": "KTM",
-          "legacy_id": 298
-        },
-        "name": "Red Bull KTM Factory Racing",
-        "legacy_id": 23,
-        "color": "#ff6600",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/0/b/0b6cc118-a286-4343-9020-fb53c6f77c1a/KTM_Factory_Racing.png",
-        "published": true
+    {
+      "country": {
+        "iso": "ES",
+        "name": "Spain",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
       },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
+      "birth_city": "Figueres",
+      "birth_date": "1995-01-12",
+      "start_year": 2011,
+      "years_old": 30,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 12,
+        "sponsored_team": "Red Bull KTM Tech3",
+        "team": {
+          "id": "8a8633cd-a3e2-4a3d-aa24-66b99014a9dd",
+          "name": "Red Bull KTM Tech3",
+          "legacy_id": 99983,
+          "type": "Official",
+          "color": null,
+          "text_color": null,
+          "constructor": {
+            "id": "5ecd8db7-d87b-4b3e-87b6-1f72ee457ede",
+            "name": "KTM",
+            "legacy_id": 298
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/8/a/8a8633cd-a3e2-4a3d-aa24-66b99014a9dd/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "MV12",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/7/1/71df6f0d-51c3-4cdb-9f5c-51939e6f33f2/2025/profile/main-77436.png",
+            "secondary": null
+          },
+          "bike": {
+            "main": "https://photos.motogp.com/riders/7/1/71df6f0d-51c3-4cdb-9f5c-51939e6f33f2/bike/main/12_Maverick_Vinales_Bike_Official_LGZ4212.png",
+            "secondary": null
+          },
+          "helmet": {
+            "main": "https://photos.motogp.com/riders/7/1/71df6f0d-51c3-4cdb-9f5c-51939e6f33f2/helmet/main/12_Maverick_Vinales_Helmet_Official_LGZ4232.jpg",
+            "secondary": null
+          },
+          "number": "https://photos.motogp.com/riders/1/3/13e53141-e4b0-4a27-aaa4-bb5aec9cd3ec/number/12.png",
+          "portrait": null
+        },
+        "type": "Official"
       },
-      "in_grid": true,
-      "short_nickname": "JM43",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/b/0/b0c1fea6-2dd5-4e26-8a18-0ac9fe6870e4/profile/main/43_Jack_Miller_Official_Rider_DSC8505.png",
-          "secondary": null
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/b/0/b0c1fea6-2dd5-4e26-8a18-0ac9fe6870e4/bike/main/43_Jack_Miller_Bike_Official_LGZ3458.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/b/0/b0c1fea6-2dd5-4e26-8a18-0ac9fe6870e4/helmet/main/43_Jack_Miller_Helmet_Official_LGZ3481.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/3/4/344f6fc4-253a-4b89-9bc3-51d60ca09db5/number/43.png",
-        "portrait": "https://photos.motogp.com/riders/b/0/b0c1fea6-2dd5-4e26-8a18-0ac9fe6870e4/portrait/43_Jack_Miller_Official_Rider_DSC8511.jpg"
-      },
-      "type": "Official"
+      "retired_year": 2024,
+      "surname": "Viñales",
+      "name": "Maverick",
+      "nickname": null,
+      "legacy_id": 7409,
+      "retired": true,
+      "id": "71df6f0d-51c3-4cdb-9f5c-51939e6f33f2"
     },
-    "country": {
-      "iso": "AU",
-      "name": "Australia",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/AU.svg"
+    {
+      "country": {
+        "iso": "FR",
+        "name": "France",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/FR.svg"
+      },
+      "birth_city": "Nice",
+      "birth_date": "1999-04-20",
+      "start_year": 2015,
+      "years_old": 25,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 20,
+        "sponsored_team": "Monster Energy Yamaha MotoGP™",
+        "team": {
+          "id": "141b6f0f-7e53-4d27-9bdb-0ea8fba7e842",
+          "name": "Monster Energy Yamaha MotoGP",
+          "legacy_id": 19,
+          "type": "Official",
+          "color": "#0a2d82",
+          "text_color": "#ffffff",
+          "constructor": {
+            "id": "f2e835be-7fab-4782-a26b-de3d583d132c",
+            "name": "Yamaha",
+            "legacy_id": 3
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/1/4/141b6f0f-7e53-4d27-9bdb-0ea8fba7e842/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "FQ20",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/b/f/bf95d959-6a60-44f1-84b5-ded861e62578/2025/profile/main-278555.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": 2024,
+      "surname": "Quartararo",
+      "name": "Fabio",
+      "nickname": null,
+      "legacy_id": 8520,
+      "retired": true,
+      "id": "bf95d959-6a60-44f1-84b5-ded861e62578"
     },
-    "birth_city": "Townsville",
-    "birth_date": "1995-01-18",
-    "years_old": 29,
-    "published": true,
-    "legacy_id": 8049
-  },
-  {
-    "id": "525b1551-f10b-4cfd-9b43-59af6fca654b",
-    "name": "Fabio",
-    "surname": "Di Giannantonio",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 49,
-      "sponsored_team": "Pertamina Enduro VR46 Racing Team",
-      "team": {
-        "id": "4130a48f-fa91-48be-a50c-f8a2e3f863a0",
-        "constructor": {
-          "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
-          "name": "Ducati",
-          "legacy_id": 110
-        },
-        "name": "Pertamina Enduro VR46 Racing Team",
-        "legacy_id": 214,
-        "color": "#dbff03",
-        "text_color": "#323232",
-        "picture": "https://photos.motogp.com/teams/4/1/4130a48f-fa91-48be-a50c-f8a2e3f863a0/Pertamina_Enduro_VR46.png",
-        "published": true
+    {
+      "country": {
+        "iso": "IT",
+        "name": "Italy",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
       },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
+      "birth_city": "Rome",
+      "birth_date": "1994-12-04",
+      "start_year": 2013,
+      "years_old": 30,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 21,
+        "sponsored_team": "Pertamina Enduro VR46 Racing Team",
+        "team": {
+          "id": "4130a48f-fa91-48be-a50c-f8a2e3f863a0",
+          "name": "Pertamina Enduro VR46 Racing Team",
+          "legacy_id": 214,
+          "type": "Official",
+          "color": "#dbff03",
+          "text_color": "#323232",
+          "constructor": {
+            "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
+            "name": "Ducati",
+            "legacy_id": 110
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/4/1/4130a48f-fa91-48be-a50c-f8a2e3f863a0/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "FM21",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/4/1/4113c5f7-33c5-4246-b05b-3f81f4ddbd8f/2025/profile/main-360510.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
       },
-      "in_grid": true,
-      "short_nickname": "FD49",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/5/2/525b1551-f10b-4cfd-9b43-59af6fca654b/profile/main/49_Fabio_Di_Giannantonio_Official_Rider_DSC9250.png",
-          "secondary": null
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/5/2/525b1551-f10b-4cfd-9b43-59af6fca654b/bike/main/49_Fabio_Di_Giannantonio_Bike_Official_LGZ4038.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/5/2/525b1551-f10b-4cfd-9b43-59af6fca654b/helmet/main/49_Fabio_Di_Giannantonio_Helmet_Official_LGZ4088.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/e/5/e53e3913-315d-42b6-88ef-04284a938ddb/number/49.png",
-        "portrait": "https://photos.motogp.com/riders/5/2/525b1551-f10b-4cfd-9b43-59af6fca654b/portrait/49_Fabio_Di_Giannantonio_Official_Rider_DSC9258.jpg"
-      },
-      "type": "Official"
+      "retired_year": 2024,
+      "surname": "Morbidelli",
+      "name": "Franco",
+      "nickname": null,
+      "legacy_id": 7741,
+      "retired": true,
+      "id": "4113c5f7-33c5-4246-b05b-3f81f4ddbd8f"
     },
-    "country": {
-      "iso": "IT",
-      "name": "Italy",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
+    {
+      "country": {
+        "iso": "IT",
+        "name": "Italy",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
+      },
+      "birth_city": "Rimini",
+      "birth_date": "1997-12-30",
+      "start_year": 2014,
+      "years_old": 27,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 23,
+        "sponsored_team": "Red Bull KTM Tech3",
+        "team": {
+          "id": "8a8633cd-a3e2-4a3d-aa24-66b99014a9dd",
+          "name": "Red Bull KTM Tech3",
+          "legacy_id": 99983,
+          "type": "Official",
+          "color": null,
+          "text_color": null,
+          "constructor": {
+            "id": "5ecd8db7-d87b-4b3e-87b6-1f72ee457ede",
+            "name": "KTM",
+            "legacy_id": 298
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/8/a/8a8633cd-a3e2-4a3d-aa24-66b99014a9dd/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "EB23",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/0/0/00db2312-15f2-4333-be5c-4bbff9d17aec/2025/profile/main-590777.png",
+            "secondary": null
+          },
+          "bike": {
+            "main": "https://photos.motogp.com/riders/0/0/00db2312-15f2-4333-be5c-4bbff9d17aec/bike/main/23_Enea_Bastianini_Bike_Official_LGZ3853.png",
+            "secondary": null
+          },
+          "helmet": {
+            "main": "https://photos.motogp.com/riders/0/0/00db2312-15f2-4333-be5c-4bbff9d17aec/helmet/main/23_Enea_Bastianini_Helmet_Official_LGZ3906.jpg",
+            "secondary": null
+          },
+          "number": "https://photos.motogp.com/riders/a/2/a2b905bb-19ff-4092-b4dd-cfb1f2333439/number/23.png",
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": 2024,
+      "surname": "Bastianini",
+      "name": "Enea",
+      "nickname": null,
+      "legacy_id": 8295,
+      "retired": true,
+      "id": "00db2312-15f2-4333-be5c-4bbff9d17aec"
     },
-    "birth_city": "Roma",
-    "birth_date": "1998-10-10",
-    "years_old": 25,
-    "published": true,
-    "legacy_id": 8539
-  },
-  {
-    "id": "e622ec5b-5ccf-457c-a67f-ec028f0ddf6e",
-    "name": "Marco",
-    "surname": "Bezzecchi",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 72,
-      "sponsored_team": "Pertamina Enduro VR46 Racing Team",
-      "team": {
-        "id": "4130a48f-fa91-48be-a50c-f8a2e3f863a0",
-        "constructor": {
-          "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
-          "name": "Ducati",
-          "legacy_id": 110
-        },
-        "name": "Pertamina Enduro VR46 Racing Team",
-        "legacy_id": 214,
-        "color": "#dbff03",
-        "text_color": "#323232",
-        "picture": "https://photos.motogp.com/teams/4/1/4130a48f-fa91-48be-a50c-f8a2e3f863a0/Pertamina_Enduro_VR46.png",
-        "published": true
+    {
+      "country": {
+        "iso": "ES",
+        "name": "Spain",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
       },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
+      "birth_city": "Madrid",
+      "birth_date": "2000-10-23",
+      "start_year": 2016,
+      "years_old": 24,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 25,
+        "sponsored_team": "Trackhouse Racing",
+        "team": {
+          "id": "8532f5e4-c2f3-417b-8c76-09302a826dd4",
+          "name": "Trackhouse MotoGP Team",
+          "legacy_id": 46,
+          "type": "Official",
+          "color": "#0066cc",
+          "text_color": "#ffffff",
+          "constructor": {
+            "id": "21fbe597-b587-42e1-b571-a06af5cc2487",
+            "name": "Aprilia",
+            "legacy_id": 7
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/8/5/8532f5e4-c2f3-417b-8c76-09302a826dd4/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "RF25",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/e/e/eec1f7dc-b115-44f6-82aa-73130e5c92cf/2025/profile/main-671816.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
       },
-      "in_grid": true,
-      "short_nickname": "MB72",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/e/6/e622ec5b-5ccf-457c-a67f-ec028f0ddf6e/profile/main/72_Marco_Bezzecchi_Official_Rider_DSC9179.png",
-          "secondary": null
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/e/6/e622ec5b-5ccf-457c-a67f-ec028f0ddf6e/bike/main/72_Marco_Bezzecchi_Bike_Official_LGZ3985.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/e/6/e622ec5b-5ccf-457c-a67f-ec028f0ddf6e/helmet/main/72_Marco_Bezzecchi_Helmet_Official_LGZ4031.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/4/e/4ed5e1ab-96d4-413c-87b2-448bbc27f897/number/72.png",
-        "portrait": "https://photos.motogp.com/riders/e/6/e622ec5b-5ccf-457c-a67f-ec028f0ddf6e/portrait/72_Marco_Bezzecchi_Official_Rider_DSC9185.jpg"
-      },
-      "type": "Official"
+      "retired_year": 2024,
+      "surname": "Fernandez",
+      "name": "Raul",
+      "nickname": null,
+      "legacy_id": 8269,
+      "retired": true,
+      "id": "eec1f7dc-b115-44f6-82aa-73130e5c92cf"
     },
-    "country": {
-      "iso": "IT",
-      "name": "Italy",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
+    {
+      "country": {
+        "iso": "ES",
+        "name": "Spain",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
+      },
+      "birth_city": "Sabadell",
+      "birth_date": "1985-09-29",
+      "start_year": 2001,
+      "years_old": 39,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 26,
+        "sponsored_team": "Red Bull KTM Factory Racing",
+        "team": {
+          "id": "0b6cc118-a286-4343-9020-fb53c6f77c1a",
+          "name": "Red Bull KTM Factory Racing",
+          "legacy_id": 23,
+          "type": "Official",
+          "color": "#ff7e27",
+          "text_color": "#262626",
+          "constructor": {
+            "id": "5ecd8db7-d87b-4b3e-87b6-1f72ee457ede",
+            "name": "KTM",
+            "legacy_id": 298
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/0/b/0b6cc118-a286-4343-9020-fb53c6f77c1a/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "DP26",
+        "current": false,
+        "pictures": {
+          "profile": { "main": null, "secondary": null },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Test"
+      },
+      "retired_year": 2024,
+      "surname": "Pedrosa",
+      "name": "Dani",
+      "nickname": null,
+      "legacy_id": 5515,
+      "retired": true,
+      "id": "a8071fde-27fa-49f0-96c8-a53030fcd0dc"
     },
-    "birth_city": "Rimini",
-    "birth_date": "1998-11-12",
-    "years_old": 25,
-    "published": true,
-    "legacy_id": 8688
-  },
-  {
-    "id": "41195f0f-9817-4a4d-913e-c1fbbb351d9b",
-    "name": "Alex",
-    "surname": "Marquez",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 73,
-      "sponsored_team": "Gresini Racing MotoGP\u2122",
-      "team": {
-        "id": "11729e67-d2cb-41ad-b3a8-4a0ac5768a5f",
-        "constructor": {
-          "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
-          "name": "Ducati",
-          "legacy_id": 110
-        },
-        "name": "Gresini Racing MotoGP\u2122",
-        "legacy_id": 10,
-        "color": "#9db4d9",
-        "text_color": "#323232",
-        "picture": "https://photos.motogp.com/teams/1/1/11729e67-d2cb-41ad-b3a8-4a0ac5768a5f/Gresini_Racing_MotoGP.png",
-        "published": true
+    {
+      "country": {
+        "iso": "IT",
+        "name": "Italy",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
       },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
+      "birth_city": "Cesena",
+      "birth_date": "1993-04-04",
+      "start_year": 2008,
+      "years_old": 31,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 32,
+        "sponsored_team": "Aprilia Racing",
+        "team": {
+          "id": "11d18b37-baba-400a-80c2-f8ddf040f97e",
+          "name": "Aprilia Racing",
+          "legacy_id": 21,
+          "type": "Official",
+          "color": "#5f259f",
+          "text_color": "#ffffff",
+          "constructor": {
+            "id": "21fbe597-b587-42e1-b571-a06af5cc2487",
+            "name": "Aprilia",
+            "legacy_id": 7
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/1/1/11d18b37-baba-400a-80c2-f8ddf040f97e/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": false,
+        "short_nickname": "LS32",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/a/1/a1311c17-1099-4893-bba0-347bf43226a4/profile/main/32-Lorenzo-Savadori,-MotoGP_DS_8509.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Test"
       },
-      "in_grid": true,
-      "short_nickname": "AM73",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/4/1/41195f0f-9817-4a4d-913e-c1fbbb351d9b/profile/main/73_Alex_Marquez_Official_Rider_DSC8669.png",
-          "secondary": "https://photos.motogp.com/riders/3/7/37c28369-ef75-46bb-90c9-482e037c75ce/profile/secondary/Funny_0003_73-Alex-Marquez,-Rider_DS_9095.png"
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/4/1/41195f0f-9817-4a4d-913e-c1fbbb351d9b/bike/main/73_Alex_Marquez_Bike_Official_LGZ3567.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/4/1/41195f0f-9817-4a4d-913e-c1fbbb351d9b/helmet/main/73_Alex_Marquez_Helmet_Official_LGZ3591.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/6/d/6d5849a9-5b0d-48f5-ab1d-1245a4e5ecd1/number/73.png",
-        "portrait": "https://photos.motogp.com/riders/4/1/41195f0f-9817-4a4d-913e-c1fbbb351d9b/portrait/73_Alex_Marquez_Official_Rider_DSC8678.jpg"
-      },
-      "type": "Official"
+      "retired_year": 2024,
+      "surname": "Savadori",
+      "name": "Lorenzo",
+      "nickname": null,
+      "legacy_id": 7246,
+      "retired": true,
+      "id": "a1311c17-1099-4893-bba0-347bf43226a4"
     },
-    "country": {
-      "iso": "ES",
-      "name": "Spain",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
+    {
+      "country": {
+        "iso": "ZA",
+        "name": "South Africa",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/ZA.svg"
+      },
+      "birth_city": "Potchefstroom",
+      "birth_date": "1995-08-11",
+      "start_year": 2012,
+      "years_old": 29,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 33,
+        "sponsored_team": "Red Bull KTM Factory Racing",
+        "team": {
+          "id": "0b6cc118-a286-4343-9020-fb53c6f77c1a",
+          "name": "Red Bull KTM Factory Racing",
+          "legacy_id": 23,
+          "type": "Official",
+          "color": "#ff7e27",
+          "text_color": "#262626",
+          "constructor": {
+            "id": "5ecd8db7-d87b-4b3e-87b6-1f72ee457ede",
+            "name": "KTM",
+            "legacy_id": 298
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/0/b/0b6cc118-a286-4343-9020-fb53c6f77c1a/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "BB33",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/a/d/ade5ef32-01ea-487c-95ca-491544a668ed/2025/profile/main-930504.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": 2024,
+      "surname": "Binder",
+      "name": "Brad",
+      "nickname": null,
+      "legacy_id": 7646,
+      "retired": true,
+      "id": "ade5ef32-01ea-487c-95ca-491544a668ed"
     },
-    "birth_city": "Cervera",
-    "birth_date": "1996-04-23",
-    "years_old": 27,
-    "published": true,
-    "legacy_id": 8173
-  },
-  {
-    "id": "50b4fb1f-1785-4a9a-a65c-97d0de9daa22",
-    "name": "Miguel",
-    "surname": "Oliveira",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 88,
-      "sponsored_team": "Trackhouse Racing",
-      "team": {
-        "id": "8532f5e4-c2f3-417b-8c76-09302a826dd4",
-        "constructor": {
-          "id": "21fbe597-b587-42e1-b571-a06af5cc2487",
-          "name": "Aprilia",
-          "legacy_id": 7
-        },
-        "name": "Trackhouse Racing",
-        "legacy_id": 46,
-        "color": "#0066cc",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/8/5/8532f5e4-c2f3-417b-8c76-09302a826dd4/Trackhouse_Racing.png",
-        "published": true
+    {
+      "country": {
+        "iso": "TH",
+        "name": "Thailand",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/TH.svg"
       },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
+      "birth_city": "Chon Buri, Thailand",
+      "birth_date": "1998-12-15",
+      "start_year": 2018,
+      "years_old": 26,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 35,
+        "sponsored_team": "IDEMITSU Honda LCR",
+        "team": {
+          "id": "77a0174a-c84d-4955-a722-b39e4d8e4ce5",
+          "name": "LCR Honda",
+          "legacy_id": 17,
+          "type": "Official",
+          "color": "#fafafa",
+          "text_color": "#262626",
+          "constructor": {
+            "id": "8e21365c-a465-476a-a66b-5fda45058c2e",
+            "name": "Honda",
+            "legacy_id": 1
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/7/7/77a0174a-c84d-4955-a722-b39e4d8e4ce5/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "SC35",
+        "current": false,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/f/a/fa8ac04c-8fa2-4c43-9aa5-cc79b1f35fb9/2025/profile/main-988657.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
       },
-      "in_grid": true,
-      "short_nickname": "MO88",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/5/0/50b4fb1f-1785-4a9a-a65c-97d0de9daa22/profile/main/88_Miguel_Oliveira_Official_Rider_DSC8090.png",
-          "secondary": "https://photos.motogp.com/riders/8/0/80185dd6-e9e9-4de2-9431-67d47e13ca8e/profile/secondary/Funny_0002_88-Miguel-Oliveira,-Rider-Extras_DS_8535.png"
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/5/0/50b4fb1f-1785-4a9a-a65c-97d0de9daa22/bike/main/88_Miguel_Oliveira_Official_LGZ3428.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/5/0/50b4fb1f-1785-4a9a-a65c-97d0de9daa22/helmet/main/88_Miguel_Oliveira_Helmet_Official_LGZ3214.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/5/c/5c88002e-150a-4dca-9b15-313d43ff3566/number/88.png",
-        "portrait": "https://photos.motogp.com/riders/5/0/50b4fb1f-1785-4a9a-a65c-97d0de9daa22/portrait/88_Miguel_Oliveira_Official_Rider_DSC8096.jpg"
-      },
-      "type": "Official"
+      "retired_year": 2024,
+      "surname": "Chantra",
+      "name": "Somkiat",
+      "nickname": null,
+      "legacy_id": 8476,
+      "retired": true,
+      "id": "fa8ac04c-8fa2-4c43-9aa5-cc79b1f35fb9"
     },
-    "country": {
-      "iso": "PT",
-      "name": "Portugal",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/PT.svg"
+    {
+      "country": {
+        "iso": "ES",
+        "name": "Spain",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
+      },
+      "birth_city": "Palma de Mallorca",
+      "birth_date": "1997-09-01",
+      "start_year": 2016,
+      "years_old": 27,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 36,
+        "sponsored_team": "Honda HRC Castrol",
+        "team": {
+          "id": "ce837bd3-bc07-40ef-83cf-6a8025bededf",
+          "name": "Honda HRC Castrol",
+          "legacy_id": 14,
+          "type": "Official",
+          "color": "#e50000",
+          "text_color": "#ffffff",
+          "constructor": {
+            "id": "8e21365c-a465-476a-a66b-5fda45058c2e",
+            "name": "Honda",
+            "legacy_id": 1
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/c/e/ce837bd3-bc07-40ef-83cf-6a8025bededf/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "JM36",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/f/5/f55f9c34-8621-437b-ae04-ae2418720204/2025/profile/main-82596.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": 2024,
+      "surname": "Mir",
+      "name": "Joan",
+      "nickname": null,
+      "legacy_id": 8141,
+      "retired": true,
+      "id": "f55f9c34-8621-437b-ae04-ae2418720204"
     },
-    "birth_city": "Pragal",
-    "birth_date": "1995-01-04",
-    "years_old": 29,
-    "published": true,
-    "legacy_id": 7199
-  },
-  {
-    "id": "5b9af34e-da94-4ca2-9c4c-6be0fc8b1bbc",
-    "name": "Jorge",
-    "surname": "Martin",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 89,
-      "sponsored_team": "Prima Pramac Racing",
-      "team": {
-        "id": "612440fd-90eb-4823-bec9-f9e37520d00f",
-        "constructor": {
-          "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
-          "name": "Ducati",
-          "legacy_id": 110
-        },
-        "name": "Prima Pramac Racing",
-        "legacy_id": 32,
-        "color": "#8234c2",
-        "text_color": "#ffffff",
-        "picture": "https://photos.motogp.com/teams/6/1/612440fd-90eb-4823-bec9-f9e37520d00f/FrontalBike_0001_89-Jorge-Martin,-Bike_L9919.png",
-        "published": true
+    {
+      "country": {
+        "iso": "ES",
+        "name": "Spain",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
       },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
+      "birth_city": "Murcia, Spain",
+      "birth_date": "2004-05-25",
+      "start_year": 2020,
+      "years_old": 20,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 37,
+        "sponsored_team": "Red Bull KTM Factory Racing",
+        "team": {
+          "id": "0b6cc118-a286-4343-9020-fb53c6f77c1a",
+          "name": "Red Bull KTM Factory Racing",
+          "legacy_id": 23,
+          "type": "Official",
+          "color": "#ff7e27",
+          "text_color": "#262626",
+          "constructor": {
+            "id": "5ecd8db7-d87b-4b3e-87b6-1f72ee457ede",
+            "name": "KTM",
+            "legacy_id": 298
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/0/b/0b6cc118-a286-4343-9020-fb53c6f77c1a/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "PA37",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/e/a/ea39a0af-95d3-4a37-81a7-f332efdb9216/2025/profile/main-824336.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
       },
-      "in_grid": true,
-      "short_nickname": "JM89",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/5/b/5b9af34e-da94-4ca2-9c4c-6be0fc8b1bbc/profile/main/89_Jorge_Martin_Rider_DS_8628.png",
-          "secondary": "https://photos.motogp.com/riders/b/c/bc3d15e8-e01d-4158-bf0d-db9c9f9d6d3e/profile/secondary/Funny_0000_89-Jorge-Martin,-Rider-Extras_DS_8642.png"
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/2/7/27165112-bb39-410e-8bc3-0c9eee79d619/bike/main/89_Jorge_Martin_Bike_LGZ9920.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/2/7/27165112-bb39-410e-8bc3-0c9eee79d619/helmet/main/89_Jorge_Martin_Helmet_LGZ9939.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/1/1/11ecf4dc-15ad-4370-8297-5d07e5affa92/number/89.png",
-        "portrait": "https://photos.motogp.com/riders/5/b/5b9af34e-da94-4ca2-9c4c-6be0fc8b1bbc/portrait/89_Jorge_Martin_Rider_DS_8634.jpg"
-      },
-      "type": "Official"
+      "retired_year": 2024,
+      "surname": "Acosta",
+      "name": "Pedro",
+      "nickname": null,
+      "legacy_id": 8658,
+      "retired": true,
+      "id": "ea39a0af-95d3-4a37-81a7-f332efdb9216"
     },
-    "country": {
-      "iso": "ES",
-      "name": "Spain",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
-    },
-    "birth_city": "Madrid",
-    "birth_date": "1998-01-29",
-    "years_old": 26,
-    "published": true,
-    "legacy_id": 8146
-  },
-  {
-    "id": "23e50438-a657-4fb0-a190-3262b5472f29",
-    "name": "Marc",
-    "surname": "Marquez",
-    "nickname": null,
-    "current_career_step": {
-      "season": 2024,
-      "number": 93,
-      "sponsored_team": "Gresini Racing MotoGP\u2122",
-      "team": {
-        "id": "11729e67-d2cb-41ad-b3a8-4a0ac5768a5f",
-        "constructor": {
-          "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
-          "name": "Ducati",
-          "legacy_id": 110
-        },
-        "name": "Gresini Racing MotoGP\u2122",
-        "legacy_id": 10,
-        "color": "#9db4d9",
-        "text_color": "#323232",
-        "picture": "https://photos.motogp.com/teams/1/1/11729e67-d2cb-41ad-b3a8-4a0ac5768a5f/Gresini_Racing_MotoGP.png",
-        "published": true
+    {
+      "country": {
+        "iso": "ES",
+        "name": "Spain",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
       },
-      "category": {
-        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
-        "name": "MotoGP",
-        "legacy_id": 3
+      "birth_city": "Barcelona",
+      "birth_date": "1995-12-08",
+      "start_year": 2012,
+      "years_old": 29,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 42,
+        "sponsored_team": "Monster Energy Yamaha MotoGP™",
+        "team": {
+          "id": "141b6f0f-7e53-4d27-9bdb-0ea8fba7e842",
+          "name": "Monster Energy Yamaha MotoGP",
+          "legacy_id": 19,
+          "type": "Official",
+          "color": "#0a2d82",
+          "text_color": "#ffffff",
+          "constructor": {
+            "id": "f2e835be-7fab-4782-a26b-de3d583d132c",
+            "name": "Yamaha",
+            "legacy_id": 3
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/1/4/141b6f0f-7e53-4d27-9bdb-0ea8fba7e842/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "AR42",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/0/4/04bf0ce4-5062-44fc-9745-ec85a8d8f8d3/2025/profile/main-727568.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
       },
-      "in_grid": true,
-      "short_nickname": "MM93",
-      "current": true,
-      "pictures": {
-        "profile": {
-          "main": "https://photos.motogp.com/riders/2/3/23e50438-a657-4fb0-a190-3262b5472f29/profile/main/93_Marc_Marquez_Official_Rider_DSC8752.png",
-          "secondary": null
-        },
-        "bike": {
-          "main": "https://photos.motogp.com/riders/2/3/23e50438-a657-4fb0-a190-3262b5472f29/bike/main/93_Marc_Marquez_Bike_Official_LGZ3628.png",
-          "secondary": null
-        },
-        "helmet": {
-          "main": "https://photos.motogp.com/riders/2/3/23e50438-a657-4fb0-a190-3262b5472f29/helmet/main/93_Marc_Marquez_Helmet_Official_LGZ3664.jpg",
-          "secondary": null
-        },
-        "number": "https://photos.motogp.com/riders/3/8/3877c550-4eba-430c-9022-0b81b0d9b91f/number/93.png",
-        "portrait": "https://photos.motogp.com/riders/2/3/23e50438-a657-4fb0-a190-3262b5472f29/portrait/93_Marc_Marquez_Official_Rider_DSC8758.jpg"
+      "retired_year": 2024,
+      "surname": "Rins",
+      "name": "Alex",
+      "nickname": null,
+      "legacy_id": 8150,
+      "retired": true,
+      "id": "04bf0ce4-5062-44fc-9745-ec85a8d8f8d3"
+    },
+    {
+      "country": {
+        "iso": "AU",
+        "name": "Australia",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/AU.svg"
       },
-      "type": "Official"
+      "birth_city": "Townsville",
+      "birth_date": "1995-01-18",
+      "start_year": 2012,
+      "years_old": 30,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 43,
+        "sponsored_team": "Prima Pramac Yamaha",
+        "team": {
+          "id": "598ccfb2-e0f1-4ad7-92b7-00ec9238a72c",
+          "name": "Prima Pramac Yamaha",
+          "legacy_id": 76358,
+          "type": "Official",
+          "color": null,
+          "text_color": null,
+          "constructor": {
+            "id": "f2e835be-7fab-4782-a26b-de3d583d132c",
+            "name": "Yamaha",
+            "legacy_id": 3
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/5/9/598ccfb2-e0f1-4ad7-92b7-00ec9238a72c/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "JM43",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/b/0/b0c1fea6-2dd5-4e26-8a18-0ac9fe6870e4/2025/profile/main-976738.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": 2024,
+      "surname": "Miller",
+      "name": "Jack",
+      "nickname": null,
+      "legacy_id": 8049,
+      "retired": true,
+      "id": "b0c1fea6-2dd5-4e26-8a18-0ac9fe6870e4"
     },
-    "country": {
-      "iso": "ES",
-      "name": "Spain",
-      "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
+    {
+      "country": {
+        "iso": "IT",
+        "name": "Italy",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
+      },
+      "birth_city": "Rome, Italy",
+      "birth_date": "1998-10-10",
+      "start_year": 2016,
+      "years_old": 26,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 49,
+        "sponsored_team": "Pertamina Enduro VR46 Racing Team",
+        "team": {
+          "id": "4130a48f-fa91-48be-a50c-f8a2e3f863a0",
+          "name": "Pertamina Enduro VR46 Racing Team",
+          "legacy_id": 214,
+          "type": "Official",
+          "color": "#dbff03",
+          "text_color": "#323232",
+          "constructor": {
+            "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
+            "name": "Ducati",
+            "legacy_id": 110
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/4/1/4130a48f-fa91-48be-a50c-f8a2e3f863a0/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "FD49",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/5/2/525b1551-f10b-4cfd-9b43-59af6fca654b/2025/profile/main-63572.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": 2024,
+      "surname": "Di Giannantonio",
+      "name": "Fabio",
+      "nickname": null,
+      "legacy_id": 8539,
+      "retired": true,
+      "id": "525b1551-f10b-4cfd-9b43-59af6fca654b"
     },
-    "birth_city": "Cervera",
-    "birth_date": "1993-02-17",
-    "years_old": 31,
-    "published": true,
-    "legacy_id": 7444
-  }
-]
+    {
+      "country": {
+        "iso": "IT",
+        "name": "Italy",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
+      },
+      "birth_city": "San Giovanni Rotondo",
+      "birth_date": "1986-07-05",
+      "start_year": 2005,
+      "years_old": 38,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 51,
+        "sponsored_team": "Ducati Lenovo Team",
+        "team": {
+          "id": "892fff2f-7402-4fbd-99fb-5fd567d8a80c",
+          "name": "Ducati Lenovo Team",
+          "legacy_id": 15,
+          "type": "Official",
+          "color": "#ad0000",
+          "text_color": "#ffffff",
+          "constructor": {
+            "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
+            "name": "Ducati",
+            "legacy_id": 110
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/8/9/892fff2f-7402-4fbd-99fb-5fd567d8a80c/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "MP51",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/7/c/7c653b2a-b493-436b-a77e-06a43b37b799/profile/main/_0003_51-Michele-Pirro,-MotoGP_DS_1752.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Test"
+      },
+      "retired_year": 2023,
+      "surname": "Pirro",
+      "name": "Michele",
+      "nickname": null,
+      "legacy_id": 6231,
+      "retired": true,
+      "id": "7c653b2a-b493-436b-a77e-06a43b37b799"
+    },
+    {
+      "country": {
+        "iso": "ES",
+        "name": "Spain",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
+      },
+      "birth_city": "El Palmar, Spain",
+      "birth_date": "2005-04-05",
+      "start_year": null,
+      "years_old": 19,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 54,
+        "sponsored_team": "Gresini Racing MotoGP™",
+        "team": {
+          "id": "11729e67-d2cb-41ad-b3a8-4a0ac5768a5f",
+          "name": "Gresini Racing MotoGP",
+          "legacy_id": 10,
+          "type": "Official",
+          "color": "#9baee4",
+          "text_color": "#262626",
+          "constructor": {
+            "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
+            "name": "Ducati",
+            "legacy_id": 110
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/1/1/11729e67-d2cb-41ad-b3a8-4a0ac5768a5f/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "FA54",
+        "current": false,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/7/1/71052114-5bce-4307-908c-4cc2bd387aac/2025/profile/main-155779.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": null,
+      "surname": "Aldeguer ",
+      "name": "Fermin",
+      "nickname": null,
+      "legacy_id": 9867,
+      "retired": false,
+      "id": "71052114-5bce-4307-908c-4cc2bd387aac"
+    },
+    {
+      "country": {
+        "iso": "IT",
+        "name": "Italy",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
+      },
+      "birth_city": "Torino",
+      "birth_date": "1997-01-14",
+      "start_year": 2014,
+      "years_old": 28,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 63,
+        "sponsored_team": "Ducati Lenovo Team",
+        "team": {
+          "id": "892fff2f-7402-4fbd-99fb-5fd567d8a80c",
+          "name": "Ducati Lenovo Team",
+          "legacy_id": 15,
+          "type": "Official",
+          "color": "#ad0000",
+          "text_color": "#ffffff",
+          "constructor": {
+            "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
+            "name": "Ducati",
+            "legacy_id": 110
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/8/9/892fff2f-7402-4fbd-99fb-5fd567d8a80c/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "FB63",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/6/6/66b78301-5826-4986-b11e-fa68a7bd77a7/2025/profile/main-188273.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": 2024,
+      "surname": "Bagnaia",
+      "name": "Francesco",
+      "nickname": null,
+      "legacy_id": 8273,
+      "retired": true,
+      "id": "66b78301-5826-4986-b11e-fa68a7bd77a7"
+    },
+    {
+      "country": {
+        "iso": "IT",
+        "name": "Italy",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/IT.svg"
+      },
+      "birth_city": "Rimini",
+      "birth_date": "1998-11-12",
+      "start_year": 2016,
+      "years_old": 26,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 72,
+        "sponsored_team": "Aprilia Racing",
+        "team": {
+          "id": "11d18b37-baba-400a-80c2-f8ddf040f97e",
+          "name": "Aprilia Racing",
+          "legacy_id": 21,
+          "type": "Official",
+          "color": "#5f259f",
+          "text_color": "#ffffff",
+          "constructor": {
+            "id": "21fbe597-b587-42e1-b571-a06af5cc2487",
+            "name": "Aprilia",
+            "legacy_id": 7
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/1/1/11d18b37-baba-400a-80c2-f8ddf040f97e/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "MB72",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/e/6/e622ec5b-5ccf-457c-a67f-ec028f0ddf6e/2025/profile/main-212826.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": 2024,
+      "surname": "Bezzecchi",
+      "name": "Marco",
+      "nickname": null,
+      "legacy_id": 8688,
+      "retired": true,
+      "id": "e622ec5b-5ccf-457c-a67f-ec028f0ddf6e"
+    },
+    {
+      "country": {
+        "iso": "ES",
+        "name": "Spain",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
+      },
+      "birth_city": "Cervera",
+      "birth_date": "1996-04-23",
+      "start_year": 2012,
+      "years_old": 28,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 73,
+        "sponsored_team": "Gresini Racing MotoGP™",
+        "team": {
+          "id": "11729e67-d2cb-41ad-b3a8-4a0ac5768a5f",
+          "name": "Gresini Racing MotoGP",
+          "legacy_id": 10,
+          "type": "Official",
+          "color": "#9baee4",
+          "text_color": "#262626",
+          "constructor": {
+            "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
+            "name": "Ducati",
+            "legacy_id": 110
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/1/1/11729e67-d2cb-41ad-b3a8-4a0ac5768a5f/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "AM73",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/4/1/41195f0f-9817-4a4d-913e-c1fbbb351d9b/2025/profile/main-327428.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": 2024,
+      "surname": "Marquez",
+      "name": "Alex",
+      "nickname": null,
+      "legacy_id": 8173,
+      "retired": true,
+      "id": "41195f0f-9817-4a4d-913e-c1fbbb351d9b"
+    },
+    {
+      "country": {
+        "iso": "JP",
+        "name": "Japan",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/JP.svg"
+      },
+      "birth_city": "Kiyose, Tokyo, Japan",
+      "birth_date": "2001-01-26",
+      "start_year": 2018,
+      "years_old": 24,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 79,
+        "sponsored_team": "Trackhouse MotoGP™ Team",
+        "team": {
+          "id": "8532f5e4-c2f3-417b-8c76-09302a826dd4",
+          "name": "Trackhouse MotoGP Team",
+          "legacy_id": 46,
+          "type": "Official",
+          "color": "#0066cc",
+          "text_color": "#ffffff",
+          "constructor": {
+            "id": "21fbe597-b587-42e1-b571-a06af5cc2487",
+            "name": "Aprilia",
+            "legacy_id": 7
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/8/5/8532f5e4-c2f3-417b-8c76-09302a826dd4/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "AO79",
+        "current": false,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/2/4/244b6f51-ac33-40ee-876d-9401dc9d1346/2025/profile/main-613285.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": 2024,
+      "surname": "Ogura",
+      "name": "Ai",
+      "nickname": null,
+      "legacy_id": 8680,
+      "retired": true,
+      "id": "244b6f51-ac33-40ee-876d-9401dc9d1346"
+    },
+    {
+      "country": {
+        "iso": "PT",
+        "name": "Portugal",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/PT.svg"
+      },
+      "birth_city": "Pragal",
+      "birth_date": "1995-01-04",
+      "start_year": 2011,
+      "years_old": 30,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 88,
+        "sponsored_team": "Prima Pramac Yamaha",
+        "team": {
+          "id": "598ccfb2-e0f1-4ad7-92b7-00ec9238a72c",
+          "name": "Prima Pramac Yamaha",
+          "legacy_id": 76358,
+          "type": "Official",
+          "color": null,
+          "text_color": null,
+          "constructor": {
+            "id": "f2e835be-7fab-4782-a26b-de3d583d132c",
+            "name": "Yamaha",
+            "legacy_id": 3
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/5/9/598ccfb2-e0f1-4ad7-92b7-00ec9238a72c/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "MO88",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/5/0/50b4fb1f-1785-4a9a-a65c-97d0de9daa22/2025/profile/main-380004.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": 2024,
+      "surname": "Oliveira",
+      "name": "Miguel",
+      "nickname": null,
+      "legacy_id": 7199,
+      "retired": true,
+      "id": "50b4fb1f-1785-4a9a-a65c-97d0de9daa22"
+    },
+    {
+      "country": {
+        "iso": "ES",
+        "name": "Spain",
+        "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
+      },
+      "birth_city": "Cervera",
+      "birth_date": "1993-02-17",
+      "start_year": 2008,
+      "years_old": 31,
+      "published": true,
+      "current_career_step": {
+        "season": 2025,
+        "number": 93,
+        "sponsored_team": "Ducati Lenovo Team",
+        "team": {
+          "id": "892fff2f-7402-4fbd-99fb-5fd567d8a80c",
+          "name": "Ducati Lenovo Team",
+          "legacy_id": 15,
+          "type": "Official",
+          "color": "#ad0000",
+          "text_color": "#ffffff",
+          "constructor": {
+            "id": "38af1078-e2f1-4399-811c-1e98cf6f6150",
+            "name": "Ducati",
+            "legacy_id": 110
+          },
+          "category": {
+            "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+            "name": "MotoGP",
+            "legacy_id": 3
+          },
+          "picture": "https://photos.motogp.com/teams/8/9/892fff2f-7402-4fbd-99fb-5fd567d8a80c/main-picture.png",
+          "published": true
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        },
+        "in_grid": true,
+        "short_nickname": "MM93",
+        "current": true,
+        "pictures": {
+          "profile": {
+            "main": "https://photos.motogp.com/riders/2/3/23e50438-a657-4fb0-a190-3262b5472f29/2025/profile/main-549335.png",
+            "secondary": null
+          },
+          "bike": { "main": null, "secondary": null },
+          "helmet": { "main": null, "secondary": null },
+          "number": null,
+          "portrait": null
+        },
+        "type": "Official"
+      },
+      "retired_year": 2024,
+      "surname": "Marquez",
+      "name": "Marc",
+      "nickname": null,
+      "legacy_id": 7444,
+      "retired": true,
+      "id": "23e50438-a657-4fb0-a190-3262b5472f29"
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import { Rider } from "@/models/rider";
 import style from "./Riders.module.scss";
 import { motoGP } from "@/app/fonts";
 import classNames from "classnames";
+import { FALLBACK_TEAM_COLOR } from "../consts";
 
 const RiderCard = ({
   rider,
@@ -20,9 +21,11 @@ const RiderCard = ({
   inGuestArray?: Boolean;
 }) => {
   const getImageUrl = () => {
-    const endUrl = rider.pictures.profile.main.split("/");
+    const url = rider.pictures.profile.main;
+    if(!url) return;
+    const endUrl = url.split("/");
 
-    return require(`/public/riders/24/${
+    return require(`/public/riders/25/${
       endUrl[endUrl.length - 1]
     }?resize&size=500&webp`);
   };
@@ -44,6 +47,10 @@ const RiderCard = ({
         highlightGuest && style.highlightGuest,
       )} rider-${rider.name}-${rider.surname}` }
     >
+      {
+        rider.pictures.bike.main || rider.teamPicture && (
+          
+
       <img
         src={rider.pictures.bike.main || rider.teamPicture}
         alt=""
@@ -52,6 +59,8 @@ const RiderCard = ({
           !rider.pictures.bike.main && style.altBikeImage
         )}
       />
+    )
+  }
       <img
         alt=""
         className={style.riderPic__img}
@@ -69,7 +78,7 @@ const RiderCard = ({
             </>
           )}
         </span>
-        <span className={style.team} style={{ color: rider.teamColor }}>
+        <span className={style.team} style={{ color: rider.teamColor || FALLBACK_TEAM_COLOR }}>
           {rider.sponsoredTeam}
         </span>
         <span className={style.riderNumber}>#{rider.number}</span>{" "}

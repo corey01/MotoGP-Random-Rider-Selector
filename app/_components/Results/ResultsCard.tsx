@@ -15,7 +15,7 @@ const ResultsCard = ({
   const getRiderPortrait = () => {
     const endUrl = rider.pictures.portrait!.split("/");
 
-    return require(`/public/riders/portrait/${
+    return require(`/public/riders/25/portrait/${
       endUrl[endUrl.length - 1]
     }?resize&size=400&webp`);
   };
