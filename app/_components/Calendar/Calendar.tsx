@@ -10,8 +10,11 @@ import { CalendarEventModal } from "../Modals/CalendarEventModal";
 
 import { inter } from "@/app/fonts";
 import './Calendar.css'; 
+import { MotoGpSeasonData, WsbkSeasonData } from "@/utils/getSeasonDataLocal";
 
-export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: any, wsbkData: any }) => {
+
+
+export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonData, wsbkData: WsbkSeasonData }) => {
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
   const handleEventClick = (clickInfo: EventClickArg) => {

@@ -2,12 +2,44 @@ import { Season } from "@/models/race";
 import seasonData from "./seasonData.json";
 import wsbkSeasonData from './wsbkSeason2025.json';
 import { add } from "date-fns";
-import { convertToLocalTime } from "@/app/calendar/page";
+
+interface Broadcast {
+  kind: string;
+  date_start: string;
+  eventName: string;
+  name: string;
+}
+
+interface RaceEvent {
+  name: string;
+  broadcasts: Broadcast[];
+}
+
+interface CalendarEvent {
+  title: string;
+  start: string;
+  className: string;
+}
 
 const defaultSeasonObject = {
   past: [],
   future: [],
   current: [],
+};
+
+export const convertToLocalTime = (dateString: string): string => {
+  const date = new Date(dateString);
+  return date.toISOString();
+};
+
+export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
+  return data.broadcasts
+    .filter(session => session.kind === "RACE")
+    .map(session => ({
+      title: `${data.name} ${session.eventName} ${session.name}`,
+      start: convertToLocalTime(session.date_start),
+      className: 'motogp-event'
+    }));
 };
 
 export async function getSeasonDataLocal() {
@@ -44,7 +76,7 @@ export async function getSeasonDataLocal() {
 }
 
 export async function getUnsortedSeasonDataLocal() {  
-  return seasonData;
+  return seasonData.flatMap(s => filterAndFormatSessions(s));
 }
 
 export async function getWsbkSeasonDataLocal() {
@@ -57,3 +89,6 @@ export async function getWsbkSeasonDataLocal() {
     })).filter(event => event.type === "RACE")
   })
 }
+
+export type MotoGpSeasonData = Awaited<ReturnType<typeof getUnsortedSeasonDataLocal>>;
+export type WsbkSeasonData = Awaited<ReturnType<typeof getWsbkSeasonDataLocal>>;
