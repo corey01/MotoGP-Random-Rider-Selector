@@ -16,20 +16,34 @@ import { MotoGpSeasonData, WsbkSeasonData } from "@/utils/getSeasonDataLocal";
 export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonData, wsbkData: WsbkSeasonData }) => {
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const calendarRef = useRef<any>(null);
+  const touchStartRef = useRef({ x: 0, y: 0 });
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     setSelectedEvent(clickInfo.event);
   };
 
-  const handleSwipe = (e: React.TouchEvent) => {
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY
+    };
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
     if (!calendarRef.current) return;
     
-    const calendarApi = calendarRef.current.getApi();
     const touchEndX = e.changedTouches[0].clientX;
-    const touchStartX = (e.currentTarget as any).touchStartX;
-    const direction = touchStartX - touchEndX > 100 ? 'next' : touchEndX - touchStartX > 100 ? 'prev' : null;
+    const touchEndY = e.changedTouches[0].clientY;
+    const deltaX = touchStartRef.current.x - touchEndX;
+    const deltaY = Math.abs(touchStartRef.current.y - touchEndY);
+
+    // Only handle horizontal swipes (ignore if vertical movement is larger)
+    if (deltaY > Math.abs(deltaX)) return;
+
+    const direction = deltaX > 100 ? 'next' : deltaX < -100 ? 'prev' : null;
 
     if (direction) {
+      const calendarApi = calendarRef.current.getApi();
       const viewEl = calendarApi.el.querySelector('.fc-view-harness');
       if (!viewEl) return;
 
@@ -60,8 +74,8 @@ export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonDat
   return (
     <div className="calendar-container">
       <div className={`calendar-wrapper ${inter.className}`}
-           onTouchStart={(e) => (e.currentTarget as any).touchStartX = e.touches[0].clientX}
-           onTouchEnd={handleSwipe}>
+           onTouchStart={handleTouchStart}
+           onTouchEnd={handleTouchEnd}>
         <FullCalendar
           ref={calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
