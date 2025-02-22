@@ -23,6 +23,15 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -30,6 +39,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+  color: rgb(var(--foreground-rgb));
+  min-height: 100vh;
 }
 ol, ul {
 	list-style: none;
@@ -59,10 +70,6 @@ table {
 
 * {
   box-sizing: border-box;
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
 }
 
 main {
@@ -156,4 +163,11 @@ input {
   padding: 8px;
   border: 1px solid #aaa;
   color: #000;
+}
+
+.fullHeight {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
 }

@@ -8,8 +8,7 @@ import { usePathname } from "next/navigation";
 const Header = () => {
   const pathname = usePathname();
 
-  const isHomePage = pathname === "/MotoGP-Random-Rider-Selector";
-  const isLineupPage = pathname.includes("/race-lineup");
+  const isHomePage = pathname.includes("/sweepstake");
   const isCalendarPage = pathname.includes("/calendar");
 
   return (
@@ -17,10 +16,7 @@ const Header = () => {
       <nav className={`${style.headerNav} ${inter.className}`}>
         <ul>
           <li className={isHomePage ? style.active : undefined}>
-            <Link href="/">Home</Link>
-          </li>
-          <li className={isLineupPage ? style.active : undefined}>
-            <Link href="/race-lineup">Race Lineup</Link>
+            <Link href="/sweepstake">Sweepstake</Link>
           </li>
           <li className={isCalendarPage ? style.active : undefined}>
             <Link href="/calendar">Calendar</Link>

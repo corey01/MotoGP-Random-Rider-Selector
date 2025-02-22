@@ -1,19 +1,9 @@
 "use client";
 
-import App from "@/app/_components/App";
-import { getRiderData } from "@/utils/getRiderData";
-import { getSeasonDataLocal } from "@/utils/getSeasonDataLocal";
-import { Suspense } from "react";
+import { Home } from "./_components/Home/Home";
 
-const Home = async () => {
-  const allRiders = await getRiderData();
-  const season = await getSeasonDataLocal();
-
+export default function HomePage() {
   return (
-    <Suspense>
-      <App allRiders={allRiders} season={season} />
-    </Suspense>
+    <Home />
   );
-};
-
-export default Home;
+}

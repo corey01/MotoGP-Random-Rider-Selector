@@ -5,7 +5,7 @@ import style from "../Riders.module.scss";
 import { motoGP, motoGPTextBold, motoGPTextMed } from "@/app/fonts";
 import classNames from "classnames";
 import { getEntrantImage } from "@/utils/entrants";
-import { FALLBACK_RIDER_COLOR, FALLBACK_TEAM_COLOR } from "@/app/consts";
+import { FALLBACK_NUMBER_COLOR, FALLBACK_RIDER_COLOR, FALLBACK_TEAM_COLOR, FALLBACK_TOWER_COLOR } from "@/app/consts";
 
 const ResultsRiderCard = ({
   selected: { entrant, rider },
@@ -46,7 +46,7 @@ const ResultsRiderCard = ({
         <span className={`${motoGPTextBold.className} ${style.riderName}`}>
           {rider.name} {rider.surname}
         </span>
-        <span style={{ color: rider.teamColor || FALLBACK_TEAM_COLOR }} className={style.riderNumber}>
+        <span style={{ color: rider.teamColor || FALLBACK_NUMBER_COLOR }} className={style.riderNumber}>
           #{rider.number}
         </span>
       </div>
@@ -56,7 +56,7 @@ const ResultsRiderCard = ({
           src={getEntrantImage(entrant)}
           alt=""
           />
-      <div className={`${motoGP.className} ${style.towerName}`}><div style={{backgroundColor: rider.teamColor || FALLBACK_TEAM_COLOR}} className={style.towerBar} />{riderShortName} <span style={{color: rider.textColor || FALLBACK_RIDER_COLOR, backgroundColor: rider.teamColor || FALLBACK_TEAM_COLOR}}>{rider.number}</span></div>
+      <div className={`${motoGP.className} ${style.towerName}`}><div style={{backgroundColor: rider.teamColor || FALLBACK_TOWER_COLOR}} className={style.towerBar} />{riderShortName} <span style={{color: rider.textColor || FALLBACK_RIDER_COLOR, backgroundColor: rider.teamColor || FALLBACK_TEAM_COLOR}}>{rider.number}</span></div>
       </div>
     </div>
   );

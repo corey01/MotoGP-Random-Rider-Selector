@@ -7,6 +7,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { useState, useRef } from "react";
 import { CalendarEventModal } from "../Modals/CalendarEventModal";
+import { CalendarLegend } from './CalendarLegend';
 
 import { inter, motoGP } from "@/app/fonts";
 import './Calendar.css'; 
@@ -102,7 +103,7 @@ export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonDat
           eventClick={handleEventClick}
         />
       </div>
-
+      <CalendarLegend />
       <CalendarEventModal 
         isOpen={!!selectedEvent}
         onClose={() => setSelectedEvent(null)}

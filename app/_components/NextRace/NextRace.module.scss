@@ -6,6 +6,12 @@
   margin-top: 31px;
   margin-bottom: 31px;
 
+  .raceName a {
+    text-decoration: none;
+    color: var(--motogp-red);
+    font-weight: 600;
+  }
+
   h2 {
     font-size: 14px;
     font-weight: 600;

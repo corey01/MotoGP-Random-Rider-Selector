@@ -22,7 +22,7 @@ const NextRace = ({ season }: { season: Season }) => {
   return (
     <div className={`${style.NextRace} ${isActiveNow ? style.ongoing : ""}`}>
       <h2>{isActiveNow ? "Ongoing Grand Prix" : "Next Grand Prix"}</h2>
-      <p>{race.name}</p>
+      <p className={style.raceName}><Link href="/race-lineup">{race.name}</Link></p>
       <p>
         {race.circuit.circuitName} - {race.circuit.circuitCountry}
       </p>

@@ -80,7 +80,7 @@ const RiderCard = ({
             </>
           )}
         </span>
-        <span className={style.team} style={{ color: rider.teamColor || FALLBACK_TEAM_COLOR }}>
+        <span className={`${style.team} ${rider.teamColor ? '' : style.teamOutline}`} style={{ color: rider.teamColor || FALLBACK_TEAM_COLOR }}>
           {rider.sponsoredTeam}
         </span>
         <span className={style.riderNumber}>#{rider.number}</span>{" "}
