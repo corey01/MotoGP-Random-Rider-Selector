@@ -12,9 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${motoGP.variable}`}>
+    <html lang="en">
       <meta name="theme-color" content="#242424" />
-      <body>
+      <body className={`${inter.className} ${inter.variable} ${motoGP.variable}`}>
         <main>
           <Header />
           {children}
