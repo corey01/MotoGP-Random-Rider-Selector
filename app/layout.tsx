@@ -1,5 +1,5 @@
 import Header from "./_components/Header";
-import { inter } from "./fonts";
+import { inter, motoGP } from "./fonts";
 import "./globals.css";
 
 export const metadata = {
@@ -12,9 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${motoGP.variable}`}>
       <meta name="theme-color" content="#242424" />
-      <body className={inter.className}>
+      <body>
         <main>
           <Header />
           {children}

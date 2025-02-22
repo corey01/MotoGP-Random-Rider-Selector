@@ -1,20 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { motoGP } from "../fonts";
+import { inter, motoGP } from "../fonts";
 import style from "./Header.module.scss";
 import { usePathname } from "next/navigation";
 
 const Header = () => {
   const pathname = usePathname();
 
-  const isHomePage = pathname === "/";
+  const isHomePage = pathname === "/MotoGP-Random-Rider-Selector";
   const isLineupPage = pathname.includes("/race-lineup");
   const isCalendarPage = pathname.includes("/calendar");
 
   return (
     <div className={style.header}>
-      <nav className={style.headerNav}>
+      <nav className={`${style.headerNav} ${inter.className}`}>
         <ul>
           <li className={isHomePage ? style.active : undefined}>
             <Link href="/">Home</Link>
@@ -29,7 +29,6 @@ const Header = () => {
       </nav>
       {
         !isCalendarPage && (
-
           <h1 className={motoGP.className}>
         {" "}
         MotoGP

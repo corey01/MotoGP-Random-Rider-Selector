@@ -112,7 +112,7 @@
     text-align: center !important;
     white-space: normal !important;
     width: 100% !important;
-    font-family: var(--font-motoGP) !important;
+    font-family: 'MotoGP', sans-serif !important;  /* Use font name directly */
   }
 
   /* Navigation buttons */
@@ -421,7 +421,7 @@
 
 /* Adjust day cell to accommodate variable height events */
 .fc-daygrid-day-frame {
-  min-height: 100px !important;
+  min-height: 45px !important;
 }
 
 /* Remove any conflicting height constraints */
@@ -454,4 +454,8 @@
   font-family: var(--font-motoGP);
   padding: 4px 12px;
   border-radius: 4px;
+}
+
+.fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+    min-height: 0;
 }
