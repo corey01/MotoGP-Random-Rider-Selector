@@ -41,7 +41,7 @@ const ResultsPage = () => {
 
   const handleReset = () => {
     localStorage.removeItem("savedResults");
-    router.push("/");
+    router.push("/sweepstake");
   };
 
   const handleAddEntrantAndGenerate = (entrant: string) => {

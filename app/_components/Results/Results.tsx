@@ -1,7 +1,7 @@
 import { SelectedRider } from "@/models/rider";
 import ResultsCard from "./ResultsCard";
 import style from "./ResultsCard.module.scss";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ReturnModal from "../Modals/ReturnModal";
 import RiderCard from "../RiderCard";
 import ResultsRiderCard from "./ResultsRiderCard";
@@ -17,7 +17,11 @@ const Results = ({ handleReset, selectedRiders, addEntrant }: ResultsProps) => {
   const [returnModalOpen, setReturnModalOpen] = useState(false);
   const [addEntrantModalOpen, setEntrantModalOpen] = useState(false);
 
-  console.log(selectedRiders)
+  // Memoize the sorted riders
+  const sortedRiders = useMemo(() => 
+    [...selectedRiders].sort((a, b) => a.rider.number - b.rider.number),
+   [selectedRiders] // Only re-sort when selectedRiders changes
+  );
 
   const generateShareLink = () => {
     const url = window.location.href;
@@ -46,7 +50,7 @@ const Results = ({ handleReset, selectedRiders, addEntrant }: ResultsProps) => {
 
   return (
     <div className={style.results}>
-      {selectedRiders.map((selected) => (
+      {sortedRiders.map((selected) => (
         <ResultsRiderCard
           key={`res-${selected.rider.id}`}
           selected={selected}
