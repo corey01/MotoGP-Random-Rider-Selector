@@ -1,28 +1,87 @@
 /* General styles for the calendar */
 .fc {
   max-width: 100%;
-  margin: 0 auto;
-  height: 80vh;
-  min-height: 650px;
   width: 100%;
+  min-height: 650px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+/* General styles for the calendar */
+.fc {
+  max-width: 100%;
+  width: 100%;
+  min-height: 650px;
+  background: #fff;
+  border-radius: 8px;
 }
 
 /* Toolbar styles */
 .fc .fc-toolbar {
-  padding: 0.5rem !important;
+  padding: 1rem !important;
   margin-bottom: 0.5rem !important;
+  background: transparent !important;
+  margin-top: 1rem !important;
 }
 
 .fc .fc-toolbar-title {
   font-size: 1.2rem !important;
   margin: 0 !important;
-  font-family: var(--font-motoGP) !important;
+  font-family: 'MotoGP', sans-serif !important;
 }
 
 /* Button styles */
 .fc .fc-button {
   padding: 0.4rem 0.8rem !important;
   font-size: 0.9rem !important;
+  background-color: #000 !important;
+  border-color: #000 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+.fc .fc-button:hover {
+  background-color: #333 !important;
+  border-color: #333 !important;
+}
+
+.fc .fc-button-active {
+  background-color: #000 !important;
+  border-color: #000 !important;
+}
+
+/* Update button group styling */
+.fc .fc-button-group {
+  gap: 0 !important;
+  display: inline-flex !important;
+}
+
+.fc .fc-today-button {
+  border-radius: 0 !important;
+  margin: 0 -1px !important;  /* Compensate for double borders */
+  position: relative;
+  z-index: 1;
+  border-left: 1px solid rgba(255,255,255,0.2) !important;
+  border-right: 1px solid rgba(255,255,255,0.2) !important;
+}
+
+.fc .fc-prev-button {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-top-left-radius: 4px !important;
+  border-bottom-left-radius: 4px !important;
+}
+
+.fc .fc-next-button {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-top-right-radius: 4px !important;
+  border-bottom-right-radius: 4px !important;
+}
+
+.fc .fc-button-group .fc-button:not(:last-child) {
+  border-right: 1px solid rgba(255,255,255,0.2) !important;
 }
 
 /* Mobile-specific styles */
@@ -30,6 +89,7 @@
   .fc {
     min-height: unset;
     height: calc(100vh - 20px);
+    touch-action: pan-y pinch-zoom;
   }
 
   .fc .fc-toolbar {
@@ -43,7 +103,7 @@
     display: flex !important;
     justify-content: center !important;
     width: 100% !important;
-    gap: 0.3rem;
+    gap: 0;
   }
 
   /* Title styling */
@@ -83,7 +143,7 @@
   }
 
   .fc .fc-day {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 
   .fc .fc-event {
@@ -96,11 +156,17 @@
 
   .fc .fc-view-harness {
     max-height: calc(100vh - 120px) !important;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   /* Make day cells more compact */
   .fc .fc-daygrid-day {
     padding: 2px !important;
+  }
+
+  .fc .fc-scroller {
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -157,7 +223,6 @@
 .fc-view-harness {
   height: auto !important;
   max-height: calc(80vh - 80px) !important;
-  overflow: auto !important;
 }
 
 /* Day column width adjustments */
@@ -165,7 +230,7 @@
 .fc-day-sun,
 .fc-col-header-cell.fc-day-sat,
 .fc-col-header-cell.fc-day-sun {
-  width: 22% !important;
+  width: 25% !important;
 }
 
 .fc-day-mon,
@@ -178,7 +243,7 @@
 .fc-col-header-cell.fc-day-wed,
 .fc-col-header-cell.fc-day-thu,
 .fc-col-header-cell.fc-day-fri {
-  width: 11.2% !important;
+  width: 10% !important;
 }
 
 /* Additional styling to ensure content fits in smaller cells */
@@ -275,22 +340,30 @@
 
 /* Event type-specific styling */
 .fc-event.motogp-event {
-  background-color: #E31B23 !important;
+  background-color: var(--motogp-red, #E31B23) !important;
   color: white !important;
+  border: none !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .fc-event.wsbk-event {
-  background-color: #000088 !important;
+  background-color: var(--wsbk-blue, #004C9E) !important;
   color: white !important;
+  border: none !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Hover states for different event types */
 .fc-event.motogp-event:hover {
-  background-color: #c41820 !important;
+  background-color: var(--motogp-red-dark, #c41820) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .fc-event.wsbk-event:hover {
-  background-color: #000066 !important;
+  background-color: var(--wsbk-blue-dark, #003870) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Custom event content styling */
@@ -301,16 +374,84 @@
 }
 
 .event-time {
-  font-size: 0.85em;
+  font-size: 0.75em;
   opacity: 0.9;
 }
 
 .event-title {
   font-weight: 500;
+  font-size: 0.8em;
 }
 
-/* Adjust event height for two lines */
+/* Remove fixed height constraints and update event styling */
 .fc-daygrid-event {
-  min-height: 42px !important;
-  max-height: 42px !important;
+  display: flex !important;
+  align-items: center !important;
+  overflow: visible !important;
+  min-height: unset !important;
+  max-height: unset !important;
+  padding: 4px 6px !important;
+  margin: 1px 0 !important;
+}
+
+.event-content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  width: 100% !important;
+  padding: 2px 0 !important;
+}
+
+.event-time {
+  font-size: 0.75em !important;
+  opacity: 0.9 !important;
+  line-height: 1.2 !important;
+}
+
+.event-title {
+  font-weight: 500 !important;
+  font-size: 0.8em !important;
+  line-height: 1.2 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+
+/* Adjust day cell to accommodate variable height events */
+.fc-daygrid-day-frame {
+  min-height: 100px !important;
+}
+
+/* Remove any conflicting height constraints */
+.fc-daygrid-event-harness {
+  height: auto !important;
+}
+
+/* Update day header styling */
+.fc-col-header {
+  background-color: #f8f8f8;
+}
+
+.fc-col-header-cell {
+  padding: 8px 0 !important;
+  font-weight: 600;
+}
+
+/* Update today highlight */
+.fc .fc-day-today {
+  background-color: rgba(227, 27, 35, 0.05) !important;
+}
+
+/* Remove background from toolbar area */
+.fc-header-toolbar {
+  border-radius: 0 !important;
+}
+
+.calendar-title {
+  display: inline-block;
+  font-family: var(--font-motoGP);
+  padding: 4px 12px;
+  border-radius: 4px;
 }

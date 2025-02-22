@@ -1,5 +1,6 @@
 'use client';
 
+import { motoGP } from "@/app/fonts";
 import style from "./Modal.module.scss";
 
 interface CalendarEventModalProps {
@@ -17,23 +18,49 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
     }
   };
 
+  const eventProps = event.extendedProps;
+  const eventDate = new Date(event.start);
+
+  const formatDate = (date: Date) => {
+    return {
+      day: date.toLocaleDateString([], { weekday: 'long' }),
+      date: date.toLocaleDateString([], { 
+        day: 'numeric', 
+        month: 'long'
+      }),
+      year: date.getFullYear(),
+      time: date.toLocaleTimeString([], { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false 
+      })
+    };
+  };
+
+  const { day, date, year, time } = formatDate(eventDate);
+
   return (
     <div onClick={handleOverlayClick} className={style.Overlay}>
       <div className={style.Modal}>
-        <p className={style.title}>Race Details</p>
-        <div>
-          <p style={{ marginBottom: '12px' }}>
-            {new Date(event.start).toLocaleString([], {
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit'
-            })}
-          </p>
-          <p>{event.title}</p>
+        <div className={style.modalHeader}>
+          <div className={`${style.seriesTag} ${event.classNames.includes('motogp-event') ? style.motogpTag : style.wsbkTag}`}>
+            {event.classNames.includes('motogp-event') ? 'MotoGP' : 'WSBK'}
+          </div>
+          <h2 className={style.title}>{eventProps.meta.round}</h2>
         </div>
+        
+        <div className={style.eventContent}>
+          <div className={style.eventDateTime}>
+            <div className={style.eventDay}>{day}</div>
+            <div className={style.eventDate}>{date}, {year}</div>
+            <div className={style.eventTime}>{time}</div>
+          </div>
+
+          <div className={style.eventName}>
+            {event.title}
+          </div>
+        </div>
+
         <div className={style.buttonBar}>
           <button className="pickButton" onClick={onClose}>
             Close

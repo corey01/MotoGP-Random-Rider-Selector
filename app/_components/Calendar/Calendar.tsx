@@ -8,11 +8,9 @@ import interactionPlugin from '@fullcalendar/interaction'
 import { useState } from "react";
 import { CalendarEventModal } from "../Modals/CalendarEventModal";
 
-import { inter } from "@/app/fonts";
+import { inter, motoGP } from "@/app/fonts";
 import './Calendar.css'; 
 import { MotoGpSeasonData, WsbkSeasonData } from "@/utils/getSeasonDataLocal";
-
-
 
 export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonData, wsbkData: WsbkSeasonData }) => {
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
@@ -20,15 +18,21 @@ export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonDat
   const handleEventClick = (clickInfo: EventClickArg) => {
     setSelectedEvent(clickInfo.event);
   };
-
   return (
     <div className="calendar-container">
       <div className={`calendar-wrapper ${inter.className}`}>
         <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin,
-              interactionPlugin]}
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           events={[...motoGPData, ...wsbkData]}
+          editable={false}
+          eventStartEditable={false}
+          eventDurationEditable={false}
+          selectable={false}
+          selectMirror={false}
+          // Calendar settings
+          height="auto"
+          handleWindowResize={true}
           eventTimeFormat={{
             hour: '2-digit',
             minute: '2-digit',
@@ -43,18 +47,16 @@ export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonDat
             `
           })}
           headerToolbar={{
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay'
+              left: 'title',
+              center: 'prev today next',
+              right: '' // Removed the view switching buttons
           }}
           firstDay={1}
-          height="100%"
           contentHeight="auto"
-          handleWindowResize={true}
           stickyHeaderDates={true}
-          titleFormat={{ 
-            year: 'numeric',
-            month: 'long'
+          titleFormat={{
+            month: 'long',
+            year: 'numeric'
           }}
           eventClick={handleEventClick}
         />

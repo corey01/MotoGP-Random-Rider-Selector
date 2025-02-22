@@ -21,6 +21,12 @@ interface CalendarEvent {
   className: string;
 }
 
+type EventMeta = {
+  round: string;
+  name: string;
+}
+
+
 const defaultSeasonObject = {
   past: [],
   future: [],
@@ -36,9 +42,13 @@ export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
   return data.broadcasts
     .filter(session => session.kind === "RACE")
     .map(session => ({
-      title: `${data.name} ${session.eventName} ${session.name}`,
+      title: `${session.eventName} ${session.name}`,
       start: convertToLocalTime(session.date_start),
-      className: 'motogp-event'
+      className: 'motogp-event',
+      meta: {
+        round: `${data.name} Grand Prix`,
+        name: session.name
+      }
     }));
 };
 
@@ -79,13 +89,18 @@ export async function getUnsortedSeasonDataLocal() {
   return seasonData.flatMap(s => filterAndFormatSessions(s));
 }
 
+
 export async function getWsbkSeasonDataLocal() {
   return wsbkSeasonData.flatMap(schedule => {
     return schedule.data.flatMap(a => a).map(event => ({
       ...event, 
-      title: `${event.name} - ${schedule.title}`,
+      title: event.name.replace('WorldSBK', 'WSBK'),
       start: convertToLocalTime(event.dateTimeStart),
-      className: 'wsbk-event'
+      className: 'wsbk-event',
+      meta: {
+        round: schedule.title,
+        name: event.name
+      }
     })).filter(event => event.type === "RACE")
   })
 }
