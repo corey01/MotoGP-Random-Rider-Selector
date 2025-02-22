@@ -72,8 +72,9 @@ main {
 
 main h1 {
   text-align: center;
-  font-size: 36px;
-  margin-top: 16px;
+  font-size: 28px;
+  line-height: 26px;
+  margin-top: 18px;
 }
 
 .resetButton {

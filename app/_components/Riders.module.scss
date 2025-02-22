@@ -88,10 +88,10 @@
 }
 
 .riderName {
-  font-size: 34px;
-  line-height: 25px;
-  margin-bottom: 12px;
-  margin-top: 12px;
+  font-size: 22px;
+  line-height: 20px;
+  margin-bottom:4px;
+  margin-top: 4px;
   display: block;
 }
 
@@ -119,11 +119,11 @@
   display: block;
 
   .entrantTitle {
-    font-size: 28px;
+    font-size: 20px;
   }
 
   .riderName {
-    font-size: 26px;
+    font-size: 22px;
     line-height: 22px;
   }
 
@@ -151,12 +151,13 @@
   }
 
   .towerName {
+    font-size: 12px;
     background: rgb(55,70,67);
     background: linear-gradient(90deg, rgba(55,70,67,1) 0%, rgba(21,34,22,1) 100%);
     position: relative;
     bottom: 34px;
     z-index: 10;
-    padding: 6px 0 6px 10px;
+    padding: 10px 0 8px 10px;
     text-align: left;
     color: #fff;
     display: flex;

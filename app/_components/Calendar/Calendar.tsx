@@ -30,26 +30,29 @@ export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonDat
 
     if (direction) {
       const viewEl = calendarApi.el.querySelector('.fc-view-harness');
-      if (viewEl) {
-        // Add entrance animation class
-        viewEl.classList.add(direction === 'next' ? 'slide-left-enter' : 'slide-right-enter');
+      if (!viewEl) return;
+
+      // Force a repaint to ensure animation runs
+      void viewEl.offsetHeight;
+
+      // Add initial animation class
+      viewEl.classList.add(direction === 'next' ? 'slide-left-enter' : 'slide-right-enter');
+
+      // Queue the month change
+      setTimeout(() => {
+        calendarApi[direction]();
         
-        // Wait a frame to ensure the animation starts
-        requestAnimationFrame(() => {
-          // Trigger the month change
-          calendarApi[direction]();
-          
-          // Add the center position class
-          requestAnimationFrame(() => {
-            viewEl.classList.add('slide-center');
-            
-            // Clean up classes after animation
-            setTimeout(() => {
-              viewEl.classList.remove('slide-left-enter', 'slide-right-enter', 'slide-center');
-            }, 300);
-          });
-        });
-      }
+        // Force another repaint
+        void viewEl.offsetHeight;
+        
+        // Add final position class
+        viewEl.classList.add('slide-center');
+
+        // Clean up classes
+        setTimeout(() => {
+          viewEl.classList.remove('slide-left-enter', 'slide-right-enter', 'slide-center');
+        }, 300);
+      }, 50);
     }
   };
 

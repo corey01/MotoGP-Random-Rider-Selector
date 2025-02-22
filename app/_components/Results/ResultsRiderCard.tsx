@@ -2,7 +2,7 @@
 
 import { SelectedRider } from "@/models/rider";
 import style from "../Riders.module.scss";
-import { motoGP } from "@/app/fonts";
+import { motoGP, motoGPTextBold, motoGPTextMed } from "@/app/fonts";
 import classNames from "classnames";
 import { getEntrantImage } from "@/utils/entrants";
 import { FALLBACK_RIDER_COLOR, FALLBACK_TEAM_COLOR } from "@/app/consts";
@@ -43,7 +43,7 @@ const ResultsRiderCard = ({
         <span className={classNames(motoGP.className, style.entrantTitle)}>
           {entrant}
         </span>
-        <span className={`${motoGP.className} ${style.riderName}`}>
+        <span className={`${motoGPTextBold.className} ${style.riderName}`}>
           {rider.name} {rider.surname}
         </span>
         <span style={{ color: rider.teamColor || FALLBACK_TEAM_COLOR }} className={style.riderNumber}>

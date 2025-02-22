@@ -501,3 +501,36 @@
     transform: translateX(0);
   }
 }
+
+/* Animation styles with higher specificity */
+.calendar-wrapper .fc .fc-view-harness {
+  transform-origin: center !important;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out !important;
+  will-change: transform, opacity !important;
+}
+
+.calendar-wrapper .fc .fc-view-harness.slide-left-enter {
+  opacity: 0 !important;
+  transform: translateX(100px) !important;
+  pointer-events: none !important;
+}
+
+.calendar-wrapper .fc .fc-view-harness.slide-right-enter {
+  opacity: 0 !important;
+  transform: translateX(-100px) !important;
+  pointer-events: none !important;
+}
+
+.calendar-wrapper .fc .fc-view-harness.slide-center {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+/* Override any FullCalendar transitions */
+.fc * {
+  transition: none !important;
+}
+
+.fc .fc-view-harness-active {
+  transition: height 0.3s ease-out !important;
+}
