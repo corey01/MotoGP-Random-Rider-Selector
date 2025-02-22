@@ -1,0 +1,316 @@
+/* General styles for the calendar */
+.fc {
+  max-width: 100%;
+  margin: 0 auto;
+  height: 80vh;
+  min-height: 650px;
+  width: 100%;
+}
+
+/* Toolbar styles */
+.fc .fc-toolbar {
+  padding: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.fc .fc-toolbar-title {
+  font-size: 1.2rem !important;
+  margin: 0 !important;
+  font-family: var(--font-motoGP) !important;
+}
+
+/* Button styles */
+.fc .fc-button {
+  padding: 0.4rem 0.8rem !important;
+  font-size: 0.9rem !important;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .fc {
+    min-height: unset;
+    height: calc(100vh - 20px);
+  }
+
+  .fc .fc-toolbar {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    padding: 0.25rem !important;
+  }
+
+  .fc .fc-toolbar-chunk {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    gap: 0.3rem;
+  }
+
+  /* Title styling */
+  .fc .fc-toolbar-title {
+    font-size: 1.1rem !important;
+    text-align: center !important;
+    white-space: normal !important;
+    width: 100% !important;
+    font-family: var(--font-motoGP) !important;
+  }
+
+  /* Navigation buttons */
+  .fc .fc-prev-button,
+  .fc .fc-next-button,
+  .fc .fc-today-button {
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* View switching buttons */
+  .fc .fc-dayGridMonth-button,
+  .fc .fc-timeGridWeek-button,
+  .fc .fc-timeGridDay-button {
+    font-size: 0.8rem !important;
+    padding: 0.3rem 0.5rem !important;
+  }
+
+  /* Button groups */
+  .fc .fc-button-group {
+    display: flex !important;
+    gap: 0.2rem;
+  }
+
+  /* Prevent text wrapping in buttons */
+  .fc .fc-button {
+    white-space: nowrap !important;
+  }
+
+  .fc .fc-day {
+    font-size: 0.9rem;
+  }
+
+  .fc .fc-event {
+    font-size: 0.75rem !important;
+  }
+
+  .fc-daygrid-event {
+    min-height: 28px;
+  }
+
+  .fc .fc-view-harness {
+    max-height: calc(100vh - 120px) !important;
+  }
+
+  /* Make day cells more compact */
+  .fc .fc-daygrid-day {
+    padding: 2px !important;
+  }
+}
+
+.calendar-container {
+  width: 100%;
+  padding: 0;
+}
+
+.calendar-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.fc-event {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.fc-daygrid-event {
+  min-height: 24px;
+  max-height: 24px;
+  display: flex;
+  align-items: center;
+  overflow: hidden !important;
+}
+
+/* Update event display for multi-line content */
+.fc-daygrid-event {
+  min-height: 36px !important;
+  max-height: 36px !important;
+  white-space: normal !important;
+}
+
+.fc-event-title {
+  white-space: normal !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  line-height: 1.2 !important;
+}
+
+.fc-daygrid-dot-event .fc-event-title {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.fc-daygrid-event-harness {
+  margin-bottom: 1px !important;
+}
+
+.fc-view-harness {
+  height: auto !important;
+  max-height: calc(80vh - 80px) !important;
+  overflow: auto !important;
+}
+
+/* Day column width adjustments */
+.fc-day-sat,
+.fc-day-sun,
+.fc-col-header-cell.fc-day-sat,
+.fc-col-header-cell.fc-day-sun {
+  width: 22% !important;
+}
+
+.fc-day-mon,
+.fc-day-tue,
+.fc-day-wed,
+.fc-day-thu,
+.fc-day-fri,
+.fc-col-header-cell.fc-day-mon,
+.fc-col-header-cell.fc-day-tue,
+.fc-col-header-cell.fc-day-wed,
+.fc-col-header-cell.fc-day-thu,
+.fc-col-header-cell.fc-day-fri {
+  width: 11.2% !important;
+}
+
+/* Additional styling to ensure content fits in smaller cells */
+.fc-day-mon,
+.fc-day-tue,
+.fc-day-wed,
+.fc-day-thu,
+.fc-day-fri {
+  .fc-daygrid-day-events {
+    min-height: 0 !important;
+  }
+  
+  .fc-daygrid-day-number {
+    font-size: 0.9em;
+    padding: 2px !important;
+  }
+}
+
+/* Adjust the grid to accommodate the new widths */
+.fc .fc-scrollgrid-section table,
+.fc .fc-scrollgrid-section-header table,
+.fc .fc-scrollgrid-section-body table {
+  width: 100% !important;
+  table-layout: fixed !important;
+}
+
+/* Tighter padding for day cells and events */
+.fc .fc-daygrid-day-frame {
+  padding: 2px !important;
+}
+
+.fc .fc-daygrid-day-events {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.fc .fc-daygrid-body-balanced .fc-daygrid-day-events {
+  margin: 0 !important;
+  padding-top: 1px !important;
+}
+
+.fc .fc-daygrid-event-harness {
+  margin: 1px 0 !important;
+}
+
+/* Adjust event spacing */
+.fc-direction-ltr .fc-daygrid-event.fc-event-end {
+  margin-right: 1px !important;
+}
+
+.fc-direction-ltr .fc-daygrid-event.fc-event-start {
+  margin-left: 1px !important;
+}
+
+/* Pill-shaped events styling */
+.fc-daygrid-dot-event {
+  padding: 2px 6px !important;
+  border-radius: 12px !important;
+}
+
+.fc-daygrid-dot-event .fc-event-title {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Remove the dot before events */
+.fc-daygrid-dot-event .fc-event-title:before {
+  display: none !important;
+}
+
+/* Ensure events have background color and proper spacing */
+.fc-daygrid-event {
+  background-color: var(--fc-event-bg-color) !important;
+  border: none !important;
+  padding: 2px 6px !important;
+  border-radius: 12px !important;
+}
+
+/* Reset any default spacing that might be applied */
+.fc-daygrid-event .fc-event-title,
+.fc-daygrid-dot-event .fc-event-title {
+  padding: 0 !important;
+}
+
+/* Adjust hover state */
+.fc-daygrid-dot-event:hover {
+  background-color: var(--fc-event-bg-color) !important;
+  opacity: 0.8;
+}
+
+.fc-daygrid-event-dot {
+    display: none;
+}
+
+/* Event type-specific styling */
+.fc-event.motogp-event {
+  background-color: #E31B23 !important;
+  color: white !important;
+}
+
+.fc-event.wsbk-event {
+  background-color: #000088 !important;
+  color: white !important;
+}
+
+/* Hover states for different event types */
+.fc-event.motogp-event:hover {
+  background-color: #c41820 !important;
+}
+
+.fc-event.wsbk-event:hover {
+  background-color: #000066 !important;
+}
+
+/* Custom event content styling */
+.event-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.event-time {
+  font-size: 0.85em;
+  opacity: 0.9;
+}
+
+.event-title {
+  font-weight: 500;
+}
+
+/* Adjust event height for two lines */
+.fc-daygrid-event {
+  min-height: 42px !important;
+  max-height: 42px !important;
+}

@@ -8,6 +8,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.15",
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/react": "^6.1.15",
+    "@fullcalendar/interaction": "^6.1.10",
+    "@fullcalendar/timegrid": "^6.1.10",
     "@hashicorp/next-optimized-images": "^0.2.0",
     "@types/node": "20.1.2",
     "@types/react": "18.2.8",

@@ -1,48 +1,67 @@
-"use client";
+'use client';
 
-import { Race, Season } from "@/models/race";
-import React from "react";
-import NextRace from "../NextRace/NextRace";
-import Tile from "../CalendarTile/CalendarTile";
-import Link from "next/link";
-import style from "./Calendar.module.scss";
-import { useSearchParams } from "next/navigation";
+import FullCalendar from "@fullcalendar/react";
+import { EventClickArg } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import { useState } from "react";
+import { CalendarEventModal } from "../Modals/CalendarEventModal";
 
-export function Calendar({
-  season,
-  races,
-  currentRaceName,
-}: {
-  season: Season;
-  races: Race[];
-  currentRaceName?: string;
-}) {
-  // const searchParams = useSearchParams();
+import './Calendar.css'; 
+import { inter, motoGP } from "@/app/fonts";
 
-  // const active = searchParams.get("active");
+export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: any, wsbkData: any }) => {
+  const [selectedEvent, setSelectedEvent] = useState<any>(null);
+
+  const handleEventClick = (clickInfo: EventClickArg) => {
+    setSelectedEvent(clickInfo.event);
+  };
 
   return (
-    <div className={style.Calendar}>
-      <NextRace season={season} />
-      <h1>Upcoming Grand{races.length > 1 && "s"} Prix</h1>
-
-      <p className={style.timeNote}>Note: All times shown in GMT</p>
-      {races.map((race) => {
-        return (
-          <Tile
-            key={race.name}
-            race={race}
-            isCurrent={race.name === currentRaceName}
-            // isActive={!!active && active === race.name}
-          />
-        );
-      })}
-
-      <div className={style.buttonBar}>
-        <button className={style.home}>
-          <Link href="/">Return Home</Link>
-        </button>
+    <div className="calendar-container">
+      <div className={`calendar-wrapper ${inter.className}`}>
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin,
+              interactionPlugin]}
+          initialView="dayGridMonth"
+          events={[...motoGPData, ...wsbkData]}
+          eventTimeFormat={{
+            hour: '2-digit',
+            minute: '2-digit',
+            meridiem: 'short'
+          }}
+          eventContent={(eventInfo) => ({
+            html: `
+              <div class="event-content">
+                <div class="event-time">${eventInfo.timeText}</div>
+                <div class="event-title">${eventInfo.event.title}</div>
+              </div>
+            `
+          })}
+          headerToolbar={{
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          }}
+          firstDay={1}
+          height="100%"
+          contentHeight="auto"
+          handleWindowResize={true}
+          stickyHeaderDates={true}
+          titleFormat={{ 
+            year: 'numeric',
+            month: 'long'
+          }}
+          eventClick={handleEventClick}
+        />
       </div>
+
+      <CalendarEventModal 
+        isOpen={!!selectedEvent}
+        onClose={() => setSelectedEvent(null)}
+        event={selectedEvent}
+      />
     </div>
   );
-}
+};

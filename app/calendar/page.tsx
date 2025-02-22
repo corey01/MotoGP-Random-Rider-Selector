@@ -1,24 +1,48 @@
-"use client";
+import { getSeasonDataLocal, getUnsortedSeasonDataLocal, getWsbkSeasonDataLocal } from "@/utils/getSeasonDataLocal";
+import { Calendar } from "../_components/Calendar/Calendar";
 
-import { Calendar } from "./../_components/Calendar/Calendar";
-import { getSeasonDataLocal } from "@/utils/getSeasonDataLocal";
+interface Broadcast {
+  kind: string;
+  date_start: string;
+  eventName: string;
+  name: string;
+}
+
+interface RaceEvent {
+  name: string;
+  broadcasts: Broadcast[];
+}
+
+interface CalendarEvent {
+  title: string;
+  start: string;
+  className: string;
+}
+
+export const convertToLocalTime = (dateString: string): string => {
+  const date = new Date(dateString);
+  return date.toISOString();
+};
+
+const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
+  return data.broadcasts
+    .filter(session => session.kind === "RACE")
+    .map(session => ({
+      title: `${data.name} ${session.eventName} ${session.name}`,
+      start: convertToLocalTime(session.date_start),
+      className: 'motogp-event'
+    }));
+};
 
 const CalendarPage = async () => {
-  const season = await getSeasonDataLocal();
+  const season = await getUnsortedSeasonDataLocal();
+  const wsbkSeason = await getWsbkSeasonDataLocal();
 
-  const currentRace = season.current;
-  const sortedFutureRaces = season.future.sort((a, b) => {
-    return new Date(a.date_start).valueOf() - new Date(b.date_start).valueOf();
-  });
+  const raceData = season.flatMap(s => filterAndFormatSessions(s));
 
-  const races = [...currentRace, ...sortedFutureRaces];
   return (
-    <Calendar
-      season={season}
-      races={races}
-      currentRaceName={currentRace[0]?.name || undefined}
-    />
+    <Calendar motoGPData={raceData} wsbkData={wsbkSeason} />
   );
-};
+}
 
 export default CalendarPage;

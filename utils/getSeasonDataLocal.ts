@@ -1,6 +1,8 @@
 import { Season } from "@/models/race";
-import seasonData from "../utils/seasonData.json";
+import seasonData from "./seasonData.json";
+import wsbkSeasonData from './wsbkSeason2025.json';
 import { add } from "date-fns";
+import { convertToLocalTime } from "@/app/calendar/page";
 
 const defaultSeasonObject = {
   past: [],
@@ -39,4 +41,19 @@ export async function getSeasonDataLocal() {
   }, defaultSeasonObject);
 
   return season;
+}
+
+export async function getUnsortedSeasonDataLocal() {  
+  return seasonData;
+}
+
+export async function getWsbkSeasonDataLocal() {
+  return wsbkSeasonData.flatMap(schedule => {
+    return schedule.data.flatMap(a => a).map(event => ({
+      ...event, 
+      title: `${event.name} - ${schedule.title}`,
+      start: convertToLocalTime(event.dateTimeStart),
+      className: 'wsbk-event'
+    })).filter(event => event.type === "RACE")
+  })
 }

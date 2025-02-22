@@ -1,0 +1,18 @@
+/* ...existing modal styles... */
+
+/* Calendar Event Modal Styles */
+.event-detail {
+  margin-top: 10px;
+}
+
+.event-detail-time {
+  color: #666;
+  font-size: 0.9em;
+  margin-bottom: 8px;
+}
+
+.event-detail-title {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin-bottom: 12px;
+}

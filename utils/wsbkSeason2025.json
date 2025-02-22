@@ -1,0 +1,758 @@
+[
+  {
+    "title": "Australian Round",
+    "date": "21 - 23 Feb",
+    "href": "https://www.worldsbk.com/en/event/AUS/2025",
+    "data": [
+      {
+        "dateTimeStart": "2025-02-21T11:20:00+1100",
+        "dateTimeEnd": "2025-02-21T12:28:26+1100",
+        "name": "WorldSBK - FP1",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-02-21T16:00:00+1100",
+        "dateTimeEnd": "2025-02-21T16:49:08+1100",
+        "name": "WorldSBK - FP2",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-02-22T10:00:00+1100",
+        "dateTimeEnd": "2025-02-22T10:24:11+1100",
+        "name": "WorldSBK - FP3",
+        "type": "PRACTICE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-02-22T13:00:00+1100",
+        "dateTimeEnd": "2025-02-22T13:22:36+1100",
+        "name": "WorldSBK - Superpole",
+        "type": "OTHER",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-02-22T16:00:00+1100",
+        "dateTimeEnd": "2025-02-22T16:33:38+1100",
+        "name": "WorldSBK - Race 1",
+        "type": "RACE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-02-23T10:30:00+1100",
+        "dateTimeEnd": "2025-02-23T10:40:00+1100",
+        "name": "WorldSBK - WUP",
+        "type": "WARMUP",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-02-23T13:00:00+1100",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Superpole Race",
+        "type": "RACE",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-02-23T16:00:00+1100",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 2",
+        "type": "RACE",
+        "day": "Sunday"
+      }
+    ]
+  },
+  {
+    "title": "Pirelli Portuguese Round",
+    "date": "28 - 30 Mar",
+    "href": "https://www.worldsbk.com/en/event/POR/2025",
+    "data": [
+      {
+        "dateTimeStart": "2025-03-28T10:35:00+0000",
+        "dateTimeEnd": "2025-03-28T11:20:00+0000",
+        "name": "WorldSBK - FP1",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-03-28T15:00:00+0000",
+        "dateTimeEnd": "2025-03-28T15:45:00+0000",
+        "name": "WorldSBK - FP2",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-03-29T09:00:00+0000",
+        "dateTimeEnd": "2025-03-29T09:20:00+0000",
+        "name": "WorldSBK - FP3",
+        "type": "PRACTICE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-03-29T11:00:00+0000",
+        "dateTimeEnd": "2025-03-29T11:15:00+0000",
+        "name": "WorldSBK - Superpole",
+        "type": "OTHER",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-03-29T14:00:00+0000",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 1",
+        "type": "RACE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-03-30T09:00:00+0000",
+        "dateTimeEnd": "2025-03-30T09:10:00+0000",
+        "name": "WorldSBK - WUP",
+        "type": "WARMUP",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-03-30T11:00:00+0000",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Superpole Race",
+        "type": "RACE",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-03-30T14:00:00+0000",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 2",
+        "type": "RACE",
+        "day": "Sunday"
+      }
+    ]
+  },
+  {
+    "title": "Pirelli Dutch Round",
+    "date": "11 - 13 Apr",
+    "href": "https://www.worldsbk.com/en/event/NED/2025",
+    "data": [
+      {
+        "dateTimeStart": "2025-04-11T10:20:00+0200",
+        "dateTimeEnd": "2025-04-11T11:05:00+0200",
+        "name": "WorldSBK - FP1",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-04-11T15:00:00+0200",
+        "dateTimeEnd": "2025-04-11T15:45:00+0200",
+        "name": "WorldSBK - FP2",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-04-12T09:00:00+0200",
+        "dateTimeEnd": "2025-04-12T09:20:00+0200",
+        "name": "WorldSBK - FP3",
+        "type": "PRACTICE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-04-12T11:00:00+0200",
+        "dateTimeEnd": "2025-04-12T11:15:00+0200",
+        "name": "WorldSBK - Superpole",
+        "type": "OTHER",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-04-12T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 1",
+        "type": "RACE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-04-13T09:00:00+0200",
+        "dateTimeEnd": "2025-04-13T09:10:00+0200",
+        "name": "WorldSBK - WUP",
+        "type": "WARMUP",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-04-13T11:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Superpole Race",
+        "type": "RACE",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-04-13T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 2",
+        "type": "RACE",
+        "day": "Sunday"
+      }
+    ]
+  },
+  {
+    "title": "Acerbis Italian Round",
+    "date": "02 - 04 May",
+    "href": "https://www.worldsbk.com/en/event/CRE/2025",
+    "data": [
+      {
+        "dateTimeStart": "2025-05-02T10:20:00+0200",
+        "dateTimeEnd": "2025-05-02T11:05:00+0200",
+        "name": "WorldSBK - FP1",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-05-02T15:00:00+0200",
+        "dateTimeEnd": "2025-05-02T15:45:00+0200",
+        "name": "WorldSBK - FP2",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-05-03T09:00:00+0200",
+        "dateTimeEnd": "2025-05-03T09:20:00+0200",
+        "name": "WorldSBK - FP3",
+        "type": "PRACTICE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-05-03T11:00:00+0200",
+        "dateTimeEnd": "2025-05-03T11:15:00+0200",
+        "name": "WorldSBK - Superpole",
+        "type": "OTHER",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-05-03T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 1",
+        "type": "RACE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-05-04T09:00:00+0200",
+        "dateTimeEnd": "2025-05-04T09:10:00+0200",
+        "name": "WorldSBK - WUP",
+        "type": "WARMUP",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-05-04T11:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Superpole Race",
+        "type": "RACE",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-05-04T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 2",
+        "type": "RACE",
+        "day": "Sunday"
+      }
+    ]
+  },
+  {
+    "title": "Motul Czech Round",
+    "date": "16 - 18 May",
+    "href": "https://www.worldsbk.com/en/event/CZE/2025",
+    "data": [
+      {
+        "dateTimeStart": "2025-05-16T10:35:00+0200",
+        "dateTimeEnd": "2025-05-16T11:20:00+0200",
+        "name": "WorldSBK - FP1",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-05-16T15:00:00+0200",
+        "dateTimeEnd": "2025-05-16T15:45:00+0200",
+        "name": "WorldSBK - FP2",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-05-17T09:00:00+0200",
+        "dateTimeEnd": "2025-05-17T09:20:00+0200",
+        "name": "WorldSBK - FP3",
+        "type": "PRACTICE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-05-17T11:00:00+0200",
+        "dateTimeEnd": "2025-05-17T11:15:00+0200",
+        "name": "WorldSBK - Superpole",
+        "type": "OTHER",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-05-17T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 1",
+        "type": "RACE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-05-18T09:00:00+0200",
+        "dateTimeEnd": "2025-05-18T09:10:00+0200",
+        "name": "WorldSBK - WUP",
+        "type": "WARMUP",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-05-18T11:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Superpole Race",
+        "type": "RACE",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-05-18T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 2",
+        "type": "RACE",
+        "day": "Sunday"
+      }
+    ]
+  },
+  {
+    "title": "Pirelli Emilia-Romagna Round",
+    "date": "13 - 15 Jun",
+    "href": "https://www.worldsbk.com/en/event/ITA/2025",
+    "data": [
+      {
+        "dateTimeStart": "2025-06-13T10:35:00+0200",
+        "dateTimeEnd": "2025-06-13T11:20:00+0200",
+        "name": "WorldSBK - FP1",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-06-13T15:00:00+0200",
+        "dateTimeEnd": "2025-06-13T15:45:00+0200",
+        "name": "WorldSBK - FP2",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-06-14T09:00:00+0200",
+        "dateTimeEnd": "2025-06-14T09:20:00+0200",
+        "name": "WorldSBK - FP3",
+        "type": "PRACTICE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-06-14T11:00:00+0200",
+        "dateTimeEnd": "2025-06-14T11:15:00+0200",
+        "name": "WorldSBK - Superpole",
+        "type": "OTHER",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-06-14T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 1",
+        "type": "RACE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-06-15T09:00:00+0200",
+        "dateTimeEnd": "2025-06-15T09:10:00+0200",
+        "name": "WorldSBK - WUP",
+        "type": "WARMUP",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-06-15T11:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Superpole Race",
+        "type": "RACE",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-06-15T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 2",
+        "type": "RACE",
+        "day": "Sunday"
+      }
+    ]
+  },
+  {
+    "title": "Prosecco DOC UK Round",
+    "date": "11 - 13 Jul",
+    "href": "https://www.worldsbk.com/en/event/GBR/2025",
+    "data": [
+      {
+        "dateTimeStart": "2025-07-11T10:20:00+0100",
+        "dateTimeEnd": "2025-07-11T11:05:00+0100",
+        "name": "WorldSBK - FP1",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-07-11T15:00:00+0100",
+        "dateTimeEnd": "2025-07-11T15:45:00+0100",
+        "name": "WorldSBK - FP2",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-07-12T09:00:00+0100",
+        "dateTimeEnd": "2025-07-12T09:20:00+0100",
+        "name": "WorldSBK - FP3",
+        "type": "PRACTICE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-07-12T11:00:00+0100",
+        "dateTimeEnd": "2025-07-12T11:15:00+0100",
+        "name": "WorldSBK - Superpole",
+        "type": "OTHER",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-07-12T14:00:00+0100",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 1",
+        "type": "RACE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-07-13T09:00:00+0100",
+        "dateTimeEnd": "2025-07-13T09:10:00+0100",
+        "name": "WorldSBK - WUP",
+        "type": "WARMUP",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-07-13T11:00:00+0100",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Superpole Race",
+        "type": "RACE",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-07-13T14:00:00+0100",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 2",
+        "type": "RACE",
+        "day": "Sunday"
+      }
+    ]
+  },
+  {
+    "title": "Hungarian Round",
+    "date": "25 - 27 Jul",
+    "href": "https://www.worldsbk.com/en/event/HUN/2025",
+    "data": [
+      {
+        "dateTimeStart": "2025-07-25T10:20:00+0200",
+        "dateTimeEnd": "2025-07-25T11:05:00+0200",
+        "name": "WorldSBK - FP1",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-07-25T15:00:00+0200",
+        "dateTimeEnd": "2025-07-25T15:45:00+0200",
+        "name": "WorldSBK - FP2",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-07-26T09:00:00+0200",
+        "dateTimeEnd": "2025-07-26T09:20:00+0200",
+        "name": "WorldSBK - FP3",
+        "type": "PRACTICE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-07-26T11:00:00+0200",
+        "dateTimeEnd": "2025-07-26T11:15:00+0200",
+        "name": "WorldSBK - Superpole",
+        "type": "OTHER",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-07-26T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 1",
+        "type": "RACE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-07-27T09:00:00+0200",
+        "dateTimeEnd": "2025-07-27T09:10:00+0200",
+        "name": "WorldSBK - WUP",
+        "type": "WARMUP",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-07-27T11:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Superpole Race",
+        "type": "RACE",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-07-27T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 2",
+        "type": "RACE",
+        "day": "Sunday"
+      }
+    ]
+  },
+  {
+    "title": "French Round",
+    "date": "05 - 07 Sep",
+    "href": "https://www.worldsbk.com/en/event/FRA/2025",
+    "data": [
+      {
+        "dateTimeStart": "2025-09-05T10:20:00+0200",
+        "dateTimeEnd": "2025-09-05T11:05:00+0200",
+        "name": "WorldSBK - FP1",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-09-05T15:00:00+0200",
+        "dateTimeEnd": "2025-09-05T15:45:00+0200",
+        "name": "WorldSBK - FP2",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-09-06T09:00:00+0200",
+        "dateTimeEnd": "2025-09-06T09:20:00+0200",
+        "name": "WorldSBK - FP3",
+        "type": "PRACTICE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-09-06T11:00:00+0200",
+        "dateTimeEnd": "2025-09-06T11:15:00+0200",
+        "name": "WorldSBK - Superpole",
+        "type": "OTHER",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-09-06T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 1",
+        "type": "RACE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-09-07T09:00:00+0200",
+        "dateTimeEnd": "2025-09-07T09:10:00+0200",
+        "name": "WorldSBK - WUP",
+        "type": "WARMUP",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-09-07T11:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Superpole Race",
+        "type": "RACE",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-09-07T15:30:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 2",
+        "type": "RACE",
+        "day": "Sunday"
+      }
+    ]
+  },
+  {
+    "title": "Tissot Aragon Round",
+    "date": "26 - 28 Sep",
+    "href": "https://www.worldsbk.com/en/event/ARA/2025",
+    "data": [
+      {
+        "dateTimeStart": "2025-09-26T10:35:00+0200",
+        "dateTimeEnd": "2025-09-26T11:20:00+0200",
+        "name": "WorldSBK - FP1",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-09-26T15:00:00+0200",
+        "dateTimeEnd": "2025-09-26T15:45:00+0200",
+        "name": "WorldSBK - FP2",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-09-27T09:00:00+0200",
+        "dateTimeEnd": "2025-09-27T09:20:00+0200",
+        "name": "WorldSBK - FP3",
+        "type": "PRACTICE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-09-27T11:00:00+0200",
+        "dateTimeEnd": "2025-09-27T11:15:00+0200",
+        "name": "WorldSBK - Superpole",
+        "type": "OTHER",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-09-27T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 1",
+        "type": "RACE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-09-28T09:00:00+0200",
+        "dateTimeEnd": "2025-09-28T09:10:00+0200",
+        "name": "WorldSBK - WUP",
+        "type": "WARMUP",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-09-28T11:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Superpole Race",
+        "type": "RACE",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-09-28T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 2",
+        "type": "RACE",
+        "day": "Sunday"
+      }
+    ]
+  },
+  {
+    "title": "Estoril Round",
+    "date": "10 - 12 Oct",
+    "href": "https://www.worldsbk.com/en/event/EST/2025",
+    "data": [
+      {
+        "dateTimeStart": "2025-10-10T10:35:00+0100",
+        "dateTimeEnd": "2025-10-10T11:20:00+0100",
+        "name": "WorldSBK - FP1",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-10-10T15:00:00+0100",
+        "dateTimeEnd": "2025-10-10T15:45:00+0100",
+        "name": "WorldSBK - FP2",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-10-11T09:00:00+0100",
+        "dateTimeEnd": "2025-10-11T09:20:00+0100",
+        "name": "WorldSBK - FP3",
+        "type": "PRACTICE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-10-11T11:00:00+0100",
+        "dateTimeEnd": "2025-10-11T11:15:00+0100",
+        "name": "WorldSBK - Superpole",
+        "type": "OTHER",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-10-11T14:00:00+0100",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 1",
+        "type": "RACE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-10-12T09:00:00+0100",
+        "dateTimeEnd": "2025-10-12T09:10:00+0100",
+        "name": "WorldSBK - WUP",
+        "type": "WARMUP",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-10-12T11:00:00+0100",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Superpole Race",
+        "type": "RACE",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-10-12T14:00:00+0100",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 2",
+        "type": "RACE",
+        "day": "Sunday"
+      }
+    ]
+  },
+  {
+    "title": "Pirelli Spanish Round",
+    "date": "17 - 19 Oct",
+    "href": "https://www.worldsbk.com/en/event/JER/2025",
+    "data": [
+      {
+        "dateTimeStart": "2025-10-17T10:35:00+0200",
+        "dateTimeEnd": "2025-10-17T11:20:00+0200",
+        "name": "WorldSBK - FP1",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-10-17T15:00:00+0200",
+        "dateTimeEnd": "2025-10-17T15:45:00+0200",
+        "name": "WorldSBK - FP2",
+        "type": "PRACTICE",
+        "day": "Friday"
+      },
+      {
+        "dateTimeStart": "2025-10-18T09:00:00+0200",
+        "dateTimeEnd": "2025-10-18T09:20:00+0200",
+        "name": "WorldSBK - FP3",
+        "type": "PRACTICE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-10-18T11:00:00+0200",
+        "dateTimeEnd": "2025-10-18T11:15:00+0200",
+        "name": "WorldSBK - Superpole",
+        "type": "OTHER",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-10-18T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 1",
+        "type": "RACE",
+        "day": "Saturday"
+      },
+      {
+        "dateTimeStart": "2025-10-19T09:15:00+0200",
+        "dateTimeEnd": "2025-10-19T09:25:00+0200",
+        "name": "WorldSBK - WUP",
+        "type": "WARMUP",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-10-19T11:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Superpole Race",
+        "type": "RACE",
+        "day": "Sunday"
+      },
+      {
+        "dateTimeStart": "2025-10-19T14:00:00+0200",
+        "dateTimeEnd": "",
+        "name": "WorldSBK - Race 2",
+        "type": "RACE",
+        "day": "Sunday"
+      }
+    ]
+  }
+]
