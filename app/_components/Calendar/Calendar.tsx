@@ -8,8 +8,8 @@ import interactionPlugin from '@fullcalendar/interaction'
 import { useState } from "react";
 import { CalendarEventModal } from "../Modals/CalendarEventModal";
 
+import { inter } from "@/app/fonts";
 import './Calendar.css'; 
-import { inter, motoGP } from "@/app/fonts";
 
 export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: any, wsbkData: any }) => {
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
