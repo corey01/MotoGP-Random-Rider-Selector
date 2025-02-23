@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 const Header = () => {
   const pathname = usePathname();
 
-  const isHomePage = pathname.includes("/sweepstake") || pathname.includes("/results")
+  const isHomePage = pathname.includes("/sweepstake") || pathname.includes("/results") || pathname.includes('/race-lineup')
   const isCalendarPage = pathname.includes("/calendar");
 
   return (

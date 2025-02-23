@@ -7,6 +7,7 @@ import { add } from "date-fns";
 interface Broadcast {
   kind: string;
   date_start: string;
+  date_end: string;
   eventName: string;
   name: string;
 }
@@ -84,6 +85,7 @@ export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
         round: `${data.name} Grand Prix`,
         name: session.name,
         deviceTime: session.date_start, // Browser will convert this to local time
+        deviceEndTime: session.date_end,
         raceTime: session.date_start.split('+')[0] + ` (GMT${session.date_start.slice(-5)})` // Keep original time with timezone
       }
     }
@@ -111,6 +113,7 @@ export const getWsbkSeasonDataLocal = (racesOnly = true) => {
         round: schedule.title,
         name: event.name,
         deviceTime: event.dateTimeStart, // Browser will convert this to local time
+        deviceTimeEnd: event.dateTimeEnd,
         raceTime: event.dateTimeStart.split('+')[0] + ` (GMT${event.dateTimeStart.slice(-5)})` // Keep original time with timezone
       }
     }));

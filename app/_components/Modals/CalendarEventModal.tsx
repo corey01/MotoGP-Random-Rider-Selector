@@ -13,12 +13,39 @@ interface CalendarEventModalProps {
 export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModalProps) => {
   if (!event) return null;
 
-  // Device time (user's local time)
-  const deviceDate = new Date(event.start);
-  const deviceTimeFormatted = format(deviceDate, 'HH:mm');
-  const deviceDateFormatted = format(deviceDate, 'EEEE, d MMMM yyyy');
+  // Start time formatting
+  const deviceStartDate = new Date(event.extendedProps?.meta?.deviceTime);
+  const deviceStartTimeFormatted = deviceStartDate.toLocaleTimeString('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  });
+  const deviceStartDateFormatted = deviceStartDate.toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
 
-  // Race time (from the original timezone)
+  // End time formatting (if exists)
+  const deviceEndDate = event.extendedProps?.meta?.deviceEndTime ? new Date(event.extendedProps?.meta?.deviceEndTime) : null;
+  const deviceEndTimeFormatted = deviceEndDate?.toLocaleTimeString('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  });
+  const deviceEndDateFormatted = deviceEndDate?.toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+
+  // Show end date only if it's different from start date
+  const showEndDate = deviceEndDate && 
+    deviceEndDateFormatted !== deviceStartDateFormatted;
+
+  // Race time formatting (original timezone)
   const raceTimeString = event.extendedProps?.meta?.raceTime;
   // Extract the time portion before the timezone
   const [timeWithoutTz] = raceTimeString.split(' (GMT');
@@ -50,9 +77,20 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
           
           <div className={style.timeInfo}>
             <div className={style.timeBlock}>
-              <div className={style.mainTime}>{deviceTimeFormatted}</div>
-              <div className={style.date}>{deviceDateFormatted}</div>
-              <div className={style.raceTime}>Race Time: {raceTimeFormatted}</div>
+              <div className={style.mainTime}>
+                {deviceStartTimeFormatted}
+                {deviceEndTimeFormatted && ` - ${deviceEndTimeFormatted}`}
+              </div>
+              <div className={style.date}>
+                {deviceStartDateFormatted}
+                {showEndDate && (
+                  <>
+                    <br />
+                    <span className={style.endDate}>Until {deviceEndDateFormatted}</span>
+                  </>
+                )}
+              </div>
+              <div className={style.raceTime}>Local Time: {raceTimeFormatted}</div>
               <div className={style.raceDate}>{raceDateFormatted}</div>
               <div className={style.timezone}>GMT{timezone}</div>
             </div>
