@@ -41,3 +41,19 @@
 .wsbkTag {
   background-color: var(--wsbk-blue);
 }
+
+@media (min-width: 769px) {
+  .legendContainer h4 {
+    font-size: 1rem;
+  }
+
+  .seriesTag {
+    font-size: 0.75rem;
+    padding: 4px 12px;
+  }
+
+  .legend {
+    gap: 4px;
+    margin-top: 8px;
+  }
+}

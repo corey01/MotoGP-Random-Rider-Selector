@@ -19,6 +19,8 @@ export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonDat
   const calendarRef = useRef<any>(null);
   const touchStartRef = useRef({ x: 0, y: 0 });
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [navigationDirection, setNavigationDirection] = useState<'next' | 'prev' | 'today' | undefined>();
+  const isAnimatingRef = useRef(false);
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     setSelectedEvent(clickInfo.event);
@@ -29,6 +31,43 @@ export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonDat
       x: e.touches[0].clientX,
       y: e.touches[0].clientY
     };
+  };
+
+  const animateViewChange = (direction: 'next' | 'prev' | 'today') => {
+    if (!calendarRef.current || isAnimatingRef.current) return;
+    
+    isAnimatingRef.current = true;
+    const calendarApi = calendarRef.current.getApi();
+    const viewEl = calendarApi.el.querySelector('.fc-view-harness');
+    if (!viewEl) {
+      isAnimatingRef.current = false;
+      return;
+    }
+
+    setNavigationDirection(direction);
+    void viewEl.offsetHeight;
+    const animationClass = direction === 'next' ? 'slide-left-enter' : 'slide-right-enter';
+    viewEl.classList.add(animationClass);
+
+    // Execute the calendar change immediately
+    if (direction === 'today') {
+      calendarApi.today();
+    } else {
+      calendarApi[direction]();
+    }
+    
+    // Update current date immediately after calendar change
+    setCurrentDate(calendarApi.getDate());
+
+    requestAnimationFrame(() => {
+      viewEl.classList.add('slide-center');
+
+      setTimeout(() => {
+        viewEl.classList.remove(animationClass, 'slide-center');
+        setNavigationDirection(undefined);
+        isAnimatingRef.current = false;
+      }, 300);
+    });
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
@@ -45,42 +84,21 @@ export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonDat
     const direction = deltaX > 100 ? 'next' : deltaX < -100 ? 'prev' : null;
 
     if (direction) {
-      const calendarApi = calendarRef.current.getApi();
-      const viewEl = calendarApi.el.querySelector('.fc-view-harness');
-      if (!viewEl) return;
-
-      // Force a repaint to ensure animation runs
-      void viewEl.offsetHeight;
-
-      // Add initial animation class
-      viewEl.classList.add(direction === 'next' ? 'slide-left-enter' : 'slide-right-enter');
-
-      // Queue the month change
-      setTimeout(() => {
-        calendarApi[direction]();
-        
-        // Force another repaint
-        void viewEl.offsetHeight;
-        
-        // Add final position class
-        viewEl.classList.add('slide-center');
-
-        // Clean up classes
-        setTimeout(() => {
-          viewEl.classList.remove('slide-left-enter', 'slide-right-enter', 'slide-center');
-        }, 300);
-      }, 50);
+      animateViewChange(direction);
     }
   };
 
   const handleDatesSet = (arg: any) => {
-    setCurrentDate(arg.view.currentStart);
+    // Only update the date if we're not in an animation
+    if (!isAnimatingRef.current) {
+      setCurrentDate(arg.view.currentStart);
+    }
   };
 
   return (
     <>
       <CalendarLegend />
-      <CalendarTitle currentDate={currentDate} />
+      <CalendarTitle currentDate={currentDate} direction={navigationDirection} />
       <div className="calendar-container">
         <div className={`calendar-wrapper ${inter.className}`}
             onTouchStart={handleTouchStart}
@@ -111,6 +129,18 @@ export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonDat
               </div>
               `
             })}
+            customButtons={{
+              prev: {
+                click: () => animateViewChange('prev')
+              },
+              next: {
+                click: () => animateViewChange('next')
+              },
+              today: {
+                text: 'Current Month',
+                click: () => animateViewChange('today')
+              }
+            }}
             headerToolbar={{
               left: '',
               center: 'prev today next',

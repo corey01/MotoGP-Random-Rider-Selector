@@ -168,6 +168,123 @@
   .fc .fc-scroller {
     -webkit-overflow-scrolling: touch;
   }
+
+  /* Day column width adjustments - Only apply on mobile */
+  .fc-day-sat,
+  .fc-day-sun,
+  .fc-col-header-cell.fc-day-sat,
+  .fc-col-header-cell.fc-day-sun {
+    width: 25% !important;
+  }
+
+  .fc-day-mon,
+  .fc-day-tue,
+  .fc-day-wed,
+  .fc-day-thu,
+  .fc-day-fri,
+  .fc-col-header-cell.fc-day-mon,
+  .fc-col-header-cell.fc-day-tue,
+  .fc-col-header-cell.fc-day-wed,
+  .fc-col-header-cell.fc-day-thu,
+  .fc-col-header-cell.fc-day-fri {
+    width: 10% !important;
+  }
+}
+
+/* Desktop toolbar styles */
+@media (min-width: 769px) {
+  .fc .fc-toolbar {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 0 !important;
+    padding: 0.25rem !important;
+  }
+
+  .fc .fc-toolbar-chunk {
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  /* Make buttons more compact and aligned */
+  .fc .fc-button {
+    height: 28px !important;
+    min-width: unset !important;
+    padding: 0 0.75rem !important;
+    white-space: nowrap !important;
+    display: flex !important;
+    align-items: center !important;
+    font-size: 0.8rem !important;
+  }
+
+  .fc .fc-today-button {
+    margin: 0 !important;
+    border-radius: 0 !important;
+    font-size: 0.8rem !important;
+  }
+
+  .fc .fc-button-group {
+    display: flex !important;
+    margin: 0 !important;
+  }
+
+  /* Restore weekday headers to normal size */
+  .fc .fc-col-header-cell {
+    font-size: 1rem !important;
+    padding: 12px 0 !important;
+  }
+
+  .fc .fc-day {
+    font-size: 1rem !important;
+  }
+
+  /* Make events slightly larger on desktop */
+  .fc .fc-event {
+    font-size: 0.85rem !important;
+  }
+
+  .fc .fc-daygrid-day-number {
+    font-size: 1rem !important;
+    padding: 4px !important;
+  }
+
+  /* Larger day cells and content */
+  .fc .fc-daygrid-day {
+    min-height: 120px !important;
+    padding: 8px !important;
+  }
+
+  .fc .fc-daygrid-day-frame {
+    min-height: 100px !important;
+  }
+
+  .fc-daygrid-event {
+    min-height: 32px !important;
+    max-height: none !important;
+    margin: 3px 0 !important;
+  }
+
+  .event-content {
+    padding: 4px 0 !important;
+  }
+
+  .event-time {
+    font-size: 0.85em !important;
+  }
+
+  .event-title {
+    font-size: 0.85em !important;
+    line-height: 1.3 !important;
+  }
+
+  /* More spacing between events */
+  .fc .fc-daygrid-day-events {
+    padding: 4px 0 !important;
+  }
+
+  /* Better day number positioning */
+  .fc .fc-daygrid-day-top {
+    padding: 4px !important;
+  }
 }
 
 .calendar-container {
@@ -195,6 +312,7 @@
   display: flex;
   align-items: center;
   overflow: hidden !important;
+  cursor: pointer !important;
 }
 
 /* Update event display for multi-line content */
@@ -248,27 +366,6 @@
 .slide-center {
   opacity: 1;
   transform: translateX(0);
-}
-
-/* Day column width adjustments */
-.fc-day-sat,
-.fc-day-sun,
-.fc-col-header-cell.fc-day-sat,
-.fc-col-header-cell.fc-day-sun {
-  width: 25% !important;
-}
-
-.fc-day-mon,
-.fc-day-tue,
-.fc-day-wed,
-.fc-day-thu,
-.fc-day-fri,
-.fc-col-header-cell.fc-day-mon,
-.fc-col-header-cell.fc-day-tue,
-.fc-col-header-cell.fc-day-wed,
-.fc-col-header-cell.fc-day-thu,
-.fc-col-header-cell.fc-day-fri {
-  width: 10% !important;
 }
 
 /* Additional styling to ensure content fits in smaller cells */

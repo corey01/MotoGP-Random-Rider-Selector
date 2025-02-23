@@ -3,4 +3,54 @@
   text-align: center;
   padding: 0rem;
   margin: 0.5rem 0;
+  overflow: hidden; // Prevent potential layout shifts
+}
+
+.animatedText {
+  display: inline-block;
+}
+
+.slideLeft {
+  animation: slideInLeft 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.slideRight {
+  animation: slideInRight 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
