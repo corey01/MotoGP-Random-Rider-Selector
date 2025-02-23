@@ -59,7 +59,7 @@
 }
 
 .eventContent {
-  padding: 0.5rem 0;
+  padding: 0;
 }
 
 .eventName {
@@ -69,7 +69,7 @@
   background-color: #f8f8f8;
   padding: 1rem;
   border-radius: 8px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
@@ -103,4 +103,77 @@
   font-size: 1.4rem;
   font-weight: 500;
   font-family: var(--font-inter);
+}
+
+.timeInfo {
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.timeBlock {
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  min-width: 280px;
+}
+
+.timeSection {
+  &:first-child {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+}
+
+.timeLabel {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.mainTime {
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.date {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+
+.raceTime {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.timezone {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .timeBlock {
+    padding: 1rem;
+    min-width: 240px;
+  }
+
+  .mainTime {
+    font-size: 2rem;
+  }
+
+  .date {
+    font-size: 1rem;
+  }
+
+  .raceTime {
+    font-size: 0.8rem;
+  }
 }
