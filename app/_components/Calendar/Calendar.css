@@ -23,11 +23,10 @@
   padding: 1rem !important;
   margin-bottom: 0.5rem !important;
   background: transparent !important;
-  margin-top: 1rem !important;
 }
 
 .fc .fc-toolbar-title {
-  font-size: 1.2rem !important;
+  font-size: 1rem !important;
   margin: 0 !important;
   font-family: 'MotoGP', sans-serif !important;
 }
@@ -96,8 +95,8 @@
   .fc .fc-toolbar {
     display: flex !important;
     flex-direction: column !important;
-    gap: 1rem !important;
-    padding: 0.25rem !important;
+    gap: 0.5rem !important;
+    padding: 0rem !important;
   }
 
   .fc .fc-toolbar-chunk {
@@ -209,6 +208,7 @@
   white-space: normal !important;
   overflow: hidden !important;
   display: -webkit-box !important;
+  line-clamp: 2;
   -webkit-line-clamp: 2 !important;
   -webkit-box-orient: vertical !important;
   line-height: 1.2 !important;
@@ -460,13 +460,6 @@
 /* Remove background from toolbar area */
 .fc-header-toolbar {
   border-radius: 0 !important;
-}
-
-.calendar-title {
-  display: inline-block;
-  font-family: var(--font-motoGP);
-  padding: 4px 12px;
-  border-radius: 4px;
 }
 
 .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {

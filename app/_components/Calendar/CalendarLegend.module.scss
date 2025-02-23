@@ -1,29 +1,33 @@
 .legendContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-top: 8px;
+    margin-top: -20px;
+}
+
+.legendContainer h4 {
+  font-size: 0.8rem;
 }
 
 .legend {
   display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 8px;
-  align-items: center;
+  flex-direction: column;
+  justify-content: start;
+  gap: 2px;
+  margin-top: 4px;
+  align-items: start;
 }
 
 .legendItem {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 2px;
 }
 
 .seriesTag {
   display: inline-block;
   padding: 2px 8px;
   border-radius: 3px;
-  font-size: 0.7rem;
+  font-size: 0.5rem;
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;

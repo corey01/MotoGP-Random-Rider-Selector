@@ -8,6 +8,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import { useState, useRef } from "react";
 import { CalendarEventModal } from "../Modals/CalendarEventModal";
 import { CalendarLegend } from './CalendarLegend';
+import { CalendarTitle } from './CalendarTitle';
 
 import { inter, motoGP } from "@/app/fonts";
 import './Calendar.css'; 
@@ -17,6 +18,7 @@ export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonDat
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const calendarRef = useRef<any>(null);
   const touchStartRef = useRef({ x: 0, y: 0 });
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     setSelectedEvent(clickInfo.event);
@@ -71,58 +73,66 @@ export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonDat
     }
   };
 
+  const handleDatesSet = (arg: any) => {
+    setCurrentDate(arg.view.currentStart);
+  };
+
   return (
-    <div className="calendar-container">
-      <div className={`calendar-wrapper ${inter.className}`}
-           onTouchStart={handleTouchStart}
-           onTouchEnd={handleTouchEnd}>
-        <FullCalendar
-          ref={calendarRef}
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          events={[...motoGPData, ...wsbkData]}
-          editable={false}
-          eventStartEditable={false}
-          eventDurationEditable={false}
-          selectable={false}
-          selectMirror={false}
-          // Calendar settings
-          height="auto"
-          handleWindowResize={true}
-          eventTimeFormat={{
-            hour: '2-digit',
-            minute: '2-digit',
-            meridiem: 'short'
-          }}
-          eventContent={(eventInfo) => ({
-            html: `
+    <>
+      <CalendarLegend />
+      <CalendarTitle currentDate={currentDate} />
+      <div className="calendar-container">
+        <div className={`calendar-wrapper ${inter.className}`}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}>
+          <FullCalendar
+            ref={calendarRef}
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            events={[...motoGPData, ...wsbkData]}
+            editable={false}
+            eventStartEditable={false}
+            eventDurationEditable={false}
+            selectable={false}
+            selectMirror={false}
+            // Calendar settings
+            height="auto"
+            handleWindowResize={true}
+            eventTimeFormat={{
+              hour: '2-digit',
+              minute: '2-digit',
+              meridiem: 'short'
+            }}
+            eventContent={(eventInfo) => ({
+              html: `
               <div class="event-content">
-                <div class="event-time">${eventInfo.timeText}</div>
-                <div class="event-title">${eventInfo.event.title}</div>
+              <div class="event-time">${eventInfo.timeText}</div>
+              <div class="event-title">${eventInfo.event.title}</div>
               </div>
-            `
-          })}
-          headerToolbar={{
-              left: 'title',
+              `
+            })}
+            headerToolbar={{
+              left: '',
               center: 'prev today next',
-              right: '' // Removed the view switching buttons
-          }}
-          firstDay={1}
-          contentHeight="auto"
-          stickyHeaderDates={true}
-          titleFormat={{
-            month: 'long',
-            year: 'numeric'
-          }}
-          eventClick={handleEventClick}
+              right: '' // Removed title from header
+            }}
+            firstDay={1}
+            contentHeight="auto"
+            stickyHeaderDates={true}
+            titleFormat={{
+              month: 'long',
+              year: 'numeric'
+            }}
+            eventClick={handleEventClick}
+            datesSet={handleDatesSet}
+          />
+        </div>
+        <CalendarEventModal 
+          isOpen={!!selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+          event={selectedEvent}
         />
       </div>
-      <CalendarLegend />
-      <CalendarEventModal 
-        isOpen={!!selectedEvent}
-        onClose={() => setSelectedEvent(null)}
-        event={selectedEvent}
-      />
-    </div>
+    </>
   );
 };
