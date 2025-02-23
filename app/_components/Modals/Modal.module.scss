@@ -149,13 +149,20 @@
 }
 
 .raceTime {
+  font-size: 1.2rem;
+  color: #666;
+  margin-top: 1rem;
+}
+
+.raceDate {
   font-size: 0.9rem;
   color: #666;
 }
 
 .timezone {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #666;
+  margin-top: 0.25rem;
 }
 
 /* Responsive adjustments */

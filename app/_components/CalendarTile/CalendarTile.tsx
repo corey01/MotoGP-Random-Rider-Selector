@@ -19,7 +19,6 @@ const Tile = ({
   isCurrent: boolean;
   // isActive: boolean;
 }) => {
-  const router = useRouter();
   const searchParams = useSearchParams()!;
   // const [expanded, setExpanded] = useState(() => isActive);
   const [expanded, setExpanded] = useState(false);
@@ -40,7 +39,7 @@ const Tile = ({
 
   const sprint = race.broadcasts?.find(
     ({ name, kind, eventName }) =>
-      eventName === "MotoGP" && name === "Tissot Sprint" && kind === "RACE"
+      eventName === "MotoGP" && name === "Sprint" && kind === "RACE"
   );
 
   const gpRace = race.broadcasts?.find(

@@ -6,7 +6,6 @@ import NextRace from "../NextRace/NextRace";
 import Tile from "../CalendarTile/CalendarTile";
 import Link from "next/link";
 import style from "./Calendar.module.scss";
-import { useSearchParams } from "next/navigation";
 
 export function RaceLineup({
   season,
