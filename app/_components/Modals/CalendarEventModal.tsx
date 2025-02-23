@@ -27,23 +27,6 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
     year: 'numeric'
   });
 
-  // End time formatting (if exists)
-  const deviceEndDate = event.extendedProps?.meta?.deviceEndTime ? new Date(event.extendedProps?.meta?.deviceEndTime) : null;
-  const deviceEndTimeFormatted = deviceEndDate?.toLocaleTimeString('en-GB', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
-  });
-  const deviceEndDateFormatted = deviceEndDate?.toLocaleDateString('en-GB', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  });
-
-  // Show end date only if it's different from start date
-  const showEndDate = deviceEndDate && 
-    deviceEndDateFormatted !== deviceStartDateFormatted;
 
   // Race time formatting (original timezone)
   const raceTimeString = event.extendedProps?.meta?.raceTime;
@@ -79,16 +62,9 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
             <div className={style.timeBlock}>
               <div className={style.mainTime}>
                 {deviceStartTimeFormatted}
-                {deviceEndTimeFormatted && ` - ${deviceEndTimeFormatted}`}
               </div>
               <div className={style.date}>
                 {deviceStartDateFormatted}
-                {showEndDate && (
-                  <>
-                    <br />
-                    <span className={style.endDate}>Until {deviceEndDateFormatted}</span>
-                  </>
-                )}
               </div>
               <div className={style.raceTime}>Local Time: {raceTimeFormatted}</div>
               <div className={style.raceDate}>{raceDateFormatted}</div>

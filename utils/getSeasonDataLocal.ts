@@ -108,6 +108,7 @@ export const getWsbkSeasonDataLocal = (racesOnly = true) => {
       ...event, 
       title: event.name.replace('WorldSBK', 'WSBK'),
       start: event.dateTimeStart, // Browser will auto-convert this for calendar display
+      end: add(new Date(event.dateTimeStart), { minutes: 5 }).toISOString(),
       className: 'wsbk-event',
       meta: {
         round: schedule.title,
