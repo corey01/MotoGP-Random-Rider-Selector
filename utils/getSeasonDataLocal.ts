@@ -19,13 +19,17 @@ interface CalendarEvent {
   title: string;
   start: string;
   className: string;
+  extendedProps?: {
+    session?: string;
+    type?: string;
+    meta?: EventMeta;
+  };
 }
 
 type EventMeta = {
   round: string;
   name: string;
 }
-
 
 const defaultSeasonObject = {
   past: [],
@@ -40,14 +44,16 @@ export const convertToLocalTime = (dateString: string): string => {
 
 export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
   return data.broadcasts
-    .filter(session => session.kind === "RACE")
     .map(session => ({
       title: `${session.eventName} ${session.name}`,
       start: convertToLocalTime(session.date_start),
       className: 'motogp-event',
-      meta: {
-        round: `${data.name} Grand Prix`,
-        name: session.name
+      extendedProps: {
+        session: session.kind,
+        meta: {
+          round: `${data.name} Grand Prix`,
+          name: session.name
+        }
       }
     }));
 };
@@ -85,13 +91,18 @@ export async function getSeasonDataLocal() {
   return season;
 }
 
-export async function getUnsortedSeasonDataLocal() {  
-  return seasonData.flatMap(s => filterAndFormatSessions(s));
-}
+export const getUnsortedSeasonDataLocal = (racesOnly = true) => {
+  const sessions = seasonData.flatMap(s => filterAndFormatSessions(s));
+  
+  const filteredSessions = racesOnly 
+    ? sessions.filter(session => session.extendedProps?.session === "RACE")
+    : sessions;
 
+  return filteredSessions;
+};
 
-export async function getWsbkSeasonDataLocal() {
-  return wsbkSeasonData.flatMap(schedule => {
+export const getWsbkSeasonDataLocal = (racesOnly = true) => {
+  const events = wsbkSeasonData.flatMap(schedule => {
     return schedule.data.flatMap(a => a).map(event => ({
       ...event, 
       title: event.name.replace('WorldSBK', 'WSBK'),
@@ -101,9 +112,23 @@ export async function getWsbkSeasonDataLocal() {
         round: schedule.title,
         name: event.name
       }
-    })).filter(event => event.type === "RACE")
-  })
-}
+    }));
+  });
 
-export type MotoGpSeasonData = Awaited<ReturnType<typeof getUnsortedSeasonDataLocal>>;
-export type WsbkSeasonData = Awaited<ReturnType<typeof getWsbkSeasonDataLocal>>;
+  const formattedEvents = events.map(event => ({
+    ...event,
+    extendedProps: {
+      ...event,
+      session: event.type // Add session type to extendedProps for consistency
+    }
+  }));
+
+  const filteredEvents = racesOnly 
+    ? formattedEvents.filter(event => event.extendedProps.type === "RACE")
+    : formattedEvents;
+
+  return filteredEvents;
+};
+
+export type MotoGpSeasonData = ReturnType<typeof getUnsortedSeasonDataLocal>;
+export type WsbkSeasonData = ReturnType<typeof getWsbkSeasonDataLocal>;

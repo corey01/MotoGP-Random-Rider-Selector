@@ -9,12 +9,25 @@ import { useState, useRef } from "react";
 import { CalendarEventModal } from "../Modals/CalendarEventModal";
 import { CalendarLegend } from './CalendarLegend';
 import { CalendarTitle } from './CalendarTitle';
+import { SessionToggle } from './SessionToggle';
 
 import { inter, motoGP } from "@/app/fonts";
 import './Calendar.css'; 
 import { MotoGpSeasonData, WsbkSeasonData } from "@/utils/getSeasonDataLocal";
 
-export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonData, wsbkData: WsbkSeasonData }) => {
+interface CalendarProps {
+  motoGPData: MotoGpSeasonData;
+  wsbkData: WsbkSeasonData;
+  showAllSessions: boolean;
+  onToggleSessions: () => void;
+}
+
+export const Calendar = ({ 
+  motoGPData, 
+  wsbkData, 
+  showAllSessions, 
+  onToggleSessions 
+}: CalendarProps) => {
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const calendarRef = useRef<any>(null);
   const touchStartRef = useRef({ x: 0, y: 0 });
@@ -95,10 +108,16 @@ export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonDat
     }
   };
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+
   return (
     <>
       <CalendarLegend />
       <CalendarTitle currentDate={currentDate} direction={navigationDirection} />
+      <SessionToggle 
+        showAllSessions={showAllSessions}
+        onToggle={onToggleSessions}
+      />
       <div className="calendar-container">
         <div className={`calendar-wrapper ${inter.className}`}
             onTouchStart={handleTouchStart}
@@ -155,6 +174,9 @@ export const Calendar = ({ motoGPData, wsbkData }: { motoGPData: MotoGpSeasonDat
             }}
             eventClick={handleEventClick}
             datesSet={handleDatesSet}
+            dayHeaderFormat={{
+              weekday: isMobile ? 'narrow' : 'short' // 'narrow' will show single letter, 'short' shows abbreviated name
+            }}
           />
         </div>
         <CalendarEventModal 

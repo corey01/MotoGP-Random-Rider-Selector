@@ -172,23 +172,33 @@
   /* Day column width adjustments - Only apply on mobile */
   .fc-day-sat,
   .fc-day-sun,
+  .fc-day-fri,
   .fc-col-header-cell.fc-day-sat,
-  .fc-col-header-cell.fc-day-sun {
-    width: 25% !important;
+  .fc-col-header-cell.fc-day-sun,
+  .fc-col-header-cell.fc-day-fri {
+    width: 24% !important;  /* 3 days at 24% each = 72% */
   }
 
   .fc-day-mon,
   .fc-day-tue,
   .fc-day-wed,
   .fc-day-thu,
-  .fc-day-fri,
   .fc-col-header-cell.fc-day-mon,
   .fc-col-header-cell.fc-day-tue,
   .fc-col-header-cell.fc-day-wed,
-  .fc-col-header-cell.fc-day-thu,
-  .fc-col-header-cell.fc-day-fri {
-    width: 10% !important;
+  .fc-col-header-cell.fc-day-thu {
+    width: 7% !important;  /* 4 days at 7% each = 28% */
   }
+
+  /* Shorter weekday names on mobile */
+  .fc .fc-col-header-cell-cushion {
+    padding: 4px 0 !important;
+  }
+
+  .fc-col-header-cell.fc-day-mon .fc-col-header-cell-cushion { content: 'M' !important; }
+  .fc-col-header-cell.fc-day-tue .fc-col-header-cell-cushion { content: 'T' !important; }
+  .fc-col-header-cell.fc-day-wed .fc-col-header-cell-cushion { content: 'W' !important; }
+  .fc-col-header-cell.fc-day-thu .fc-col-header-cell-cushion { content: 'T' !important; }
 }
 
 /* Desktop toolbar styles */
@@ -610,4 +620,41 @@
 
 .fc .fc-view-harness-active {
   transition: height 0.3s ease-out !important;
+}
+
+/* Fix for events overflowing their containers */
+.fc-daygrid-event-harness {
+  margin-bottom: 1px !important;
+  /* Prevent absolute positioning from breaking layout */
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+}
+
+.fc-daygrid-event {
+  /* Ensure events stay within their container */
+  width: 100% !important;
+  position: relative !important;
+  /* ...existing event styles... */
+}
+
+/* Fix for event overflow */
+.fc-daygrid-day-events {
+  overflow: hidden !important;
+  max-width: 100% !important;
+}
+
+.fc-daygrid-event {
+  max-width: calc(100% - 2px) !important;  /* Account for margins */
+  overflow: hidden !important;
+}
+
+/* Fix for absolutely positioned event containers */
+.fc-daygrid-event-harness-abs {
+  position: static !important;
+  right: 0 !important;
+}
+
+.fc-daygrid-more-link {
+  margin: 0 4px !important;
 }
