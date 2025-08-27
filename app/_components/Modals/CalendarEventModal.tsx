@@ -37,6 +37,20 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
   const raceDateFormatted = format(raceDate, 'EEEE, d MMMM yyyy');
   const timezone = raceTimeString.match(/GMT([+-]\d{4})\)/)?.[1] || '';
 
+  // Determine the series tag and style
+  let seriesLabel = '';
+  let seriesClass = '';
+  if (event.classNames?.includes('motogp-event')) {
+    seriesLabel = 'MotoGP';
+    seriesClass = style.motogpTag;
+  } else if (event.classNames?.includes('wsbk-event')) {
+    seriesLabel = 'WSBK';
+    seriesClass = style.wsbkTag;
+  } else if (event.classNames?.includes('bsb-event')) {
+    seriesLabel = 'BSB';
+    seriesClass = style.bsbTag; // <-- Add this class in your SCSS if not present
+  }
+
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -47,8 +61,8 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
     <div onClick={handleOverlayClick} className={style.Overlay}>
       <div className={style.Modal}>
         <div className={style.modalHeader}>
-          <div className={`${style.seriesTag} ${event.classNames.includes('motogp-event') ? style.motogpTag : style.wsbkTag}`}>
-            {event.classNames.includes('motogp-event') ? 'MotoGP' : 'WSBK'}
+          <div className={`${style.seriesTag} ${seriesClass}`}>
+            {seriesLabel}
           </div>
           <h2 className={style.title}>{event.extendedProps?.meta?.round}</h2>
         </div>

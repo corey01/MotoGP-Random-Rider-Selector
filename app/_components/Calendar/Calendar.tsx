@@ -1,38 +1,46 @@
-'use client';
+"use client";
 
 import FullCalendar from "@fullcalendar/react";
-import { EventClickArg } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import { EventClickArg } from "@fullcalendar/core";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 import { useState, useRef } from "react";
 import { CalendarEventModal } from "../Modals/CalendarEventModal";
-import { CalendarLegend } from './CalendarLegend';
-import { CalendarTitle } from './CalendarTitle';
-import { SessionToggle } from './SessionToggle';
+import { CalendarLegend } from "./CalendarLegend";
+import { CalendarTitle } from "./CalendarTitle";
+import { SessionToggle } from "./SessionToggle";
 
 import { inter, motoGP } from "@/app/fonts";
-import './Calendar.css'; 
-import { MotoGpSeasonData, WsbkSeasonData } from "@/utils/getSeasonDataLocal";
+import "./Calendar.css";
+import {
+  MotoGpSeasonData,
+  WsbkSeasonData,
+  BsbSeasonData,
+} from "@/utils/getSeasonDataLocal";
 
 interface CalendarProps {
   motoGPData: MotoGpSeasonData;
   wsbkData: WsbkSeasonData;
+  bsbData: BsbSeasonData;
   showAllSessions: boolean;
   onToggleSessions: () => void;
 }
 
-export const Calendar = ({ 
-  motoGPData, 
-  wsbkData, 
-  showAllSessions, 
-  onToggleSessions 
+export const Calendar = ({
+  motoGPData,
+  wsbkData,
+  bsbData,
+  showAllSessions,
+  onToggleSessions,
 }: CalendarProps) => {
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const calendarRef = useRef<any>(null);
   const touchStartRef = useRef({ x: 0, y: 0 });
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [navigationDirection, setNavigationDirection] = useState<'next' | 'prev' | 'today' | undefined>();
+  const [navigationDirection, setNavigationDirection] = useState<
+    "next" | "prev" | "today" | undefined
+  >();
   const isAnimatingRef = useRef(false);
 
   const handleEventClick = (clickInfo: EventClickArg) => {
@@ -42,16 +50,16 @@ export const Calendar = ({
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartRef.current = {
       x: e.touches[0].clientX,
-      y: e.touches[0].clientY
+      y: e.touches[0].clientY,
     };
   };
 
-  const animateViewChange = (direction: 'next' | 'prev' | 'today') => {
+  const animateViewChange = (direction: "next" | "prev" | "today") => {
     if (!calendarRef.current || isAnimatingRef.current) return;
-    
+
     isAnimatingRef.current = true;
     const calendarApi = calendarRef.current.getApi();
-    const viewEl = calendarApi.el.querySelector('.fc-view-harness');
+    const viewEl = calendarApi.el.querySelector(".fc-view-harness");
     if (!viewEl) {
       isAnimatingRef.current = false;
       return;
@@ -59,24 +67,25 @@ export const Calendar = ({
 
     setNavigationDirection(direction);
     void viewEl.offsetHeight;
-    const animationClass = direction === 'next' ? 'slide-left-enter' : 'slide-right-enter';
+    const animationClass =
+      direction === "next" ? "slide-left-enter" : "slide-right-enter";
     viewEl.classList.add(animationClass);
 
     // Execute the calendar change immediately
-    if (direction === 'today') {
+    if (direction === "today") {
       calendarApi.today();
     } else {
       calendarApi[direction]();
     }
-    
+
     // Update current date immediately after calendar change
     setCurrentDate(calendarApi.getDate());
 
     requestAnimationFrame(() => {
-      viewEl.classList.add('slide-center');
+      viewEl.classList.add("slide-center");
 
       setTimeout(() => {
-        viewEl.classList.remove(animationClass, 'slide-center');
+        viewEl.classList.remove(animationClass, "slide-center");
         setNavigationDirection(undefined);
         isAnimatingRef.current = false;
       }, 300);
@@ -85,7 +94,7 @@ export const Calendar = ({
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!calendarRef.current) return;
-    
+
     const touchEndX = e.changedTouches[0].clientX;
     const touchEndY = e.changedTouches[0].clientY;
     const deltaX = touchStartRef.current.x - touchEndX;
@@ -94,7 +103,7 @@ export const Calendar = ({
     // Only handle horizontal swipes (ignore if vertical movement is larger)
     if (deltaY > Math.abs(deltaX)) return;
 
-    const direction = deltaX > 100 ? 'next' : deltaX < -100 ? 'prev' : null;
+    const direction = deltaX > 100 ? "next" : deltaX < -100 ? "prev" : null;
 
     if (direction) {
       animateViewChange(direction);
@@ -108,25 +117,30 @@ export const Calendar = ({
     }
   };
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
 
   return (
     <>
       <CalendarLegend />
-      <CalendarTitle currentDate={currentDate} direction={navigationDirection} />
-      <SessionToggle 
+      <CalendarTitle
+        currentDate={currentDate}
+        direction={navigationDirection}
+      />
+      <SessionToggle
         showAllSessions={showAllSessions}
         onToggle={onToggleSessions}
       />
       <div className="calendar-container">
-        <div className={`calendar-wrapper ${inter.className}`}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}>
+        <div
+          className={`calendar-wrapper ${inter.className}`}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <FullCalendar
             ref={calendarRef}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
-            events={[...motoGPData, ...wsbkData]}
+            events={[...motoGPData, ...wsbkData, ...bsbData]}
             editable={false}
             eventStartEditable={false}
             eventDurationEditable={false}
@@ -136,9 +150,9 @@ export const Calendar = ({
             height="auto"
             handleWindowResize={true}
             eventTimeFormat={{
-              hour: '2-digit',
-              minute: '2-digit',
-              meridiem: 'short'
+              hour: "2-digit",
+              minute: "2-digit",
+              meridiem: "short",
             }}
             eventContent={(eventInfo) => ({
               html: `
@@ -146,40 +160,40 @@ export const Calendar = ({
               <div class="event-time">${eventInfo.timeText}</div>
               <div class="event-title">${eventInfo.event.title}</div>
               </div>
-              `
+              `,
             })}
             customButtons={{
               prev: {
-                click: () => animateViewChange('prev')
+                click: () => animateViewChange("prev"),
               },
               next: {
-                click: () => animateViewChange('next')
+                click: () => animateViewChange("next"),
               },
               today: {
-                text: 'Current Month',
-                click: () => animateViewChange('today')
-              }
+                text: "Current Month",
+                click: () => animateViewChange("today"),
+              },
             }}
             headerToolbar={{
-              left: '',
-              center: 'prev today next',
-              right: '' // Removed title from header
+              left: "",
+              center: "prev today next",
+              right: "", // Removed title from header
             }}
             firstDay={1}
             contentHeight="auto"
             stickyHeaderDates={true}
             titleFormat={{
-              month: 'long',
-              year: 'numeric'
+              month: "long",
+              year: "numeric",
             }}
             eventClick={handleEventClick}
             datesSet={handleDatesSet}
             dayHeaderFormat={{
-              weekday: isMobile ? 'narrow' : 'short' // 'narrow' will show single letter, 'short' shows abbreviated name
+              weekday: isMobile ? "narrow" : "short", // 'narrow' will show single letter, 'short' shows abbreviated name
             }}
           />
         </div>
-        <CalendarEventModal 
+        <CalendarEventModal
           isOpen={!!selectedEvent}
           onClose={() => setSelectedEvent(null)}
           event={selectedEvent}

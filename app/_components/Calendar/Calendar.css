@@ -81,8 +81,8 @@
 
 .fc .fc-today-button {
   border-radius: 0 !important;
-  border-left: 1px solid rgba(255,255,255,0.2) !important;
-  border-right: 1px solid rgba(255,255,255,0.2) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 
 /* Event styling */
@@ -137,6 +137,11 @@
   color: white !important;
 }
 
+.fc-event.bsb-event {
+  background-color: var(--bsb-green) !important; /* Example: Spotify green */
+  color: white !important;
+}
+
 /* Today highlight */
 .fc .fc-day-today {
   background-color: rgba(227, 27, 35, 0.1) !important;
@@ -163,8 +168,8 @@
 .slide-center {
   transform: translateX(0) !important;
   opacity: 1 !important;
-  transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), 
-              opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1) !important;
+  transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
+    opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1) !important;
 }
 
 /* Animation classes for view changes */
@@ -182,7 +187,7 @@
   .fc .fc-toolbar {
     flex-direction: row !important; /* Changed from column to row */
     align-items: center !important;
-        padding: 0rem !important;
+    padding: 0rem !important;
     gap: 0 !important;
   }
 
@@ -206,6 +211,15 @@
   }
 
   /* Mobile day column widths */
-  .fc-day-sat, .fc-day-sun, .fc-day-fri { width: 24% !important; }
-  .fc-day-mon, .fc-day-tue, .fc-day-wed, .fc-day-thu { width: 7% !important; }
+  .fc-day-sat,
+  .fc-day-sun,
+  .fc-day-fri {
+    width: 24% !important;
+  }
+  .fc-day-mon,
+  .fc-day-tue,
+  .fc-day-wed,
+  .fc-day-thu {
+    width: 7% !important;
+  }
 }

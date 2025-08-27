@@ -1,6 +1,7 @@
 import { Season } from "@/models/race";
 import seasonData from "./seasonData.json";
 import wsbkSeasonData from './wsbkSeason2025.json';
+import bsbSeasonData from './bsbSeason2025.json';
 import { add } from "date-fns";
 
 
@@ -31,8 +32,9 @@ interface CalendarEvent {
 type EventMeta = {
   round: string;
   name: string;
-  deviceTime: string;    // Time converted to device's local timezone
-  raceTime: string;      // Original race time with timezone
+  deviceTime: string;    
+  deviceEndTime?: string;
+  raceTime: string;      
 }
 
 const defaultSeasonObject = {
@@ -135,5 +137,48 @@ export const getWsbkSeasonDataLocal = (racesOnly = true) => {
   return filteredEvents;
 };
 
+export const getBsbSeasonDataLocal = (racesOnly = true) => {
+  const events = bsbSeasonData.flatMap(schedule => {
+    // Use "circuit" as the round/location name
+    const circuit = schedule.circuit || "";
+    const roundLabel = schedule.title && circuit
+      ? `${schedule.title} - ${circuit}`
+      : circuit || schedule.title || "";
+
+    return schedule.data.flatMap((a: any) => a).map((event: any) => {
+      const dateTimeStart = event.dateTimeStart || "";
+      const type = event.type || event.kind || "";
+
+      return {
+        // Use the session name as the event title, but you could also use `${circuit} ${event.name}` if you want both
+        title: event.name ? `${circuit} ${event.name}` : circuit,
+        start: dateTimeStart,
+        end: dateTimeStart ? add(new Date(dateTimeStart), { minutes: 30 }).toISOString() : undefined,
+        className: 'bsb-event',
+        extendedProps: {
+          session: type,
+          type,
+          meta: {
+            round: roundLabel,
+            name: event.name || "",
+            deviceTime: dateTimeStart,
+            deviceEndTime: dateTimeStart ? add(new Date(dateTimeStart), { minutes: 30 }).toISOString() : undefined,
+            raceTime: dateTimeStart && dateTimeStart.includes('+')
+              ? dateTimeStart.split('+')[0] + ` (GMT${dateTimeStart.slice(-5)})`
+              : dateTimeStart
+          }
+        }
+      } as CalendarEvent;
+    });
+  });
+
+  const filteredEvents = racesOnly 
+    ? events.filter(event => event.extendedProps?.type === "RACE")
+    : events;
+
+  return filteredEvents;
+};
+
 export type MotoGpSeasonData = ReturnType<typeof getUnsortedSeasonDataLocal>;
 export type WsbkSeasonData = ReturnType<typeof getWsbkSeasonDataLocal>;
+export type BsbSeasonData = ReturnType<typeof getBsbSeasonDataLocal>;

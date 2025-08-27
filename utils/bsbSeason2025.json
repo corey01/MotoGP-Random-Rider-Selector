@@ -1,0 +1,1482 @@
+[
+  {
+    "title": null,
+    "date": "06 - 07 Apr",
+    "circuit": "Circuito de Navarra",
+    "layout": "Main Track",
+    "href": "https://www.britishsuperbike.com/calendar/2025/t1-circuito-de-navarra",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/t1-circuito-de-navarra",
+    "data": [
+      {
+        "day": "Sun",
+        "name": "Day 1 - AM session",
+        "time": "09:30",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-06T09:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Day 1 - PM session",
+        "time": "13:00",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-06T13:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Day 1 combined times",
+        "time": "17:00",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-06T17:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Mon",
+        "name": "Day 2 - AM session",
+        "time": "10:00",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-07T10:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Mon",
+        "name": "Day 2 - PM session",
+        "time": "13:00",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-07T13:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Mon",
+        "name": "Combined overall times",
+        "time": "17:00",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-07T17:00:00.000+01:00",
+        "tz": "Europe/London"
+      }
+    ]
+  },
+  {
+    "title": null,
+    "date": "18 - 19 Apr",
+    "circuit": "Donington Park",
+    "layout": "GP",
+    "href": "https://www.britishsuperbike.com/calendar/2025/t2-donington-park",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/t2-donington-park",
+    "data": [
+      {
+        "day": "Fri",
+        "name": "Gates Open",
+        "time": "08:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-04-18T08:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Session 1",
+        "time": "10:20",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-18T10:20:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Session 2",
+        "time": "13:50",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-18T13:50:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Session 3",
+        "time": "16:25",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-18T16:25:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Gates Open",
+        "time": "08:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-04-19T08:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Session 4",
+        "time": "10:20",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-19T10:20:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Session 5",
+        "time": "13:50",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-19T13:50:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Session 6",
+        "time": "16:25",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-19T16:25:00.000+01:00",
+        "tz": "Europe/London"
+      }
+    ]
+  },
+  {
+    "title": null,
+    "date": "23 - 24 Apr",
+    "circuit": "Oulton Park",
+    "layout": "International",
+    "href": "https://www.britishsuperbike.com/calendar/2025/t3-oulton-park",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/t3-oulton-park",
+    "data": [
+      {
+        "day": "Wed",
+        "name": "Gates Open",
+        "time": "08:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-04-23T08:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Wed",
+        "name": "Session 1",
+        "time": "10:20",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-23T10:20:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Wed",
+        "name": "Session 2",
+        "time": "13:50",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-23T13:50:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Wed",
+        "name": "Session 3",
+        "time": "16:25",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-23T16:25:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Wed",
+        "name": "Day 1 combined times",
+        "time": "16:25",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-23T16:25:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Thu",
+        "name": "Gates Open",
+        "time": "08:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-04-24T08:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Thu",
+        "name": "Session 4",
+        "time": "10:20",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-24T10:20:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Thu",
+        "name": "Session 5",
+        "time": "13:50",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-24T13:50:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Thu",
+        "name": "Session 6",
+        "time": "16:25",
+        "type": "OTHER",
+        "dateTimeStart": "2025-04-24T16:25:00.000+01:00",
+        "tz": "Europe/London"
+      }
+    ]
+  },
+  {
+    "title": "Round 1",
+    "date": "03 - 05 May",
+    "circuit": "Oulton Park",
+    "layout": "International",
+    "href": "https://www.britishsuperbike.com/calendar/2025/r1-oulton-park",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/r1-oulton-park",
+    "data": [
+      {
+        "day": "Sat",
+        "name": "Gates Open",
+        "time": "08:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-05-03T08:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Free Practice 1",
+        "time": "13:00",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-05-03T13:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Free Practice 2",
+        "time": "16:20",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-05-03T16:20:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Shootout top 12 combined",
+        "time": "16:25",
+        "type": "OTHER",
+        "dateTimeStart": "2025-05-03T16:25:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Gates Open",
+        "time": "08:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-05-04T08:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Free Practice 3",
+        "time": "13:25",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-05-04T13:25:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Bandero Cafe Shoot Out Q1",
+        "time": "13:45",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-05-04T13:45:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Bandero Cafe Shoot Out Q2",
+        "time": "14:07",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-05-04T14:07:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Bandero Cafe Shoot Out Qualifying Combined Times",
+        "time": "14:30",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-05-04T14:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 1",
+        "time": "16:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-05-04T16:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Mon",
+        "name": "Gates Open",
+        "time": "07:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-05-05T07:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Mon",
+        "name": "Warm Up",
+        "time": "09:15",
+        "type": "WARMUP",
+        "dateTimeStart": "2025-05-05T09:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Mon",
+        "name": "Race 2 - Sprint",
+        "time": "13:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-05-05T13:15:00.000+01:00",
+        "tz": "Europe/London"
+      }
+    ]
+  },
+  {
+    "title": "Round 2",
+    "date": "16 - 18 May",
+    "circuit": "Donington Park",
+    "layout": "GP",
+    "href": "https://www.britishsuperbike.com/calendar/2025/r2-donington-park",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/r2-donington-park",
+    "data": [
+      {
+        "day": "Fri",
+        "name": "Gates Open",
+        "time": "07:30",
+        "type": "GATES",
+        "dateTimeStart": "2025-05-16T07:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 1",
+        "time": "13:00",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-05-16T13:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 2",
+        "time": "15:50",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-05-16T15:50:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Gates Open",
+        "time": "07:30",
+        "type": "GATES",
+        "dateTimeStart": "2025-05-17T07:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Free Practice 3",
+        "time": "13:25",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-05-17T13:25:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q1",
+        "time": "13:45",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-05-17T13:45:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q2",
+        "time": "14:07",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-05-17T14:07:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Qualifying Combined Times",
+        "time": "14:30",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-05-17T14:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Race 1",
+        "time": "16:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-05-17T16:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Gates Open",
+        "time": "07:30",
+        "type": "GATES",
+        "dateTimeStart": "2025-05-18T07:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Warm Up",
+        "time": "09:30",
+        "type": "WARMUP",
+        "dateTimeStart": "2025-05-18T09:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 2 - Sprint",
+        "time": "13:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-05-18T13:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 3",
+        "time": "16:20",
+        "type": "RACE",
+        "dateTimeStart": "2025-05-18T16:20:00.000+01:00",
+        "tz": "Europe/London"
+      }
+    ]
+  },
+  {
+    "title": "Round 3",
+    "date": "20 - 22 Jun",
+    "circuit": "Snetterton",
+    "layout": null,
+    "href": "https://www.britishsuperbike.com/calendar/2025/r3-snetterton",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/r3-snetterton",
+    "data": [
+      {
+        "day": "Fri",
+        "name": "Gates Open",
+        "time": "08:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-06-20T08:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 1",
+        "time": "13:00",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-06-20T13:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 2",
+        "time": "16:15",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-06-20T16:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Gates Open",
+        "time": "08:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-06-21T08:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Free Practice 3",
+        "time": "10:55",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-06-21T10:55:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q1",
+        "time": "13:10",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-06-21T13:10:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q2",
+        "time": "13:32",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-06-21T13:32:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Race 1",
+        "time": "16:00",
+        "type": "RACE",
+        "dateTimeStart": "2025-06-21T16:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Gates Open",
+        "time": "07:30",
+        "type": "GATES",
+        "dateTimeStart": "2025-06-22T07:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Warm Up",
+        "time": "09:30",
+        "type": "WARMUP",
+        "dateTimeStart": "2025-06-22T09:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 2",
+        "time": "13:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-06-22T13:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 3",
+        "time": "16:30",
+        "type": "RACE",
+        "dateTimeStart": "2025-06-22T16:30:00.000+01:00",
+        "tz": "Europe/London"
+      }
+    ]
+  },
+  {
+    "title": "Round 4",
+    "date": "04 - 06 Jul",
+    "circuit": "Knockhill",
+    "layout": "Full",
+    "href": "https://www.britishsuperbike.com/calendar/2025/r4-knockhill",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/r4-knockhill",
+    "data": [
+      {
+        "day": "Fri",
+        "name": "Free Practice 1",
+        "time": "13:00",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-07-04T13:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 2",
+        "time": "16:10",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-07-04T16:10:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Free Practice 3",
+        "time": "11:15",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-07-05T11:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q1",
+        "time": "13:10",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-07-05T13:10:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q2",
+        "time": "13:32",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-07-05T13:32:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Race 1",
+        "time": "16:00",
+        "type": "RACE",
+        "dateTimeStart": "2025-07-05T16:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Warm Up",
+        "time": "09:45",
+        "type": "WARMUP",
+        "dateTimeStart": "2025-07-06T09:45:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 2",
+        "time": "13:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-07-06T13:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 3",
+        "time": "16:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-07-06T16:15:00.000+01:00",
+        "tz": "Europe/London"
+      }
+    ]
+  },
+  {
+    "title": "Round 5",
+    "date": "25 - 27 Jul",
+    "circuit": "Brands Hatch",
+    "layout": "GP",
+    "href": "https://www.britishsuperbike.com/calendar/2025/r5-brands-hatch",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/r5-brands-hatch",
+    "data": [
+      {
+        "day": "Fri",
+        "name": "Gates Open",
+        "time": "08:30",
+        "type": "GATES",
+        "dateTimeStart": "2025-07-25T08:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 1",
+        "time": "13:00",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-07-25T13:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 2",
+        "time": "16:00",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-07-25T16:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Bandero Shootout top 12 combined",
+        "time": "16:00",
+        "type": "OTHER",
+        "dateTimeStart": "2025-07-25T16:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Gates Open",
+        "time": "08:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-07-26T08:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Free Practice 3",
+        "time": "09:00",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-07-26T09:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q1",
+        "time": "10:30",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-07-26T10:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q2",
+        "time": "10:52",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-07-26T10:52:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Qualifying Combined Times",
+        "time": "10:52",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-07-26T10:52:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Race 1",
+        "time": "16:00",
+        "type": "RACE",
+        "dateTimeStart": "2025-07-26T16:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Gates Open",
+        "time": "07:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-07-27T07:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Warm Up",
+        "time": "09:15",
+        "type": "WARMUP",
+        "dateTimeStart": "2025-07-27T09:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 2 - Sprint",
+        "time": "12:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-07-27T12:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 3",
+        "time": "16:00",
+        "type": "RACE",
+        "dateTimeStart": "2025-07-27T16:00:00.000+01:00",
+        "tz": "Europe/London"
+      }
+    ]
+  },
+  {
+    "title": "Round 6",
+    "date": "08 - 10 Aug",
+    "circuit": "Thruxton",
+    "layout": "Full",
+    "href": "https://www.britishsuperbike.com/calendar/2025/r6-thruxton",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/r6-thruxton",
+    "data": [
+      {
+        "day": "Fri",
+        "name": "Free Practice 1",
+        "time": "13:00",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-08-08T13:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 2",
+        "time": "15:50",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-08-08T15:50:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Bandero Shootout top 12 combined",
+        "time": "16:00",
+        "type": "OTHER",
+        "dateTimeStart": "2025-08-08T16:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Free Practice 3",
+        "time": "13:25",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-08-09T13:25:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q1",
+        "time": "13:45",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-08-09T13:45:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q2",
+        "time": "14:07",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-08-09T14:07:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Qualifying Combined Times",
+        "time": "14:30",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-08-09T14:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Race 1",
+        "time": "16:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-08-09T16:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Warm Up",
+        "time": "09:30",
+        "type": "WARMUP",
+        "dateTimeStart": "2025-08-10T09:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 2 - Sprint",
+        "time": "13:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-08-10T13:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 3",
+        "time": "16:20",
+        "type": "RACE",
+        "dateTimeStart": "2025-08-10T16:20:00.000+01:00",
+        "tz": "Europe/London"
+      }
+    ]
+  },
+  {
+    "title": "Round 7",
+    "date": "23 - 25 Aug",
+    "circuit": "Cadwell Park",
+    "layout": "Full Circuit",
+    "href": "https://www.britishsuperbike.com/calendar/2025/r7-cadwell-park",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/r7-cadwell-park",
+    "data": [
+      {
+        "day": "Fri",
+        "name": "Official Test",
+        "time": "17:00",
+        "type": "OTHER",
+        "dateTimeStart": null,
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Gates Open",
+        "time": "08:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-08-23T08:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Free Practice 1",
+        "time": "11:30",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-08-23T11:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Free Practice 2",
+        "time": "15:45",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-08-23T15:45:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Shootout top 12 combined",
+        "time": "16:00",
+        "type": "OTHER",
+        "dateTimeStart": "2025-08-23T16:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Gates Open",
+        "time": "07:30",
+        "type": "GATES",
+        "dateTimeStart": "2025-08-24T07:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Free Practice 3",
+        "time": "13:10",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-08-24T13:10:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Bandero Cafe Shoot Out Q1",
+        "time": "13:30",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-08-24T13:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Omologato Superpole",
+        "time": "14:00",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-08-24T14:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Bandero Cafe Shoot Out Qualifying Combined Times",
+        "time": "14:30",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-08-24T14:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 1",
+        "time": "17:00",
+        "type": "RACE",
+        "dateTimeStart": "2025-08-24T17:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Mon",
+        "name": "Gates Open",
+        "time": "07:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-08-25T07:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Mon",
+        "name": "Warm Up",
+        "time": "09:40",
+        "type": "WARMUP",
+        "dateTimeStart": "2025-08-25T09:40:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Mon",
+        "name": "Race 2 - Sprint",
+        "time": "13:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-08-25T13:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Mon",
+        "name": "Race 3",
+        "time": "16:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-08-25T16:15:00.000+01:00",
+        "tz": "Europe/London"
+      }
+    ]
+  },
+  {
+    "title": "Round 8",
+    "date": "05 - 07 Sep",
+    "circuit": "Donington Park",
+    "layout": "GP",
+    "href": "https://www.britishsuperbike.com/calendar/2025/r8-donington-park",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/r8-donington-park",
+    "data": [
+      {
+        "day": "Fri",
+        "name": "Gates Open",
+        "time": "07:30",
+        "type": "GATES",
+        "dateTimeStart": "2025-09-05T07:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 1",
+        "time": "13:00",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-09-05T13:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 2",
+        "time": "15:50",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-09-05T15:50:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Bandero Shootout top 12 combined",
+        "time": "16:00",
+        "type": "OTHER",
+        "dateTimeStart": "2025-09-05T16:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Gates Open",
+        "time": "07:30",
+        "type": "GATES",
+        "dateTimeStart": "2025-09-06T07:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Free Practice 3",
+        "time": "13:25",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-09-06T13:25:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q1",
+        "time": "13:45",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-09-06T13:45:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q2",
+        "time": "14:07",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-09-06T14:07:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Qualifying Combined Times",
+        "time": "14:30",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-09-06T14:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Race 1",
+        "time": "16:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-09-06T16:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Gates Open",
+        "time": "07:30",
+        "type": "GATES",
+        "dateTimeStart": "2025-09-07T07:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Warm Up",
+        "time": "09:30",
+        "type": "WARMUP",
+        "dateTimeStart": "2025-09-07T09:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 2 - Sprint",
+        "time": "13:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-09-07T13:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 3",
+        "time": "16:20",
+        "type": "RACE",
+        "dateTimeStart": "2025-09-07T16:20:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 4",
+        "time": "17:00",
+        "type": "RACE",
+        "dateTimeStart": "2025-09-07T17:00:00.000+01:00",
+        "tz": "Europe/London"
+      }
+    ]
+  },
+  {
+    "title": "Round 9",
+    "date": "19 - 21 Sep",
+    "circuit": "Assen",
+    "layout": "GP",
+    "href": "https://www.britishsuperbike.com/calendar/2025/r9-assen",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/r9-assen",
+    "data": [
+      {
+        "day": "Fri",
+        "name": "Free Practice 1",
+        "time": "13:00",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-09-19T13:00:00.000+02:00",
+        "tz": "Europe/Amsterdam"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 2",
+        "time": "15:50",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-09-19T15:50:00.000+02:00",
+        "tz": "Europe/Amsterdam"
+      },
+      {
+        "day": "Fri",
+        "name": "Bandero Shootout top 12 combined",
+        "time": "16:00",
+        "type": "OTHER",
+        "dateTimeStart": "2025-09-19T16:00:00.000+02:00",
+        "tz": "Europe/Amsterdam"
+      },
+      {
+        "day": "Sat",
+        "name": "Free Practice 3",
+        "time": "13:25",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-09-20T13:25:00.000+02:00",
+        "tz": "Europe/Amsterdam"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q1",
+        "time": "13:45",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-09-20T13:45:00.000+02:00",
+        "tz": "Europe/Amsterdam"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q2",
+        "time": "14:07",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-09-20T14:07:00.000+02:00",
+        "tz": "Europe/Amsterdam"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Qualifying Combined Times",
+        "time": "14:30",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-09-20T14:30:00.000+02:00",
+        "tz": "Europe/Amsterdam"
+      },
+      {
+        "day": "Sat",
+        "name": "Race 1",
+        "time": "16:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-09-20T16:15:00.000+02:00",
+        "tz": "Europe/Amsterdam"
+      },
+      {
+        "day": "Sun",
+        "name": "Warm Up",
+        "time": "09:30",
+        "type": "WARMUP",
+        "dateTimeStart": "2025-09-21T09:30:00.000+02:00",
+        "tz": "Europe/Amsterdam"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 2 - Sprint",
+        "time": "13:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-09-21T13:15:00.000+02:00",
+        "tz": "Europe/Amsterdam"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 3",
+        "time": "16:20",
+        "type": "RACE",
+        "dateTimeStart": "2025-09-21T16:20:00.000+02:00",
+        "tz": "Europe/Amsterdam"
+      }
+    ]
+  },
+  {
+    "title": "Round 10",
+    "date": "03 - 05 Oct",
+    "circuit": "Oulton Park",
+    "layout": "International",
+    "href": "https://www.britishsuperbike.com/calendar/2025/r10-oulton-park",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/r10-oulton-park",
+    "data": [
+      {
+        "day": "Fri",
+        "name": "Gates Open",
+        "time": "08:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-10-03T08:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 1",
+        "time": "13:00",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-10-03T13:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 2",
+        "time": "15:50",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-10-03T15:50:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Bandero Shootout top 12 combined",
+        "time": "16:00",
+        "type": "OTHER",
+        "dateTimeStart": "2025-10-03T16:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Gates Open",
+        "time": "07:30",
+        "type": "GATES",
+        "dateTimeStart": "2025-10-04T07:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Free Practice 3",
+        "time": "13:25",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-10-04T13:25:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q1",
+        "time": "13:45",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-10-04T13:45:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q2",
+        "time": "14:07",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-10-04T14:07:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Qualifying Combined Times",
+        "time": "14:30",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-10-04T14:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Race 1",
+        "time": "16:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-10-04T16:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Gates Open",
+        "time": "07:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-10-05T07:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Warm Up",
+        "time": "09:30",
+        "type": "WARMUP",
+        "dateTimeStart": "2025-10-05T09:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 2 - Sprint",
+        "time": "13:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-10-05T13:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 3",
+        "time": "16:20",
+        "type": "RACE",
+        "dateTimeStart": "2025-10-05T16:20:00.000+01:00",
+        "tz": "Europe/London"
+      }
+    ]
+  },
+  {
+    "title": "Round 11",
+    "date": "17 - 19 Oct",
+    "circuit": "Brands Hatch",
+    "layout": "GP",
+    "href": "https://www.britishsuperbike.com/calendar/2025/r11-brands-hatch",
+    "year": 2025,
+    "eventTitle": null,
+    "url": "https://www.britishsuperbike.com/calendar/2025/r11-brands-hatch",
+    "data": [
+      {
+        "day": "Fri",
+        "name": "Gates Open",
+        "time": "08:30",
+        "type": "GATES",
+        "dateTimeStart": "2025-10-17T08:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 1",
+        "time": "13:00",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-10-17T13:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Free Practice 2",
+        "time": "15:50",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-10-17T15:50:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Fri",
+        "name": "Bandero Shootout top 12 combined",
+        "time": "16:00",
+        "type": "OTHER",
+        "dateTimeStart": "2025-10-17T16:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Gates Open",
+        "time": "08:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-10-18T08:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Free Practice 3",
+        "time": "13:25",
+        "type": "PRACTICE",
+        "dateTimeStart": "2025-10-18T13:25:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q1",
+        "time": "13:45",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-10-18T13:45:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Q2",
+        "time": "14:07",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-10-18T14:07:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Bandero Cafe Shoot Out Qualifying Combined Times",
+        "time": "14:30",
+        "type": "QUALIFYING",
+        "dateTimeStart": "2025-10-18T14:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sat",
+        "name": "Race 1",
+        "time": "16:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-10-18T16:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Gates Open",
+        "time": "07:00",
+        "type": "GATES",
+        "dateTimeStart": "2025-10-19T07:00:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Warm Up",
+        "time": "09:30",
+        "type": "WARMUP",
+        "dateTimeStart": "2025-10-19T09:30:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 2 - Sprint",
+        "time": "13:15",
+        "type": "RACE",
+        "dateTimeStart": "2025-10-19T13:15:00.000+01:00",
+        "tz": "Europe/London"
+      },
+      {
+        "day": "Sun",
+        "name": "Race 3",
+        "time": "16:20",
+        "type": "RACE",
+        "dateTimeStart": "2025-10-19T16:20:00.000+01:00",
+        "tz": "Europe/London"
+      }
+    ]
+  }
+]
