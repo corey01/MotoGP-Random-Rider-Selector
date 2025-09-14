@@ -29,6 +29,7 @@ export default function SweepstakeApp({ allRiders, season }: HomeProps) {
   const [guestRiders, setGuestRiders] = useState<Rider[]>([]);
   const [entrants, setEntrants] = useState(() => defaultEntrants);
   const [loading, setLoading] = useState<boolean>(false);
+  const [eligibleRiderIds, setEligibleRiderIds] = useState<string[] | null>(null);
 
   const router = useRouter();
 
@@ -124,8 +125,9 @@ export default function SweepstakeApp({ allRiders, season }: HomeProps) {
 
   const pickRiders = () => {
     setLoading(true);
-    const tempRidersArray = [...riders];
-    localStorage.setItem('riderList', JSON.stringify({riders, generatedDate: Date.now()}));
+    const pool = eligibleRiderIds ? riders.filter(r => eligibleRiderIds.includes(r.id)) : riders;
+    const tempRidersArray = [...pool];
+    localStorage.setItem('riderList', JSON.stringify({riders: pool, generatedDate: Date.now()}));
     const results = entrants
       .sort(() => Math.random() - 0.5)
       .reduce((acc, entrant, idx) => {
@@ -163,6 +165,7 @@ export default function SweepstakeApp({ allRiders, season }: HomeProps) {
             handleRemoveRider={handleRemoveRider}
             handleResetAllRiders={handleResetAllRiders}
             handleAddRider={handleAddRider}
+            onEligibleRidersChange={setEligibleRiderIds}
           />
         )}
         {page === "entrants" && (

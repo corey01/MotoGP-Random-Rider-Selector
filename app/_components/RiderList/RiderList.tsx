@@ -15,12 +15,14 @@ const RiderList = ({
   handleRemoveRider,
   handleResetAllRiders,
   handleAddRider,
+  onEligibleRidersChange,
 }: {
   riderList: Rider[];
   guestRiders: Rider[];
   handleRemoveRider: (rider: Rider) => void;
   handleResetAllRiders: () => void;
   handleAddRider: (rider: Rider) => void;
+  onEligibleRidersChange?: (ids: string[] | null) => void;
 }) => {
   const [grid, setGrid] = useState<any[]>([]);
   const [gridLoading, setGridLoading] = useState(false);
@@ -68,6 +70,17 @@ const RiderList = ({
           )
         )
       : riderList;
+
+  // Sync eligible rider IDs to parent so sweepstake uses the same pool
+  useEffect(() => {
+    if (!onEligibleRidersChange) return;
+    if (showTop10) {
+      onEligibleRidersChange(filteredRiderList.map((r) => r.id));
+    } else {
+      onEligibleRidersChange(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showTop10, gridTop10Ids.length, riderList.length]);
 
   // Map any known grid rider id (api id, riders_api_uuid, legacy_id) to qualifying position
   const gridPositionByAnyId = useMemo(() => {
@@ -128,6 +141,7 @@ const RiderList = ({
           handleResetAllRiders();
           setShowTop10(false);
           setGrid([]);
+          if (onEligibleRidersChange) onEligibleRidersChange(null);
         }}
         className={style.resetButton}
       >

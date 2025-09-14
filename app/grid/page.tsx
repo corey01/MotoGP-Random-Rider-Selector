@@ -1,5 +1,7 @@
 // app/grid/page.tsx
 import "server-only";
+import GridPanel from "../_components/Grid/Grid";
+import { getRiderData } from "@/utils/getRiderData";
 
 /* ---------------------------- tiny fetch helpers --------------------------- */
 type Json = any;
@@ -359,58 +361,13 @@ async function getGrid(eventId: string, categoryId: string) {
 /* --------------------------------- page ----------------------------------- */
 export default async function GridPage() {
   try {
-    const { resultsEventId, eventMotoGpCat, eventLabel } = await resolveEventAndCategory();
-    const { grid, source } = await getGrid(resultsEventId, eventMotoGpCat);
-
-    if (!grid.length) {
-      const [sessions, entry] = await Promise.all([
-        fetchJson(
-          `${BASE}/results/sessions?eventUuid=${resultsEventId}&categoryUuid=${eventMotoGpCat}`
-        ),
-        fetchJson(
-          `${BASE}/results/event/${resultsEventId}/entry?categoryUuid=${eventMotoGpCat}`
-        ),
-      ]);
-
-      return (
-        <pre style={{ whiteSpace: "pre-wrap" }}>
-          {`No grid data available (official & derived both empty).
-
-Event: ${resultsEventId}
-Event Name: ${eventLabel}
-Category: ${eventMotoGpCat}
-
-Sessions (names/types):
-${JSON.stringify(
-  (sessions ?? []).map((s: any) => ({
-    id: s.id,
-    name: s.name,
-    short: s.session_shortname,
-    type: s.type,
-    code: s.code,
-    phase: s.phase,
-    number: s.number,
-    date: s.date,
-  })),
-  null,
-  2
-)}
-
-Entry list length: ${(entry ?? []).length}
-`}
-        </pre>
-      );
-    }
+    const { eventLabel } = await resolveEventAndCategory();
+    const riders = await getRiderData();
 
     return (
       <div style={{ fontFamily: "system-ui, sans-serif", padding: 16 }}>
-        <h2 style={{ margin: 0, marginBottom: 4 }}>{eventLabel}</h2>
-        <p style={{ marginTop: 0, marginBottom: 12, opacity: 0.8 }}>
-          Grid source: <strong>{source}</strong>
-        </p>
-        <pre style={{ whiteSpace: "pre-wrap", fontSize: 13 }}>
-          {JSON.stringify(grid, null, 2)}
-        </pre>
+        <h2 style={{ margin: 0, marginBottom: 8 }}>{eventLabel}</h2>
+        <GridPanel riders={[...riders.standardRiders, ...riders.guestRiders]} />
       </div>
     );
   } catch (e: any) {
