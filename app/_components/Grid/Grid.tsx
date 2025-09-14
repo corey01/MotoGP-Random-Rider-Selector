@@ -21,6 +21,7 @@ export default function GridPanel({ riders }: { riders: Rider[] }) {
   const [grid, setGrid] = useState<GridEntry[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [eventName, setEventName] = useState<string | null>(null);
 
   useEffect(() => {
     let alive = true;
@@ -32,6 +33,15 @@ export default function GridPanel({ riders }: { riders: Rider[] }) {
           "https://cascading-monkeys.corey-obeirne.workers.dev/get_next_grandprix"
         );
         const data = await res.json();
+        const nameCandidate =
+          data?.event?.full_name ||
+          data?.event?.name ||
+          data?.name ||
+          data?.title ||
+          data?.grand_prix_name ||
+          data?.grand_prix ||
+          null;
+        if (alive) setEventName(nameCandidate);
         if (data?.links?.grid) {
           const gridRes = await fetch(data.links.grid);
           const gridData = await gridRes.json();
@@ -91,7 +101,7 @@ export default function GridPanel({ riders }: { riders: Rider[] }) {
   return (
     <div className={`panel ${style.GridPanel}`}>
       <div className={style.header}>
-        <h3 style={{ margin: 0 }}>Current Grid</h3>
+        <h3 style={{ margin: 0 }}>{eventName || "Current Grid"}</h3>
         <span className={style.meta}>
           {loading
             ? "Loading…"
