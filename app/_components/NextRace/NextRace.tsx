@@ -1,20 +1,32 @@
 import { Race, Season } from "@/models/race";
-import { format, formatDistanceToNow } from "date-fns";
+import { add, format, formatDistanceToNow } from "date-fns";
 import style from "./NextRace.module.scss";
 import Link from "next/link";
 
 const NextRace = ({ season }: { season: Season }) => {
-  let race: Race;
-  const currentRace = season.current;
-  const isActiveNow = season.current.length > 0;
-  const sortedFutureRaces = season.future.sort((a, b) => {
-    return new Date(a.date_start).valueOf() - new Date(b.date_start).valueOf();
-  });
-  if (isActiveNow) {
-    race = currentRace[0];
-  } else {
-    race = sortedFutureRaces[0];
-  }
+  // Recompute current/next at render time so static exports stay fresh
+  const now = new Date();
+  const all: Race[] = [
+    ...(season.past || []),
+    ...(season.current || []),
+    ...(season.future || []),
+  ];
+  const isOngoing = (ev: Race) => {
+    const start = new Date(ev.date_start);
+    const end = add(new Date(ev.date_end), { hours: 23, minutes: 59 });
+    return start <= now && now <= end;
+  };
+  const current = all.find(isOngoing) || null;
+  const upcoming =
+    all
+      .filter((ev) => new Date(ev.date_start) > now)
+      .sort(
+        (a, b) =>
+          new Date(a.date_start).valueOf() - new Date(b.date_start).valueOf()
+      )[0] || null;
+
+  const race = (current || upcoming)!;
+  const isActiveNow = !!current;
 
   const startDate = new Date(race.date_start);
   const endDate = new Date(race.date_end);

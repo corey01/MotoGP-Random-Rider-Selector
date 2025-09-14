@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import RiderList from "./RiderList";
+import GridPanel from "./Grid/Grid";
 import Entrants from "./Entrants/Entrants";
 import { Rider, SelectedRider } from "@/models/rider";
 import { defaultEntrants } from "@/utils/entrants";
@@ -172,6 +173,7 @@ export default function SweepstakeApp({ allRiders, season }: HomeProps) {
             handleAddNewEntrant={handleAddNewEntrant}
           />
         )}
+        {page === "grid" && <GridPanel riders={[...riders, ...guestRiders]} />}
       </div>
       <div className="navbar">
         <div
@@ -185,6 +187,12 @@ export default function SweepstakeApp({ allRiders, season }: HomeProps) {
           onClick={() => setPage("entrants")}
         >
           Entrants
+        </div>
+        <div
+          className={`setpage ${page === "grid" ? "active" : ""}`}
+          onClick={() => setPage("grid")}
+        >
+          Grid
         </div>
       </div>
     </>
