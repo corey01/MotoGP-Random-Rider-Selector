@@ -6,6 +6,23 @@ import {fileURLToPath} from 'node:url';
 import binBuild from 'bin-build';
 import bin from './index.js';
 
+const removeBundledBinaryForNonDarwin = () => {
+  if (process.platform === 'darwin') {
+    return;
+  }
+
+  const binaryName = process.platform === 'win32' ? 'cjpeg.exe' : 'cjpeg';
+  const binaryPath = path.join(bin.dest(), binaryName);
+
+  try {
+    if (fs.existsSync(binaryPath)) {
+      fs.unlinkSync(binaryPath);
+    }
+  } catch {
+    // Ignore cleanup errors; bin-wrapper will re-download if needed.
+  }
+};
+
 const cpuNumber = Math.max(os.cpus().length, 1);
 const ensureEnvFlag = (variable, flags) => {
   if (flags.length === 0) {
@@ -56,6 +73,8 @@ const addSearchPathsForDarwin = () => {
       : pkgConfigPaths.join(':');
   }
 };
+
+removeBundledBinaryForNonDarwin();
 
 bin.run(['-version'])
   .then(() => {
