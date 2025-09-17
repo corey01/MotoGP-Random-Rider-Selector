@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Rider } from "@/models/rider";
 import { FALLBACK_TEAM_COLOR } from "@/app/consts";
 import style from "./Grid.module.scss";
+import { format } from "date-fns";
 
 type GridEntry = {
   qualifying_position?: number | string;
@@ -17,11 +18,22 @@ type GridEntry = {
   } | null;
 };
 
+type Sessions = {
+  Q1: string | null;
+  Q2: string | null;
+};
+
 export default function GridPanel({ riders }: { riders: Rider[] }) {
   const [grid, setGrid] = useState<GridEntry[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [eventName, setEventName] = useState<string | null>(null);
+  const [sessions, setSessions] = useState<Sessions>({
+    Q1: null,
+    Q2: null,
+  });
+
+  console.log(sessions);
 
   useEffect(() => {
     let alive = true;
@@ -42,6 +54,14 @@ export default function GridPanel({ riders }: { riders: Rider[] }) {
           data?.grand_prix ||
           null;
         if (alive) setEventName(nameCandidate);
+        console.log(data);
+
+        if (data?.sessions.Q1 && data?.sessions.Q2) {
+          setSessions({
+            Q1: data.sessions.Q1,
+            Q2: data.sessions.Q2,
+          });
+        }
         if (data?.links?.grid) {
           const gridRes = await fetch(data.links.grid);
           const gridData = await gridRes.json();
@@ -98,6 +118,12 @@ export default function GridPanel({ riders }: { riders: Rider[] }) {
     return L > 0.6 ? "#121212" : "#ffffff";
   };
 
+  const displayNextSession =
+    !loading &&
+    !ordered.length &&
+    typeof sessions.Q1 === "string" &&
+    typeof sessions.Q2 === "string";
+
   return (
     <div className={`panel ${style.GridPanel}`}>
       <div className={style.header}>
@@ -110,6 +136,25 @@ export default function GridPanel({ riders }: { riders: Rider[] }) {
             : "No grid available"}
         </span>
       </div>
+      {displayNextSession && (
+        <>
+          <h5>Next sessions</h5>
+          <h6>
+            Q1:{" "}
+            {format(
+              new Date(sessions.Q1 ? sessions.Q1 : ""),
+              "EEEE, d MMMM yy HH:mm aaaaa'm'"
+            )}
+          </h6>
+          <h6>
+            Q2:{" "}
+            {format(
+              new Date(sessions.Q2 ? sessions.Q2 : ""),
+              "EEEE, d MMMM yy HH:mm aaaaa'm'"
+            )}
+          </h6>
+        </>
+      )}
       {error && <div className={style.error}>{error}</div>}
       {!loading && rows.length > 0 && (
         <div className={style.rows}>
