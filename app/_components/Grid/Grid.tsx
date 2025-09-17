@@ -33,8 +33,6 @@ export default function GridPanel({ riders }: { riders: Rider[] }) {
     Q2: null,
   });
 
-  console.log(sessions);
-
   useEffect(() => {
     let alive = true;
     async function fetchGrid() {
@@ -54,7 +52,6 @@ export default function GridPanel({ riders }: { riders: Rider[] }) {
           data?.grand_prix ||
           null;
         if (alive) setEventName(nameCandidate);
-        console.log(data);
 
         if (data?.sessions.Q1 && data?.sessions.Q2) {
           setSessions({
