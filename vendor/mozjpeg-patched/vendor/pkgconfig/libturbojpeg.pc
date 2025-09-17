@@ -1,0 +1,10 @@
+prefix=/Users/corey/projects/MotoGP-Random-Rider-Selector/vendor/mozjpeg-patched/vendor
+exec_prefix=${prefix}
+libdir=/Users/corey/projects/MotoGP-Random-Rider-Selector/vendor/mozjpeg-patched/vendor
+includedir=${prefix}/include
+
+Name: libturbojpeg
+Description: A SIMD-accelerated JPEG codec that provides the TurboJPEG API
+Version: 3.2
+Libs: -L${libdir} -lturbojpeg
+Cflags: -I${includedir}
