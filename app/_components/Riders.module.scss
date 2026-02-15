@@ -85,23 +85,22 @@
 
 .listItem .team {
   display: inline-block;
-  width: fit-content;
   font-size: 0.8rem;
   line-height: 1.2;
   margin-top: 2px;
   padding: 2px 6px;
   border-radius: 4px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
-  max-width: min(92%, 240px);
+  max-width: 18ch;
   white-space: normal;
   overflow-wrap: break-word;
   word-break: normal;
   hyphens: none;
-  overflow: hidden;
+  vertical-align: top;
 }
 
 .riderName {
-  font-size: 22px;
+  font-size: 18px;
   line-height: 0.92;
   margin-bottom:4px;
   margin-top: 4px;
@@ -128,19 +127,19 @@
   }
 
   .riderName {
-    font-size: 15px;
-    line-height: 0.96;
+    font-size: 18px;
+    line-height: 0.92;
     max-width: 100%;
   }
 
   .riderNameCompact {
-    font-size: 14px;
-    line-height: 0.98;
+    font-size: 18px;
+    line-height: 0.94;
   }
 
   .listItem .team {
-    max-width: min(92%, 190px);
     line-height: 1.15;
+    max-width: 16ch;
   }
 }
 

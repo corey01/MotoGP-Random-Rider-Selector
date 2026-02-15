@@ -1,5 +1,4 @@
 import { Rider } from "@/models/rider";
-import { getRiderData } from "./getRiderData";
 import { getRiderDataLocal } from "./getRiderDataLocal";
 
 const getCachedRiders = (): Rider[] => {
@@ -24,7 +23,8 @@ const getCachedRiders = (): Rider[] => {
 };
 
 export const getSelectedRidersByID = async (ids: string[]) => {
-  const { allRiders } = await getRiderData();
+  const cached = getCachedRiders();
+  const allRiders = cached.length ? cached : getRiderDataLocal().allRiders;
 
   const selectedRiders = ids.map((id) => {
     const riderResults = allRiders.filter((rider) => rider.id === id);
