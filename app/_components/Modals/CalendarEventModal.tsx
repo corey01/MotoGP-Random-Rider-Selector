@@ -64,12 +64,12 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
           <div className={`${style.seriesTag} ${seriesClass}`}>
             {seriesLabel}
           </div>
-          <h2 className={style.title}>{event.extendedProps?.meta?.round}</h2>
+          <h2 className={style.title}>{event.title}</h2>
         </div>
         
         <div className={style.eventContent}>
           <div className={style.eventName}>
-            {event.title}
+            {event.extendedProps?.meta?.round}
           </div>
           
           <div className={style.timeInfo}>

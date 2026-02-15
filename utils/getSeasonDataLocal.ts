@@ -6,15 +6,22 @@ import { add } from "date-fns";
 
 
 interface Broadcast {
-  kind: string;
-  date_start: string;
-  date_end: string;
-  eventName: string;
-  name: string;
+  kind?: string;
+  type?: string;
+  date_start?: string;
+  date_end?: string;
+  eventName?: string;
+  event_name?: string;
+  name?: string;
+  title?: string;
+  shortname?: string;
+  category?: { name?: string };
 }
 
 interface RaceEvent {
-  name: string;
+  name?: string;
+  country?: string;
+  title?: string;
   broadcasts: Broadcast[];
 }
 
@@ -77,21 +84,59 @@ export async function getSeasonDataLocal() {
 }
 
 export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
-  return data.broadcasts.map(session => ({
-    title: `${session.eventName} ${session.name}`,
-    start: session.date_start, // Browser will auto-convert this for the calendar display
-    className: 'motogp-event',
-    extendedProps: {
-      session: session.kind,
-      meta: {
-        round: `${data.name} Grand Prix`,
-        name: session.name,
-        deviceTime: session.date_start, // Browser will convert this to local time
-        deviceEndTime: session.date_end,
-        raceTime: session.date_start.split('+')[0] + ` (GMT${session.date_start.slice(-5)})` // Keep original time with timezone
-      }
+  const eventLabel = (data.name || data.country || data.title || "Grand Prix").trim();
+
+  return (data.broadcasts || []).flatMap((session) => {
+    const series =
+      session.eventName ||
+      session.event_name ||
+      session.category?.name ||
+      "MotoGP";
+
+    const rawSessionName =
+      session.name ||
+      session.title ||
+      session.shortname ||
+      session.kind ||
+      session.type ||
+      "Session";
+
+    const sessionName = rawSessionName.replace(/^Tissot\s+Sprint$/i, "Sprint");
+    const sessionKind = (session.kind || session.type || "SESSION").toUpperCase();
+    const start = session.date_start || "";
+    const end = session.date_end;
+
+    if (!start) return [];
+
+    const isSprint = /SPRINT/i.test(sessionName);
+    const isRace = /RACE|GRAND PRIX/i.test(sessionName) || sessionKind === "RACE";
+    let sessionLabel = `${series} ${sessionName}`;
+
+    if (isSprint) {
+      sessionLabel = `${series} Sprint`;
+    } else if (isRace) {
+      sessionLabel = `${series} Grand Prix`;
     }
-  }));
+
+    const tzSuffix = start.includes("+") ? ` (GMT${start.slice(-5)})` : "";
+    const displayName = `${eventLabel} ${sessionLabel}`.replace(/\s+/g, " ").trim();
+
+    return [{
+      title: displayName,
+      start, // Browser will auto-convert this for the calendar display
+      className: "motogp-event",
+      extendedProps: {
+        session: sessionKind,
+        meta: {
+          round: `${eventLabel} Grand Prix`,
+          name: sessionLabel,
+          deviceTime: start, // Browser will convert this to local time
+          deviceEndTime: end,
+          raceTime: start.split("+")[0] + tzSuffix // Keep original time with timezone
+        }
+      }
+    }];
+  });
 };
 
 export const getUnsortedSeasonDataLocal = (racesOnly = true) => {
