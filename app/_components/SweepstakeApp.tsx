@@ -8,7 +8,6 @@ import Entrants from "./Entrants/Entrants";
 import { Rider, SelectedRider } from "@/models/rider";
 import { defaultEntrants } from "@/utils/entrants";
 import { Season } from "@/models/race";
-import NextRace from "./NextRace/NextRace";
 import { useRouter } from "next/navigation";
 import LoadingOverlay from "./Loading/Overlay";
 import {
@@ -48,6 +47,15 @@ export default function SweepstakeApp({ allRiders, season }: HomeProps) {
 
   useEffect(() => {
     setGuestRiders(allRiders.guestRiders);
+  }, [allRiders]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        "allRidersCache",
+        JSON.stringify({ riders: allRiders.allRiders, generatedDate: Date.now() })
+      );
+    } catch {}
   }, [allRiders]);
 
   const handleResetAllRiders = () => {
@@ -152,7 +160,7 @@ export default function SweepstakeApp({ allRiders, season }: HomeProps) {
   return (
     <>
       {loading && <LoadingOverlay />}
-      <NextRace season={season} />
+      {/* <NextRace season={season} /> */}
 
       <button disabled={loading} className="pickButton" onClick={pickRiders}>
         Randomly Assign Riders Now!

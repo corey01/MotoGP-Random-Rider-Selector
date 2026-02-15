@@ -52,7 +52,6 @@ export default function GridPanel({ riders }: { riders: Rider[] }) {
           data?.grand_prix ||
           null;
         if (alive) setEventName(nameCandidate);
-
         if (data?.sessions.Q1 && data?.sessions.Q2) {
           setSessions({
             Q1: data.sessions.Q1,
@@ -186,9 +185,18 @@ export default function GridPanel({ riders }: { riders: Rider[] }) {
                   const parts = riderImg.split("/");
                   const file = parts[parts.length - 1];
                   try {
-                    // require path for local optimized image like RiderCard
-                    thumb = require(`/public/riders/25/${file}?resize&size=300&webp`);
-                  } catch {}
+                    if (riderImg.startsWith("/riders/25/")) {
+                      thumb = require(`/public/riders/25/${file}?resize&size=300&webp`);
+                    } else if (riderImg.startsWith("/riders/24/")) {
+                      thumb = require(`/public/riders/24/${file}?resize&size=300&webp`);
+                    } else if (riderImg.startsWith("/riders/")) {
+                      thumb = require(`/public/riders/${file}?resize&size=300&webp`);
+                    } else {
+                      thumb = riderImg;
+                    }
+                  } catch {
+                    thumb = riderImg;
+                  }
                 }
                 return (
                   <div key={key} className={`${style.cell} ${cellClass}`}>

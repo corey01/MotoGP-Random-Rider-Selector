@@ -24,10 +24,21 @@ const RiderCard = ({
     const url = rider.pictures.profile.main;
     if(!url) return;
     const endUrl = url.split("/");
+    const file = endUrl[endUrl.length - 1];
 
-    return require(`/public/riders/25/${
-      endUrl[endUrl.length - 1]
-    }?resize&size=500&webp`);
+    try {
+      if (url.startsWith("/riders/25/")) {
+        return require(`/public/riders/25/${file}?resize&size=500&webp`);
+      }
+      if (url.startsWith("/riders/24/")) {
+        return require(`/public/riders/24/${file}?resize&size=500&webp`);
+      }
+      if (url.startsWith("/riders/")) {
+        return require(`/public/riders/${file}?resize&size=500&webp`);
+      }
+    } catch {}
+
+    return url;
   };
 
   const handleAdd = () => {
@@ -38,8 +49,23 @@ const RiderCard = ({
 
   const isGuest = rider.riderType === "guest";
   const highlightGuest = !inGuestArray && rider.riderType === "guest";
+  const isLongName = `${rider.name} ${rider.surname}`.length > 18;
 
   const hasBikeImage = !!rider.pictures.bike.main  || rider.teamPicture;
+
+  const getContrastText = (hex?: string | null) => {
+    if (!hex || !/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(hex)) return "#ffffff";
+    let h = hex.slice(1);
+    if (h.length === 3) h = h.split("").map(c => c + c).join("");
+    const r = parseInt(h.slice(0, 2), 16);
+    const g = parseInt(h.slice(2, 4), 16);
+    const b = parseInt(h.slice(4, 6), 16);
+    const luma = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luma > 0.62 ? "#111111" : "#ffffff";
+  };
+
+  const teamBg = rider.teamColor || "rgba(255,255,255,0.12)";
+  const teamFg = rider.textColor || getContrastText(rider.teamColor || "");
 
   return (
     <div
@@ -71,8 +97,8 @@ const RiderCard = ({
         height={375}
       />
       <div className={style.details}>
-        <span className={`${motoGP.className} ${style.riderName}`}>
-          {rider.name} {rider.surname}{" "}
+        <span className={`${motoGP.className} ${classNames(style.riderName, isLongName && style.riderNameCompact)}`}>
+          {rider.name} {rider.surname}
           {highlightGuest && (
             <>
               <br />
@@ -80,7 +106,13 @@ const RiderCard = ({
             </>
           )}
         </span>
-        <span className={`${style.team} ${rider.teamColor ? '' : style.teamOutline}`} style={{ color: rider.teamColor || FALLBACK_TEAM_COLOR }}>
+        <span
+          className={`${style.team} ${rider.teamColor ? '' : style.teamOutline}`}
+          style={{
+            color: rider.teamColor ? teamFg : FALLBACK_TEAM_COLOR,
+            backgroundColor: teamBg,
+          }}
+        >
           {rider.sponsoredTeam}
         </span>
         <span className={style.riderNumber}>#{rider.number}</span>{" "}

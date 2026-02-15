@@ -11,13 +11,34 @@ const ResultsCard = ({
   selected: SelectedRider;
 }) => {
   const [isExpanded, setExpanded] = useState<boolean>(false);
-
   const getRiderPortrait = () => {
-    const endUrl = rider.pictures.portrait!.split("/");
+    const url = rider.pictures.portrait || rider.pictures.profile.main;
+    if (!url) return "";
+    const endUrl = url.split("/");
+    const file = endUrl[endUrl.length - 1];
 
-    return require(`/public/riders/25/portrait/${
-      endUrl[endUrl.length - 1]
-    }?resize&size=400&webp`);
+    try {
+      if (url.startsWith("/riders/25/portrait/")) {
+        return require(`/public/riders/25/portrait/${file}?resize&size=400&webp`);
+      }
+      if (url.startsWith("/riders/24/portrait/")) {
+        return require(`/public/riders/24/portrait/${file}?resize&size=400&webp`);
+      }
+      if (url.startsWith("/riders/portrait/")) {
+        return require(`/public/riders/portrait/${file}?resize&size=400&webp`);
+      }
+      if (url.startsWith("/riders/25/")) {
+        return require(`/public/riders/25/${file}?resize&size=400&webp`);
+      }
+      if (url.startsWith("/riders/24/")) {
+        return require(`/public/riders/24/${file}?resize&size=400&webp`);
+      }
+      if (url.startsWith("/riders/")) {
+        return require(`/public/riders/${file}?resize&size=400&webp`);
+      }
+    } catch {}
+
+    return url;
   };
 
   return (
@@ -31,7 +52,7 @@ const ResultsCard = ({
           src={getEntrantImage(entrant)}
         />
         <div className={style.equal}>=</div>
-        <Image
+        <img
           width={140}
           height={140}
           alt=""

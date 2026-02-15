@@ -2,7 +2,6 @@
 
 import { Race, Season } from "@/models/race";
 import React from "react";
-import NextRace from "../NextRace/NextRace";
 import Tile from "../CalendarTile/CalendarTile";
 import Link from "next/link";
 import style from "./Calendar.module.scss";
@@ -22,7 +21,7 @@ export function RaceLineup({
 
   return (
     <div className={style.Calendar}>
-      <NextRace season={season} />
+      {/* <NextRace season={season} /> */}
       <h1>Upcoming Grand{races.length > 1 && "s"} Prix</h1>
 
       <p className={style.timeNote}>Note: All times shown in GMT</p>
