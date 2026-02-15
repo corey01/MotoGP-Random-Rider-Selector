@@ -30,20 +30,7 @@ export default function CalendarPage() {
           process.env.NEXT_PUBLIC_MOTOGP_WORKER_URL || defaultBaseUrl;
         const requestUrl = `${baseUrl.replace(/\/$/, "")}/season-events?year=${year}`;
 
-        console.info("[calendar] load start", {
-          year,
-          showAllSessions,
-          baseUrl,
-          requestUrl,
-          fallbackCount: fallback.length,
-        });
-
         const res = await fetch(requestUrl, { cache: "no-store" });
-        console.info("[calendar] fetch response", {
-          status: res.status,
-          ok: res.ok,
-          requestUrl,
-        });
         if (!res.ok) throw new Error(`season-events failed (${res.status})`);
 
         const payload = await res.json();
@@ -53,23 +40,10 @@ export default function CalendarPage() {
           ? sessions
           : sessions.filter((s: any) => s.extendedProps?.session === "RACE");
 
-        console.info("[calendar] transformed", {
-          source: payload?.source,
-          eventCount: events.length,
-          sessionCount: sessions.length,
-          filteredCount: filtered.length,
-        });
-
         if (!cancelled) {
           setMotoGpData(filtered.length ? filtered : fallback);
-          if (!filtered.length) {
-            console.warn("[calendar] using fallback because filtered results are empty", {
-              fallbackCount: fallback.length,
-            });
-          }
         }
-      } catch (error) {
-        console.error("[calendar] season-events fetch failed, using fallback", error);
+      } catch {
         if (!cancelled) {
           setMotoGpData(fallback);
         }
