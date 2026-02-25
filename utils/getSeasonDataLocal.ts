@@ -21,6 +21,10 @@ interface Broadcast {
 interface RaceEvent {
   name?: string;
   country?: string;
+  countryName?: string;
+  venue?: string;
+  city?: string;
+  grandPrixName?: string;
   title?: string;
   broadcasts: Broadcast[];
 }
@@ -48,6 +52,67 @@ const defaultSeasonObject = {
   past: [],
   future: [],
   current: [],
+};
+
+const COUNTRY_LABEL_OVERRIDES: Record<string, string> = {
+  TH: "Thailand",
+  ES: "Spain",
+  FR: "France",
+  IT: "Italy",
+  PT: "Portugal",
+  GB: "United Kingdom",
+  NL: "Netherlands",
+  AT: "Austria",
+  CZ: "Czechia",
+  DE: "Germany",
+  AR: "Argentina",
+  US: "United States",
+  JP: "Japan",
+  AU: "Australia",
+  QA: "Qatar",
+  IN: "India",
+  MY: "Malaysia",
+  ID: "Indonesia",
+};
+
+const countryLabelFromCode = (countryCode?: string) => {
+  if (!countryCode) return "";
+  const code = countryCode.trim().toUpperCase();
+  if (!code) return "";
+  if (COUNTRY_LABEL_OVERRIDES[code]) return COUNTRY_LABEL_OVERRIDES[code];
+  try {
+    const dn = new Intl.DisplayNames(["en"], { type: "region" });
+    return dn.of(code) || code;
+  } catch {
+    return code;
+  }
+};
+
+const toTitleCase = (value: string) =>
+  value
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+const extractRegionFromGrandPrix = (grandPrixName?: string) => {
+  if (!grandPrixName) return "";
+  const clean = grandPrixName.replace(/\s+/g, " ").trim();
+
+  const ofMatch = clean.match(/OF\s+(.+)$/i);
+  if (ofMatch?.[1]) return toTitleCase(ofMatch[1]);
+
+  const deMatch = clean.match(/DE\s+(.+)$/i);
+  if (deMatch?.[1]) return toTitleCase(deMatch[1]);
+
+  const diMatch = clean.match(/DI\s+(.+)$/i);
+  if (diMatch?.[1]) {
+    const shortened = diMatch[1].split(/\s+E\s+DELLA\s+/i)[0];
+    return toTitleCase(shortened);
+  }
+
+  return "";
 };
 
 export async function getSeasonDataLocal() {
@@ -84,7 +149,24 @@ export async function getSeasonDataLocal() {
 }
 
 export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
-  const eventLabel = (data.name || data.country || data.title || "Grand Prix").trim();
+  const countryLabel =
+    (data.countryName || "").trim() ||
+    countryLabelFromCode(data.country) ||
+    "";
+  const venueLabel =
+    (data.venue || data.name || data.city || "").trim() || "";
+  const gpBase =
+    (data.grandPrixName || data.title || (countryLabel ? `Grand Prix of ${countryLabel}` : "")).trim() ||
+    `${venueLabel || countryLabel || "Grand Prix"} Grand Prix`;
+
+  // Prefer GP region naming (Catalunya, Aragon, San Marino, etc.) over generic country labels.
+  const gpRegionLabel = extractRegionFromGrandPrix(gpBase);
+  const eventLabel = (gpRegionLabel || venueLabel || countryLabel || data.title || "Grand Prix").trim();
+
+  const roundLabel =
+    venueLabel && !gpBase.toLowerCase().includes(venueLabel.toLowerCase())
+      ? `${gpBase} in ${venueLabel}`
+      : gpBase;
 
   return (data.broadcasts || []).flatMap((session) => {
     const series =
@@ -108,16 +190,7 @@ export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
 
     if (!start) return [];
 
-    const isSprint = /SPRINT/i.test(sessionName);
-    const isRace = /RACE|GRAND PRIX/i.test(sessionName) || sessionKind === "RACE";
-    let sessionLabel = `${series} ${sessionName}`;
-
-    if (isSprint) {
-      sessionLabel = `${series} Sprint`;
-    } else if (isRace) {
-      sessionLabel = `${series} Grand Prix`;
-    }
-
+    const sessionLabel = `${series} ${sessionName}`.replace(/\s+/g, " ").trim();
     const tzSuffix = start.includes("+") ? ` (GMT${start.slice(-5)})` : "";
     const displayName = `${eventLabel} ${sessionLabel}`.replace(/\s+/g, " ").trim();
 
@@ -128,7 +201,7 @@ export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
       extendedProps: {
         session: sessionKind,
         meta: {
-          round: `${eventLabel} Grand Prix`,
+          round: roundLabel,
           name: sessionLabel,
           deviceTime: start, // Browser will convert this to local time
           deviceEndTime: end,
