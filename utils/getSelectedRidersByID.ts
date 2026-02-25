@@ -16,7 +16,8 @@ const getCachedRiders = (): Rider[] => {
     const rawAll = localStorage.getItem("allRidersCache");
     if (rawAll) {
       const parsed = JSON.parse(rawAll) as { riders?: Rider[]; seasonYear?: number };
-      if (parsed?.seasonYear && Number(parsed.seasonYear) !== activeSeasonYear) {
+      const cachedSeasonYear = Number(parsed?.seasonYear);
+      if (!cachedSeasonYear || cachedSeasonYear !== activeSeasonYear) {
         localStorage.removeItem("allRidersCache");
       } else if (Array.isArray(parsed?.riders) && parsed.riders.length) {
         return parsed.riders;
@@ -28,7 +29,8 @@ const getCachedRiders = (): Rider[] => {
     const rawList = localStorage.getItem("riderList");
     if (rawList) {
       const parsed = JSON.parse(rawList) as { riders?: Rider[]; seasonYear?: number };
-      if (parsed?.seasonYear && Number(parsed.seasonYear) !== activeSeasonYear) {
+      const cachedSeasonYear = Number(parsed?.seasonYear);
+      if (!cachedSeasonYear || cachedSeasonYear !== activeSeasonYear) {
         localStorage.removeItem("riderList");
       } else if (Array.isArray(parsed?.riders) && parsed.riders.length) {
         return parsed.riders;

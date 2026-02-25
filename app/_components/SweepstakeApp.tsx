@@ -110,7 +110,8 @@ JSON.stringify({ riders: allRiders.allRiders, generatedDate: Date.now(), seasonY
     if(savedRiderList){
       const decodedResults = JSON.parse(savedRiderList);
 
-      if (decodedResults?.seasonYear && Number(decodedResults.seasonYear) !== seasonYear) {
+      const cachedSeasonYear = Number(decodedResults?.seasonYear);
+      if (!cachedSeasonYear || cachedSeasonYear !== seasonYear) {
         localStorage.removeItem("riderList");
         setLoading(false);
         return;
@@ -126,10 +127,22 @@ JSON.stringify({ riders: allRiders.allRiders, generatedDate: Date.now(), seasonY
           return;
         }
       }
-      setRiders(decodedResults.riders)
+      const cachedRiders = Array.isArray(decodedResults?.riders)
+        ? decodedResults.riders
+        : [];
+      const currentIds = new Set(allRiders.allRiders.map((r) => r.id));
+      const hasUnknownRider = cachedRiders.some(
+        (r: Rider) => !currentIds.has(r.id)
+      );
+      if (hasUnknownRider) {
+        localStorage.removeItem("riderList");
+        setLoading(false);
+        return;
+      }
+      setRiders(cachedRiders);
     }
 
-  }, [router, seasonYear]);
+  }, [router, seasonYear, allRiders]);
 
   useEffect(() => {
     handleStorage();
