@@ -75,6 +75,32 @@ const COUNTRY_LABEL_OVERRIDES: Record<string, string> = {
   ID: "Indonesia",
 };
 
+
+const REGION_OVERRIDES_BY_COUNTRY: Record<string, Record<string, string>> = {
+  ES: {
+    ARAGON: "Aragon",
+    CATALUNYA: "Catalunya",
+    CATALUNA: "Catalunya",
+    VALENCIA: "Valencia",
+    SPAIN: "Spain",
+  },
+  IT: {
+    "SAN MARINO": "San Marino",
+    ITALY: "Italy",
+  },
+};
+
+const inferRegionFromName = (countryCode?: string, eventName?: string) => {
+  const code = (countryCode || "").trim().toUpperCase();
+  const key = (eventName || "")
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z\s]/g, "")
+    .replace(/\s+/g, " ");
+  if (!code || !key) return "";
+  return REGION_OVERRIDES_BY_COUNTRY[code]?.[key] || "";
+};
+
 const countryLabelFromCode = (countryCode?: string) => {
   if (!countryCode) return "";
   const code = countryCode.trim().toUpperCase();
@@ -149,19 +175,21 @@ export async function getSeasonDataLocal() {
 }
 
 export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
+  const countryCode = (data.country || "").trim().toUpperCase();
   const countryLabel =
     (data.countryName || "").trim() ||
-    countryLabelFromCode(data.country) ||
+    countryLabelFromCode(countryCode) ||
     "";
-  const venueLabel =
-    (data.venue || data.name || data.city || "").trim() || "";
+  const venueLabel = (data.venue || data.city || "").trim() || "";
   const gpBase =
     (data.grandPrixName || data.title || (countryLabel ? `Grand Prix of ${countryLabel}` : "")).trim() ||
     `${venueLabel || countryLabel || "Grand Prix"} Grand Prix`;
 
   // Prefer GP region naming (Catalunya, Aragon, San Marino, etc.) over generic country labels.
   const gpRegionLabel = extractRegionFromGrandPrix(gpBase);
-  const eventLabel = (gpRegionLabel || venueLabel || countryLabel || data.title || "Grand Prix").trim();
+  const regionalNameOverride = inferRegionFromName(countryCode, data.name);
+  const eventLabel =
+    (gpRegionLabel || regionalNameOverride || countryLabel || venueLabel || data.title || "Grand Prix").trim();
 
   const roundLabel =
     venueLabel && !gpBase.toLowerCase().includes(venueLabel.toLowerCase())
