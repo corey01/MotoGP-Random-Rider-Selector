@@ -7,7 +7,6 @@ import GridPanel from "./Grid/Grid";
 import Entrants from "./Entrants/Entrants";
 import { Rider, SelectedRider } from "@/models/rider";
 import { defaultEntrants } from "@/utils/entrants";
-import { Season } from "@/models/race";
 import { useRouter } from "next/navigation";
 import LoadingOverlay from "./Loading/Overlay";
 import {
@@ -19,10 +18,10 @@ import { RiderDataResponse } from "@/utils/getRiderDataLocal";
 
 interface HomeProps {
   allRiders: RiderDataResponse;
-  season: Season;
+  seasonYear: number;
 }
 
-export default function SweepstakeApp({ allRiders, season }: HomeProps) {
+export default function SweepstakeApp({ allRiders, seasonYear }: HomeProps) {
   const [page, setPage] = useState("riders");
   const [riders, setRiders] = useState<Rider[]>([]);
   const [guestRiders, setGuestRiders] = useState<Rider[]>([]);
@@ -43,7 +42,7 @@ export default function SweepstakeApp({ allRiders, season }: HomeProps) {
 
   useEffect(() => {
     setRiders(allRiders.standardRiders);
-  }, [allRiders]);
+  }, [allRiders, seasonYear]);
 
   useEffect(() => {
     setGuestRiders(allRiders.guestRiders);
@@ -53,7 +52,7 @@ export default function SweepstakeApp({ allRiders, season }: HomeProps) {
     try {
       localStorage.setItem(
         "allRidersCache",
-        JSON.stringify({ riders: allRiders.allRiders, generatedDate: Date.now() })
+JSON.stringify({ riders: allRiders.allRiders, generatedDate: Date.now(), seasonYear })
       );
     } catch {}
   }, [allRiders]);
@@ -111,6 +110,11 @@ export default function SweepstakeApp({ allRiders, season }: HomeProps) {
     if(savedRiderList){
       const decodedResults = JSON.parse(savedRiderList);
 
+      if (decodedResults?.seasonYear && Number(decodedResults.seasonYear) !== seasonYear) {
+        localStorage.removeItem("riderList");
+        setLoading(false);
+        return;
+      }
 
       if (decodedResults.generatedDate) {
         const timeDistanceInHours = millisecondsToHours(
@@ -120,12 +124,12 @@ export default function SweepstakeApp({ allRiders, season }: HomeProps) {
           localStorage.removeItem("riderList");
           setLoading(false);
           return;
-        } 
+        }
       }
       setRiders(decodedResults.riders)
     }
 
-  }, [router]);
+  }, [router, seasonYear]);
 
   useEffect(() => {
     handleStorage();
@@ -135,7 +139,7 @@ export default function SweepstakeApp({ allRiders, season }: HomeProps) {
     setLoading(true);
     const pool = eligibleRiderIds ? riders.filter(r => eligibleRiderIds.includes(r.id)) : riders;
     const tempRidersArray = [...pool];
-    localStorage.setItem('riderList', JSON.stringify({riders: pool, generatedDate: Date.now()}));
+    localStorage.setItem('riderList', JSON.stringify({ riders: pool, generatedDate: Date.now(), seasonYear }));
     const results = entrants
       .sort(() => Math.random() - 0.5)
       .reduce((acc, entrant, idx) => {
@@ -160,7 +164,7 @@ export default function SweepstakeApp({ allRiders, season }: HomeProps) {
   return (
     <>
       {loading && <LoadingOverlay />}
-      {/* <NextRace season={season} /> */}
+      {/* <NextRace /> */}
 
       <button disabled={loading} className="pickButton" onClick={pickRiders}>
         Randomly Assign Riders Now!
