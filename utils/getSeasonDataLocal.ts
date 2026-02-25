@@ -20,6 +20,9 @@ interface Broadcast {
 
 interface RaceEvent {
   name?: string;
+  shortName?: string;
+  slug?: string;
+  circuitName?: string;
   country?: string;
   countryName?: string;
   venue?: string;
@@ -82,7 +85,7 @@ const REGION_OVERRIDES_BY_COUNTRY: Record<string, Record<string, string>> = {
     CATALUNYA: "Catalunya",
     CATALUNA: "Catalunya",
     VALENCIA: "Valencia",
-    SPAIN: "Spain",
+    SPAIN: "",
   },
   IT: {
     "SAN MARINO": "San Marino",
@@ -99,6 +102,29 @@ const inferRegionFromName = (countryCode?: string, eventName?: string) => {
     .replace(/\s+/g, " ");
   if (!code || !key) return "";
   return REGION_OVERRIDES_BY_COUNTRY[code]?.[key] || "";
+};
+
+const inferRegionFromVenue = (venue?: string) => {
+  const v = (venue || "").trim().toLowerCase();
+  if (!v) return "";
+  if (v.includes("barcelona") || v.includes("catalunya")) return "Catalunya";
+  if (v.includes("aragon") || v.includes("motorland")) return "Aragon";
+  if (v.includes("ricardo tormo") || v.includes("cheste")) return "Valencia";
+  if (v.includes("jerez")) return "Spain";
+  if (v.includes("misano")) return "San Marino";
+  if (v.includes("mugello")) return "Italy";
+  return "";
+};
+
+const inferRegionFromSlugOrShortName = (value?: string) => {
+  const key = (value || "").trim().toLowerCase();
+  if (!key) return "";
+  if (key.includes("catalunya") || key.includes("cataluna")) return "Catalunya";
+  if (key.includes("aragon")) return "Aragon";
+  if (key.includes("valencia")) return "Valencia";
+  if (key.includes("san-marino") || key.includes("san marino")) return "San Marino";
+  if (key.includes("spain") || key.includes("espana")) return "Spain";
+  return "";
 };
 
 const countryLabelFromCode = (countryCode?: string) => {
@@ -180,7 +206,7 @@ export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
     (data.countryName || "").trim() ||
     countryLabelFromCode(countryCode) ||
     "";
-  const venueLabel = (data.venue || data.city || "").trim() || "";
+  const venueLabel = (data.venue || data.circuitName || data.city || "").trim() || "";
   const gpBase =
     (data.grandPrixName || data.title || (countryLabel ? `Grand Prix of ${countryLabel}` : "")).trim() ||
     `${venueLabel || countryLabel || "Grand Prix"} Grand Prix`;
@@ -188,8 +214,21 @@ export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
   // Prefer GP region naming (Catalunya, Aragon, San Marino, etc.) over generic country labels.
   const gpRegionLabel = extractRegionFromGrandPrix(gpBase);
   const regionalNameOverride = inferRegionFromName(countryCode, data.name);
+  const regionalVenueOverride = inferRegionFromVenue(venueLabel);
+  const regionalSlugOverride =
+    inferRegionFromSlugOrShortName(data.slug) ||
+    inferRegionFromSlugOrShortName(data.shortName);
   const eventLabel =
-    (gpRegionLabel || regionalNameOverride || countryLabel || venueLabel || data.title || "Grand Prix").trim();
+    (
+      gpRegionLabel ||
+      regionalSlugOverride ||
+      regionalNameOverride ||
+      regionalVenueOverride ||
+      venueLabel ||
+      countryLabel ||
+      data.title ||
+      "Grand Prix"
+    ).trim();
 
   const roundLabel =
     venueLabel && !gpBase.toLowerCase().includes(venueLabel.toLowerCase())
