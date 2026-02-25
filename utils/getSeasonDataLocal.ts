@@ -100,13 +100,13 @@ const extractRegionFromGrandPrix = (grandPrixName?: string) => {
   if (!grandPrixName) return "";
   const clean = grandPrixName.replace(/\s+/g, " ").trim();
 
-  const ofMatch = clean.match(/OF\s+(.+)$/i);
+  const ofMatch = clean.match(/\bOF\s+(.+)$/i);
   if (ofMatch?.[1]) return toTitleCase(ofMatch[1]);
 
-  const deMatch = clean.match(/DE\s+(.+)$/i);
+  const deMatch = clean.match(/\bDE\s+(.+)$/i);
   if (deMatch?.[1]) return toTitleCase(deMatch[1]);
 
-  const diMatch = clean.match(/DI\s+(.+)$/i);
+  const diMatch = clean.match(/\bDI\s+(.+)$/i);
   if (diMatch?.[1]) {
     const shortened = diMatch[1].split(/\s+E\s+DELLA\s+/i)[0];
     return toTitleCase(shortened);
@@ -190,7 +190,14 @@ export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
 
     if (!start) return [];
 
-    const sessionLabel = `${series} ${sessionName}`.replace(/\s+/g, " ").trim();
+    const isSprint = /SPRINT/i.test(sessionName);
+    const isRace = /RACE|GRAND PRIX/i.test(sessionName) || sessionKind === "RACE";
+    const sessionDescriptor = isSprint
+      ? "Sprint"
+      : isRace
+      ? "Grand Prix"
+      : sessionName;
+    const sessionLabel = `${series} ${sessionDescriptor}`.replace(/\s+/g, " ").trim();
     const tzSuffix = start.includes("+") ? ` (GMT${start.slice(-5)})` : "";
     const displayName = `${eventLabel} ${sessionLabel}`.replace(/\s+/g, " ").trim();
 

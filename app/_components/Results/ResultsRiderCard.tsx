@@ -35,7 +35,24 @@ const ResultsRiderCard = ({
   };
 
   const imgUrl = getImageUrl();
-  const riderShortName = `${rider.name.slice(0,1)} ${rider.surname.slice(0,3)}`
+  const buildSurnameCode = (surname: string) => {
+    const cleaned = surname
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim();
+    if (!cleaned) return "";
+
+    const parts = cleaned.split(/\s+/).filter(Boolean);
+    const prefixes = new Set(["di", "de", "del", "della", "da", "van", "von", "la", "le"]);
+
+    if (parts.length >= 2 && prefixes.has(parts[0].toLowerCase())) {
+      return `${parts[0][0]}${parts[1].slice(0, 2)}`.toUpperCase();
+    }
+
+    return parts[0].slice(0, 3).toUpperCase();
+  };
+
+  const riderShortName = `${rider.name.slice(0,1).toUpperCase()} ${buildSurnameCode(rider.surname)}`;
 
   return (
     <div className={classNames(style.listItem, style.resultsCard)}>

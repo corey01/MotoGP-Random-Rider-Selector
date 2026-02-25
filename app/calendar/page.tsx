@@ -35,7 +35,6 @@ export default function CalendarPage() {
 
         const payload = await res.json();
         const events = Array.isArray(payload?.events) ? payload.events : [];
-        console.log(events);
         const sessions = events.flatMap((ev: any) => filterAndFormatSessions(ev));
         const filtered = showAllSessions
           ? sessions
@@ -60,8 +59,6 @@ export default function CalendarPage() {
 
   const wsbkData = getWsbkSeasonDataLocal(!showAllSessions);
   const bsbData = getBsbSeasonDataLocal(!showAllSessions);
-
-  console.log(motoGpData)
   return (
     <Calendar
       motoGPData={motoGpData}
