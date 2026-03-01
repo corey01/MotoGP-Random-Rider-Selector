@@ -41,6 +41,7 @@ interface CalendarEvent {
   extendedProps?: {
     session?: string;
     type?: string;
+    subSeries?: string;
     meta?: EventMeta;
   };
 }
@@ -159,6 +160,21 @@ const f1SessionFromEvent = (eventName?: string, fallbackType?: string) => {
   return displaySessionName(candidate);
 };
 
+export const resolveMotoSubSeries = (seriesName?: string) => {
+  const value = String(seriesName || "").toLowerCase();
+  if (value.includes("moto2")) return "moto2";
+  if (value.includes("moto3")) return "moto3";
+  return "motogp";
+};
+
+const resolveWsbkSubSeries = (eventName?: string) => {
+  const value = String(eventName || "").toLowerCase();
+  if (value.includes("worldssp")) return "worldssp";
+  if (value.includes("worldwcr")) return "worldwcr";
+  if (value.includes("worldspb")) return "worldspb";
+  return "worldsbk";
+};
+
 export async function getSeasonDataLocal() {
   const season: Season = seasonData.reduce((allSeasonsObject, season) => {
     let key: keyof typeof defaultSeasonObject;
@@ -220,6 +236,7 @@ export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
       session.event_name ||
       session.category?.name ||
       "MotoGP";
+    const subSeries = resolveMotoSubSeries(series);
 
     const rawSessionName =
       session.name ||
@@ -253,6 +270,7 @@ export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
       className: "motogp-event",
       extendedProps: {
         session: sessionKind,
+        subSeries,
         meta: {
           round: roundLabel,
           name: sessionLabel,
@@ -283,6 +301,7 @@ export const getWsbkSeasonDataLocal = (racesOnly = true) => {
       start: event.dateTimeStart, // Browser will auto-convert this for calendar display
       end: add(new Date(event.dateTimeStart), { minutes: 5 }).toISOString(),
       className: 'wsbk-event',
+      subSeries: resolveWsbkSubSeries(event.name),
       meta: {
         round: schedule.title,
         name: event.name,
@@ -297,7 +316,8 @@ export const getWsbkSeasonDataLocal = (racesOnly = true) => {
     ...event,
     extendedProps: {
       ...event,
-      session: event.type
+      session: event.type,
+      subSeries: event.subSeries
     }
   }));
 
@@ -329,6 +349,7 @@ export const getBsbSeasonDataLocal = (racesOnly = true) => {
         extendedProps: {
           session: type,
           type,
+          subSeries: "bsb",
           meta: {
             round: roundLabel,
             name: event.name || "",
@@ -389,6 +410,7 @@ export const getFimSpeedwaySeasonDataLocal = (racesOnly = true) => {
       ...event,
       session: event.type,
       type: event.type,
+      subSeries: "speedway",
     },
   }));
 
@@ -438,6 +460,7 @@ export const getFormula1SeasonDataLocal = (racesOnly = true) => {
       ...event,
       session: event.type,
       type: event.type,
+      subSeries: "f1",
     },
   }));
 

@@ -8,7 +8,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { useState, useRef } from "react";
 import { CalendarEventModal } from "../Modals/CalendarEventModal";
 import { CalendarTitle } from "./CalendarTitle";
-import { SessionToggle, SessionView, SeriesKey } from "./SessionToggle";
+import { SessionToggle, SessionView } from "./SessionToggle";
+import { SeriesKey, SubSeriesKey } from "./filterConfig";
 
 import { inter } from "@/app/fonts";
 import "./Calendar.css";
@@ -28,8 +29,9 @@ interface CalendarProps {
   formula1Data: Formula1SeasonData;
   sessionView: SessionView;
   onSessionViewChange: (view: SessionView) => void;
-  visibleSeries: Record<SeriesKey, boolean>;
+  visibleSubSeries: Record<SubSeriesKey, boolean>;
   onToggleSeries: (series: SeriesKey) => void;
+  onToggleSubSeries: (subSeries: SubSeriesKey) => void;
 }
 
 export const Calendar = ({
@@ -40,8 +42,9 @@ export const Calendar = ({
   formula1Data,
   sessionView,
   onSessionViewChange,
-  visibleSeries,
+  visibleSubSeries,
   onToggleSeries,
+  onToggleSubSeries,
 }: CalendarProps) => {
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const calendarRef = useRef<any>(null);
@@ -52,13 +55,19 @@ export const Calendar = ({
   >();
   const isAnimatingRef = useRef(false);
 
-  const visibleEvents = [
-    ...(visibleSeries.motogp ? motoGPData : []),
-    ...(visibleSeries.wsbk ? wsbkData : []),
-    ...(visibleSeries.bsb ? bsbData : []),
-    ...(visibleSeries.speedway ? fimSpeedwayData : []),
-    ...(visibleSeries.f1 ? formula1Data : []),
+  const allEvents = [
+    ...motoGPData,
+    ...wsbkData,
+    ...bsbData,
+    ...fimSpeedwayData,
+    ...formula1Data,
   ];
+
+  const visibleEvents = allEvents.filter((event: any) => {
+    const subSeries = event?.extendedProps?.subSeries as SubSeriesKey | undefined;
+    if (!subSeries) return true;
+    return !!visibleSubSeries[subSeries];
+  });
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     setSelectedEvent(clickInfo.event);
@@ -141,8 +150,9 @@ export const Calendar = ({
       <SessionToggle
         sessionView={sessionView}
         onSessionViewChange={onSessionViewChange}
-        visibleSeries={visibleSeries}
+        visibleSubSeries={visibleSubSeries}
         onToggleSeries={onToggleSeries}
+        onToggleSubSeries={onToggleSubSeries}
       />
       <CalendarTitle
         currentDate={currentDate}

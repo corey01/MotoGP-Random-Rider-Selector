@@ -1,5 +1,5 @@
 import { motoGPTextBold } from "@/app/fonts";
-import type { SeriesKey } from "./SessionToggle";
+import type { SeriesKey } from "./filterConfig";
 import style from "./CalendarLegend.module.scss";
 
 interface CalendarLegendProps {
