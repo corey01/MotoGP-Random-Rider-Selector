@@ -1,50 +1,94 @@
-import { Race, Season } from "@/models/race";
-import { add, format, formatDistanceToNow } from "date-fns";
-import style from "./NextRace.module.scss";
+"use client";
+
+import { format, formatDistanceToNow } from "date-fns";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import style from "./NextRace.module.scss";
 
-const NextRace = ({ season }: { season: Season }) => {
-  // Recompute current/next at render time so static exports stay fresh
-  const now = new Date();
-  const all: Race[] = [
-    ...(season.past || []),
-    ...(season.current || []),
-    ...(season.future || []),
-  ];
-  const isOngoing = (ev: Race) => {
-    const start = new Date(ev.date_start);
-    const end = add(new Date(ev.date_end), { hours: 23, minutes: 59 });
-    return start <= now && now <= end;
+type NextGpResponse = {
+  status?: string;
+  event?: {
+    name?: string;
+    circuit?: string | null;
+    country?: string | null;
+    window?: {
+      start?: string | null;
+      end?: string | null;
+    };
   };
-  const current = all.find(isOngoing) || null;
-  const upcoming =
-    all
-      .filter((ev) => new Date(ev.date_start) > now)
-      .sort(
-        (a, b) =>
-          new Date(a.date_start).valueOf() - new Date(b.date_start).valueOf()
-      )[0] || null;
+};
 
-  const race = (current || upcoming)!;
-  const isActiveNow = !!current;
+const NextRace = () => {
+  const [data, setData] = useState<NextGpResponse | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const startDate = new Date(race.date_start);
-  const endDate = new Date(race.date_end);
+  useEffect(() => {
+    let cancelled = false;
+
+    const load = async () => {
+      try {
+        const defaultBaseUrl =
+          process.env.NODE_ENV === "development"
+            ? "http://localhost:8787"
+            : "https://cascading-monkeys.corey-obeirne.workers.dev";
+        const baseUrl = process.env.NEXT_PUBLIC_MOTOGP_WORKER_URL || defaultBaseUrl;
+        const res = await fetch(
+          `${baseUrl.replace(/\/$/, "")}/get_next_grandprix`,
+          { cache: "no-store" }
+        );
+        if (!res.ok) throw new Error(`next-gp failed (${res.status})`);
+        const payload = (await res.json()) as NextGpResponse;
+        if (!cancelled) setData(payload);
+      } catch {
+        if (!cancelled) setData(null);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    void load();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (loading) return null;
+
+  const status = String(data?.status || "").toLowerCase();
+  if (!data?.event || status === "offseason") return null;
+
+  const isActiveNow = status === "live";
+  const raceName = data.event.name || "Next Grand Prix";
+  const startRaw = data.event.window?.start || "";
+  const endRaw = data.event.window?.end || "";
+  const startDate = startRaw ? new Date(startRaw) : null;
+  const endDate = endRaw ? new Date(endRaw) : null;
+  const hasStartDate = !!(startDate && !Number.isNaN(startDate.valueOf()));
+  const hasEndDate = !!(endDate && !Number.isNaN(endDate.valueOf()));
 
   return (
-    <div className={`${style.NextRace} ${isActiveNow ? style.ongoing : ""}`}>
+    <div className={`${style.nextRace} ${isActiveNow ? style.ongoing : ""}`}>
       <h2>{isActiveNow ? "Ongoing Grand Prix" : "Next Grand Prix"}</h2>
-      <p className={style.raceName}><Link href="/race-lineup">{race.name}</Link></p>
-      <p>
-        {race.circuit.circuitName} - {race.circuit.circuitCountry}
+      <p className={style.raceName}>
+        <Link href="/calendar">{raceName}</Link>
       </p>
-      <p>
-        {format(startDate, "eee do")} - {format(endDate, "eee do MMM yy")}
-      </p>
-      {!isActiveNow && (
+      {(data.event.circuit || data.event.country) && (
         <p>
-          Starts in{" "}
-          {formatDistanceToNow(new Date(race.broadcasts[0].date_start)) + "!"}
+          {data.event.circuit || ""}
+          {data.event.circuit && data.event.country ? " - " : ""}
+          {data.event.country || ""}
+        </p>
+      )}
+      {hasStartDate && (
+        <p>
+          {format(startDate as Date, "eee do")}
+          {hasEndDate ? ` - ${format(endDate as Date, "eee do MMM yy")}` : ""}
+        </p>
+      )}
+      {!isActiveNow && hasStartDate && (
+        <p>
+          Starts in {formatDistanceToNow(startDate as Date) + "!"}
         </p>
       )}
     </div>

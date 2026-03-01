@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import RiderList from "./RiderList";
 import GridPanel from "./Grid/Grid";
 import Entrants from "./Entrants/Entrants";
+import NextRace from "./NextRace/NextRace";
 import { Rider, SelectedRider } from "@/models/rider";
 import { defaultEntrants } from "@/utils/entrants";
 import { useRouter } from "next/navigation";
@@ -177,7 +178,7 @@ JSON.stringify({ riders: allRiders.allRiders, generatedDate: Date.now(), seasonY
   return (
     <>
       {loading && <LoadingOverlay />}
-      {/* <NextRace /> */}
+      <NextRace />
 
       <button disabled={loading} className="pickButton" onClick={pickRiders}>
         Randomly Assign Riders Now!

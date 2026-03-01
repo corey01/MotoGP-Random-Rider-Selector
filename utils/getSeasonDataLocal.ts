@@ -1,6 +1,6 @@
 import { Season } from "@/models/race";
 import seasonData from "./seasonData.json";
-import wsbkSeasonData from './wsbkSeason2025.json';
+import wsbkSeasonData from './wsbkSeason2026.json';
 import bsbSeasonData from './bsbSeason2025.json';
 import { add } from "date-fns";
 
@@ -79,54 +79,6 @@ const COUNTRY_LABEL_OVERRIDES: Record<string, string> = {
 };
 
 
-const REGION_OVERRIDES_BY_COUNTRY: Record<string, Record<string, string>> = {
-  ES: {
-    ARAGON: "Aragon",
-    CATALUNYA: "Catalunya",
-    CATALUNA: "Catalunya",
-    VALENCIA: "Valencia",
-    SPAIN: "",
-  },
-  IT: {
-    "SAN MARINO": "San Marino",
-    ITALY: "Italy",
-  },
-};
-
-const inferRegionFromName = (countryCode?: string, eventName?: string) => {
-  const code = (countryCode || "").trim().toUpperCase();
-  const key = (eventName || "")
-    .trim()
-    .toUpperCase()
-    .replace(/[^A-Z\s]/g, "")
-    .replace(/\s+/g, " ");
-  if (!code || !key) return "";
-  return REGION_OVERRIDES_BY_COUNTRY[code]?.[key] || "";
-};
-
-const inferRegionFromVenue = (venue?: string) => {
-  const v = (venue || "").trim().toLowerCase();
-  if (!v) return "";
-  if (v.includes("barcelona") || v.includes("catalunya")) return "Catalunya";
-  if (v.includes("aragon") || v.includes("motorland")) return "Aragon";
-  if (v.includes("ricardo tormo") || v.includes("cheste")) return "Valencia";
-  if (v.includes("jerez")) return "Spain";
-  if (v.includes("misano")) return "San Marino";
-  if (v.includes("mugello")) return "Italy";
-  return "";
-};
-
-const inferRegionFromSlugOrShortName = (value?: string) => {
-  const key = (value || "").trim().toLowerCase();
-  if (!key) return "";
-  if (key.includes("catalunya") || key.includes("cataluna")) return "Catalunya";
-  if (key.includes("aragon")) return "Aragon";
-  if (key.includes("valencia")) return "Valencia";
-  if (key.includes("san-marino") || key.includes("san marino")) return "San Marino";
-  if (key.includes("spain") || key.includes("espana")) return "Spain";
-  return "";
-};
-
 const countryLabelFromCode = (countryCode?: string) => {
   if (!countryCode) return "";
   const code = countryCode.trim().toUpperCase();
@@ -148,23 +100,23 @@ const toTitleCase = (value: string) =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-const extractRegionFromGrandPrix = (grandPrixName?: string) => {
-  if (!grandPrixName) return "";
-  const clean = grandPrixName.replace(/\s+/g, " ").trim();
+const extractRegionFromGrandPrix = (eventName?: string) => {
+  if (!eventName) return "";
+  const clean = eventName.replace(/\s+/g, " ").trim();
 
-  const ofMatch = clean.match(/\bOF\s+(.+)$/i);
-  if (ofMatch?.[1]) return toTitleCase(ofMatch[1]);
+  const tidyRegion = (raw: string) =>
+    toTitleCase(
+      raw
+        .replace(/^THE\s+/i, "")
+        .split(/\s+(AND|&)\s+/i)[0]
+        .split(/\s+E\s+DELLA\s+/i)[0]
+        .trim()
+    );
 
-  const deMatch = clean.match(/\bDE\s+(.+)$/i);
-  if (deMatch?.[1]) return toTitleCase(deMatch[1]);
+  const ofMatch = clean.match(/\bGRAND\s+PRIX\s+OF\s+(.+)$/i);
+  if (ofMatch?.[1]) return tidyRegion(ofMatch[1]);
 
-  const diMatch = clean.match(/\bDI\s+(.+)$/i);
-  if (diMatch?.[1]) {
-    const shortened = diMatch[1].split(/\s+E\s+DELLA\s+/i)[0];
-    return toTitleCase(shortened);
-  }
-
-  return "";
+  return toTitleCase(clean);
 };
 
 export async function getSeasonDataLocal() {
@@ -208,27 +160,14 @@ export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
     "";
   const venueLabel = (data.venue || data.circuitName || data.city || "").trim() || "";
   const gpBase =
-    (data.grandPrixName || data.title || (countryLabel ? `Grand Prix of ${countryLabel}` : "")).trim() ||
+    (data.grandPrixName || data.name || data.title || (countryLabel ? `Grand Prix of ${countryLabel}` : "")).trim() ||
     `${venueLabel || countryLabel || "Grand Prix"} Grand Prix`;
 
-  // Prefer GP region naming (Catalunya, Aragon, San Marino, etc.) over generic country labels.
-  const gpRegionLabel = extractRegionFromGrandPrix(gpBase);
-  const regionalNameOverride = inferRegionFromName(countryCode, data.name);
-  const regionalVenueOverride = inferRegionFromVenue(venueLabel);
-  const regionalSlugOverride =
-    inferRegionFromSlugOrShortName(data.slug) ||
-    inferRegionFromSlugOrShortName(data.shortName);
   const eventLabel =
-    (
-      gpRegionLabel ||
-      regionalSlugOverride ||
-      regionalNameOverride ||
-      regionalVenueOverride ||
-      venueLabel ||
-      countryLabel ||
-      data.title ||
-      "Grand Prix"
-    ).trim();
+    extractRegionFromGrandPrix(gpBase) ||
+    venueLabel ||
+    countryLabel ||
+    "Grand Prix";
 
   const roundLabel =
     venueLabel && !gpBase.toLowerCase().includes(venueLabel.toLowerCase())

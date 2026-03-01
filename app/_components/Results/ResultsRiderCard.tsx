@@ -35,24 +35,37 @@ const ResultsRiderCard = ({
   };
 
   const imgUrl = getImageUrl();
-  const buildSurnameCode = (surname: string) => {
-    const cleaned = surname
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .trim();
-    if (!cleaned) return "";
+  const buildSurnameCode = (name: string, surname: string) => {
+    const normalize = (value: string) =>
+      value
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
 
-    const parts = cleaned.split(/\s+/).filter(Boolean);
+    const cleanedSurname = normalize(surname);
+    if (!cleanedSurname) return "";
+
+    const surnameParts = cleanedSurname.split(/\s+/).filter(Boolean);
+    const nameParts = normalize(name).split(/\s+/).filter(Boolean);
     const prefixes = new Set(["di", "de", "del", "della", "da", "van", "von", "la", "le"]);
 
-    if (parts.length >= 2 && prefixes.has(parts[0].toLowerCase())) {
-      return `${parts[0][0]}${parts[1].slice(0, 2)}`.toUpperCase();
+    if (surnameParts.length >= 2 && prefixes.has(surnameParts[0].toLowerCase())) {
+      return `${surnameParts[0].slice(0, 2)}${surnameParts[1][0] || ""}`
+        .toUpperCase()
+        .slice(0, 3);
     }
 
-    return parts[0].slice(0, 3).toUpperCase();
+    const trailingNamePart = nameParts[nameParts.length - 1]?.toLowerCase();
+    if (trailingNamePart && prefixes.has(trailingNamePart)) {
+      return `${trailingNamePart.slice(0, 2)}${surnameParts[0][0] || ""}`
+        .toUpperCase()
+        .slice(0, 3);
+    }
+
+    return surnameParts[0].slice(0, 3).toUpperCase();
   };
 
-  const riderShortName = `${rider.name.slice(0,1).toUpperCase()} ${buildSurnameCode(rider.surname)}`;
+  const riderShortName = `${rider.name.slice(0,1).toUpperCase()} ${buildSurnameCode(rider.name, rider.surname)}`;
 
   return (
     <div className={classNames(style.listItem, style.resultsCard)}>

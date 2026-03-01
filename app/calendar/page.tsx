@@ -3,7 +3,6 @@
 import { Calendar } from "../_components/Calendar/Calendar";
 import { useEffect, useState } from "react";
 import {
-  filterAndFormatSessions,
   getBsbSeasonDataLocal,
   getUnsortedSeasonDataLocal,
   getWsbkSeasonDataLocal,
@@ -28,20 +27,46 @@ export default function CalendarPage() {
             : "https://cascading-monkeys.corey-obeirne.workers.dev";
         const baseUrl =
           process.env.NEXT_PUBLIC_MOTOGP_WORKER_URL || defaultBaseUrl;
-        const requestUrl = `${baseUrl.replace(/\/$/, "")}/season-events?year=${year}`;
+        const racesOnly = showAllSessions ? 0 : 1;
+        const requestUrl = `${baseUrl.replace(
+          /\/$/,
+          ""
+        )}/calendar-events?year=${year}&racesOnly=${racesOnly}`;
 
         const res = await fetch(requestUrl, { cache: "no-store" });
-        if (!res.ok) throw new Error(`season-events failed (${res.status})`);
+        if (!res.ok) throw new Error(`calendar-events failed (${res.status})`);
 
         const payload = await res.json();
-        const events = Array.isArray(payload?.events) ? payload.events : [];
-        const sessions = events.flatMap((ev: any) => filterAndFormatSessions(ev));
-        const filtered = showAllSessions
-          ? sessions
-          : sessions.filter((s: any) => s.extendedProps?.session === "RACE");
+        const sessions = Array.isArray(payload?.sessions) ? payload.sessions : [];
+        const mapped = sessions.map((session: any) => {
+          const start = session?.start || "";
+          const tzSuffix = start.includes("+") ? ` (GMT${start.slice(-5)})` : "";
+          return {
+            title: session?.calendarLabel || "Grand Prix",
+            start,
+            className: "motogp-event",
+            extendedProps: {
+              session: session?.sessionKind || "SESSION",
+              meta: {
+                round:
+                  session?.modal?.round ||
+                  session?.modal?.eventName ||
+                  "Grand Prix",
+                name: `${session?.series || "MotoGP"} ${
+                  session?.sessionName || "Session"
+                }`
+                  .replace(/\s+/g, " ")
+                  .trim(),
+                deviceTime: start,
+                deviceEndTime: session?.end || undefined,
+                raceTime: `${start.split("+")[0] || start}${tzSuffix}`,
+              },
+            },
+          };
+        });
 
         if (!cancelled) {
-          setMotoGpData(filtered.length ? filtered : fallback);
+          setMotoGpData(mapped.length ? mapped : fallback);
         }
       } catch {
         if (!cancelled) {
