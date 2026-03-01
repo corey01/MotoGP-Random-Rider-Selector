@@ -4,7 +4,7 @@ import wsbkSeasonData from './wsbkSeason2026.json';
 import bsbSeasonData from './bsbSeason2026.json';
 import fimSpeedwaySeasonData from './fimSpeedwaySeason2026.json';
 import formula1SeasonData from './formula1Season2026.json';
-import { add } from "date-fns";
+import { add, format } from "date-fns";
 
 
 interface Broadcast {
@@ -25,12 +25,16 @@ interface RaceEvent {
   shortName?: string;
   slug?: string;
   circuitName?: string;
+  circuit?: { circuitCountry?: string };
   country?: string;
   countryName?: string;
   venue?: string;
   city?: string;
   grandPrixName?: string;
   title?: string;
+  url?: string;
+  date_start?: string;
+  date_end?: string;
   broadcasts: Broadcast[];
 }
 
@@ -160,6 +164,171 @@ const f1SessionFromEvent = (eventName?: string, fallbackType?: string) => {
   return displaySessionName(candidate);
 };
 
+const parseDateSafe = (value?: string) => {
+  const parsed = new Date(String(value || ""));
+  if (Number.isNaN(parsed.getTime())) return null;
+  return parsed;
+};
+
+const gmtOffsetSuffix = (dateTime?: string) => {
+  const match = String(dateTime || "").match(/([+-]\d{2}:?\d{2})$/);
+  if (!match?.[1]) return "";
+  return match[1].replace(":", "");
+};
+
+const raceTimeLabel = (dateTime?: string) => {
+  const value = String(dateTime || "");
+  if (!value) return "";
+  const offset = gmtOffsetSuffix(value);
+  if (!offset) return value;
+  return `${value.replace(/([+-]\d{2}:?\d{2})$/, "")} (GMT${offset})`;
+};
+
+const formatRoundDateLabel = (start?: string, end?: string) => {
+  const startDate = parseDateSafe(start);
+  const endDate = parseDateSafe(end);
+  if (!startDate || !endDate) return "";
+
+  const startDay = format(startDate, "d");
+  const endDay = format(endDate, "d");
+  const startMonth = format(startDate, "MMM");
+  const endMonth = format(endDate, "MMM");
+
+  if (startMonth === endMonth) {
+    return `${startDay} - ${endDay} ${endMonth}`;
+  }
+  return `${startDay} ${startMonth} - ${endDay} ${endMonth}`;
+};
+
+const slugifySegment = (value?: string) =>
+  String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+export const buildMotoGpEventUrl = (
+  year: number,
+  eventSlugOrName?: string,
+  eventId?: string
+) => {
+  const slug = slugifySegment(eventSlugOrName);
+  if (!slug) return "";
+  const cleanEventId = String(eventId || "").trim();
+  if (cleanEventId) {
+    return `https://www.motogp.com/en/calendar/${year}/event/${slug}/${cleanEventId}?tab=overview`;
+  }
+  return `https://www.motogp.com/en/calendar/${year}/event/${slug}`;
+};
+
+type MotoGpRoundMetaInput = {
+  eventName?: string;
+  countryCode?: string;
+  countryName?: string;
+  start?: string;
+  year?: number;
+  eventId?: string;
+};
+
+export const getMotoGpRoundMeta = ({
+  eventName,
+  countryCode,
+  countryName,
+  start,
+  year,
+  eventId,
+}: MotoGpRoundMetaInput) => {
+  const targetYear = Number(year || new Date().getFullYear());
+  const normalizedEvent = slugifySegment(extractRegionFromGrandPrix(eventName || ""));
+  const normalizedCountryCode = String(countryCode || "").trim().toUpperCase();
+  const sessionStart = parseDateSafe(start);
+
+  const candidateByName = seasonData.find((round) => {
+    const roundData = round as RaceEvent & { title?: string; countryName?: string };
+    const roundLabel = extractRegionFromGrandPrix(
+      roundData.grandPrixName || roundData.name || roundData.title || ""
+    );
+    const roundCountry = String(roundData.country || "").toUpperCase();
+    if (normalizedEvent && slugifySegment(roundLabel) !== normalizedEvent) return false;
+    if (normalizedCountryCode && roundCountry && roundCountry !== normalizedCountryCode) {
+      return false;
+    }
+    return true;
+  });
+
+  const candidateByDate = !candidateByName
+    ? seasonData.find((round) => {
+        if (!sessionStart) return false;
+        const roundStart = parseDateSafe(round.date_start);
+        const roundEnd = parseDateSafe(round.date_end);
+        if (!roundStart || !roundEnd) return false;
+        return sessionStart >= roundStart && sessionStart <= roundEnd;
+      })
+    : null;
+
+  const round = candidateByName || candidateByDate;
+  const fallbackCountry = String(countryName || "").trim() || countryLabelFromCode(countryCode);
+
+  if (!round) {
+    return {
+      country: fallbackCountry || "",
+      eventDateLabel: "",
+      sourceUrl: buildMotoGpEventUrl(targetYear, eventName, eventId),
+    };
+  }
+
+  const roundCountry =
+    round.circuit?.circuitCountry ||
+    (round as RaceEvent & { countryName?: string }).countryName ||
+    countryLabelFromCode(round.country) ||
+    fallbackCountry;
+  const sourceUrl = buildMotoGpEventUrl(
+    targetYear,
+    round.url || (round as RaceEvent & { title?: string }).grandPrixName || round.name || eventName,
+    eventId
+  );
+
+  return {
+    country: String(roundCountry || ""),
+    eventDateLabel: formatRoundDateLabel(round.date_start, round.date_end),
+    sourceUrl,
+  };
+};
+
+const wsbkCountryFromEventCode = (href?: string, roundTitle?: string) => {
+  const code = String(href || "").match(/\/event\/([^/]+)/i)?.[1]?.toUpperCase() || "";
+  const fromCode: Record<string, string> = {
+    AUS: "Australia",
+    POR: "Portugal",
+    NED: "Netherlands",
+    HUN: "Hungary",
+    CZE: "Czechia",
+    ARA: "Spain",
+    ITA: "Italy",
+    GBR: "United Kingdom",
+    FRA: "France",
+    CRE: "Italy",
+    EST: "Portugal",
+    JER: "Spain",
+  };
+  if (fromCode[code]) return fromCode[code];
+  const titleMatch = String(roundTitle || "").match(/([A-Za-z\s]+)\s+Round$/);
+  return titleMatch?.[1] ? toTitleCase(titleMatch[1].trim()) : "";
+};
+
+const wsbkSessionFromName = (eventName?: string, fallbackType?: string) => {
+  const raw = String(eventName || "").trim();
+  const fromDash = raw.includes(" - ") ? raw.split(" - ").pop() || "" : raw;
+  return displaySessionName(fromDash || fallbackType);
+};
+
+const bsbCountryFromCircuit = (circuit?: string) => {
+  const clean = String(circuit || "").trim().toLowerCase();
+  if (clean.includes("assen")) return "Netherlands";
+  return "United Kingdom";
+};
+
 export const resolveMotoSubSeries = (seriesName?: string) => {
   const value = String(seriesName || "").toLowerCase();
   if (value.includes("moto2")) return "moto2";
@@ -211,6 +380,7 @@ export async function getSeasonDataLocal() {
 export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
   const countryCode = (data.country || "").trim().toUpperCase();
   const countryLabel =
+    (data.circuit?.circuitCountry || "").trim() ||
     (data.countryName || "").trim() ||
     countryLabelFromCode(countryCode) ||
     "";
@@ -229,6 +399,12 @@ export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
     venueLabel && !gpBase.toLowerCase().includes(venueLabel.toLowerCase())
       ? `${gpBase} in ${venueLabel}`
       : gpBase;
+  const eventDateLabel = formatRoundDateLabel(data.date_start, data.date_end);
+  const eventYear = parseDateSafe(data.date_start)?.getFullYear() || new Date().getFullYear();
+  const sourceUrl = buildMotoGpEventUrl(
+    eventYear,
+    data.url || data.grandPrixName || data.name || data.title
+  );
 
   return (data.broadcasts || []).flatMap((session) => {
     const series =
@@ -261,7 +437,6 @@ export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
       ? "Grand Prix"
       : sessionName;
     const sessionLabel = `${series} ${sessionDescriptor}`.replace(/\s+/g, " ").trim();
-    const tzSuffix = start.includes("+") ? ` (GMT${start.slice(-5)})` : "";
     const displayName = `${eventLabel} ${sessionLabel}`.replace(/\s+/g, " ").trim();
 
     return [{
@@ -276,7 +451,11 @@ export const filterAndFormatSessions = (data: RaceEvent): CalendarEvent[] => {
           name: sessionLabel,
           deviceTime: start, // Browser will convert this to local time
           deviceEndTime: end,
-          raceTime: start.split("+")[0] + tzSuffix // Keep original time with timezone
+          raceTime: raceTimeLabel(start), // Keep original time with timezone
+          country: countryLabel,
+          sessionName: sessionDescriptor,
+          eventDateLabel,
+          sourceUrl,
         }
       }
     }];
@@ -295,6 +474,7 @@ export const getUnsortedSeasonDataLocal = (racesOnly = true) => {
 
 export const getWsbkSeasonDataLocal = (racesOnly = true) => {
   const events = wsbkSeasonData.flatMap(schedule => {
+    const country = wsbkCountryFromEventCode(schedule.href, schedule.title);
     return schedule.data.flatMap(a => a).map(event => ({
       ...event, 
       title: event.name.replace('WorldSBK', 'WSBK'),
@@ -306,8 +486,14 @@ export const getWsbkSeasonDataLocal = (racesOnly = true) => {
         round: schedule.title,
         name: event.name,
         deviceTime: event.dateTimeStart, // Browser will convert this to local time
-        deviceTimeEnd: event.dateTimeEnd,
-        raceTime: event.dateTimeStart.split('+')[0] + ` (GMT${event.dateTimeStart.slice(-5)})` // Keep original time with timezone
+        deviceEndTime: event.dateTimeEnd,
+        raceTime: raceTimeLabel(event.dateTimeStart),
+        country,
+        sessionName: wsbkSessionFromName(event.name, event.type),
+        eventDateLabel: schedule.date || "",
+        day: event.day || "",
+        sourceEventName: event.name || "",
+        sourceUrl: schedule.href || "",
       }
     }));
   });
@@ -335,10 +521,13 @@ export const getBsbSeasonDataLocal = (racesOnly = true) => {
     const roundLabel = schedule.title && circuit
       ? `${schedule.title} - ${circuit}`
       : circuit || schedule.title || "";
+    const country = bsbCountryFromCircuit(circuit);
+    const sourceUrl = schedule.href || schedule.url || "";
 
     return schedule.data.flatMap((a: any) => a).map((event: any) => {
       const dateTimeStart = event.dateTimeStart || "";
       const type = event.type || event.kind || "";
+      const sessionName = event.name || displaySessionName(type);
 
       return {
         // Use the session name as the event title, but you could also use `${circuit} ${event.name}` if you want both
@@ -355,9 +544,13 @@ export const getBsbSeasonDataLocal = (racesOnly = true) => {
             name: event.name || "",
             deviceTime: dateTimeStart,
             deviceEndTime: dateTimeStart ? add(new Date(dateTimeStart), { minutes: 30 }).toISOString() : undefined,
-            raceTime: dateTimeStart && dateTimeStart.includes('+')
-              ? dateTimeStart.split('+')[0] + ` (GMT${dateTimeStart.slice(-5)})`
-              : dateTimeStart
+            raceTime: raceTimeLabel(dateTimeStart),
+            country,
+            sessionName,
+            eventDateLabel: schedule.date || "",
+            day: event.day || "",
+            sourceEventName: event.name || "",
+            sourceUrl,
           }
         }
       } as CalendarEvent;
@@ -389,10 +582,8 @@ export const getFimSpeedwaySeasonDataLocal = (racesOnly = true) => {
           round: schedule.title,
           name: calendarLabel,
           deviceTime: dateTimeStart,
-          deviceTimeEnd: dateTimeEnd,
-          raceTime: dateTimeStart.includes("+")
-            ? dateTimeStart.split("+")[0] + ` (GMT${dateTimeStart.slice(-5)})`
-            : dateTimeStart,
+          deviceEndTime: dateTimeEnd,
+          raceTime: raceTimeLabel(dateTimeStart),
           country,
           sessionName,
           eventDateLabel: schedule.date || "",
@@ -439,10 +630,8 @@ export const getFormula1SeasonDataLocal = (racesOnly = true) => {
           round: schedule.title,
           name: calendarLabel,
           deviceTime: dateTimeStart,
-          deviceTimeEnd: dateTimeEnd,
-          raceTime: dateTimeStart.includes("+")
-            ? dateTimeStart.split("+")[0] + ` (GMT${dateTimeStart.slice(-5)})`
-            : dateTimeStart,
+          deviceEndTime: dateTimeEnd,
+          raceTime: raceTimeLabel(dateTimeStart),
           country,
           sessionName,
           eventDateLabel: schedule.date || "",

@@ -35,7 +35,7 @@ const Header = () => {
           {" "}
           MotoGP
           <br />
-          Sweepstake Generator
+          Sweepstake
         </h1>
       )}
     </div>

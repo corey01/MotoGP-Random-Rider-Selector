@@ -1,6 +1,5 @@
 'use client';
 
-import { motoGP } from "@/app/fonts";
 import style from "./Modal.module.scss";
 import { format } from 'date-fns-tz';
 
@@ -37,12 +36,13 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
   const raceTimeFormatted = format(raceDate, 'HH:mm');
   const raceDateFormatted = format(raceDate, 'EEEE, d MMMM yyyy');
   const timezone = raceTimeString.match(/GMT([+-]\d{4})\)/)?.[1] || '';
+  const fallbackSession = String(
+    meta.sessionName || event.extendedProps?.session || event.extendedProps?.type || ""
+  ).trim();
   const detailItems = [
     { label: "Country", value: meta.country },
-    { label: "Session", value: meta.sessionName },
+    { label: "Session", value: fallbackSession },
     { label: "Round Date", value: meta.eventDateLabel },
-    { label: "Day", value: meta.day },
-    { label: "Original Event", value: meta.sourceEventName },
   ].filter((item) => item.value);
   const sourceUrl = String(meta.sourceUrl || "");
 

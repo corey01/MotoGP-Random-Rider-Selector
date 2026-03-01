@@ -13,6 +13,7 @@ import {
   getBsbSeasonDataLocal,
   getFimSpeedwaySeasonDataLocal,
   getFormula1SeasonDataLocal,
+  getMotoGpRoundMeta,
   getUnsortedSeasonDataLocal,
   getWsbkSeasonDataLocal,
   resolveMotoSubSeries,
@@ -116,6 +117,14 @@ export default function CalendarPage() {
         const mapped = sessions.map((session: any) => {
           const start = session?.start || "";
           const tzSuffix = start.includes("+") ? ` (GMT${start.slice(-5)})` : "";
+          const motoMeta = getMotoGpRoundMeta({
+            eventName: session?.modal?.eventName || session?.modal?.round,
+            countryCode: session?.modal?.countryCode,
+            countryName: session?.modal?.countryName,
+            start,
+            year,
+            eventId: session?.eventId || session?.broadcastId,
+          });
           return {
             title: session?.calendarLabel || "Grand Prix",
             start,
@@ -136,6 +145,10 @@ export default function CalendarPage() {
                 deviceTime: start,
                 deviceEndTime: session?.end || undefined,
                 raceTime: `${start.split("+")[0] || start}${tzSuffix}`,
+                country: motoMeta.country || session?.modal?.countryName || "",
+                sessionName: session?.sessionName || "Session",
+                eventDateLabel: motoMeta.eventDateLabel || "",
+                sourceUrl: session?.modal?.sourceUrl || motoMeta.sourceUrl || "",
               },
             },
           };
