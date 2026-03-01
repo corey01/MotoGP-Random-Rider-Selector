@@ -2,14 +2,28 @@
 
 import { Calendar } from "../_components/Calendar/Calendar";
 import { useEffect, useState } from "react";
+import type {
+  SessionView,
+  SeriesKey,
+} from "../_components/Calendar/SessionToggle";
 import {
   getBsbSeasonDataLocal,
+  getFimSpeedwaySeasonDataLocal,
+  getFormula1SeasonDataLocal,
   getUnsortedSeasonDataLocal,
   getWsbkSeasonDataLocal,
 } from "@/utils/getSeasonDataLocal";
 
 export default function CalendarPage() {
-  const [showAllSessions, setShowAllSessions] = useState(false);
+  const [sessionView, setSessionView] = useState<SessionView>("races");
+  const showAllSessions = sessionView === "all";
+  const [visibleSeries, setVisibleSeries] = useState<Record<SeriesKey, boolean>>({
+    motogp: true,
+    wsbk: true,
+    bsb: true,
+    speedway: true,
+    f1: true,
+  });
   const [motoGpData, setMotoGpData] = useState(getUnsortedSeasonDataLocal(true));
 
   useEffect(() => {
@@ -84,13 +98,25 @@ export default function CalendarPage() {
 
   const wsbkData = getWsbkSeasonDataLocal(!showAllSessions);
   const bsbData = getBsbSeasonDataLocal(!showAllSessions);
+  const fimSpeedwayData = getFimSpeedwaySeasonDataLocal(!showAllSessions);
+  const formula1Data = getFormula1SeasonDataLocal(!showAllSessions);
+
   return (
     <Calendar
       motoGPData={motoGpData}
       wsbkData={wsbkData}
       bsbData={bsbData}
-      showAllSessions={showAllSessions}
-      onToggleSessions={() => setShowAllSessions((prev) => !prev)}
+      fimSpeedwayData={fimSpeedwayData}
+      formula1Data={formula1Data}
+      sessionView={sessionView}
+      onSessionViewChange={setSessionView}
+      visibleSeries={visibleSeries}
+      onToggleSeries={(series) =>
+        setVisibleSeries((prev) => ({
+          ...prev,
+          [series]: !prev[series],
+        }))
+      }
     />
   );
 }

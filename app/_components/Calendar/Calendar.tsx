@@ -7,32 +7,41 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useState, useRef } from "react";
 import { CalendarEventModal } from "../Modals/CalendarEventModal";
-import { CalendarLegend } from "./CalendarLegend";
 import { CalendarTitle } from "./CalendarTitle";
-import { SessionToggle } from "./SessionToggle";
+import { SessionToggle, SessionView, SeriesKey } from "./SessionToggle";
 
-import { inter, motoGP } from "@/app/fonts";
+import { inter } from "@/app/fonts";
 import "./Calendar.css";
 import {
   MotoGpSeasonData,
   WsbkSeasonData,
   BsbSeasonData,
+  FimSpeedwaySeasonData,
+  Formula1SeasonData,
 } from "@/utils/getSeasonDataLocal";
 
 interface CalendarProps {
   motoGPData: MotoGpSeasonData;
   wsbkData: WsbkSeasonData;
   bsbData: BsbSeasonData;
-  showAllSessions: boolean;
-  onToggleSessions: () => void;
+  fimSpeedwayData: FimSpeedwaySeasonData;
+  formula1Data: Formula1SeasonData;
+  sessionView: SessionView;
+  onSessionViewChange: (view: SessionView) => void;
+  visibleSeries: Record<SeriesKey, boolean>;
+  onToggleSeries: (series: SeriesKey) => void;
 }
 
 export const Calendar = ({
   motoGPData,
   wsbkData,
   bsbData,
-  showAllSessions,
-  onToggleSessions,
+  fimSpeedwayData,
+  formula1Data,
+  sessionView,
+  onSessionViewChange,
+  visibleSeries,
+  onToggleSeries,
 }: CalendarProps) => {
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const calendarRef = useRef<any>(null);
@@ -42,6 +51,14 @@ export const Calendar = ({
     "next" | "prev" | "today" | undefined
   >();
   const isAnimatingRef = useRef(false);
+
+  const visibleEvents = [
+    ...(visibleSeries.motogp ? motoGPData : []),
+    ...(visibleSeries.wsbk ? wsbkData : []),
+    ...(visibleSeries.bsb ? bsbData : []),
+    ...(visibleSeries.speedway ? fimSpeedwayData : []),
+    ...(visibleSeries.f1 ? formula1Data : []),
+  ];
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     setSelectedEvent(clickInfo.event);
@@ -121,14 +138,15 @@ export const Calendar = ({
 
   return (
     <>
-      <CalendarLegend />
+      <SessionToggle
+        sessionView={sessionView}
+        onSessionViewChange={onSessionViewChange}
+        visibleSeries={visibleSeries}
+        onToggleSeries={onToggleSeries}
+      />
       <CalendarTitle
         currentDate={currentDate}
         direction={navigationDirection}
-      />
-      <SessionToggle
-        showAllSessions={showAllSessions}
-        onToggle={onToggleSessions}
       />
       <div className="calendar-container">
         <div
@@ -140,7 +158,7 @@ export const Calendar = ({
             ref={calendarRef}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
-            events={[...motoGPData, ...wsbkData, ...bsbData]}
+            events={visibleEvents}
             editable={false}
             eventStartEditable={false}
             eventDurationEditable={false}

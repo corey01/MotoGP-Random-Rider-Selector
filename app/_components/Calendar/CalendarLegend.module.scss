@@ -1,7 +1,7 @@
 .legendContainer {
-    display: flex;
-    flex-direction: column;
-    margin-top: -20px;
+  display: flex;
+  flex-direction: column;
+  margin-top: -20px;
 }
 
 .legendContainer h4 {
@@ -17,21 +17,29 @@
   align-items: start;
 }
 
-.legendItem {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
 .seriesTag {
   display: inline-block;
+  width: auto;
+  margin: 0;
   padding: 2px 8px;
   border-radius: 3px;
+  border: none;
   font-size: 0.5rem;
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: white;
+  line-height: 1;
+  cursor: default;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.seriesTag:hover {
+  filter: brightness(0.95);
+}
+
+.seriesTagInactive {
+  opacity: 0.35;
 }
 
 .motogpTag {
@@ -44,6 +52,10 @@
 
 .bsbTag {
   background-color: var(--bsb-green);
+}
+
+.speedwayTag {
+  background-color: var(--speedway-orange);
 }
 
 @media (min-width: 769px) {

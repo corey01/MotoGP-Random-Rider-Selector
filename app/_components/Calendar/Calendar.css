@@ -128,7 +128,7 @@
 
 /* Event type-specific styling */
 .fc-event.motogp-event {
-  background-color: var(--motogp-red) !important;
+  background-color: #111 !important;
   color: white !important;
 }
 
@@ -139,6 +139,16 @@
 
 .fc-event.bsb-event {
   background-color: var(--bsb-green) !important; /* Example: Spotify green */
+  color: white !important;
+}
+
+.fc-event.speedway-event {
+  background-color: var(--speedway-orange) !important;
+  color: white !important;
+}
+
+.fc-event.f1-event {
+  background-color: var(--f1-red) !important;
   color: white !important;
 }
 

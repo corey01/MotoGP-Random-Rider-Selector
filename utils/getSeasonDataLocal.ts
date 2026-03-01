@@ -1,7 +1,9 @@
 import { Season } from "@/models/race";
 import seasonData from "./seasonData.json";
 import wsbkSeasonData from './wsbkSeason2026.json';
-import bsbSeasonData from './bsbSeason2025.json';
+import bsbSeasonData from './bsbSeason2026.json';
+import fimSpeedwaySeasonData from './fimSpeedwaySeason2026.json';
+import formula1SeasonData from './formula1Season2026.json';
 import { add } from "date-fns";
 
 
@@ -48,7 +50,13 @@ type EventMeta = {
   name: string;
   deviceTime: string;    
   deviceEndTime?: string;
-  raceTime: string;      
+  raceTime: string;
+  country?: string;
+  sessionName?: string;
+  eventDateLabel?: string;
+  day?: string;
+  sourceEventName?: string;
+  sourceUrl?: string;
 }
 
 const defaultSeasonObject = {
@@ -117,6 +125,38 @@ const extractRegionFromGrandPrix = (eventName?: string) => {
   if (ofMatch?.[1]) return tidyRegion(ofMatch[1]);
 
   return toTitleCase(clean);
+};
+
+const speedwayCountryFromRoundTitle = (roundTitle?: string) => {
+  const clean = String(roundTitle || "").replace(/\s+/g, " ").trim();
+  if (!clean) return "";
+  const match = clean.match(/\bGP\s+of\s+(.+?)(?:\s*-\s*|$)/i);
+  if (!match?.[1]) return "";
+  return toTitleCase(match[1].trim());
+};
+
+const displaySessionName = (value?: string) => {
+  const raw = String(value || "Session").trim();
+  if (!raw) return "Session";
+  if (raw.toUpperCase() === "RACE") return "Race";
+  if (raw.toUpperCase() === "QUALIFYING") return "Qualifying";
+  return toTitleCase(raw.replace(/_/g, " "));
+};
+
+const f1CountryFromGrandPrixTitle = (roundTitle?: string) => {
+  const clean = String(roundTitle || "").replace(/\s+/g, " ").trim();
+  if (!clean) return "";
+  const withoutSuffix = clean.replace(/\s+Grand\s+Prix$/i, "").trim();
+  return toTitleCase(withoutSuffix);
+};
+
+const f1SessionFromEvent = (eventName?: string, fallbackType?: string) => {
+  const raw = String(eventName || "").trim();
+  const fromName = raw.includes(" - ") ? raw.split(" - ").pop() || "" : raw;
+  const candidate = fromName || displaySessionName(fallbackType);
+  if (/^Sprint\s*Q$/i.test(candidate)) return "Sprint Qualifying";
+  if (/^FP\d$/i.test(candidate)) return candidate.toUpperCase();
+  return displaySessionName(candidate);
 };
 
 export async function getSeasonDataLocal() {
@@ -310,6 +350,106 @@ export const getBsbSeasonDataLocal = (racesOnly = true) => {
   return filteredEvents;
 };
 
+export const getFimSpeedwaySeasonDataLocal = (racesOnly = true) => {
+  const events = fimSpeedwaySeasonData.flatMap((schedule: any) => {
+    return schedule.data.flatMap((a: any) => a).map((event: any) => {
+      const dateTimeStart = event.dateTimeStart || "";
+      const dateTimeEnd = event.dateTimeEnd || undefined;
+      const country = speedwayCountryFromRoundTitle(schedule.title) || "Grand Prix";
+      const sessionName = displaySessionName(event.type || event.kind);
+      const calendarLabel = `FIM Speedway ${country} ${sessionName}`.replace(/\s+/g, " ").trim();
+      return {
+        ...event,
+        title: calendarLabel,
+        start: dateTimeStart, // Browser will auto-convert this for calendar display
+        end: dateTimeEnd,
+        className: "speedway-event",
+        meta: {
+          round: schedule.title,
+          name: calendarLabel,
+          deviceTime: dateTimeStart,
+          deviceTimeEnd: dateTimeEnd,
+          raceTime: dateTimeStart.includes("+")
+            ? dateTimeStart.split("+")[0] + ` (GMT${dateTimeStart.slice(-5)})`
+            : dateTimeStart,
+          country,
+          sessionName,
+          eventDateLabel: schedule.date || "",
+          day: event.day || "",
+          sourceEventName: event.name || "",
+          sourceUrl: schedule.href || "",
+        },
+      };
+    });
+  });
+
+  const formattedEvents = events.map((event) => ({
+    ...event,
+    extendedProps: {
+      ...event,
+      session: event.type,
+      type: event.type,
+    },
+  }));
+
+  const filteredEvents = racesOnly
+    ? formattedEvents.filter((event) => event.extendedProps.type === "RACE")
+    : formattedEvents;
+
+  return filteredEvents;
+};
+
+export const getFormula1SeasonDataLocal = (racesOnly = true) => {
+  const events = formula1SeasonData.flatMap((schedule: any) => {
+    return schedule.data.flatMap((a: any) => a).map((event: any) => {
+      const dateTimeStart = event.dateTimeStart || "";
+      const dateTimeEnd = event.dateTimeEnd || undefined;
+      const country = f1CountryFromGrandPrixTitle(schedule.title) || "Grand Prix";
+      const sessionName = f1SessionFromEvent(event.name, event.type || event.kind);
+      const calendarLabel = `F1 ${country} ${sessionName}`.replace(/\s+/g, " ").trim();
+      return {
+        ...event,
+        title: calendarLabel,
+        start: dateTimeStart,
+        end: dateTimeEnd,
+        className: "f1-event",
+        meta: {
+          round: schedule.title,
+          name: calendarLabel,
+          deviceTime: dateTimeStart,
+          deviceTimeEnd: dateTimeEnd,
+          raceTime: dateTimeStart.includes("+")
+            ? dateTimeStart.split("+")[0] + ` (GMT${dateTimeStart.slice(-5)})`
+            : dateTimeStart,
+          country,
+          sessionName,
+          eventDateLabel: schedule.date || "",
+          day: event.day || "",
+          sourceEventName: event.name || "",
+          sourceUrl: schedule.href || "",
+        },
+      };
+    });
+  });
+
+  const formattedEvents = events.map((event) => ({
+    ...event,
+    extendedProps: {
+      ...event,
+      session: event.type,
+      type: event.type,
+    },
+  }));
+
+  const filteredEvents = racesOnly
+    ? formattedEvents.filter((event) => event.extendedProps.type === "RACE")
+    : formattedEvents;
+
+  return filteredEvents;
+};
+
 export type MotoGpSeasonData = ReturnType<typeof getUnsortedSeasonDataLocal>;
 export type WsbkSeasonData = ReturnType<typeof getWsbkSeasonDataLocal>;
 export type BsbSeasonData = ReturnType<typeof getBsbSeasonDataLocal>;
+export type FimSpeedwaySeasonData = ReturnType<typeof getFimSpeedwaySeasonDataLocal>;
+export type Formula1SeasonData = ReturnType<typeof getFormula1SeasonDataLocal>;

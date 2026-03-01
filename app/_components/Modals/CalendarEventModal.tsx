@@ -12,9 +12,10 @@ interface CalendarEventModalProps {
 
 export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModalProps) => {
   if (!event) return null;
+  const meta = event.extendedProps?.meta || {};
 
   // Start time formatting
-  const deviceStartDate = new Date(event.extendedProps?.meta?.deviceTime);
+  const deviceStartDate = new Date(meta.deviceTime);
   const deviceStartTimeFormatted = deviceStartDate.toLocaleTimeString('en-GB', {
     hour: '2-digit',
     minute: '2-digit',
@@ -29,13 +30,21 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
 
 
   // Race time formatting (original timezone)
-  const raceTimeString = event.extendedProps?.meta?.raceTime;
+  const raceTimeString = String(meta.raceTime || "");
   // Extract the time portion before the timezone
   const [timeWithoutTz] = raceTimeString.split(' (GMT');
   const raceDate = new Date(timeWithoutTz);
   const raceTimeFormatted = format(raceDate, 'HH:mm');
   const raceDateFormatted = format(raceDate, 'EEEE, d MMMM yyyy');
   const timezone = raceTimeString.match(/GMT([+-]\d{4})\)/)?.[1] || '';
+  const detailItems = [
+    { label: "Country", value: meta.country },
+    { label: "Session", value: meta.sessionName },
+    { label: "Round Date", value: meta.eventDateLabel },
+    { label: "Day", value: meta.day },
+    { label: "Original Event", value: meta.sourceEventName },
+  ].filter((item) => item.value);
+  const sourceUrl = String(meta.sourceUrl || "");
 
   // Determine the series tag and style
   let seriesLabel = '';
@@ -49,6 +58,12 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
   } else if (event.classNames?.includes('bsb-event')) {
     seriesLabel = 'BSB';
     seriesClass = style.bsbTag; // <-- Add this class in your SCSS if not present
+  } else if (event.classNames?.includes('speedway-event')) {
+    seriesLabel = 'Speedway';
+    seriesClass = style.speedwayTag;
+  } else if (event.classNames?.includes('f1-event')) {
+    seriesLabel = 'F1';
+    seriesClass = style.f1Tag;
   }
 
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -69,7 +84,7 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
         
         <div className={style.eventContent}>
           <div className={style.eventName}>
-            {event.extendedProps?.meta?.round}
+            {meta.round}
           </div>
           
           <div className={style.timeInfo}>
@@ -85,6 +100,27 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
               <div className={style.timezone}>GMT{timezone}</div>
             </div>
           </div>
+
+          {detailItems.length > 0 && (
+            <div className={style.detailCard}>
+              {detailItems.map((item) => (
+                <div className={style.detailRow} key={item.label}>
+                  <span className={style.detailLabel}>{item.label}</span>
+                  <span className={style.detailValue}>{item.value}</span>
+                </div>
+              ))}
+              {sourceUrl && (
+                <a
+                  className={style.sourceLink}
+                  href={sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View Official Event Page
+                </a>
+              )}
+            </div>
+          )}
         </div>
 
         <div className={style.buttonBar}>

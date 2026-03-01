@@ -1,32 +1,188 @@
 .toggleContainer {
   display: flex;
-  justify-content: flex-end;
-  padding: 0;  /* Remove horizontal padding */
-  margin-bottom: 0.5rem;
+  justify-content: flex-start;
+  margin-bottom: 0;
 }
 
-.toggle {
-  background: none;
+.triggerButton {
+  width: auto;
+  margin: 0;
   border: 1px solid #000;
-  padding: 4px 12px;
-  font-size: 0.8rem;
-  cursor: pointer;
+  background: #fff;
+  color: #000;
+  padding: 4px 10px;
   border-radius: 4px;
-  transition: all 0.2s ease;
+  font-size: 0.72rem;
+  line-height: 1;
+  cursor: pointer;
+}
 
-  &:hover {
-    background: #f5f5f5;
-  }
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
 
-  &.active {
-    background: #000;
-    color: white;
-  }
+.modal {
+  width: min(560px, 100%);
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 1rem;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.modalHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.closeButton {
+  width: auto;
+  margin: 0;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.section {
+  margin-bottom: 0.8rem;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.sessionMode {
+  display: inline-flex;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #000;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.radioLabel {
+  position: relative;
+  cursor: pointer;
+  flex: 1;
+}
+
+.radioInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radioText {
+  display: inline-block;
+  width: 100%;
+  min-width: 0;
+  text-align: center;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  color: #000;
+  background: #fff;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.radioLabel + .radioLabel .radioText {
+  border-left: 1px solid #000;
+}
+
+.radioInput:checked + .radioText {
+  background: #000;
+  color: #fff;
+}
+
+.seriesRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.seriesButton {
+  width: auto;
+  margin: 0;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease, color 0.2s ease, background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.seriesButton:hover {
+  opacity: 0.85;
+}
+
+.seriesButtonActive {
+  color: #fff;
+}
+
+.seriesButtonActive.motogp {
+  background: #111;
+  border-color: #111;
+}
+
+.seriesButtonActive.wsbk {
+  background: var(--wsbk-blue);
+  border-color: var(--wsbk-blue);
+}
+
+.seriesButtonActive.bsb {
+  background: var(--bsb-green);
+  border-color: var(--bsb-green);
+}
+
+.seriesButtonActive.speedway {
+  background: var(--speedway-orange);
+  border-color: var(--speedway-orange);
+}
+
+.seriesButtonActive.f1 {
+  background: var(--f1-red);
+  border-color: var(--f1-red);
 }
 
 @media (min-width: 769px) {
-  .toggle {
+  .triggerButton {
+    font-size: 0.82rem;
+  }
+
+  .radioText {
     font-size: 0.9rem;
     padding: 6px 16px;
+  }
+
+  .seriesButton {
+    font-size: 0.8rem;
+    padding: 5px 12px;
   }
 }
