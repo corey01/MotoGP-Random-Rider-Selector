@@ -1,5 +1,4 @@
 import { Rider } from "@/models/rider";
-import { getRiderDataLocal } from "./getRiderDataLocal";
 
 const getActiveSeasonYear = () => {
   if (typeof window === "undefined") return new Date().getFullYear();
@@ -41,27 +40,39 @@ const getCachedRiders = (): Rider[] => {
   return [];
 };
 
+const createUnknownRider = (id: string): Rider => ({
+  id,
+  name: "Unknown",
+  surname: "Rider",
+  number: 0,
+  sponsoredTeam: "",
+  teamColor: null,
+  textColor: null,
+  teamPicture: null,
+  shortNickname: "",
+  pictures: {
+    profile: { main: null, secondary: null },
+    bike: { main: null },
+    helmet: { main: null },
+    number: null,
+    portrait: null,
+  },
+  from: {
+    countryName: "",
+    countryFlag: "",
+    birthCity: "",
+  },
+  birthDate: "",
+  yearsOld: 0,
+  riderType: "standard",
+});
+
 export const getSelectedRidersByID = async (ids: string[]) => {
   const cached = getCachedRiders();
-  const allRiders = cached.length ? cached : getRiderDataLocal().allRiders;
-
-  const selectedRiders = ids.map((id) => {
-    const riderResults = allRiders.filter((rider) => rider.id === id);
-
-    return riderResults[0];
-  });
-
-  return selectedRiders;
+  return ids.map((id) => cached.find((rider) => rider.id === id) || createUnknownRider(id));
 };
 
 export const getRiderById = (id: string) => {
   const cached = getCachedRiders();
-  if (cached.length) {
-    const hit = cached.find((rider) => rider.id === id);
-    if (hit) return hit;
-  }
-
-  const { allRiders } = getRiderDataLocal();
-
-  return allRiders.find((rider) => rider.id === id);
+  return cached.find((rider) => rider.id === id) || createUnknownRider(id);
 };

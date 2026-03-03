@@ -1,68 +1,33 @@
 import { Rider } from "@/models/rider";
-import { getRiderDataLocal, RiderDataResponse } from "./getRiderDataLocal";
-import riderData from "./riderData.json";
-import { existsSync } from "fs";
-import path from "path";
 
-interface WorkerRider {
-  id?: string;
-  name?: string;
-  shortName?: string;
-  number?: number;
-  nationality?: string;
-  countryFlag?: string;
-  birthCity?: string;
-  birthDate?: string;
-  yearsOld?: number;
-  team?: string;
-  teamColor?: string;
-  textColor?: string;
-  teamPicture?: string;
-  manufacturer?: string;
+export interface RiderDataResponse {
+  allRiders: Rider[];
+  standardRiders: Rider[];
+  guestRiders: Rider[];
+}
+
+interface ApiRider {
+  id: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  name?: string | null;
+  number?: number | null;
+  nationality?: string | null;
+  team?: string | null;
+  teamColor?: string | null;
+  textColor?: string | null;
   pictures?: {
-    profile?: { main?: string | null; secondary?: string | null };
-    bike?: { main?: string | null };
-    helmet?: { main?: string | null };
-    number?: string | null;
+    profile?: string | null;
+    bike?: string | null;
+    helmet?: string | null;
     portrait?: string | null;
-  };
+    number?: string | null;
+  } | null;
 }
 
-interface WorkerRidersResponse {
+interface ApiRidersResponse {
   ok?: boolean;
-  year?: number;
-  count?: number;
-  riders?: Record<string, WorkerRider>;
-}
-
-interface LocalRiderLike {
-  id?: string;
-  legacy_id?: string | number;
-  name?: string;
-  surname?: string;
-  birth_city?: string;
-  birth_date?: string;
-  years_old?: number;
-  country?: { name?: string; flag?: string };
-  current_career_step?: {
-    season?: number;
-    sponsored_team?: string;
-    short_nickname?: string;
-    team?: {
-      name?: string;
-      color?: string;
-      text_color?: string;
-      picture?: string;
-      constructor?: { name?: string };
-    };
-    pictures?: {
-      profile?: { main?: string | null; secondary?: string | null };
-      bike?: { main?: string | null; secondary?: string | null };
-      helmet?: { main?: string | null; secondary?: string | null };
-      number?: string | null;
-      portrait?: string | null;
-    };
-  };
+  riders?: ApiRider[];
 }
 
 const guestRiderNames = [
@@ -91,118 +56,42 @@ const splitName = (fullName: string) => {
   return { name: parts.slice(0, -1).join(" "), surname: parts[parts.length - 1] };
 };
 
-const localRiders = ((riderData as { riders?: LocalRiderLike[] })?.riders || []) as LocalRiderLike[];
-const localById = new Map<string, LocalRiderLike>(
-  localRiders
-    .map((r) => [String(r.id || ""), r] as const)
-    .filter(([id]) => !!id)
-);
-const localByLegacyId = new Map<string, LocalRiderLike>(
-  localRiders
-    .map((r) => [String(r.legacy_id || ""), r] as const)
-    .filter(([id]) => !!id)
-);
-const loggedMissing = new Set<string>();
+function mapApiRider(rider: ApiRider): Rider {
+  let name = String(rider.firstName || "").trim();
+  let surname = String(rider.lastName || "").trim();
 
-const fileNameFromUrl = (url?: string | null) => {
-  if (!url) return null;
-  const clean = String(url).split("?")[0];
-  const parts = clean.split("/");
-  return parts[parts.length - 1] || null;
-};
-
-const hasPublicFile = (relPath: string) => {
-  const cleaned = relPath.replace(/^\/+/, "");
-  return existsSync(path.join(process.cwd(), "public", cleaned));
-};
-
-const localOrOfficial = (
-  officialUrl: string | null | undefined,
-  localCandidates: string[],
-  logKey: string
-) => {
-  if (!officialUrl) return null;
-  for (const p of localCandidates) {
-    if (hasPublicFile(p)) return p.startsWith("/") ? p : `/${p}`;
+  if (!name && !surname) {
+    const parsed = splitName(String(rider.name || "Unknown Rider"));
+    name = parsed.name;
+    surname = parsed.surname;
   }
-  if (!loggedMissing.has(logKey)) {
-    console.warn(`[riders] missing local image, fallback to official: ${officialUrl}`);
-    loggedMissing.add(logKey);
-  }
-  return officialUrl;
-};
 
-function mapWorkerRider(rider: WorkerRider, idFromKey: string): Rider {
-  const id = rider.id || idFromKey;
-  const fullName = rider.name || "Unknown Rider";
-  const { name, surname } = splitName(fullName);
-  const local =
-    localById.get(String(id)) ||
-    localByLegacyId.get(String(id)) ||
-    localRiders.find((r) => {
-      const n = String(r?.name || "").toLowerCase();
-      const s = String(r?.surname || "").toLowerCase();
-      return n === name.toLowerCase() && s === surname.toLowerCase();
-    });
-
-  const localStep = local?.current_career_step || {};
-  const localPics = localStep?.pictures || {};
-  const workerPics = rider?.pictures || {};
-
-  const profileOfficial = workerPics?.profile?.main || localPics?.profile?.main || null;
-  const profileFile = fileNameFromUrl(profileOfficial);
-  const profileMain = localOrOfficial(
-    profileOfficial,
-    [
-      `riders/25/${profileFile || ""}`,
-      `riders/24/${profileFile || ""}`,
-      `riders/${profileFile || ""}`,
-    ].filter((v) => !v.endsWith("/")),
-    `profile:${id}:${profileFile || "none"}`
-  );
-
-  const portraitOfficial = workerPics?.portrait || localPics?.portrait || null;
-  const portraitFile = fileNameFromUrl(portraitOfficial);
-  const portraitMain = localOrOfficial(
-    portraitOfficial,
-    [
-      `riders/25/portrait/${portraitFile || ""}`,
-      `riders/24/portrait/${portraitFile || ""}`,
-      `riders/portrait/${portraitFile || ""}`,
-    ].filter((v) => !v.endsWith("/")),
-    `portrait:${id}:${portraitFile || "none"}`
-  );
-
-  const bikeOfficial =
-    workerPics?.bike?.main || rider?.teamPicture || localPics?.bike?.main || localStep?.team?.picture || null;
+  const pics = rider.pictures || {};
 
   return {
-    id,
+    id: String(rider.id || ""),
     name,
     surname,
     number: rider.number ?? 0,
-    sponsoredTeam: rider.team || localStep?.sponsored_team || localStep?.team?.name || "",
-    teamColor: rider.teamColor || localStep?.team?.color || null,
-    textColor: rider.textColor || localStep?.team?.text_color || null,
-    teamPicture: rider.teamPicture || localStep?.team?.picture || null,
-    shortNickname: rider.shortName || localStep?.short_nickname || "",
+    sponsoredTeam: rider.team || "",
+    teamColor: rider.teamColor || null,
+    textColor: rider.textColor || null,
+    teamPicture: pics.bike || null,
+    shortNickname: "",
     pictures: {
-      profile: {
-        main: profileMain,
-        secondary: workerPics?.profile?.secondary || localPics?.profile?.secondary || null
-      },
-      bike: { main: bikeOfficial || null },
-      helmet: { main: workerPics?.helmet?.main || localPics?.helmet?.main || null },
-      number: workerPics?.number || localPics?.number || null,
-      portrait: portraitMain,
+      profile: { main: pics.profile || null, secondary: null },
+      bike: { main: pics.bike || null },
+      helmet: { main: pics.helmet || null },
+      number: pics.number || null,
+      portrait: pics.portrait || null,
     },
     from: {
-      countryName: rider.nationality || local?.country?.name || "",
-      countryFlag: rider.countryFlag || local?.country?.flag || "",
-      birthCity: rider.birthCity || local?.birth_city || "",
+      countryName: rider.nationality || "",
+      countryFlag: "",
+      birthCity: "",
     },
-    birthDate: rider.birthDate || local?.birth_date || "",
-    yearsOld: rider.yearsOld ?? local?.years_old ?? 0,
+    birthDate: "",
+    yearsOld: 0,
     riderType: isGuestRider(surname, name) ? "guest" : "standard",
   };
 }
@@ -213,32 +102,20 @@ function toRiderDataResponse(riders: Rider[]): RiderDataResponse {
   return { allRiders: sorted, guestRiders, standardRiders };
 }
 
-export async function getRiderData(): Promise<RiderDataResponse> {
-  try {
-    const defaultBaseUrl =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:8787"
-        : "https://cascading-monkeys.corey-obeirne.workers.dev";
-    const baseUrl =
-      process.env.MOTOGP_WORKER_URL ||
-      process.env.NEXT_PUBLIC_MOTOGP_WORKER_URL ||
-      defaultBaseUrl;
-    const year = Number(process.env.MOTOGP_SEASON_YEAR || new Date().getFullYear());
-    const res = await fetch(`${baseUrl.replace(/\/$/, "")}/riders?year=${year}`, {
-      method: "GET",
-      ...(process.env.NODE_ENV === "development"
-        ? { cache: "no-store" as const }
-        : { next: { revalidate: 300 } }),
-    });
+const getBaseUrl = () => {
+  const baseUrl = process.env.NEXT_PUBLIC_RACECAL_URL;
+  if (!baseUrl) throw new Error("NEXT_PUBLIC_RACECAL_URL is not set");
+  return baseUrl.replace(/\/$/, "");
+};
 
-    if (!res.ok) throw new Error(`Failed rider fetch (${res.status})`);
-    const payload = (await res.json()) as WorkerRidersResponse;
-    const riderMap = payload?.riders || {};
-    const allRiders = Object.entries(riderMap).map(([id, rider]) => mapWorkerRider(rider || {}, id));
-    if (!allRiders.length) throw new Error("Empty rider payload");
-    return toRiderDataResponse(allRiders);
-  } catch (e) {
-    console.warn("[riders] Falling back to local riderData.json", e);
-    return getRiderDataLocal();
-  }
+export async function getRiderData(): Promise<RiderDataResponse> {
+  const year = Number(process.env.NEXT_PUBLIC_MOTOGP_SEASON_YEAR || new Date().getFullYear());
+  const res = await fetch(`${getBaseUrl()}/riders?year=${year}`, { cache: "no-store" });
+  if (!res.ok) throw new Error(`RaceCal riders failed (${res.status})`);
+
+  const payload = (await res.json()) as ApiRidersResponse;
+  const allRiders = (payload?.riders ?? []).map(mapApiRider);
+  if (!allRiders.length) throw new Error("Empty RaceCal rider payload");
+
+  return toRiderDataResponse(allRiders);
 }

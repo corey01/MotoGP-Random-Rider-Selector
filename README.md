@@ -1,4 +1,4 @@
-Simple sweepstake web app to randomly assign a random MotoGP rider to one of us.
+Simple sweepstake web app to randomly assign MotoGP riders to entrants.
 
 ## Getting Started
 
@@ -12,20 +12,13 @@ yarn dev
 pnpm dev
 ```
 
-### MotoGP Api Data
+### Environment
+Set the RaceCal backend URL in `.env`:
 
-Where to get season data:
+```bash
+NEXT_PUBLIC_RACECAL_URL=http://localhost:3001
+NEXT_PUBLIC_MOTOGP_SEASON_YEAR=2026
+```
 
-https://api.motogp.pulselive.com/motogp/v1/events?seasonYear=2023
-
-process this using the get() route in /season/route.ts, this will format the data to be processed by getSeasonDataLocal.ts on the client side.
-
-For Rider Data
-
-https://api.motogp.pulselive.com/motogp/v1/riders
-
-
-
-API Guide:
-
-https://github.com/robschmitt/MotoGP-API
+### Data Source
+The frontend now fetches riders and calendar data directly from the RaceCal API (`/riders`, `/calendar-events`) and does not use embedded season JSON fallbacks.
