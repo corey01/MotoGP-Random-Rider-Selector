@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar } from "../_components/Calendar/Calendar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { SessionView } from "../_components/Calendar/SessionToggle";
 import {
   DEFAULT_SUB_SERIES_VISIBILITY,
@@ -15,6 +15,8 @@ import {
   emptyCalendarData,
   type AllCalendarData,
 } from "@/utils/getCalendarData";
+import { useAuth } from "../_components/AuthProvider";
+import { fetchWithAuthJson } from "@/utils/auth";
 
 const CALENDAR_SESSION_VIEW_KEY = "calendar:sessionView";
 const CALENDAR_SUB_SERIES_KEY = "calendar:visibleSubSeries";
@@ -58,16 +60,45 @@ const activeCalendarFilters = (visibleSubSeries: Record<SubSeriesKey, boolean>) 
   return { series, subSeries };
 };
 
+type SubscriptionResponse = {
+  ok: boolean;
+  series: string[];
+};
+
+const subSeriesVisibilityFromSubscriptions = (seriesSlugs: string[]) => {
+  const allowed = new Set(seriesSlugs.map((slug) => String(slug).toLowerCase()));
+  const next: Record<SubSeriesKey, boolean> = { ...DEFAULT_SUB_SERIES_VISIBILITY };
+
+  (Object.keys(next) as SubSeriesKey[]).forEach((key) => {
+    next[key] = false;
+  });
+
+  SERIES_GROUPS.forEach((group) => {
+    const isEnabled = allowed.has(group.key);
+    group.children.forEach((child) => {
+      next[child.key] = isEnabled;
+    });
+  });
+
+  return next;
+};
+
+const normalizedSeriesKey = (series: string[]) =>
+  Array.from(new Set(series.map((slug) => slug.toLowerCase()))).sort().join(",");
+
 export default function CalendarPage() {
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
   const [sessionView, setSessionView] = useState<SessionView>("races");
   const showAllSessions = sessionView === "all";
   const [visibleSubSeries, setVisibleSubSeries] = useState<Record<SubSeriesKey, boolean>>(
     () => ({ ...DEFAULT_SUB_SERIES_VISIBILITY })
   );
   const [preferencesLoaded, setPreferencesLoaded] = useState(false);
+  const [subscriptionsLoaded, setSubscriptionsLoaded] = useState(false);
   const [calendarData, setCalendarData] = useState<AllCalendarData>(() =>
     emptyCalendarData()
   );
+  const syncedSeriesKeyRef = useRef<string | null>(null);
 
   useEffect(() => {
     const storedSessionView = parseStoredSessionView(
@@ -89,6 +120,43 @@ export default function CalendarPage() {
   }, []);
 
   useEffect(() => {
+    if (!preferencesLoaded || authLoading) return;
+
+    if (!isAuthenticated) {
+      syncedSeriesKeyRef.current = null;
+      setSubscriptionsLoaded(true);
+      return;
+    }
+
+    let cancelled = false;
+    setSubscriptionsLoaded(false);
+
+    const loadSubscriptions = async () => {
+      try {
+        const payload = await fetchWithAuthJson<SubscriptionResponse>("/subscriptions");
+        if (cancelled) return;
+
+        const series = Array.isArray(payload.series) ? payload.series : [];
+        syncedSeriesKeyRef.current = normalizedSeriesKey(series);
+        setVisibleSubSeries(subSeriesVisibilityFromSubscriptions(series));
+      } catch {
+        // Fallback to local state when subscriptions are unavailable.
+        syncedSeriesKeyRef.current = null;
+      } finally {
+        if (!cancelled) {
+          setSubscriptionsLoaded(true);
+        }
+      }
+    };
+
+    void loadSubscriptions();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [authLoading, isAuthenticated, preferencesLoaded]);
+
+  useEffect(() => {
     if (!preferencesLoaded) return;
     localStorage.setItem(CALENDAR_SESSION_VIEW_KEY, sessionView);
   }, [preferencesLoaded, sessionView]);
@@ -97,6 +165,36 @@ export default function CalendarPage() {
     if (!preferencesLoaded) return;
     localStorage.setItem(CALENDAR_SUB_SERIES_KEY, JSON.stringify(visibleSubSeries));
   }, [preferencesLoaded, visibleSubSeries]);
+
+  useEffect(() => {
+    if (!preferencesLoaded || authLoading || !isAuthenticated || !subscriptionsLoaded) return;
+
+    const seriesToSave = activeCalendarFilters(visibleSubSeries).series;
+    const nextSeriesKey = normalizedSeriesKey(seriesToSave);
+
+    if (nextSeriesKey === syncedSeriesKeyRef.current) return;
+
+    const timeoutId = window.setTimeout(() => {
+      void (async () => {
+        try {
+          await fetchWithAuthJson<SubscriptionResponse>("/subscriptions", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ series: seriesToSave }),
+          });
+          syncedSeriesKeyRef.current = nextSeriesKey;
+        } catch {
+          // Keep UI/localStorage state even if remote sync fails.
+        }
+      })();
+    }, 500);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [authLoading, isAuthenticated, preferencesLoaded, subscriptionsLoaded, visibleSubSeries]);
 
   useEffect(() => {
     let cancelled = false;

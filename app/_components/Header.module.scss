@@ -18,6 +18,7 @@
   .headerNav ul {
     list-style: none;
     display: flex;
+    align-items: center;
     margin-left: auto;
 
     li {
@@ -52,5 +53,58 @@
     li.active a {
       color: #000;
     }
+  }
+
+  .userItem {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+
+    &:before {
+      content: "";
+    }
+  }
+
+  .userName {
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 13px;
+  }
+
+  .logoutButton {
+    width: auto;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 400;
+    background: transparent;
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+  }
+
+  .logoutButton:hover {
+    color: #000;
+  }
+
+  .invitesLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .inviteBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    padding: 0 5px;
+    background-color: #e31b23;
+    color: #fff;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 700;
   }
 }

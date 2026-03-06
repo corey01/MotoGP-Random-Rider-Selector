@@ -10,6 +10,7 @@ interface CalendarEventModalProps {
 }
 
 export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModalProps) => {
+  console.log('event', event);
   if (!event) return null;
   const meta = event.extendedProps?.meta || {};
 

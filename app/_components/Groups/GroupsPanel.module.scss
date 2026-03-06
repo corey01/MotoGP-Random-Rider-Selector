@@ -1,0 +1,125 @@
+.panel {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #fff;
+  padding: 14px;
+  width: 100%;
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.smallButton {
+  width: auto;
+  margin: 0;
+  padding: 8px 10px;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.error {
+  color: #b00020;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.success {
+  color: #066d37;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.createForm {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.input {
+  flex: 1;
+}
+
+.createButton {
+  width: auto;
+  margin: 0;
+}
+
+.list {
+  display: grid;
+  gap: 8px;
+}
+
+.empty {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+}
+
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  padding: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.groupName {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.meta {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 12px;
+}
+
+.viewLink {
+  width: auto;
+  display: inline-block;
+  border: 1px solid #000;
+  padding: 6px 10px;
+  text-decoration: none;
+  color: #000;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.deleteButton {
+  width: auto;
+  margin: 0;
+  padding: 6px 10px;
+  border: 1px solid #8f0f1f;
+  color: #8f0f1f;
+  background: #fff;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+}

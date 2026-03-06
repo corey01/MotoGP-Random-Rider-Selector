@@ -10,12 +10,14 @@ import { Rider, SelectedRider } from "@/models/rider";
 import { defaultEntrants } from "@/utils/entrants";
 import { useRouter } from "next/navigation";
 import LoadingOverlay from "./Loading/Overlay";
+import GroupsPanel from "./Groups/GroupsPanel";
 import {
   formatDistance,
   millisecondsToHours,
   millisecondsToMinutes,
 } from "date-fns";
 import type { RiderDataResponse } from "@/utils/getRiderData";
+import { useAuth } from "./AuthProvider";
 
 interface HomeProps {
   allRiders: RiderDataResponse;
@@ -29,6 +31,7 @@ export default function SweepstakeApp({ allRiders, seasonYear }: HomeProps) {
   const [entrants, setEntrants] = useState(() => defaultEntrants);
   const [loading, setLoading] = useState<boolean>(false);
   const [eligibleRiderIds, setEligibleRiderIds] = useState<string[] | null>(null);
+  const { isAuthenticated } = useAuth();
 
   const router = useRouter();
 
@@ -203,6 +206,7 @@ JSON.stringify({ riders: allRiders.allRiders, generatedDate: Date.now(), seasonY
           />
         )}
         {page === "grid" && <GridPanel riders={[...riders, ...guestRiders]} />}
+        {page === "groups" && isAuthenticated && <GroupsPanel />}
       </div>
       <div className="navbar">
         <div
@@ -223,6 +227,14 @@ JSON.stringify({ riders: allRiders.allRiders, generatedDate: Date.now(), seasonY
         >
           Grid
         </div>
+        {isAuthenticated && (
+          <div
+            className={`setpage ${page === "groups" ? "active" : ""}`}
+            onClick={() => setPage("groups")}
+          >
+            Groups
+          </div>
+        )}
       </div>
     </>
   );

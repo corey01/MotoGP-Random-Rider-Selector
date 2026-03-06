@@ -1,0 +1,61 @@
+.panel {
+  max-width: 420px;
+  margin: 24px auto 0;
+  padding: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #fff;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.description {
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.4;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+}
+
+.label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.field {
+  width: 100%;
+}
+
+.error {
+  color: #b00020;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.submit {
+  margin: 4px 0 0;
+}
+
+.helperText {
+  margin-top: 12px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.helperLink {
+  color: #000;
+  font-weight: 600;
+  text-decoration: underline;
+}

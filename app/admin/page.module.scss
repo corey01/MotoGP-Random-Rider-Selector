@@ -1,0 +1,193 @@
+.adminPage {
+  max-width: 1080px;
+  margin: 20px auto 0;
+  padding: 0 0 24px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.subtitle {
+  margin-top: 8px;
+  color: rgba(0, 0, 0, 0.7);
+  line-height: 1.4;
+  font-size: 14px;
+}
+
+.controls {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+  grid-template-columns: 1fr;
+}
+
+.panel {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  padding: 14px;
+}
+
+.panelTitle {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.inputLabel {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.yearInput {
+  max-width: 160px;
+}
+
+.actionsGrid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr;
+}
+
+.actionButton {
+  margin: 0;
+  text-align: left;
+  padding: 10px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  background: #fff;
+}
+
+.actionLabel {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.actionHint {
+  display: block;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.statusLine {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.success {
+  color: #066d37;
+}
+
+.error {
+  color: #b00020;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  text-align: left;
+  vertical-align: top;
+  padding: 8px 10px;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.table th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(0, 0, 0, 0.75);
+  background-color: #f6f6f6;
+  font-weight: 700;
+}
+
+.statusPill {
+  display: inline-block;
+  min-width: 72px;
+  text-align: center;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1px solid transparent;
+}
+
+.statusRunning {
+  background: #fff4df;
+  color: #8a5a00;
+  border-color: #f0c36a;
+}
+
+.statusSuccess {
+  background: #e8f8ef;
+  color: #0d6b3c;
+  border-color: #90d3af;
+}
+
+.statusError {
+  background: #fdebec;
+  color: #8f0f1f;
+  border-color: #f1a7b0;
+}
+
+.statusUnknown {
+  background: #efefef;
+  color: #444;
+  border-color: #d5d5d5;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.refreshButton {
+  width: auto;
+  margin: 0;
+  padding: 8px 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.hint {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 13px;
+}
+
+@media (min-width: 900px) {
+  .controls {
+    grid-template-columns: 280px 1fr;
+  }
+
+  .actionsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
