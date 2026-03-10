@@ -1,0 +1,15 @@
+services:
+  motogp-selector:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_URL: ${NEXT_PUBLIC_URL}
+        NEXT_PUBLIC_RACECAL_URL: ${NEXT_PUBLIC_RACECAL_URL}
+    container_name: motogp_selector
+    restart: unless-stopped
+    networks:
+      - web_network
+
+networks:
+  web_network:
+    external: true

@@ -21,14 +21,7 @@ module.exports = withOptimisedImages({
   images: {
     disableStaticImages: true,
     unoptimized: true,
-    path: "/MotoGP-Random-Rider-Selector/",
   },
-  // sassOptions: {
-  //   includePaths: [path.join(__dirname, "styles")],
-  // },
-
-  basePath: "/MotoGP-Random-Rider-Selector",
-  assetPrefix: "/MotoGP-Random-Rider-Selector",
 
   responsive: {
     adapter: require("responsive-loader/sharp"),

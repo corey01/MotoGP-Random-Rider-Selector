@@ -15,7 +15,7 @@ import {
   millisecondsToHours,
   millisecondsToMinutes,
 } from "date-fns";
-import { RiderDataResponse } from "@/utils/getRiderDataLocal";
+import type { RiderDataResponse } from "@/utils/getRiderData";
 
 interface HomeProps {
   allRiders: RiderDataResponse;

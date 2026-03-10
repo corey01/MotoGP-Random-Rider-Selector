@@ -14,12 +14,12 @@ import { SeriesKey, SubSeriesKey } from "./filterConfig";
 import { inter } from "@/app/fonts";
 import "./Calendar.css";
 import {
-  MotoGpSeasonData,
-  WsbkSeasonData,
-  BsbSeasonData,
-  FimSpeedwaySeasonData,
-  Formula1SeasonData,
-} from "@/utils/getSeasonDataLocal";
+  type MotoGpSeasonData,
+  type WsbkSeasonData,
+  type BsbSeasonData,
+  type FimSpeedwaySeasonData,
+  type Formula1SeasonData,
+} from "@/utils/getCalendarData";
 
 interface CalendarProps {
   motoGPData: MotoGpSeasonData;

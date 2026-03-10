@@ -5,19 +5,16 @@ import { useEffect, useState } from "react";
 import type { SessionView } from "../_components/Calendar/SessionToggle";
 import {
   DEFAULT_SUB_SERIES_VISIBILITY,
+  SERIES_GROUPS,
   SeriesKey,
   SubSeriesKey,
   seriesChildren,
 } from "../_components/Calendar/filterConfig";
 import {
-  getBsbSeasonDataLocal,
-  getFimSpeedwaySeasonDataLocal,
-  getFormula1SeasonDataLocal,
-  getMotoGpRoundMeta,
-  getUnsortedSeasonDataLocal,
-  getWsbkSeasonDataLocal,
-  resolveMotoSubSeries,
-} from "@/utils/getSeasonDataLocal";
+  fetchCalendarData,
+  emptyCalendarData,
+  type AllCalendarData,
+} from "@/utils/getCalendarData";
 
 const CALENDAR_SESSION_VIEW_KEY = "calendar:sessionView";
 const CALENDAR_SUB_SERIES_KEY = "calendar:visibleSubSeries";
@@ -50,6 +47,17 @@ const parseStoredSubSeries = (
   }
 };
 
+const activeCalendarFilters = (visibleSubSeries: Record<SubSeriesKey, boolean>) => {
+  const subSeries = (Object.keys(visibleSubSeries) as SubSeriesKey[]).filter(
+    (key) => visibleSubSeries[key]
+  );
+  const series = SERIES_GROUPS
+    .filter((group) => group.children.some((child) => visibleSubSeries[child.key]))
+    .map((group) => group.key);
+
+  return { series, subSeries };
+};
+
 export default function CalendarPage() {
   const [sessionView, setSessionView] = useState<SessionView>("races");
   const showAllSessions = sessionView === "all";
@@ -57,7 +65,9 @@ export default function CalendarPage() {
     () => ({ ...DEFAULT_SUB_SERIES_VISIBILITY })
   );
   const [preferencesLoaded, setPreferencesLoaded] = useState(false);
-  const [motoGpData, setMotoGpData] = useState(getUnsortedSeasonDataLocal(true));
+  const [calendarData, setCalendarData] = useState<AllCalendarData>(() =>
+    emptyCalendarData()
+  );
 
   useEffect(() => {
     const storedSessionView = parseStoredSessionView(
@@ -91,90 +101,35 @@ export default function CalendarPage() {
   useEffect(() => {
     let cancelled = false;
 
-    const fetchMotoGpCalendar = async () => {
-      const fallback = getUnsortedSeasonDataLocal(!showAllSessions);
+    const fetchAllCalendarData = async () => {
+      const fallback = emptyCalendarData();
       try {
+        const filters = activeCalendarFilters(visibleSubSeries);
+        if (!filters.subSeries.length) {
+          if (!cancelled) setCalendarData(emptyCalendarData());
+          return;
+        }
+
         const year = Number(
           process.env.NEXT_PUBLIC_MOTOGP_SEASON_YEAR || new Date().getFullYear()
         );
-        const defaultBaseUrl =
-          process.env.NODE_ENV === "development"
-            ? "http://localhost:8787"
-            : "https://cascading-monkeys.corey-obeirne.workers.dev";
-        const baseUrl =
-          process.env.NEXT_PUBLIC_MOTOGP_WORKER_URL || defaultBaseUrl;
-        const racesOnly = showAllSessions ? 0 : 1;
-        const requestUrl = `${baseUrl.replace(
-          /\/$/,
-          ""
-        )}/calendar-events?year=${year}&racesOnly=${racesOnly}`;
-
-        const res = await fetch(requestUrl, { cache: "no-store" });
-        if (!res.ok) throw new Error(`calendar-events failed (${res.status})`);
-
-        const payload = await res.json();
-        const sessions = Array.isArray(payload?.sessions) ? payload.sessions : [];
-        const mapped = sessions.map((session: any) => {
-          const start = session?.start || "";
-          const tzSuffix = start.includes("+") ? ` (GMT${start.slice(-5)})` : "";
-          const motoMeta = getMotoGpRoundMeta({
-            eventName: session?.modal?.eventName || session?.modal?.round,
-            countryCode: session?.modal?.countryCode,
-            countryName: session?.modal?.countryName,
-            start,
-            year,
-            eventId: session?.eventId || session?.broadcastId,
-          });
-          return {
-            title: session?.calendarLabel || "Grand Prix",
-            start,
-            className: "motogp-event",
-            extendedProps: {
-              session: session?.sessionKind || "SESSION",
-              subSeries: resolveMotoSubSeries(session?.series),
-              meta: {
-                round:
-                  session?.modal?.round ||
-                  session?.modal?.eventName ||
-                  "Grand Prix",
-                name: `${session?.series || "MotoGP"} ${
-                  session?.sessionName || "Session"
-                }`
-                  .replace(/\s+/g, " ")
-                  .trim(),
-                deviceTime: start,
-                deviceEndTime: session?.end || undefined,
-                raceTime: `${start.split("+")[0] || start}${tzSuffix}`,
-                country: motoMeta.country || session?.modal?.countryName || "",
-                sessionName: session?.sessionName || "Session",
-                eventDateLabel: motoMeta.eventDateLabel || "",
-                sourceUrl: session?.modal?.sourceUrl || motoMeta.sourceUrl || "",
-              },
-            },
-          };
-        });
-
+        const nextData = await fetchCalendarData(year, !showAllSessions, filters);
         if (!cancelled) {
-          setMotoGpData(mapped.length ? mapped : fallback);
+          setCalendarData(nextData);
         }
       } catch {
         if (!cancelled) {
-          setMotoGpData(fallback);
+          setCalendarData(fallback);
         }
       }
     };
 
-    void fetchMotoGpCalendar();
+    void fetchAllCalendarData();
 
     return () => {
       cancelled = true;
     };
-  }, [showAllSessions]);
-
-  const wsbkData = getWsbkSeasonDataLocal(!showAllSessions);
-  const bsbData = getBsbSeasonDataLocal(!showAllSessions);
-  const fimSpeedwayData = getFimSpeedwaySeasonDataLocal(!showAllSessions);
-  const formula1Data = getFormula1SeasonDataLocal(!showAllSessions);
+  }, [showAllSessions, visibleSubSeries]);
 
   const handleToggleSeries = (series: SeriesKey) => {
     setVisibleSubSeries((prev) => {
@@ -197,11 +152,11 @@ export default function CalendarPage() {
 
   return (
     <Calendar
-      motoGPData={motoGpData}
-      wsbkData={wsbkData}
-      bsbData={bsbData}
-      fimSpeedwayData={fimSpeedwayData}
-      formula1Data={formula1Data}
+      motoGPData={calendarData.motoGpData}
+      wsbkData={calendarData.wsbkData}
+      bsbData={calendarData.bsbData}
+      fimSpeedwayData={calendarData.fimSpeedwayData}
+      formula1Data={calendarData.formula1Data}
       sessionView={sessionView}
       onSessionViewChange={setSessionView}
       visibleSubSeries={visibleSubSeries}
