@@ -1,0 +1,322 @@
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem 0.5rem 4rem;
+}
+
+// Header
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+  text-align: left;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: 4px;
+
+  strong {
+    color: #000;
+    font-weight: 600;
+  }
+}
+
+.signOutBtn {
+  margin: 0;
+  width: auto;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  border: 1px solid #ccc;
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #000;
+    background: #f5f5f5;
+  }
+}
+
+// Year picker
+
+.yearRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+
+  label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+  }
+}
+
+.yearInput {
+  width: 100px;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+
+  &:focus {
+    outline: none;
+    border-color: #000;
+  }
+}
+
+// Sections
+
+.section {
+  margin-bottom: 2rem;
+  border: 1px solid #e0e0e0;
+  padding: 1rem;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.sectionTitle {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(0, 0, 0, 0.4);
+  margin: 0 0 0.75rem;
+}
+
+.sectionHeader .sectionTitle {
+  margin-bottom: 0;
+}
+
+// Action grid
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.5rem;
+}
+
+.actionBtn {
+  margin: 0;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  &:hover:not(:disabled) {
+    border-color: #000;
+    background: #f5f5f5;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.btnLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btnHint {
+  font-size: 0.7rem;
+  color: rgba(0, 0, 0, 0.4);
+  font-weight: 400;
+}
+
+// Spinner
+
+.spinner {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #ccc;
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Refresh button
+
+.refreshBtn {
+  margin: 0;
+  width: auto;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  border: 1px solid #ccc;
+  background: transparent;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  &:hover {
+    border-color: #000;
+    background: #f5f5f5;
+  }
+}
+
+// Table
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  font-size: 0.82rem;
+
+  th {
+    text-align: left;
+    padding: 6px 8px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: 600;
+  }
+
+  td {
+    padding: 7px 8px;
+    border-bottom: 1px solid #f0f0f0;
+    color: rgba(0, 0, 0, 0.7);
+
+    code {
+      font-family: monospace;
+      font-size: 0.8rem;
+    }
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.errorCell {
+  color: #c00 !important;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty {
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.35);
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+// Status badge
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.failed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.running {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+// Error text
+
+.errorText {
+  font-size: 0.85rem;
+  color: #c00;
+  padding: 0.5rem 0;
+}
+
+// Toast
+
+.toast {
+  position: fixed;
+  bottom: 5rem;
+  right: 1rem;
+  padding: 10px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid;
+  max-width: 340px;
+  z-index: 50;
+  animation: fadeIn 0.2s ease;
+}
+
+.toastOk {
+  background: #d1fae5;
+  border-color: #6ee7b7;
+  color: #065f46;
+}
+
+.toastError {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
