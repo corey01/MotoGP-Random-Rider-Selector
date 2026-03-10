@@ -118,5 +118,5 @@ export async function apiMe(): Promise<AuthUser> {
   const res = await fetchWithAuth("/auth/me");
   const data = await res.json();
   if (!res.ok) throw new Error(data.error ?? "Failed to fetch user");
-  return data;
+  return data.user ?? data;
 }
