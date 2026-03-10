@@ -8,10 +8,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
-    "@fullcalendar/react": "^6.1.15",
     "@fullcalendar/interaction": "^6.1.10",
+    "@fullcalendar/react": "^6.1.15",
     "@fullcalendar/timegrid": "^6.1.10",
     "@types/node": "20.1.2",
     "@types/react": "18.2.8",
