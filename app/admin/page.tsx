@@ -137,7 +137,7 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
   ];
 
 export default function AdminPage() {
-  const { isAdmin, isLoading, user, logout } = useAuth();
+  const { isAdmin, isAuthenticated, isLoading, user, logout } = useAuth();
   const router = useRouter();
 
   const [year, setYear] = useState(CURRENT_YEAR);
@@ -149,12 +149,13 @@ export default function AdminPage() {
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null);
 
-  // Redirect if not admin once auth resolves
+  // Redirect to login only if unauthenticated — avoids a loop if isAdmin
+  // hasn't resolved yet or the user lacks the admin role.
   useEffect(() => {
-    if (!isLoading && !isAdmin) {
+    if (!isLoading && !isAuthenticated) {
       router.replace("/login");
     }
-  }, [isAdmin, isLoading, router]);
+  }, [isAuthenticated, isLoading, router]);
 
   const showToast = useCallback((msg: string, ok: boolean) => {
     setToast({ msg, ok });
@@ -218,7 +219,7 @@ export default function AdminPage() {
     router.push("/login");
   };
 
-  if (isLoading || !isAdmin) return null;
+  if (isLoading || !isAuthenticated || !isAdmin) return null;
 
   return (
     <div className={style.page}>

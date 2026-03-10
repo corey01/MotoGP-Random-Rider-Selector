@@ -6,7 +6,7 @@ import { useAuth } from "@/app/_components/AuthProvider";
 import style from "./Login.module.scss";
 
 export default function LoginPage() {
-  const { login, isAuthenticated, isLoading } = useAuth();
+  const { login, isAdmin, isLoading } = useAuth();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -15,10 +15,10 @@ export default function LoginPage() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!isLoading && isAuthenticated) {
+    if (!isLoading && isAdmin) {
       router.replace("/admin");
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isAdmin, isLoading, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
