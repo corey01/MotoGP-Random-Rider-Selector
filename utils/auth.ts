@@ -63,7 +63,7 @@ export async function fetchWithAuth(
     fetch(`${API}${path}`, {
       ...options,
       headers: {
-        "Content-Type": "application/json",
+        ...(options.body ? { "Content-Type": "application/json" } : {}),
         Authorization: `Bearer ${token}`,
         ...(options.headers ?? {}),
       },
