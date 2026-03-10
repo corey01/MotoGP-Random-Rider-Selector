@@ -12,29 +12,7 @@ const ResultsRiderCard = ({
 }: {
   selected: SelectedRider;
 }) => {
-  const getImageUrl = () => {
-    const url = rider.pictures.profile.main;
-
-    if(!url) return;
-    const endUrl = url.split("/");
-    const file = endUrl[endUrl.length - 1];
-
-    try {
-      if (url.startsWith("/riders/25/")) {
-        return require(`/public/riders/25/${file}?resize&size=500&webp`);
-      }
-      if (url.startsWith("/riders/24/")) {
-        return require(`/public/riders/24/${file}?resize&size=500&webp`);
-      }
-      if (url.startsWith("/riders/")) {
-        return require(`/public/riders/${file}?resize&size=500&webp`);
-      }
-    } catch {}
-
-    return url;
-  };
-
-  const imgUrl = getImageUrl();
+  const imgUrl = rider.pictures.profile.main as string;
   const buildSurnameCode = (name: string, surname: string) => {
     const normalize = (value: string) =>
       value

@@ -20,27 +20,6 @@ const RiderCard = ({
   addEvent?: (riderToAdd: Rider) => void;
   inGuestArray?: Boolean;
 }) => {
-  const getImageUrl = () => {
-    const url = rider.pictures.profile.main;
-    if(!url) return;
-    const endUrl = url.split("/");
-    const file = endUrl[endUrl.length - 1];
-
-    try {
-      if (url.startsWith("/riders/25/")) {
-        return require(`/public/riders/25/${file}?resize&size=500&webp`);
-      }
-      if (url.startsWith("/riders/24/")) {
-        return require(`/public/riders/24/${file}?resize&size=500&webp`);
-      }
-      if (url.startsWith("/riders/")) {
-        return require(`/public/riders/${file}?resize&size=500&webp`);
-      }
-    } catch {}
-
-    return url;
-  };
-
   const handleAdd = () => {
     if (!addEvent) return;
 
@@ -75,24 +54,10 @@ const RiderCard = ({
         highlightGuest && style.highlightGuest,
       )} rider-${rider.name}-${rider.surname}` }
     >
-      {
-        hasBikeImage && (
-          
-
-      <img
-        src={(rider.pictures.bike.main || rider.teamPicture) as string}
-        alt=""
-        className={classNames(
-          style.bikeImage,
-          !rider.pictures.bike.main && style.altBikeImage
-        )}
-      />
-    )
-  }
       <img
         alt=""
         className={style.riderPic__img}
-        src={getImageUrl()}
+        src={rider.pictures.profile.main as string}
         width={250}
         height={375}
       />
