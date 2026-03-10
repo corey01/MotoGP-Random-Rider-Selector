@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "postinstall": "node scripts/link-optipng.js"
+    "start": "next start"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.15",
