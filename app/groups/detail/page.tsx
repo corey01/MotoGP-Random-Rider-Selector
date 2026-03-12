@@ -6,42 +6,20 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/_components/AuthProvider";
 import {
-  assignRiders,
   fetchGroup,
   inviteToGroup,
-  updateGroup,
   addGuest,
   removeGuest,
-  type GroupAssignment,
   type GroupDetail,
   type GroupGuest,
-  type GroupGuestAssignment,
+  type SweepstakeSummary,
 } from "@/utils/groups";
-import {
-  fetchCalendarEvents,
-  type ApiCalendarEvent,
-} from "@/utils/getCalendarData";
-import { getRiderData } from "@/utils/getRiderData";
-import type { Rider } from "@/models/rider";
-import RiderCard from "@/app/_components/RiderCard";
 import style from "./GroupDetail.module.scss";
 
-type Round = { id: number; name: string; place: string | null };
-
-function deriveRounds(events: ApiCalendarEvent[]): Round[] {
-  const seen = new Set<number>();
-  const rounds: Round[] = [];
-  for (const ev of events) {
-    if (!seen.has(ev.round.id)) {
-      seen.add(ev.round.id);
-      rounds.push({
-        id: ev.round.id,
-        name: ev.round.name,
-        place: ev.round.country ?? null,
-      });
-    }
-  }
-  return rounds;
+function formatRoundLabel(s: SweepstakeSummary): string {
+  let label = s.roundName;
+  if (s.roundCountry) label += ` · ${s.roundCountry}`;
+  return label;
 }
 
 function GroupDetailContent() {
@@ -52,10 +30,6 @@ function GroupDetailContent() {
   const router = useRouter();
 
   const [detail, setDetail] = useState<GroupDetail | null>(null);
-  const [rounds, setRounds] = useState<Round[]>([]);
-  const [allRiders, setAllRiders] = useState<Rider[]>([]);
-  const [riderPool, setRiderPool] = useState<Rider[]>([]);
-  const [removedRiderIds, setRemovedRiderIds] = useState<Set<string>>(new Set());
   const [loadingData, setLoadingData] = useState(true);
   const [error, setError] = useState("");
 
@@ -68,17 +42,6 @@ function GroupDetailContent() {
   const [addingGuest, setAddingGuest] = useState(false);
   const [guestError, setGuestError] = useState("");
 
-  const [assigning, setAssigning] = useState(false);
-  const [assignError, setAssignError] = useState("");
-
-  const [editRound, setEditRound] = useState(false);
-  const [selectedRoundId, setSelectedRoundId] = useState<number | "">("");
-  const [savingRound, setSavingRound] = useState(false);
-
-  const year = Number(
-    process.env.NEXT_PUBLIC_MOTOGP_SEASON_YEAR || new Date().getFullYear()
-  );
-
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       router.replace("/login");
@@ -90,16 +53,8 @@ function GroupDetailContent() {
 
     const load = async () => {
       try {
-        const [groupDetail, events, riderData] = await Promise.all([
-          fetchGroup(groupId),
-          fetchCalendarEvents({ year, series: ["motogp"], types: ["RACE"] }),
-          getRiderData(),
-        ]);
+        const groupDetail = await fetchGroup(groupId);
         setDetail(groupDetail);
-        setSelectedRoundId(groupDetail.group.roundId ?? "");
-        setRounds(deriveRounds(events));
-        setAllRiders(riderData.allRiders);
-        setRiderPool(riderData.allRiders);
       } catch (e) {
         setError(e instanceof Error ? e.message : "Failed to load group");
       } finally {
@@ -108,7 +63,7 @@ function GroupDetailContent() {
     };
 
     void load();
-  }, [isAuthenticated, groupId, year]);
+  }, [isAuthenticated, groupId]);
 
   const isOwner = detail?.membershipRole === "owner";
 
@@ -162,78 +117,12 @@ function GroupDetailContent() {
     }
   };
 
-  const handleRemoveRider = (rider: Rider) => {
-    setRiderPool((prev) => prev.filter((r) => r.id !== rider.id));
-    setRemovedRiderIds((prev) => { const s = new Set(prev); s.add(rider.id); return s; });
-  };
-
-  const handleRestoreRider = (rider: Rider) => {
-    setRiderPool((prev) =>
-      [...prev, rider].sort((a, b) => (a.number || 999) - (b.number || 999))
-    );
-    setRemovedRiderIds((prev) => {
-      const next = new Set(prev);
-      next.delete(rider.id);
-      return next;
-    });
-  };
-
-  const handleTopN = (n: number) => {
-    setRiderPool(allRiders.slice(0, n));
-    setRemovedRiderIds(new Set(allRiders.slice(n).map((r) => r.id)));
-  };
-
-  const handleResetRiders = () => {
-    setRiderPool(allRiders);
-    setRemovedRiderIds(new Set());
-  };
-
-  const handleAssign = async () => {
-    setAssigning(true);
-    setAssignError("");
-    try {
-      const riderIds = riderPool.map((r) => r.dbId);
-      await assignRiders(groupId, riderIds);
-      const refreshed = await fetchGroup(groupId);
-      setDetail(refreshed);
-    } catch (e) {
-      setAssignError(
-        e instanceof Error ? e.message : "Failed to assign riders"
-      );
-    } finally {
-      setAssigning(false);
-    }
-  };
-
-  const handleSaveRound = async () => {
-    setSavingRound(true);
-    try {
-      const updated = await updateGroup(groupId, {
-        roundId: selectedRoundId !== "" ? selectedRoundId : null,
-      });
-      setDetail((prev) =>
-        prev
-          ? { ...prev, group: { ...prev.group, roundId: updated.roundId } }
-          : prev
-      );
-      setEditRound(false);
-    } catch {
-      // ignore
-    } finally {
-      setSavingRound(false);
-    }
-  };
-
   if (isLoading || (!isAuthenticated && !isLoading)) return null;
   if (loadingData) return <div className={style.loading}>Loading…</div>;
   if (error) return <div className={style.errorPage}>{error}</div>;
   if (!detail) return null;
 
-  const { group, members, guests, assignments, guestAssignments, invites } = detail;
-  const linkedRound = rounds.find((r) => r.id === group.roundId);
-  const publicUrl = `/sweepstake/results?id=${group.id}`;
-  const totalParticipants = members.length + guests.length;
-  const totalAssignments = assignments.length + (guestAssignments?.length ?? 0);
+  const { group, members, guests, sweepstakes, invites } = detail;
 
   return (
     <div className={style.page}>
@@ -244,68 +133,6 @@ function GroupDetailContent() {
       </div>
 
       <h2 className={style.groupName}>{group.name}</h2>
-
-      {/* Round */}
-      <section className={style.section}>
-        <div className={style.sectionHeader}>
-          <h3 className={style.sectionTitle}>Race Round</h3>
-          {isOwner && !editRound && (
-            <button
-              className={style.editBtn}
-              onClick={() => setEditRound(true)}
-            >
-              {group.roundId ? "Change" : "Link Round"}
-            </button>
-          )}
-        </div>
-
-        {editRound ? (
-          <div className={style.roundEdit}>
-            <select
-              value={selectedRoundId}
-              onChange={(e) =>
-                setSelectedRoundId(
-                  e.target.value !== "" ? Number(e.target.value) : ""
-                )
-              }
-            >
-              <option value="">— None —</option>
-              {rounds.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.name}
-                  {r.place ? ` (${r.place})` : ""}
-                </option>
-              ))}
-            </select>
-            <div className={style.roundEditActions}>
-              <button
-                className={style.cancelBtn}
-                onClick={() => {
-                  setEditRound(false);
-                  setSelectedRoundId(group.roundId ?? "");
-                }}
-              >
-                Cancel
-              </button>
-              <button
-                className={style.saveBtn}
-                onClick={handleSaveRound}
-                disabled={savingRound}
-              >
-                {savingRound ? "Saving…" : "Save"}
-              </button>
-            </div>
-          </div>
-        ) : (
-          <p className={style.roundValue}>
-            {linkedRound ? (
-              `${linkedRound.name}${linkedRound.place ? ` · ${linkedRound.place}` : ""}`
-            ) : (
-              <span className={style.none}>Not linked to a round</span>
-            )}
-          </p>
-        )}
-      </section>
 
       {/* Members */}
       <section className={style.section}>
@@ -346,8 +173,7 @@ function GroupDetailContent() {
                 .filter((i) => i.status === "pending")
                 .map((inv) => (
                   <span key={inv.id} className={style.pendingChip}>
-                    {inv.invitedUserDisplayName ??
-                      `User #${inv.invitedUserId}`}
+                    {inv.invitedUserDisplayName ?? `User #${inv.invitedUserId}`}
                   </span>
                 ))}
             </div>
@@ -392,140 +218,58 @@ function GroupDetailContent() {
         )}
       </section>
 
-      {/* Rider Pool */}
-      {isOwner && group.roundId && allRiders.length > 0 && (
-        <section className={style.section}>
-          <div className={style.sectionHeader}>
-            <h3 className={style.sectionTitle}>
-              Rider Pool ({riderPool.length})
-            </h3>
-            <div className={style.riderPoolActions}>
-              <button
-                className={style.topNBtn}
-                type="button"
-                onClick={() => handleTopN(10)}
-              >
-                Top 10
-              </button>
-              <button
-                className={style.topNBtn}
-                type="button"
-                onClick={() => handleTopN(15)}
-              >
-                Top 15
-              </button>
-              {removedRiderIds.size > 0 && (
-                <button
-                  className={style.resetBtn}
-                  type="button"
-                  onClick={handleResetRiders}
-                >
-                  Reset all
-                </button>
-              )}
-            </div>
-          </div>
-
-          {removedRiderIds.size > 0 && (
-            <div className={style.removedSection}>
-              <p className={style.removedLabel}>
-                Removed ({removedRiderIds.size}) — click to restore:
-              </p>
-              <div className={style.removedChips}>
-                {allRiders
-                  .filter((r) => removedRiderIds.has(r.id))
-                  .map((r) => (
-                    <button
-                      key={r.id}
-                      className={style.removedChip}
-                      onClick={() => handleRestoreRider(r)}
-                    >
-                      {r.name} {r.surname}
-                    </button>
-                  ))}
-              </div>
-            </div>
-          )}
-
-          <div className={style.riderGrid}>
-            {riderPool.map((rider) => (
-              <RiderCard
-                key={rider.id}
-                rider={rider}
-                removeEvent={handleRemoveRider}
-              />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Assignments */}
+      {/* Sweepstakes */}
       <section className={style.section}>
         <div className={style.sectionHeader}>
           <h3 className={style.sectionTitle}>
-            Assignments
-            {totalAssignments > 0 && ` (${totalAssignments})`}
+            Sweepstakes {sweepstakes.length > 0 && `(${sweepstakes.length})`}
           </h3>
-          {totalAssignments > 0 && (
-            <Link href={publicUrl} className={style.publicLink}>
-              Public link →
+          {isOwner && (
+            <Link
+              href={`/sweepstake/wizard?groupId=${group.id}`}
+              className={style.editBtn}
+            >
+              + New Sweepstake
             </Link>
           )}
         </div>
 
-        {isOwner && group.roundId && (
-          <div className={style.assignRow}>
-            <button
-              className={style.assignBtn}
-              onClick={handleAssign}
-              disabled={
-                assigning ||
-                totalParticipants === 0 ||
-                riderPool.length < totalParticipants
-              }
-            >
-              {assigning
-                ? "Assigning…"
-                : totalAssignments > 0
-                  ? "Re-assign Riders"
-                  : "Assign Riders"}
-            </button>
-            {riderPool.length < totalParticipants && totalParticipants > 0 && (
-              <p className={style.fieldError}>
-                Need at least {totalParticipants} riders in pool (currently{" "}
-                {riderPool.length})
-              </p>
-            )}
-            {assignError && <p className={style.fieldError}>{assignError}</p>}
-          </div>
-        )}
-
-        {!group.roundId && isOwner && (
+        {sweepstakes.length === 0 ? (
           <p className={style.hint}>
-            Link a round above to enable rider assignment.
+            {isOwner
+              ? "No sweepstakes yet. Start one for an upcoming race."
+              : "No sweepstakes yet."}
           </p>
-        )}
-
-        {totalAssignments > 0 && (
-          <ul className={style.assignmentList}>
-            {assignments.map((a: GroupAssignment) => (
-              <li key={`user-${a.id}`} className={style.assignmentItem}>
-                <span className={style.assignmentUser}>
-                  {a.userDisplayName}
-                </span>
-                <span className={style.assignmentRider}>
-                  {a.riderName ?? `Rider #${a.riderId}`}
-                </span>
-              </li>
-            ))}
-            {guestAssignments?.map((a) => (
-              <li key={`guest-${a.id}`} className={style.assignmentItem}>
-                <span className={style.assignmentUser}>
-                  {a.guestName}
-                </span>
-                <span className={style.assignmentRider}>
-                  {a.riderName ?? `Rider #${a.riderId}`}
-                </span>
+        ) : (
+          <ul className={style.sweepstakeList}>
+            {sweepstakes.map((s) => (
+              <li key={s.id} className={style.sweepstakeItem}>
+                <Link
+                  href={`/sweepstake/results?id=${s.id}`}
+                  className={style.sweepstakeLink}
+                >
+                  <span className={style.sweepstakeName}>
+                    {formatRoundLabel(s)}
+                  </span>
+                  <span
+                    className={
+                      s.status === "generated"
+                        ? style.statusGenerated
+                        : style.statusPending
+                    }
+                  >
+                    {s.status}
+                  </span>
+                </Link>
+                {isOwner && (
+                  <Link
+                    href={`/sweepstake/wizard?groupId=${group.id}&sweepstakeId=${s.id}`}
+                    className={style.editBtn}
+                    title="Edit / regenerate"
+                  >
+                    Edit
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

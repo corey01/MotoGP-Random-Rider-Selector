@@ -165,7 +165,7 @@ export default function CalendarPage() {
       onToggleSeries={handleToggleSeries}
       onToggleSubSeries={handleToggleSubSeries}
       onCreateSweepstake={(roundId) =>
-        router.push(`/groups?create=${roundId}`)
+        router.push(`/sweepstake/wizard?roundId=${roundId}`)
       }
     />
   );

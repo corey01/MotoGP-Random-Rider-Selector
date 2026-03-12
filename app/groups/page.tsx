@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/_components/AuthProvider";
 import {
   createGroup,
@@ -10,63 +10,26 @@ import {
   fetchGroups,
   fetchPendingInvites,
   respondToInvite,
-  updateGroup,
   type GroupWithRole,
   type PendingInvite,
 } from "@/utils/groups";
-import {
-  fetchCalendarEvents,
-  type ApiCalendarEvent,
-} from "@/utils/getCalendarData";
 import style from "./Groups.module.scss";
-
-type Round = { id: number; name: string; place: string | null };
-
-function deriveRounds(events: ApiCalendarEvent[]): Round[] {
-  const seen = new Set<number>();
-  const rounds: Round[] = [];
-  for (const ev of events) {
-    if (!seen.has(ev.round.id)) {
-      seen.add(ev.round.id);
-      rounds.push({
-        id: ev.round.id,
-        name: ev.round.name,
-        place: ev.round.country ?? null,
-      });
-    }
-  }
-  return rounds;
-}
 
 function GroupsContent() {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [groups, setGroups] = useState<GroupWithRole[]>([]);
   const [invites, setInvites] = useState<PendingInvite[]>([]);
-  const [rounds, setRounds] = useState<Round[]>([]);
   const [loadingData, setLoadingData] = useState(true);
   const [error, setError] = useState("");
 
-  // Modal state
   const [showCreate, setShowCreate] = useState(false);
-  const [createMode, setCreateMode] = useState<"new" | "existing">("existing");
-  // Shared round ID across both modes
-  const [selectedRoundId, setSelectedRoundId] = useState<number | "">("");
-  // New group fields
   const [newName, setNewName] = useState("");
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState("");
-  // Existing group fields
-  const [existingGroupId, setExistingGroupId] = useState<number | "">("");
 
-  // Invite respond state
   const [respondingId, setRespondingId] = useState<number | null>(null);
-
-  const year = Number(
-    process.env.NEXT_PUBLIC_MOTOGP_SEASON_YEAR || new Date().getFullYear()
-  );
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -79,14 +42,12 @@ function GroupsContent() {
 
     const load = async () => {
       try {
-        const [groupsData, invitesData, events] = await Promise.all([
+        const [groupsData, invitesData] = await Promise.all([
           fetchGroups(),
           fetchPendingInvites(),
-          fetchCalendarEvents({ year, series: ["motogp"], types: ["RACE"] }),
         ]);
         setGroups(groupsData);
         setInvites(invitesData);
-        setRounds(deriveRounds(events));
       } catch (e) {
         setError(e instanceof Error ? e.message : "Failed to load");
       } finally {
@@ -95,49 +56,24 @@ function GroupsContent() {
     };
 
     void load();
-  }, [isAuthenticated, year]);
-
-  // Auto-open create modal when navigated from calendar with ?create=<roundId>
-  useEffect(() => {
-    const createRoundId = searchParams.get("create");
-    if (createRoundId && rounds.length > 0 && !showCreate) {
-      setSelectedRoundId(Number(createRoundId));
-      setNewName("");
-      setExistingGroupId("");
-      setCreateError("");
-      setShowCreate(true);
-    }
-  }, [searchParams, rounds]);
+  }, [isAuthenticated]);
 
   const openCreate = () => {
-    setCreateMode("existing");
     setNewName("");
-    setExistingGroupId("");
     setCreateError("");
     setShowCreate(true);
   };
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!newName.trim()) return;
     setCreating(true);
     setCreateError("");
-
     try {
-      if (effectiveMode === "new") {
-        if (!newName.trim()) return;
-        const group = await createGroup(
-          newName.trim(),
-          selectedRoundId !== "" ? selectedRoundId : null
-        );
-        setGroups((prev) => [{ ...group, role: "owner" as const }, ...prev]);
-        setShowCreate(false);
-        router.push(`/groups/detail?id=${group.id}`);
-      } else {
-        if (existingGroupId === "" || selectedRoundId === "") return;
-        await updateGroup(existingGroupId, { roundId: selectedRoundId });
-        setShowCreate(false);
-        router.push(`/groups/detail?id=${existingGroupId}`);
-      }
+      const group = await createGroup(newName.trim());
+      setGroups((prev) => [{ ...group, role: "owner" as const }, ...prev]);
+      setShowCreate(false);
+      router.push(`/groups/detail?id=${group.id}`);
     } catch (e) {
       setCreateError(e instanceof Error ? e.message : "Failed");
     } finally {
@@ -173,11 +109,6 @@ function GroupsContent() {
 
   if (isLoading || (!isAuthenticated && !isLoading)) return null;
   if (loadingData) return <div className={style.loading}>Loading…</div>;
-
-  const ownedGroups = groups.filter((g) => g.role === "owner");
-  // Fall back to "new" if there are no owned groups to select
-  const effectiveMode =
-    createMode === "existing" && ownedGroups.length === 0 ? "new" : createMode;
 
   return (
     <div className={style.page}>
@@ -261,96 +192,20 @@ function GroupsContent() {
           onClick={() => setShowCreate(false)}
         >
           <div className={style.modal} onClick={(e) => e.stopPropagation()}>
-            <h2 className={style.modalTitle}>Create / Link Sweepstake</h2>
-
-            {/* Mode toggle */}
-            <div className={style.modeToggle}>
-              <button
-                type="button"
-                className={
-                  effectiveMode === "existing" ? style.modeActive : style.modeBtn
-                }
-                onClick={() => setCreateMode("existing")}
-                disabled={ownedGroups.length === 0}
-              >
-                Existing group
-              </button>
-              <button
-                type="button"
-                className={
-                  effectiveMode === "new" ? style.modeActive : style.modeBtn
-                }
-                onClick={() => setCreateMode("new")}
-              >
-                New group
-              </button>
-            </div>
-
+            <h2 className={style.modalTitle}>New Group</h2>
             <form onSubmit={handleCreate} className={style.form}>
-              {/* Round picker — shared, always shown first */}
               <div className={style.field}>
-                <label htmlFor="group-round">
-                  Race Round{" "}
-                  {effectiveMode === "new" && (
-                    <span className={style.optional}>(optional)</span>
-                  )}
-                </label>
-                <select
-                  id="group-round"
-                  value={selectedRoundId}
-                  onChange={(e) =>
-                    setSelectedRoundId(
-                      e.target.value !== "" ? Number(e.target.value) : ""
-                    )
-                  }
-                  required={effectiveMode === "existing"}
-                >
-                  <option value="">— None —</option>
-                  {rounds.map((r) => (
-                    <option key={r.id} value={r.id}>
-                      {r.name}
-                      {r.place ? ` (${r.place})` : ""}
-                    </option>
-                  ))}
-                </select>
+                <label htmlFor="group-name">Group Name</label>
+                <input
+                  id="group-name"
+                  type="text"
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  placeholder="e.g. Sunday Sweepstake"
+                  required
+                  autoFocus
+                />
               </div>
-
-              {effectiveMode === "new" ? (
-                <div className={style.field}>
-                  <label htmlFor="group-name">Group Name</label>
-                  <input
-                    id="group-name"
-                    type="text"
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                    placeholder="e.g. Sunday Sweepstake"
-                    required
-                    autoFocus
-                  />
-                </div>
-              ) : (
-                <div className={style.field}>
-                  <label htmlFor="existing-group">Group</label>
-                  <select
-                    id="existing-group"
-                    value={existingGroupId}
-                    onChange={(e) =>
-                      setExistingGroupId(
-                        e.target.value !== "" ? Number(e.target.value) : ""
-                      )
-                    }
-                    required
-                  >
-                    <option value="">— Select a group —</option>
-                    {ownedGroups.map((g) => (
-                      <option key={g.id} value={g.id}>
-                        {g.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-
               {createError && <p className={style.error}>{createError}</p>}
               <div className={style.modalActions}>
                 <button
@@ -363,18 +218,9 @@ function GroupsContent() {
                 <button
                   type="submit"
                   className={style.submitBtn}
-                  disabled={
-                    creating ||
-                    (effectiveMode === "new" && !newName.trim()) ||
-                    (effectiveMode === "existing" &&
-                      (existingGroupId === "" || selectedRoundId === ""))
-                  }
+                  disabled={creating || !newName.trim()}
                 >
-                  {creating
-                    ? "Saving…"
-                    : effectiveMode === "new"
-                      ? "Create"
-                      : "Link Round"}
+                  {creating ? "Creating…" : "Create"}
                 </button>
               </div>
             </form>

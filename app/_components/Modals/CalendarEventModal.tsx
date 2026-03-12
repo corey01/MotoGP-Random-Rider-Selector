@@ -1,7 +1,6 @@
 'use client';
 
 import style from "./Modal.module.scss";
-import { format } from 'date-fns-tz';
 
 interface CalendarEventModalProps {
   isOpen: boolean;
@@ -10,7 +9,7 @@ interface CalendarEventModalProps {
   onCreateSweepstake?: (roundId: number) => void;
 }
 
-export const CalendarEventModal = ({ isOpen, onClose, event, onCreateSweepstake }: CalendarEventModalProps) => {
+export const CalendarEventModal = ({ onClose, event, onCreateSweepstake }: CalendarEventModalProps) => {
   if (!event) return null;
   const meta = event.extendedProps?.meta || {};
 
@@ -28,20 +27,31 @@ export const CalendarEventModal = ({ isOpen, onClose, event, onCreateSweepstake 
     year: 'numeric'
   });
 
-  // Race time formatting (original timezone)
+  // Race time formatting (venue's local timezone)
+  // raceTime format: "2026-03-22T18:00:00.000Z (GMT-03:00)" or just "2026-03-22T18:00:00.000Z"
   const raceTimeString = String(meta.raceTime || "");
-  const [timeWithoutTz] = raceTimeString.split(' (GMT');
-  const raceDate = new Date(timeWithoutTz);
-  const raceTimeFormatted = format(raceDate, 'HH:mm');
-  const raceDateFormatted = format(raceDate, 'EEEE, d MMMM yyyy');
-  const timezone = raceTimeString.match(/GMT([+-]\d{4})\)/)?.[1] || '';
+  const [utcPart] = raceTimeString.split(' (GMT');
+  const offsetMatch = raceTimeString.match(/GMT([+-])(\d{2}):?(\d{2})\)/);
+  const timezone = offsetMatch ? `${offsetMatch[1]}${offsetMatch[2]}${offsetMatch[3]}` : '';
+  const utcDate = new Date(utcPart);
+  let venueDate = utcDate;
+  if (offsetMatch) {
+    const sign = offsetMatch[1] === '+' ? 1 : -1;
+    const offsetMs = sign * (parseInt(offsetMatch[2]) * 60 + parseInt(offsetMatch[3])) * 60000;
+    venueDate = new Date(utcDate.getTime() + offsetMs);
+  }
+  const venueIso = venueDate.toISOString();
+  const raceTimeFormatted = venueIso.substring(11, 16);
+  const [vy, vm, vd] = venueIso.substring(0, 10).split('-').map(Number);
+  const raceDateFormatted = new Date(vy, vm - 1, vd).toLocaleDateString('en-GB', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+  });
   const fallbackSession = String(
     meta.sessionName || event.extendedProps?.session || event.extendedProps?.type || ""
   ).trim();
   const detailItems = [
     { label: "Country", value: meta.country },
     { label: "Session", value: fallbackSession },
-    { label: "Round Date", value: meta.eventDateLabel },
   ].filter((item) => item.value);
   const sourceUrl = String(meta.sourceUrl || "");
 
@@ -68,8 +78,9 @@ export const CalendarEventModal = ({ isOpen, onClose, event, onCreateSweepstake 
 
   const isRace = String(event.extendedProps?.type || "").toUpperCase() === "RACE";
   const isMainMotoGP = String(event.extendedProps?.subSeries || "").toLowerCase() === "motogp";
+  const isGrandPrix = fallbackSession.toLowerCase().includes("grand prix");
   const roundId: number | null = meta.roundId ?? null;
-  const showSweepstakeButton = isMotoGP && isRace && isMainMotoGP && roundId !== null && onCreateSweepstake;
+  const showSweepstakeButton = isMotoGP && isRace && isMainMotoGP && isGrandPrix && roundId !== null && onCreateSweepstake;
 
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -88,21 +99,22 @@ export const CalendarEventModal = ({ isOpen, onClose, event, onCreateSweepstake 
         </div>
 
         <div className={style.eventContent}>
-          <div className={style.eventName}>
-            {meta.round}
-          </div>
+          {meta.round && (
+            <div className={style.eventName}>{meta.round}</div>
+          )}
 
           <div className={style.timeInfo}>
             <div className={style.timeBlock}>
-              <div className={style.mainTime}>
-                {deviceStartTimeFormatted}
+              <div className={style.timeLabel}>Your time</div>
+              <div className={style.mainTime}>{deviceStartTimeFormatted}</div>
+              <div className={style.date}>{deviceStartDateFormatted}</div>
+            </div>
+            <div className={style.timeBlock}>
+              <div className={style.timeLabel}>
+                Venue time{timezone ? ` (GMT${timezone})` : ''}
               </div>
-              <div className={style.date}>
-                {deviceStartDateFormatted}
-              </div>
-              <div className={style.raceTime}>Local Time: {raceTimeFormatted}</div>
-              <div className={style.raceDate}>{raceDateFormatted}</div>
-              <div className={style.timezone}>GMT{timezone}</div>
+              <div className={style.mainTime}>{raceTimeFormatted}</div>
+              <div className={style.date}>{raceDateFormatted}</div>
             </div>
           </div>
 

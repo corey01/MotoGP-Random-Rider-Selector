@@ -8,7 +8,6 @@ export interface Group {
   id: number;
   name: string;
   ownerId: number;
-  roundId: number | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -28,15 +27,6 @@ export interface GroupMember {
 export interface GroupGuest {
   id: number;
   name: string;
-}
-
-export interface GroupAssignment {
-  id: number;
-  userId: number;
-  userDisplayName: string;
-  riderId: number;
-  riderName: string | null;
-  assignedAt: string;
 }
 
 export interface GroupInvite {
@@ -61,12 +51,30 @@ export interface PendingInvite {
   createdAt: string;
 }
 
-export interface GroupGuestAssignment {
+export interface SweepstakeSummary {
   id: number;
-  guestId: number;
-  guestName: string;
+  groupId: number;
+  roundId: number;
+  status: "pending" | "generated";
+  createdAt: string;
+  roundName: string;
+  roundPlace: string | null;
+  roundCountry: string | null;
+  roundStartDate: string | null;
+}
+
+export interface SweepstakeAssignment {
+  id: number;
+  sweepstakeId: number;
+  participantName: string;
+  participantType: "member" | "guest";
   riderId: number;
-  riderName: string | null;
+  riderName: string;
+  assignedAt: string;
+}
+
+export interface SweepstakeDetail extends SweepstakeSummary {
+  assignments: SweepstakeAssignment[];
 }
 
 export interface GroupDetail {
@@ -74,27 +82,25 @@ export interface GroupDetail {
   membershipRole: "owner" | "member";
   members: GroupMember[];
   guests: GroupGuest[];
-  assignments: GroupAssignment[];
-  guestAssignments: GroupGuestAssignment[];
+  sweepstakes: SweepstakeSummary[];
   invites?: GroupInvite[];
 }
 
-export interface PublicGroupData {
-  group: {
+export interface PublicSweepstakeData {
+  sweepstake: {
     id: number;
-    name: string;
-    round: {
-      id: number;
-      name: string;
-      place: string | null;
-      country: string | null;
-      startDate: string | null;
-    } | null;
+    groupName: string;
+    roundName: string;
+    roundPlace: string | null;
+    roundCountry: string | null;
+    roundStartDate: string | null;
+    status: "pending" | "generated";
   };
   assignments: {
     participantName: string;
+    participantType: "member" | "guest";
     riderId: number;
-    riderName: string | null;
+    riderName: string;
   }[];
 }
 
@@ -107,13 +113,10 @@ export async function fetchGroups(): Promise<GroupWithRole[]> {
   return data.groups;
 }
 
-export async function createGroup(
-  name: string,
-  roundId?: number | null
-): Promise<Group> {
+export async function createGroup(name: string): Promise<Group> {
   const res = await fetchWithAuth("/groups", {
     method: "POST",
-    body: JSON.stringify({ name, roundId: roundId ?? null }),
+    body: JSON.stringify({ name }),
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.error ?? "Failed to create group");
@@ -124,12 +127,12 @@ export async function fetchGroup(id: number): Promise<GroupDetail> {
   const res = await fetchWithAuth(`/groups/${id}`);
   const data = await res.json();
   if (!res.ok) throw new Error(data.error ?? "Group not found");
-  return { ...data, guests: data.guests ?? [], guestAssignments: data.guestAssignments ?? [] };
+  return { ...data, guests: data.guests ?? [], sweepstakes: data.sweepstakes ?? [] };
 }
 
 export async function updateGroup(
   id: number,
-  updates: { name?: string; roundId?: number | null }
+  updates: { name: string }
 ): Promise<Group> {
   const res = await fetchWithAuth(`/groups/${id}`, {
     method: "PATCH",
@@ -168,10 +171,7 @@ export async function respondToInvite(
 ): Promise<void> {
   const res = await fetchWithAuth(
     `/groups/${groupId}/invites/${inviteId}/respond`,
-    {
-      method: "POST",
-      body: JSON.stringify({ accept }),
-    }
+    { method: "POST", body: JSON.stringify({ accept }) }
   );
   if (!res.ok) {
     const data = await res.json();
@@ -184,21 +184,6 @@ export async function fetchPendingInvites(): Promise<PendingInvite[]> {
   const data = await res.json();
   if (!res.ok) throw new Error(data.error ?? "Failed to fetch invites");
   return data.invites;
-}
-
-export async function assignRiders(
-  groupId: number,
-  riderIds?: number[]
-): Promise<GroupAssignment[]> {
-  const body: Record<string, unknown> = {};
-  if (riderIds !== undefined) body.riderIds = riderIds;
-  const res = await fetchWithAuth(`/groups/${groupId}/assign`, {
-    method: "POST",
-    body: JSON.stringify(body),
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error ?? "Failed to assign riders");
-  return data.assignments;
 }
 
 export async function addGuest(
@@ -227,11 +212,56 @@ export async function removeGuest(
   }
 }
 
+// ─── Sweepstake API calls ─────────────────────────────────────────────────────
+
+export async function createSweepstake(
+  groupId: number,
+  roundId: number
+): Promise<SweepstakeSummary> {
+  const res = await fetchWithAuth(`/groups/${groupId}/sweepstakes`, {
+    method: "POST",
+    body: JSON.stringify({ roundId }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error ?? "Failed to create sweepstake");
+  return data.sweepstake;
+}
+
+export async function fetchSweepstakeDetail(
+  groupId: number,
+  sweepstakeId: number
+): Promise<SweepstakeDetail> {
+  const res = await fetchWithAuth(
+    `/groups/${groupId}/sweepstakes/${sweepstakeId}`
+  );
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error ?? "Sweepstake not found");
+  return { ...data.sweepstake, assignments: data.assignments ?? [] };
+}
+
+export async function assignRiders(
+  groupId: number,
+  sweepstakeId: number,
+  riderIds?: number[]
+): Promise<SweepstakeAssignment[]> {
+  const body: Record<string, unknown> = {};
+  if (riderIds !== undefined) body.riderIds = riderIds;
+  const res = await fetchWithAuth(
+    `/groups/${groupId}/sweepstakes/${sweepstakeId}/assign`,
+    { method: "POST", body: JSON.stringify(body) }
+  );
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error ?? "Failed to assign riders");
+  return data.assignments;
+}
+
 // ─── Public (no auth) ────────────────────────────────────────────────────────
 
-export async function fetchPublicGroup(id: number): Promise<PublicGroupData> {
-  const res = await fetch(`${API}/groups/${id}/public`);
+export async function fetchPublicSweepstake(
+  sweepstakeId: number
+): Promise<PublicSweepstakeData> {
+  const res = await fetch(`${API}/sweepstakes/${sweepstakeId}/public`);
   const data = await res.json();
-  if (!res.ok) throw new Error(data.error ?? "Group not found");
+  if (!res.ok) throw new Error(data.error ?? "Sweepstake not found");
   return data;
 }
