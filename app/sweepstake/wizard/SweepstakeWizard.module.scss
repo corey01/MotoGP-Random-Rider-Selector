@@ -76,7 +76,7 @@
     color: rgba(0, 0, 0, 0.5);
   }
 
-  input,
+  input:not([type="radio"]):not([type="checkbox"]),
   select {
     padding: 10px 12px;
     border: 1px solid #ccc;
@@ -227,6 +227,7 @@
 
   input {
     flex: 1;
+    min-width: 0;
     padding: 8px 10px;
     border: 1px solid #ccc;
     font-size: 0.9rem;
@@ -238,6 +239,7 @@
   }
 
   button {
+    flex: 0 0 auto;
     margin: 0;
     padding: 8px 14px;
     font-size: 0.8rem;
@@ -310,6 +312,7 @@
 .removedChips {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: 0.35rem;
 }
 
@@ -319,6 +322,8 @@
   border: 1px solid #ccc;
   background: #f0f0f0;
   cursor: pointer;
+  width: fit-content;
+  flex-shrink: 0;
 
   &:hover {
     border-color: #000;

@@ -84,6 +84,9 @@ function WizardContent() {
   const [riderPool, setRiderPool] = useState<Rider[]>([]);
   const [removedRiderIds, setRemovedRiderIds] = useState<Set<string>>(new Set());
 
+  // Step 1
+  const [step1Error, setStep1Error] = useState("");
+
   // Step 4
   const [assignments, setAssignments] = useState<SweepstakeAssignment[]>([]);
   const [generating, setGenerating] = useState(false);
@@ -233,7 +236,13 @@ function WizardContent() {
       setAssignments(result);
       setStep(4);
     } catch (e) {
-      setGenerateError(e instanceof Error ? e.message : "Failed to generate");
+      const msg = e instanceof Error ? e.message : "Failed to generate";
+      if (msg.toLowerCase().includes("already exists")) {
+        setStep1Error(msg);
+        setStep(1);
+      } else {
+        setGenerateError(msg);
+      }
     } finally {
       setGenerating(false);
     }
@@ -303,7 +312,7 @@ function WizardContent() {
                         name="group"
                         value={g.id}
                         checked={selectedGroupId === g.id}
-                        onChange={() => setSelectedGroupId(g.id)}
+                        onChange={() => { setSelectedGroupId(g.id); setStep1Error(""); }}
                       />
                       {g.name}
                     </label>
@@ -319,9 +328,10 @@ function WizardContent() {
               <select
                 id="wizard-round"
                 value={selectedRoundId ?? ""}
-                onChange={(e) =>
-                  setSelectedRoundId(e.target.value ? Number(e.target.value) : null)
-                }
+                onChange={(e) => {
+                  setSelectedRoundId(e.target.value ? Number(e.target.value) : null);
+                  setStep1Error("");
+                }}
               >
                 <option value="">— Select a round —</option>
                 {rounds.map((r) => (
@@ -344,6 +354,8 @@ function WizardContent() {
               </p>
             </div>
           )}
+
+          {step1Error && <p className={style.error}>{step1Error}</p>}
 
           <div className={style.actions}>
             <button
