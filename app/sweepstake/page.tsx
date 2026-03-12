@@ -18,7 +18,8 @@ export default function SweepstakePage() {
         const data = await getRiderData();
         if (!cancelled) setAllRiders(data);
       } catch {
-        if (!cancelled) setAllRiders({ allRiders: [], standardRiders: [], guestRiders: [] });
+        if (!cancelled)
+          setAllRiders({ allRiders: [], standardRiders: [], guestRiders: [] });
       }
     };
 

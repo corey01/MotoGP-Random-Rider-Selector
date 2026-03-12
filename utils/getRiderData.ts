@@ -8,6 +8,7 @@ export interface RiderDataResponse {
 
 interface ApiRider {
   id: string;
+  dbId?: number | null;
   firstName?: string | null;
   lastName?: string | null;
   name?: string | null;
@@ -70,6 +71,7 @@ function mapApiRider(rider: ApiRider): Rider {
 
   return {
     id: String(rider.id || ""),
+    dbId: rider.dbId ?? 0,
     name,
     surname,
     number: rider.number ?? 0,

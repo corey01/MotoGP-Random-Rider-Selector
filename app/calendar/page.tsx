@@ -2,6 +2,7 @@
 
 import { Calendar } from "../_components/Calendar/Calendar";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import type { SessionView } from "../_components/Calendar/SessionToggle";
 import {
   DEFAULT_SUB_SERIES_VISIBILITY,
@@ -59,6 +60,7 @@ const activeCalendarFilters = (visibleSubSeries: Record<SubSeriesKey, boolean>) 
 };
 
 export default function CalendarPage() {
+  const router = useRouter();
   const [sessionView, setSessionView] = useState<SessionView>("races");
   const showAllSessions = sessionView === "all";
   const [visibleSubSeries, setVisibleSubSeries] = useState<Record<SubSeriesKey, boolean>>(
@@ -162,6 +164,9 @@ export default function CalendarPage() {
       visibleSubSeries={visibleSubSeries}
       onToggleSeries={handleToggleSeries}
       onToggleSubSeries={handleToggleSubSeries}
+      onCreateSweepstake={(roundId) =>
+        router.push(`/groups?create=${roundId}`)
+      }
     />
   );
 }

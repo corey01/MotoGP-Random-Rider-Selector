@@ -1,5 +1,6 @@
 import Header from "./_components/Header";
 import { AuthProvider } from "./_components/AuthProvider";
+import { GoogleProvider } from "./_components/GoogleProvider";
 import { inter, motoGP } from "./fonts";
 import "./globals.css";
 
@@ -16,12 +17,14 @@ export default function RootLayout({
     <html lang="en">
       <meta name="theme-color" content="#242424" />
       <body className={`${inter.className} ${inter.variable} ${motoGP.variable}`}>
-        <AuthProvider>
-          <main>
-            <Header />
-            {children}
-          </main>
-        </AuthProvider>
+        <GoogleProvider>
+          <AuthProvider>
+            <main>
+              <Header />
+              {children}
+            </main>
+          </AuthProvider>
+        </GoogleProvider>
       </body>
     </html>
   );

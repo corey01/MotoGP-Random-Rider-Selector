@@ -7,9 +7,10 @@ interface CalendarEventModalProps {
   isOpen: boolean;
   onClose: () => void;
   event: any;
+  onCreateSweepstake?: (roundId: number) => void;
 }
 
-export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModalProps) => {
+export const CalendarEventModal = ({ isOpen, onClose, event, onCreateSweepstake }: CalendarEventModalProps) => {
   if (!event) return null;
   const meta = event.extendedProps?.meta || {};
 
@@ -27,10 +28,8 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
     year: 'numeric'
   });
 
-
   // Race time formatting (original timezone)
   const raceTimeString = String(meta.raceTime || "");
-  // Extract the time portion before the timezone
   const [timeWithoutTz] = raceTimeString.split(' (GMT');
   const raceDate = new Date(timeWithoutTz);
   const raceTimeFormatted = format(raceDate, 'HH:mm');
@@ -49,7 +48,8 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
   // Determine the series tag and style
   let seriesLabel = '';
   let seriesClass = '';
-  if (event.classNames?.includes('motogp-event')) {
+  const isMotoGP = event.classNames?.includes('motogp-event');
+  if (isMotoGP) {
     seriesLabel = 'MotoGP';
     seriesClass = style.motogpTag;
   } else if (event.classNames?.includes('wsbk-event')) {
@@ -57,7 +57,7 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
     seriesClass = style.wsbkTag;
   } else if (event.classNames?.includes('bsb-event')) {
     seriesLabel = 'BSB';
-    seriesClass = style.bsbTag; // <-- Add this class in your SCSS if not present
+    seriesClass = style.bsbTag;
   } else if (event.classNames?.includes('speedway-event')) {
     seriesLabel = 'Speedway';
     seriesClass = style.speedwayTag;
@@ -65,6 +65,11 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
     seriesLabel = 'F1';
     seriesClass = style.f1Tag;
   }
+
+  const isRace = String(event.extendedProps?.type || "").toUpperCase() === "RACE";
+  const isMainMotoGP = String(event.extendedProps?.subSeries || "").toLowerCase() === "motogp";
+  const roundId: number | null = meta.roundId ?? null;
+  const showSweepstakeButton = isMotoGP && isRace && isMainMotoGP && roundId !== null && onCreateSweepstake;
 
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -81,12 +86,12 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
           </div>
           <h2 className={style.title}>{event.title}</h2>
         </div>
-        
+
         <div className={style.eventContent}>
           <div className={style.eventName}>
             {meta.round}
           </div>
-          
+
           <div className={style.timeInfo}>
             <div className={style.timeBlock}>
               <div className={style.mainTime}>
@@ -124,6 +129,17 @@ export const CalendarEventModal = ({ isOpen, onClose, event }: CalendarEventModa
         </div>
 
         <div className={style.buttonBar}>
+          {showSweepstakeButton && (
+            <button
+              className={style.sweepstakeButton}
+              onClick={() => {
+                onCreateSweepstake(roundId!);
+                onClose();
+              }}
+            >
+              Create Sweepstake
+            </button>
+          )}
           <button className="pickButton" onClick={onClose}>
             Close
           </button>

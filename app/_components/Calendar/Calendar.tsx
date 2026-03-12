@@ -32,6 +32,7 @@ interface CalendarProps {
   visibleSubSeries: Record<SubSeriesKey, boolean>;
   onToggleSeries: (series: SeriesKey) => void;
   onToggleSubSeries: (subSeries: SubSeriesKey) => void;
+  onCreateSweepstake?: (roundId: number) => void;
 }
 
 export const Calendar = ({
@@ -45,6 +46,7 @@ export const Calendar = ({
   visibleSubSeries,
   onToggleSeries,
   onToggleSubSeries,
+  onCreateSweepstake,
 }: CalendarProps) => {
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const calendarRef = useRef<any>(null);
@@ -225,6 +227,7 @@ export const Calendar = ({
           isOpen={!!selectedEvent}
           onClose={() => setSelectedEvent(null)}
           event={selectedEvent}
+          onCreateSweepstake={onCreateSweepstake}
         />
       </div>
     </>

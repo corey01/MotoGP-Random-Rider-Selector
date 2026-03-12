@@ -1,0 +1,413 @@
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem 0.5rem 5rem;
+}
+
+.loading,
+.errorPage {
+  text-align: center;
+  padding: 3rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.errorPage {
+  color: #c00;
+}
+
+.topBar {
+  margin-bottom: 1rem;
+}
+
+.back {
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.groupName {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1.75rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+  border-top: 1px solid #eee;
+  padding-top: 1.25rem;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.sectionTitle {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: rgba(0, 0, 0, 0.45);
+  margin: 0 0 0.6rem;
+}
+
+.sectionHeader .sectionTitle {
+  margin-bottom: 0;
+}
+
+// ─── Round ────────────────────────────────────────────────────────────────────
+
+.roundValue {
+  font-size: 0.95rem;
+}
+
+.none {
+  color: rgba(0, 0, 0, 0.4);
+  font-style: italic;
+}
+
+.roundEdit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  select {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    width: 100%;
+    background: #fff;
+
+    &:focus {
+      outline: none;
+      border-color: #000;
+    }
+  }
+}
+
+.roundEditActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.editBtn {
+  margin: 0;
+  width: auto;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid #000;
+  cursor: pointer;
+  background: transparent;
+}
+
+.cancelBtn,
+.saveBtn {
+  flex: 1;
+  margin: 0;
+  padding: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border: 1px solid #000;
+  width: auto;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.cancelBtn {
+  background: transparent;
+}
+
+.saveBtn {
+  background: #000;
+  color: #fff;
+}
+
+// ─── Members ──────────────────────────────────────────────────────────────────
+
+.memberList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.memberItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #eee;
+  font-size: 0.9rem;
+}
+
+.memberName {
+  font-weight: 500;
+}
+
+.memberRole {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.inviteForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  input {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    font-size: 0.9rem;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+      border-color: #000;
+    }
+  }
+
+  button {
+    margin: 0;
+    padding: 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid #000;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.fieldError {
+  font-size: 0.82rem;
+  color: #c00;
+}
+
+.fieldSuccess {
+  font-size: 0.82rem;
+  color: #1a7a1a;
+}
+
+.pendingInvites {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.pendingLabel {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pendingChip {
+  font-size: 0.78rem;
+  padding: 3px 10px;
+  border: 1px solid #ddd;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+// ─── Guest remove button ──────────────────────────────────────────────────────
+
+.removeMemberBtn {
+  margin: 0;
+  width: auto;
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  border: 1px solid #ddd;
+  background: transparent;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.45);
+
+  &:hover {
+    border-color: #c00;
+    color: #c00;
+  }
+}
+
+// ─── Rider Pool ───────────────────────────────────────────────────────────────
+
+.riderPoolActions {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.topNBtn {
+  margin: 0;
+  width: auto;
+  padding: 4px 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid #000;
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background: #000;
+    color: #fff;
+  }
+}
+
+.resetBtn {
+  margin: 0;
+  width: auto;
+  padding: 4px 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background: transparent;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.5);
+
+  &:hover {
+    color: #000;
+    border-color: #000;
+  }
+}
+
+.removedSection {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: #f8f8f8;
+  border: 1px solid #eee;
+}
+
+.removedLabel {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(0, 0, 0, 0.45);
+  margin-bottom: 0.5rem;
+}
+
+.removedChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.removedChip {
+  padding: 3px 10px;
+  font-size: 0.78rem;
+  border: 1px dashed #ccc;
+  background: transparent;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.5);
+
+  &:hover {
+    border-color: #000;
+    color: #000;
+  }
+}
+
+.riderGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  justify-content: flex-start;
+}
+
+// ─── Assignments ──────────────────────────────────────────────────────────────
+
+.assignRow {
+  margin-bottom: 1rem;
+}
+
+.assignBtn {
+  margin: 0 0 0.35rem;
+  padding: 12px 20px;
+  width: 100%;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background: #333;
+  }
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.45);
+  font-style: italic;
+}
+
+.publicLink {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.assignmentList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.assignmentItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #eee;
+  font-size: 0.9rem;
+}
+
+.assignmentUser {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.assignmentRider {
+  font-weight: 700;
+}

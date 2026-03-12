@@ -29,6 +29,7 @@ export interface Rider {
   birthDate: string;
   yearsOld: number;
   id: string;
+  dbId: number;
   riderType: string;
 }
 
