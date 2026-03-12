@@ -37,7 +37,7 @@ function deriveRounds(events: ApiCalendarEvent[]): Round[] {
       rounds.push({
         id: ev.round.id,
         name: ev.round.name,
-        place: ev.round.place ?? null,
+        place: ev.round.circuit ?? null,
         country: ev.round.country ?? null,
       });
     }
