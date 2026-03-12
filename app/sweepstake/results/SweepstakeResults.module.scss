@@ -1,0 +1,81 @@
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem 0.5rem 5rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.error {
+  text-align: center;
+  padding: 3rem;
+  color: #c00;
+}
+
+.groupName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.round {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(0, 0, 0, 0.45);
+  margin-bottom: 1.75rem;
+}
+
+.empty {
+  color: rgba(0, 0, 0, 0.45);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.cardWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.participant {
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.rider {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.copyBtn {
+  margin: 0;
+  width: 100%;
+  padding: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid #000;
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background: #000;
+    color: #fff;
+  }
+}

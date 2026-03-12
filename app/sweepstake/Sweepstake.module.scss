@@ -1,0 +1,238 @@
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1.5rem 0.5rem 5rem;
+}
+
+.topActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.25rem;
+}
+
+.createBtn {
+  margin: 0;
+  width: auto;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid #000;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    background: #333;
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: rgba(0, 0, 0, 0.55);
+
+  p {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+}
+
+.emptyHint {
+  font-size: 0.85rem !important;
+  font-weight: 400 !important;
+}
+
+// ─── Group list ───────────────────────────────────────────────────────────────
+
+.groupList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.groupItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  &:hover {
+    border-color: #000;
+  }
+}
+
+.groupInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.groupName {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.roundTag {
+  font-size: 0.78rem;
+  color: rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.groupActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.assignBtn {
+  margin: 0;
+  width: auto;
+  padding: 7px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: #000;
+  color: #fff;
+  border: 1px solid #000;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background: #333;
+  }
+}
+
+.resultsLink,
+.manageLink {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.5);
+  padding: 7px 10px;
+  border: 1px solid #ddd;
+
+  &:hover {
+    color: #000;
+    border-color: #000;
+  }
+}
+
+// ─── Modal ────────────────────────────────────────────────────────────────────
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.modal {
+  background: #fff;
+  width: 100%;
+  max-width: 400px;
+  padding: 1.5rem;
+}
+
+.modalTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  input,
+  select {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    width: 100%;
+    background: #fff;
+
+    &:focus {
+      outline: none;
+      border-color: #000;
+    }
+  }
+}
+
+.error {
+  font-size: 0.82rem;
+  color: #c00;
+}
+
+.modalActions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.cancelBtn,
+.submitBtn {
+  flex: 1;
+  margin: 0;
+  padding: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border: 1px solid #000;
+  width: auto;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.cancelBtn {
+  background: transparent;
+}
+
+.submitBtn {
+  background: #000;
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    background: #333;
+  }
+}

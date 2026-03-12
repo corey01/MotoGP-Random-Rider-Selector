@@ -12,10 +12,7 @@ const Header = () => {
   const { isAuthenticated, isAdmin, logout } = useAuth();
   const router = useRouter();
 
-  const isHomePage =
-    pathname.includes("/sweepstake") ||
-    pathname.includes("/results") ||
-    pathname.includes("/race-lineup");
+  const isGroupsPage = pathname.startsWith("/groups");
   const isCalendarPage = pathname.includes("/calendar");
   const isAdminPage = pathname.includes("/admin");
 
@@ -32,9 +29,11 @@ const Header = () => {
         )}
 
         <ul>
-          <li className={isHomePage ? style.active : undefined}>
-            <Link href="/sweepstake">Sweepstake</Link>
-          </li>
+          {isAuthenticated && (
+            <li className={isGroupsPage ? style.active : undefined}>
+              <Link href="/groups">Groups</Link>
+            </li>
+          )}
           <li className={isCalendarPage ? style.active : undefined}>
             <Link href="/calendar">Calendar</Link>
           </li>
@@ -43,11 +42,15 @@ const Header = () => {
               <Link href="/admin">Admin</Link>
             </li>
           )}
-          {isAuthenticated && (
+          {isAuthenticated ? (
             <li>
               <button className={style.navButton} onClick={handleLogout}>
                 Sign out
               </button>
+            </li>
+          ) : (
+            <li className={pathname === "/login" ? style.active : undefined}>
+              <Link href="/login">Sign in</Link>
             </li>
           )}
         </ul>

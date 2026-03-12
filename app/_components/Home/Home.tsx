@@ -7,7 +7,7 @@ import { motoGP } from "@/app/fonts";
 export const Home = () => {
   return (
     <div className={`${styles.splitContainer} ${styles.homePage}`}>
-      <Link href="/sweepstake" className={`${styles.section} ${styles.sweepstake}`}>
+      <Link href="/groups" className={`${styles.section} ${styles.sweepstake}`}>
         <div className={`${styles.content} ${motoGP.className}`}>
           <h2>Sweepstake</h2>
           <p>Generate random rider selections</p>

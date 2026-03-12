@@ -1,0 +1,404 @@
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 0.5rem 5rem;
+}
+
+.topBar {
+  margin-bottom: 1.5rem;
+}
+
+.back {
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.5);
+
+  &:hover {
+    color: #000;
+  }
+}
+
+// ─── Step indicator ───────────────────────────────────────────────────────────
+
+.steps {
+  display: flex;
+  gap: 0;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.stepDot {
+  flex: 1;
+  padding: 0.6rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.3);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.stepDotActive {
+  color: #000;
+  border-bottom-color: #000;
+}
+
+.stepDotDone {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+// ─── Shared section ───────────────────────────────────────────────────────────
+
+.sectionTitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 1rem;
+
+  label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  input,
+  select {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    width: 100%;
+    background: #fff;
+
+    &:focus {
+      outline: none;
+      border-color: #000;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.nextBtn,
+.backBtn,
+.generateBtn {
+  flex: 1;
+  margin: 0;
+  padding: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border: 1px solid #000;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.backBtn {
+  background: transparent;
+  flex: 0 0 auto;
+  width: auto;
+  padding: 12px 20px;
+}
+
+.nextBtn,
+.generateBtn {
+  background: #000;
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    background: #333;
+  }
+}
+
+.generateBtn {
+  background: #d40000;
+  border-color: #d40000;
+
+  &:hover:not(:disabled) {
+    background: #b00000;
+    border-color: #b00000;
+  }
+}
+
+.error {
+  font-size: 0.82rem;
+  color: #c00;
+  margin-top: 0.5rem;
+}
+
+// ─── Step 1: Group & Round ────────────────────────────────────────────────────
+
+.groupList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.groupOption {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #000;
+  }
+
+  &.selected {
+    border-color: #000;
+    background: #f9f9f9;
+  }
+
+  input[type="radio"] {
+    accent-color: #000;
+    flex-shrink: 0;
+  }
+}
+
+// ─── Step 2: Participants ─────────────────────────────────────────────────────
+
+.memberList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.memberItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.75rem;
+  background: #f6f6f6;
+  font-size: 0.9rem;
+}
+
+.memberRole {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.removeMemberBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.4);
+  padding: 0 0.25rem;
+  font-size: 0.9rem;
+  line-height: 1;
+
+  &:hover {
+    color: #c00;
+  }
+}
+
+.inlineForm {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+
+  input {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    font-size: 0.9rem;
+
+    &:focus {
+      outline: none;
+      border-color: #000;
+    }
+  }
+
+  button {
+    margin: 0;
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #000;
+    color: #fff;
+    border: 1px solid #000;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.fieldError {
+  font-size: 0.8rem;
+  color: #c00;
+  margin-top: 0.25rem;
+}
+
+// ─── Step 3: Rider Pool ───────────────────────────────────────────────────────
+
+.riderPoolHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.riderPoolActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.topNBtn,
+.resetBtn {
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1px solid #000;
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background: #000;
+    color: #fff;
+  }
+}
+
+.removedSection {
+  margin-bottom: 1rem;
+}
+
+.removedLabel {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.4rem;
+}
+
+.removedChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.removedChip {
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  border: 1px solid #ccc;
+  background: #f0f0f0;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #000;
+    background: #fff;
+  }
+}
+
+.riderGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+// ─── Step 4: Results ─────────────────────────────────────────────────────────
+
+.resultsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.assignmentList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1.5rem;
+}
+
+.assignmentItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.75rem;
+  background: #f6f6f6;
+  font-size: 0.9rem;
+}
+
+.assignmentParticipant {
+  font-weight: 600;
+}
+
+.assignmentRider {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.publicLinkRow {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.publicLink {
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.5);
+  border: 1px solid #ddd;
+  padding: 7px 12px;
+
+  &:hover {
+    color: #000;
+    border-color: #000;
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.hint {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.88rem;
+  font-style: italic;
+}

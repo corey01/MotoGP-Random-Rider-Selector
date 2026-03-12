@@ -9,6 +9,7 @@ import {
 } from "react";
 import {
   type AuthUser,
+  apiGoogleLogin,
   apiLogin,
   apiLogout,
   apiMe,
@@ -23,6 +24,7 @@ interface AuthContextValue {
   isAdmin: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  loginWithGoogle: (idToken: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -53,6 +55,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(data.user);
   }, []);
 
+  const loginWithGoogle = useCallback(async (idToken: string) => {
+    const data = await apiGoogleLogin(idToken);
+    saveTokens(data.accessToken, data.refreshToken);
+    setUser(data.user);
+  }, []);
+
   const logout = useCallback(async () => {
     await apiLogout(getRefreshToken());
     clearTokens();
@@ -67,6 +75,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isAdmin: user?.role === "admin",
         isLoading,
         login,
+        loginWithGoogle,
         logout,
       }}
     >

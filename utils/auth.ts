@@ -120,3 +120,17 @@ export async function apiMe(): Promise<AuthUser> {
   if (!res.ok) throw new Error(data.error ?? "Failed to fetch user");
   return data.user ?? data;
 }
+
+export async function apiGoogleLogin(
+  idToken: string
+): Promise<{ user: AuthUser; accessToken: string; refreshToken: string }> {
+  const res = await fetch(`${API}/auth/google`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ idToken }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error ?? "Google sign-in failed");
+  return data;
+}

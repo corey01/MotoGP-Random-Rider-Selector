@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "@/app/_components/AuthProvider";
 import style from "./Login.module.scss";
 
 export default function LoginPage() {
-  const { login, isAdmin, isLoading } = useAuth();
+  const { login, loginWithGoogle, isAdmin, isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -15,10 +16,13 @@ export default function LoginPage() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!isLoading && isAdmin) {
-      router.replace("/admin");
+    if (!isLoading && isAuthenticated) {
+      router.replace(isAdmin ? "/admin" : "/sweepstake");
     }
-  }, [isAdmin, isLoading, router]);
+  }, [isAuthenticated, isAdmin, isLoading, router]);
+
+  const redirectAfterLogin = (admin: boolean) =>
+    router.push(admin ? "/admin" : "/sweepstake");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +31,7 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      router.push("/admin");
+      redirectAfterLogin(isAdmin);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
@@ -40,7 +44,28 @@ export default function LoginPage() {
   return (
     <div className={style.page}>
       <form className={style.form} onSubmit={handleSubmit}>
-        <h1 className={style.title}>Admin Sign In</h1>
+        <h1 className={style.title}>Sign In</h1>
+
+        <div className={style.googleButton}>
+          <GoogleLogin
+            use_fedcm_for_prompt
+            onSuccess={async (response) => {
+              if (!response.credential) return;
+              setError("");
+              try {
+                await loginWithGoogle(response.credential);
+                redirectAfterLogin(isAdmin);
+              } catch (err) {
+                setError(err instanceof Error ? err.message : "Google sign-in failed");
+              }
+            }}
+            onError={() => setError("Google sign-in failed")}
+          />
+        </div>
+
+        <div className={style.divider}>
+          <span>or</span>
+        </div>
 
         <div className={style.field}>
           <label htmlFor="email">Email</label>

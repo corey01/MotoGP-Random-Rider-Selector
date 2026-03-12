@@ -42,6 +42,7 @@ const getCachedRiders = (): Rider[] => {
 
 const createUnknownRider = (id: string): Rider => ({
   id,
+  dbId: 0,
   name: "Unknown",
   surname: "Rider",
   number: 0,

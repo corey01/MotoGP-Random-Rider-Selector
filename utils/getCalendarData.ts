@@ -35,6 +35,7 @@ export interface CalendarEvent {
     subSeries?: string;
     meta?: {
       round: string;
+      roundId?: number | null;
       name: string;
       deviceTime: string;
       deviceEndTime?: string | null;
@@ -135,6 +136,7 @@ function toFullCalendarEvent(ev: ApiCalendarEvent): CalendarEvent {
       subSeries: subSeries || series,
       meta: {
         round: ev.round?.name || ev.title,
+        roundId: ev.round?.id ?? null,
         name: ev.sessionName || ev.title,
         deviceTime: ev.start,
         deviceEndTime: ev.end,
