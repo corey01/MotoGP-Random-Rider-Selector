@@ -32,14 +32,15 @@ const Header = () => {
         )}
 
         <ul>
+          <li className={isCalendarPage ? style.active : undefined}>
+            <Link href="/">Calendar</Link>
+          </li>
           {isAuthenticated && (
             <li className={isGroupsPage ? style.active : undefined}>
               <Link href="/groups">Groups</Link>
             </li>
           )}
-          <li className={isCalendarPage ? style.active : undefined}>
-            <Link href="/calendar">Calendar</Link>
-          </li>
+
           {isAdmin && (
             <li className={isAdminPage ? style.active : undefined}>
               <Link href="/admin">Admin</Link>

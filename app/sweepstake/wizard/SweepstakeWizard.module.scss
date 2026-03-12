@@ -178,6 +178,7 @@
   input[type="radio"] {
     accent-color: #000;
     flex-shrink: 0;
+    width: auto;
   }
 }
 
@@ -240,6 +241,7 @@
 
   button {
     flex: 0 0 auto;
+    width: auto;
     margin: 0;
     padding: 8px 14px;
     font-size: 0.8rem;
