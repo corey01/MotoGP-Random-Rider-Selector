@@ -23,8 +23,8 @@ interface AuthContextValue {
   isAuthenticated: boolean;
   isAdmin: boolean;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  loginWithGoogle: (idToken: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<AuthUser>;
+  loginWithGoogle: (idToken: string) => Promise<AuthUser>;
   logout: () => Promise<void>;
 }
 
@@ -53,12 +53,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const data = await apiLogin(email, password);
     saveTokens(data.accessToken, data.refreshToken);
     setUser(data.user);
+    return data.user;
   }, []);
 
   const loginWithGoogle = useCallback(async (idToken: string) => {
     const data = await apiGoogleLogin(idToken);
     saveTokens(data.accessToken, data.refreshToken);
     setUser(data.user);
+    return data.user;
   }, []);
 
   const logout = useCallback(async () => {

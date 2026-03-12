@@ -7,14 +7,17 @@ import style from "./Header.module.scss";
 import { usePathname } from "next/navigation";
 import { useAuth } from "./AuthProvider";
 
+
 const Header = () => {
   const pathname = usePathname();
   const { isAuthenticated, isAdmin, logout } = useAuth();
   const router = useRouter();
 
   const isGroupsPage = pathname.startsWith("/groups");
-  const isCalendarPage = pathname.includes("/calendar");
   const isAdminPage = pathname.includes("/admin");
+  const isAuthPage = pathname === "/login";
+
+  const isCalendarPage = !isGroupsPage && !isAdminPage && !isAuthPage;
 
   const handleLogout = async () => {
     await logout();

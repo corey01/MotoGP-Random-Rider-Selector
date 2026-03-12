@@ -17,12 +17,12 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
-      router.replace(isAdmin ? "/admin" : "/sweepstake");
+      router.replace(isAdmin ? "/admin" : "/");
     }
   }, [isAuthenticated, isAdmin, isLoading, router]);
 
   const redirectAfterLogin = (admin: boolean) =>
-    router.push(admin ? "/admin" : "/sweepstake");
+    router.push(admin ? "/admin" : "/");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,8 +30,8 @@ export default function LoginPage() {
     setSubmitting(true);
 
     try {
-      await login(email, password);
-      redirectAfterLogin(isAdmin);
+      const user = await login(email, password);
+      redirectAfterLogin(user.role === "admin");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
@@ -53,8 +53,8 @@ export default function LoginPage() {
               if (!response.credential) return;
               setError("");
               try {
-                await loginWithGoogle(response.credential);
-                redirectAfterLogin(isAdmin);
+                const user = await loginWithGoogle(response.credential);
+                redirectAfterLogin(user.role === "admin");
               } catch (err) {
                 setError(err instanceof Error ? err.message : "Google sign-in failed");
               }
