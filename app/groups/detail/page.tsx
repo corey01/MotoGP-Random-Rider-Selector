@@ -10,6 +10,7 @@ import {
   inviteToGroup,
   addGuest,
   removeGuest,
+  deleteSweepstake,
   searchUsers,
   type GroupDetail,
   type GroupGuest,
@@ -128,6 +129,20 @@ function GroupDetailContent() {
       setDetail((prev) =>
         prev
           ? { ...prev, guests: prev.guests.filter((g) => g.id !== guest.id) }
+          : prev
+      );
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleDeleteSweepstake = async (s: SweepstakeSummary) => {
+    if (!confirm(`Delete sweepstake for "${formatRoundLabel(s)}"? This cannot be undone.`)) return;
+    try {
+      await deleteSweepstake(groupId, s.id);
+      setDetail((prev) =>
+        prev
+          ? { ...prev, sweepstakes: prev.sweepstakes.filter((sw) => sw.id !== s.id) }
           : prev
       );
     } catch {
@@ -299,13 +314,22 @@ function GroupDetailContent() {
                   </span>
                 </Link>
                 {isOwner && (
-                  <Link
-                    href={`/sweepstake/wizard?groupId=${group.id}&sweepstakeId=${s.id}`}
-                    className={style.editBtn}
-                    title="Edit / regenerate"
-                  >
-                    Edit
-                  </Link>
+                  <>
+                    <Link
+                      href={`/sweepstake/wizard?groupId=${group.id}&sweepstakeId=${s.id}`}
+                      className={style.editBtn}
+                      title="Edit / regenerate"
+                    >
+                      Edit
+                    </Link>
+                    <button
+                      className={style.removeMemberBtn}
+                      onClick={() => handleDeleteSweepstake(s)}
+                      title="Delete sweepstake"
+                    >
+                      ✕
+                    </button>
+                  </>
                 )}
               </li>
             ))}

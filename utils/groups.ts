@@ -99,6 +99,7 @@ export interface PublicSweepstakeData {
   assignments: {
     participantName: string;
     participantType: "member" | "guest";
+    participantPhotoUrl: string | null;
     riderId: number;
     riderName: string;
   }[];
@@ -213,6 +214,17 @@ export async function removeGuest(
 }
 
 // ─── Sweepstake API calls ─────────────────────────────────────────────────────
+
+export async function deleteSweepstake(
+  groupId: number,
+  sweepstakeId: number
+): Promise<void> {
+  const res = await fetchWithAuth(`/groups/${groupId}/sweepstakes/${sweepstakeId}`, { method: "DELETE" });
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.error ?? "Failed to delete sweepstake");
+  }
+}
 
 export async function createSweepstake(
   groupId: number,
