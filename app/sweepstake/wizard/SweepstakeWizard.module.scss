@@ -299,6 +299,22 @@
     background: #000;
     color: #fff;
   }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+
+    &:hover {
+      background: transparent;
+      color: inherit;
+    }
+  }
+}
+
+.gridUnavailable {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  font-style: italic;
 }
 
 .removedSection {

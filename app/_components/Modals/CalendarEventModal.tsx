@@ -109,7 +109,7 @@ export const CalendarEventModal = ({ onClose, event, onCreateSweepstake }: Calen
               <div className={style.mainTime}>{deviceStartTimeFormatted}</div>
               <div className={style.date}>{deviceStartDateFormatted}</div>
             </div>
-            <div className={style.timeBlock}>
+            <div className={style.venueTimeBlock}>
               <div className={style.timeLabel}>
                 Venue time{timezone ? ` (GMT${timezone})` : ''}
               </div>

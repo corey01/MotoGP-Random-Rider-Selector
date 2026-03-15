@@ -85,6 +85,7 @@ function WizardContent() {
   const [riderPool, setRiderPool] = useState<Rider[]>([]);
   const [removedRiderIds, setRemovedRiderIds] = useState<Set<string>>(new Set());
   const [gridEntries, setGridEntries] = useState<GridEntry[]>([]);
+  const [gridStatus, setGridStatus] = useState<'idle' | 'loading' | 'ready' | 'unavailable'>('idle');
 
   // Step 1
   const [step1Error, setStep1Error] = useState("");
@@ -173,7 +174,10 @@ function WizardContent() {
   // ── Step 2 → 3 ───────────────────────────────────────────────────────────────
   const handleParticipantsNext = () => {
     if (selectedRoundId) {
-      fetchGrid(selectedRoundId, year).then((r) => setGridEntries(r.grid)).catch(() => {/* grid unavailable, top-N falls back to number order */});
+      setGridStatus('loading');
+      fetchGrid(selectedRoundId, year)
+        .then((r) => { setGridEntries(r.grid); setGridStatus('ready'); })
+        .catch(() => setGridStatus('unavailable'));
     }
     setStep(3);
   };
@@ -216,19 +220,13 @@ function WizardContent() {
   };
 
   const handleTopN = (n: number) => {
-    let ordered = allRiders;
-    if (gridEntries.length > 0) {
-      const gridIds = gridEntries
-        .map((e) => e.rider?.id ?? e.rider?.riders_api_uuid)
-        .filter(Boolean) as string[];
-      const inGrid = allRiders.filter((r) => gridIds.includes(r.id));
-      const notInGrid = allRiders.filter((r) => !gridIds.includes(r.id));
-      // Sort inGrid by grid position order
-      inGrid.sort((a, b) => gridIds.indexOf(a.id) - gridIds.indexOf(b.id));
-      ordered = [...inGrid, ...notInGrid];
-    }
-    setRiderPool(ordered.slice(0, n));
-    setRemovedRiderIds(new Set(ordered.slice(n).map((r) => r.id)));
+    const gridIds = gridEntries
+      .map((e) => e.rider?.id ?? e.rider?.riders_api_uuid)
+      .filter(Boolean) as string[];
+    const inGrid = allRiders.filter((r) => gridIds.includes(r.id));
+    inGrid.sort((a, b) => gridIds.indexOf(a.id) - gridIds.indexOf(b.id));
+    setRiderPool(inGrid.slice(0, n));
+    setRemovedRiderIds(new Set(allRiders.filter((r) => !inGrid.slice(0, n).find((g) => g.id === r.id)).map((r) => r.id)));
   };
 
   const handleResetRiders = () => {
@@ -456,15 +454,18 @@ function WizardContent() {
               Rider Pool ({riderPool.length})
             </p>
             <div className={style.riderPoolActions}>
-              <button className={style.topNBtn} type="button" onClick={() => handleTopN(10)}>
+              <button className={style.topNBtn} type="button" onClick={() => handleTopN(10)} disabled={gridStatus !== 'ready'}>
                 Top 10
               </button>
-              <button className={style.topNBtn} type="button" onClick={() => handleTopN(15)}>
+              <button className={style.topNBtn} type="button" onClick={() => handleTopN(15)} disabled={gridStatus !== 'ready'}>
                 Top 15
               </button>
+              {gridStatus === 'unavailable' && (
+                <span className={style.gridUnavailable}>Grid order not available yet</span>
+              )}
               {removedRiderIds.size > 0 && (
                 <button className={style.resetBtn} type="button" onClick={handleResetRiders}>
-                  Reset
+                  Restore All
                 </button>
               )}
             </div>

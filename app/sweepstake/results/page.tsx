@@ -72,17 +72,12 @@ function SweepstakeResultsContent() {
         <div className={style.cards}>
           {selectedRiders.map(({ participant, selected }, i) => (
             <div key={i} className={style.cardWrapper}>
-              <div className={style.participantRow}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={assignments[i].participantPhotoUrl ?? "/entrants/placeholder.png"}
-                  alt=""
-                  className={style.participantAvatar}
-                />
-                <p className={style.participant}>{participant}</p>
-              </div>
+              <p className={style.participant}>{participant}</p>
               {selected ? (
-                <ResultsRiderCard selected={selected} />
+                <ResultsRiderCard
+                  selected={selected}
+                  participantPhotoUrl={assignments[i].participantPhotoUrl}
+                />
               ) : (
                 <p className={style.rider}>{assignments[i].riderName}</p>
               )}
