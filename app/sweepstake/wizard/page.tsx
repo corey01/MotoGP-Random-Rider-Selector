@@ -114,8 +114,8 @@ function WizardContent() {
         const ownedOnly = ownedGroups.filter((g) => g.role === "owner");
         setGroups(ownedOnly);
         setRounds(deriveRounds(events));
-        setAllRiders(riderData.allRiders);
-        setRiderPool(riderData.allRiders);
+        setAllRiders(riderData.standardRiders);
+        setRiderPool(riderData.standardRiders);
 
         // Editing an existing sweepstake — load its data and jump to step 3
         if (urlSweepstakeId && urlGroupId) {
@@ -216,8 +216,19 @@ function WizardContent() {
   };
 
   const handleTopN = (n: number) => {
-    setRiderPool(allRiders.slice(0, n));
-    setRemovedRiderIds(new Set(allRiders.slice(n).map((r) => r.id)));
+    let ordered = allRiders;
+    if (gridEntries.length > 0) {
+      const gridIds = gridEntries
+        .map((e) => e.rider?.id ?? e.rider?.riders_api_uuid)
+        .filter(Boolean) as string[];
+      const inGrid = allRiders.filter((r) => gridIds.includes(r.id));
+      const notInGrid = allRiders.filter((r) => !gridIds.includes(r.id));
+      // Sort inGrid by grid position order
+      inGrid.sort((a, b) => gridIds.indexOf(a.id) - gridIds.indexOf(b.id));
+      ordered = [...inGrid, ...notInGrid];
+    }
+    setRiderPool(ordered.slice(0, n));
+    setRemovedRiderIds(new Set(ordered.slice(n).map((r) => r.id)));
   };
 
   const handleResetRiders = () => {
