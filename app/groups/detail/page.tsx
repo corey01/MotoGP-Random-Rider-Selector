@@ -10,10 +10,12 @@ import {
   inviteToGroup,
   addGuest,
   removeGuest,
+  removeMember,
   deleteSweepstake,
   searchUsers,
   type GroupDetail,
   type GroupGuest,
+  type GroupMember,
   type SweepstakeSummary,
 } from "@/utils/groups";
 import style from "./GroupDetail.module.scss";
@@ -123,6 +125,20 @@ function GroupDetailContent() {
     }
   };
 
+  const handleRemoveMember = async (m: GroupMember) => {
+    if (!confirm(`Remove "${m.displayName}" from this group?`)) return;
+    try {
+      await removeMember(groupId, m.id);
+      setDetail((prev) =>
+        prev
+          ? { ...prev, members: prev.members.filter((mem) => mem.id !== m.id) }
+          : prev
+      );
+    } catch {
+      // ignore
+    }
+  };
+
   const handleRemoveGuest = async (guest: GroupGuest) => {
     try {
       await removeGuest(groupId, guest.id);
@@ -175,6 +191,15 @@ function GroupDetailContent() {
             <li key={m.id} className={style.memberItem}>
               <span className={style.memberName}>{m.displayName}</span>
               <span className={style.memberRole}>{m.role}</span>
+              {isOwner && m.role !== "owner" && (
+                <button
+                  className={style.removeMemberBtn}
+                  onClick={() => handleRemoveMember(m)}
+                  title="Remove member"
+                >
+                  ✕
+                </button>
+              )}
             </li>
           ))}
         </ul>

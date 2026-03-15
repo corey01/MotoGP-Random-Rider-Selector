@@ -110,6 +110,26 @@ const getBaseUrl = () => {
   return baseUrl.replace(/\/$/, "");
 };
 
+export interface GridEntry {
+  rider: { id?: string | null; riders_api_uuid?: string | null } | null;
+  [key: string]: unknown;
+}
+
+export interface GridResponse {
+  ok: boolean;
+  roundId: number;
+  year: number;
+  source: 'official' | 'derived';
+  count: number;
+  grid: GridEntry[];
+}
+
+export async function fetchGrid(roundId: number, year: number): Promise<GridResponse> {
+  const res = await fetch(`${getBaseUrl()}/grid?roundId=${roundId}&year=${year}`, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`RaceCal grid failed (${res.status})`);
+  return res.json() as Promise<GridResponse>;
+}
+
 export async function getRiderData(): Promise<RiderDataResponse> {
   const year = Number(process.env.NEXT_PUBLIC_MOTOGP_SEASON_YEAR || new Date().getFullYear());
   const res = await fetch(`${getBaseUrl()}/riders?year=${year}`, { cache: "no-store" });

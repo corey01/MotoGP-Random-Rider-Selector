@@ -200,6 +200,19 @@ export async function addGuest(
   return data.guest;
 }
 
+export async function removeMember(
+  groupId: number,
+  memberId: number
+): Promise<void> {
+  const res = await fetchWithAuth(`/groups/${groupId}/members/${memberId}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.error ?? "Failed to remove member");
+  }
+}
+
 export async function removeGuest(
   groupId: number,
   guestId: number

@@ -21,7 +21,8 @@ import {
   fetchCalendarEvents,
   type ApiCalendarEvent,
 } from "@/utils/getCalendarData";
-import { getRiderData } from "@/utils/getRiderData";
+import { getRiderData, fetchGrid } from "@/utils/getRiderData";
+import type { GridEntry } from "@/utils/getRiderData";
 import type { Rider } from "@/models/rider";
 import RiderCard from "@/app/_components/RiderCard";
 import style from "./SweepstakeWizard.module.scss";
@@ -83,6 +84,7 @@ function WizardContent() {
   const [allRiders, setAllRiders] = useState<Rider[]>([]);
   const [riderPool, setRiderPool] = useState<Rider[]>([]);
   const [removedRiderIds, setRemovedRiderIds] = useState<Set<string>>(new Set());
+  const [gridEntries, setGridEntries] = useState<GridEntry[]>([]);
 
   // Step 1
   const [step1Error, setStep1Error] = useState("");
@@ -169,7 +171,12 @@ function WizardContent() {
   };
 
   // ── Step 2 → 3 ───────────────────────────────────────────────────────────────
-  const handleParticipantsNext = () => setStep(3);
+  const handleParticipantsNext = () => {
+    if (selectedRoundId) {
+      fetchGrid(selectedRoundId, year).then((r) => setGridEntries(r.grid)).catch(() => {/* grid unavailable, top-N falls back to number order */});
+    }
+    setStep(3);
+  };
 
   const handleAddGuest = async (e: React.FormEvent) => {
     e.preventDefault();
