@@ -11,7 +11,7 @@ const ResultsRiderCard = ({
   participantPhotoUrl,
 }: {
   selected: SelectedRider;
-  participantPhotoUrl: string | null;
+  participantPhotoUrl?: string | null;
 }) => {
   const imgUrl = rider.pictures.profile.main as string;
 
