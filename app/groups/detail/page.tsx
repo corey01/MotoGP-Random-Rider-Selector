@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,6 +10,7 @@ import {
   inviteToGroup,
   addGuest,
   removeGuest,
+  searchUsers,
   type GroupDetail,
   type GroupGuest,
   type SweepstakeSummary,
@@ -37,6 +38,8 @@ function GroupDetailContent() {
   const [inviting, setInviting] = useState(false);
   const [inviteError, setInviteError] = useState("");
   const [inviteSuccess, setInviteSuccess] = useState("");
+  const [suggestions, setSuggestions] = useState<Array<{ id: number; displayName: string }>>([]);
+  const suggestTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [guestName, setGuestName] = useState("");
   const [addingGuest, setAddingGuest] = useState(false);
@@ -67,12 +70,27 @@ function GroupDetailContent() {
 
   const isOwner = detail?.membershipRole === "owner";
 
+  const handleInviteNameChange = (value: string) => {
+    setInviteName(value);
+    if (suggestTimeoutRef.current) clearTimeout(suggestTimeoutRef.current);
+    if (!value.trim()) { setSuggestions([]); return; }
+    suggestTimeoutRef.current = setTimeout(async () => {
+      try {
+        const results = await searchUsers(value.trim());
+        setSuggestions(results);
+      } catch {
+        setSuggestions([]);
+      }
+    }, 250);
+  };
+
   const handleInvite = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inviteName.trim()) return;
     setInviting(true);
     setInviteError("");
     setInviteSuccess("");
+    setSuggestions([]);
     try {
       await inviteToGroup(groupId, inviteName.trim());
       setInviteSuccess(`Invite sent to "${inviteName.trim()}"`);
@@ -148,12 +166,31 @@ function GroupDetailContent() {
 
         {isOwner && (
           <form onSubmit={handleInvite} className={style.inviteForm}>
-            <input
-              type="text"
-              value={inviteName}
-              onChange={(e) => setInviteName(e.target.value)}
-              placeholder="Invite by display name"
-            />
+            <div className={style.inviteInputWrap}>
+              <input
+                type="text"
+                value={inviteName}
+                onChange={(e) => handleInviteNameChange(e.target.value)}
+                placeholder="Invite by display name"
+                autoComplete="off"
+              />
+              {suggestions.length > 0 && (
+                <ul className={style.suggestions}>
+                  {suggestions.map((s) => (
+                    <li
+                      key={s.id}
+                      className={style.suggestionItem}
+                      onMouseDown={() => {
+                        setInviteName(s.displayName);
+                        setSuggestions([]);
+                      }}
+                    >
+                      {s.displayName}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
             <button type="submit" disabled={inviting || !inviteName.trim()}>
               {inviting ? "Sending…" : "Invite"}
             </button>

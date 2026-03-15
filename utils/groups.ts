@@ -255,6 +255,16 @@ export async function assignRiders(
   return data.assignments;
 }
 
+export async function searchUsers(
+  q: string
+): Promise<Array<{ id: number; displayName: string }>> {
+  if (!q.trim()) return [];
+  const res = await fetchWithAuth(`/users/search?q=${encodeURIComponent(q)}`);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error ?? "Failed to search users");
+  return data.users;
+}
+
 // ─── Public (no auth) ────────────────────────────────────────────────────────
 
 export async function fetchPublicSweepstake(
