@@ -22,20 +22,39 @@ const SUBSERIES_LABEL: Record<string, string> = {
   moto3: "Moto3",
 };
 
-function formatSessionTime(iso: string) {
-  try {
-    return format(new Date(iso), "EEE d MMM, HH:mm 'UTC'");
-  } catch {
-    return iso;
-  }
+const RACING_TYPES = new Set(["PRACTICE", "QUALIFYING", "RACE"]);
+
+const TYPE_COLOR: Record<string, string> = {
+  PRACTICE:   "#4a9eff",
+  QUALIFYING: "#f5c842",
+  RACE:       "#ff6b35",
+};
+
+function cleanSessionName(ev: ApiCalendarEvent): string {
+  let name = ev.sessionName || ev.type || "";
+  name = name.replace(/\s*\(Restart\)/gi, "").trim();
+  name = name.replace(/Free Practice Nr\.\s*(\d)/i, "FP$1");
+  name = name.replace(/Qualifying Nr\.\s*(\d)/i, "Q$1");
+  return name;
 }
 
-function statusLabel(status: string | null) {
-  if (!status) return null;
-  if (status === "COMPLETED") return "✓";
-  if (status === "LIVE") return "● Live";
-  if (status === "CANCELLED") return "Cancelled";
-  return null;
+function sessionAbbrev(ev: ApiCalendarEvent): string {
+  const name = cleanSessionName(ev).toLowerCase();
+  if (/grand prix/i.test(name)) return "GP";
+  if (/sprint/i.test(name)) return "SPR";
+  if (/fp(\d)/.test(name)) return name.match(/fp\d/i)![0].toUpperCase();
+  if (/^q(\d)/.test(name)) return name.match(/^q\d/i)![0].toUpperCase();
+  if (/warm.?up/i.test(name)) return "WU";
+  if (/practice/i.test(name)) return "P";
+  return ev.type?.slice(0, 2) ?? "?";
+}
+
+function formatDayHeader(iso: string): string {
+  try { return format(new Date(iso), "EEEE d MMMM"); } catch { return iso; }
+}
+
+function formatTime(iso: string): string {
+  try { return format(new Date(iso), "HH:mm 'UTC'"); } catch { return iso; }
 }
 
 // ─── Inner page (needs Suspense because of useSearchParams) ───────────────────
@@ -134,26 +153,57 @@ function RacePage() {
       <section style={sectionStyle}>
         <h2 style={sectionTitleStyle}>Session Schedule</h2>
         {sortedSubSeries.map((sub) => {
-          const sessions = bySubSeries.get(sub)!;
+          const allSessions = bySubSeries.get(sub)!;
+          const sessions = allSessions.filter((ev) => RACING_TYPES.has(ev.type?.toUpperCase() ?? ""));
+          if (sessions.length === 0) return null;
+
+          // Group by day
+          const byDay = new Map<string, ApiCalendarEvent[]>();
+          for (const ev of sessions) {
+            const day = formatDayHeader(ev.start);
+            if (!byDay.has(day)) byDay.set(day, []);
+            byDay.get(day)!.push(ev);
+          }
+
           const label = SUBSERIES_LABEL[sub] ?? sub.toUpperCase();
           return (
             <div key={sub} style={subSeriesBlockStyle}>
               <h3 style={subSeriesTitleStyle}>{label}</h3>
-              <table style={tableStyle}>
-                <tbody>
-                  {sessions.map((ev) => {
-                    const badge = statusLabel(ev.status);
+              {Array.from(byDay.entries()).map(([day, daySessions]) => (
+                <div key={day} style={{ marginBottom: 12 }}>
+                  <div style={dayHeaderStyle}>{day}</div>
+                  {daySessions.map((ev) => {
+                    const color = TYPE_COLOR[ev.type?.toUpperCase() ?? ""] ?? "#666";
+                    const isLive = ev.status === "LIVE";
+                    const isDone = ev.status === "COMPLETED";
                     return (
-                      <tr key={ev.id}>
-                        <td style={tdSessionStyle}>{ev.sessionName || ev.type}</td>
-                        <td style={tdTimeStyle}>{formatSessionTime(ev.start)}</td>
-                        {badge && <td style={tdBadgeStyle}>{badge}</td>}
-                        {!badge && <td />}
-                      </tr>
+                      <div key={ev.id} style={sessionRowStyle}>
+                        <div style={{ width: 36, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <span style={{
+                            fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.03em",
+                            color, background: `${color}22`, borderRadius: 4,
+                            padding: "2px 5px", textTransform: "uppercase",
+                          }}>
+                            {sessionAbbrev(ev)}
+                          </span>
+                        </div>
+                        <div style={{ flex: 1, fontWeight: 600, fontSize: "0.88rem", minWidth: 0 }}>
+                          {cleanSessionName(ev)}
+                        </div>
+                        <div style={{ fontSize: "0.8rem", opacity: 0.55, flexShrink: 0, fontVariantNumeric: "tabular-nums" }}>
+                          {formatTime(ev.start)}
+                        </div>
+                        {isLive && (
+                          <span style={{ fontSize: "0.7rem", color: "#ff4444", fontWeight: 700, flexShrink: 0, marginLeft: 8 }}>● LIVE</span>
+                        )}
+                        {isDone && (
+                          <span style={{ fontSize: "0.8rem", opacity: 0.35, flexShrink: 0, marginLeft: 8 }}>✓</span>
+                        )}
+                      </div>
                     );
                   })}
-                </tbody>
-              </table>
+                </div>
+              ))}
             </div>
           );
         })}
@@ -205,28 +255,22 @@ const subSeriesTitleStyle: React.CSSProperties = {
   fontWeight: 700,
 };
 
-const tableStyle: React.CSSProperties = {
-  width: "100%",
-  borderCollapse: "collapse",
+const dayHeaderStyle: React.CSSProperties = {
+  fontSize: "0.7rem",
+  fontWeight: 700,
+  textTransform: "uppercase",
+  letterSpacing: "0.08em",
+  opacity: 0.35,
+  marginBottom: 4,
+  paddingLeft: 4,
 };
 
-const tdSessionStyle: React.CSSProperties = {
-  padding: "6px 0",
-  width: "40%",
-  fontWeight: 600,
-};
-
-const tdTimeStyle: React.CSSProperties = {
-  padding: "6px 0",
-  opacity: 0.7,
-  fontSize: 14,
-};
-
-const tdBadgeStyle: React.CSSProperties = {
-  padding: "6px 0",
-  textAlign: "right",
-  fontSize: 13,
-  opacity: 0.6,
+const sessionRowStyle: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: 10,
+  padding: "7px 4px",
+  borderBottom: "1px solid rgba(128,128,128,0.1)",
 };
 
 // ─── Export ───────────────────────────────────────────────────────────────────

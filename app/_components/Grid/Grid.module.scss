@@ -98,6 +98,74 @@
   opacity: 0.8;
 }
 
+/* ── Mobile: single-column compact list ── */
+@media (max-width: 639px) {
+  .rows {
+    gap: 0;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    margin-bottom: 0;
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
+  /* Reset staggered columns + vertical offsets */
+  .left, .center, .right {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+
+  /* Make cell a flex row so posLabel sits inline */
+  .cell {
+    padding-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .posLabel {
+    position: static;
+    min-width: 20px;
+    text-align: right;
+    font-size: 11px;
+    color: #888;
+    flex-shrink: 0;
+  }
+
+  .card {
+    flex: 1;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  /* Hide portrait on mobile — too cramped */
+  .bikeWrap {
+    display: none;
+  }
+
+  .textWrap {
+    margin-left: 0;
+    width: auto;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .name {
+    font-size: 0.78rem;
+    -webkit-line-clamp: 1;
+    white-space: nowrap;
+  }
+
+  .meta {
+    display: none;
+  }
+}
+
+/* ── Tablet and up: wider column gap ── */
 @media (min-width: 640px) {
   .row {
     column-gap: 14px;
@@ -111,7 +179,6 @@
   height: 300%;
   pointer-events: none;
   z-index: 1;
-  /* fade the left edge into the card background */
   mask-image: linear-gradient(to right, transparent 0%, black 35%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 35%);
 }
@@ -121,6 +188,24 @@
   object-fit: cover;
   object-position: top center;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+}
+
+/* Rider portrait (used on desktop) */
+.bikeWrap {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 130%;
+  pointer-events: none;
+  z-index: 1;
+  mask-image: linear-gradient(to right, transparent 0%, black 30%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%);
+}
+.bikeImg {
+  height: 100% !important;
+  width: auto !important;
+  object-fit: cover;
+  object-position: top center;
 }
 .bikeBackdrop {
   display: none;

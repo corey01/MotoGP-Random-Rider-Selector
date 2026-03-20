@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { fetchGridData, type GridData, type GridItem } from "@/utils/getGridData";
 import style from "./Grid.module.scss";
+import raceStyle from "./RaceGrid.module.scss";
 
 const COL_CLASSES = [style.left, style.center, style.right] as const;
 
@@ -57,7 +58,7 @@ export function RaceGrid({ roundId }: { roundId: number }) {
                   )}
 
                   {(item.pictures?.portrait ?? item.pictures?.profile) && (
-                    <div className={style.portraitWrap}>
+                    <div className={`${style.portraitWrap} ${raceStyle.portraitWrap}`}>
                       <Image
                         src={(item.pictures!.portrait ?? item.pictures!.profile)!}
                         alt=""
