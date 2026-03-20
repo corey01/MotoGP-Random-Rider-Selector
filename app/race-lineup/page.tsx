@@ -65,6 +65,7 @@ const buildRaces = (events: ApiCalendarEvent[]): Race[] => {
       const maxEnd = ends.length ? new Date(Math.max(...ends)).toISOString() : first.end || first.start;
 
       return {
+        roundId: first.round?.id ?? undefined,
         name: first.round?.name || first.title || "Grand Prix",
         country: first.round?.country || "",
         url: first.round?.sourceUrl || first.round?.circuit || "",

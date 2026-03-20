@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { motoGP } from "@/app/fonts";
 import { localRaceTime } from "@/utils/datesTimes";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Expanded } from "./Expanded";
 
 const Tile = ({
@@ -98,6 +99,11 @@ const Tile = ({
           <p className={style.seeMore} onClick={handleToggle}>
             {expanded ? "See less -" : "See full lineup +"}
           </p>
+          {race.roundId && (
+            <p className={style.seeMore}>
+              <Link href={`/race?roundId=${race.roundId}`}>More race info →</Link>
+            </p>
+          )}
         </div>
         <div className={style.imageContainer}>
           {race.circuit.simpleCircuitPath && (

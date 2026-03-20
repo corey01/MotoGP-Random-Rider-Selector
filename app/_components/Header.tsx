@@ -41,7 +41,7 @@ const Header = () => {
               <Link href="/sweepstake">Sweepstake</Link>
             </li>
           )}
-          {isAuthenticated && (
+          {isAuthenticated && (isAdmin || !isLegacy) && (
             <li className={isGroupsPage ? style.active : undefined}>
               <Link href="/groups">Groups</Link>
             </li>

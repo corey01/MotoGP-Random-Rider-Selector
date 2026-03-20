@@ -1,4 +1,5 @@
 export interface Race {
+  roundId?: number;
   name: string;
   country: string;
   url: string;
