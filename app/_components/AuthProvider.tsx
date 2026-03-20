@@ -22,6 +22,7 @@ interface AuthContextValue {
   user: AuthUser | null;
   isAuthenticated: boolean;
   isAdmin: boolean;
+  isLegacy: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<AuthUser>;
   loginWithGoogle: (idToken: string) => Promise<AuthUser>;
@@ -75,6 +76,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user,
         isAuthenticated: !!user,
         isAdmin: user?.role === "admin",
+        isLegacy: user?.role === "legacy" || user?.role === "admin",
         isLoading,
         login,
         loginWithGoogle,

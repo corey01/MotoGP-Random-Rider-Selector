@@ -10,14 +10,15 @@ import { useAuth } from "./AuthProvider";
 
 const Header = () => {
   const pathname = usePathname();
-  const { isAuthenticated, isAdmin, logout } = useAuth();
+  const { isAuthenticated, isAdmin, isLegacy, logout } = useAuth();
   const router = useRouter();
 
   const isGroupsPage = pathname.startsWith("/groups");
   const isAdminPage = pathname.includes("/admin");
   const isAuthPage = pathname === "/login";
+  const isSweepstakePage = pathname.startsWith("/sweepstake") || pathname.startsWith("/results");
 
-  const isCalendarPage = !isGroupsPage && !isAdminPage && !isAuthPage;
+  const isCalendarPage = !isGroupsPage && !isAdminPage && !isAuthPage && !isSweepstakePage;
 
   const handleLogout = async () => {
     await logout();
@@ -35,6 +36,11 @@ const Header = () => {
           <li className={isCalendarPage ? style.active : undefined}>
             <Link href="/">Calendar</Link>
           </li>
+          {isLegacy && (
+            <li className={isSweepstakePage ? style.active : undefined}>
+              <Link href="/sweepstake">Sweepstake</Link>
+            </li>
+          )}
           {isAuthenticated && (
             <li className={isGroupsPage ? style.active : undefined}>
               <Link href="/groups">Groups</Link>

@@ -204,6 +204,37 @@
     object-position: top center;
   }
 
+  .towerName {
+    font-size: 12px;
+    background: rgb(55,70,67);
+    background: linear-gradient(90deg, rgba(55,70,67,1) 0%, rgba(21,34,22,1) 100%);
+    position: relative;
+    bottom: 34px;
+    z-index: 10;
+    padding: 10px 0 8px 10px;
+    text-align: left;
+    color: #fff;
+    display: flex;
+
+    .towerBar {
+      content: '';
+      position: absolute;
+      width: 3px;
+      height: 100%;
+      left: 0;
+      top: 0;
+    }
+
+    span {
+      text-align: right;
+      margin-left: auto;
+      border-radius: 3px;
+      padding: 2px 3px;
+      margin-right: 4px;
+      margin-top: -1px;
+    }
+  }
+
   .riderNumber {
     position: relative;
     inset: 0;

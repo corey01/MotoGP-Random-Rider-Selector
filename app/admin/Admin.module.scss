@@ -275,6 +275,130 @@
   color: #1e40af;
 }
 
+// User management
+
+.userSearchWrap {
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+
+.userSearchInput {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: #000;
+  }
+}
+
+.userSuggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 10;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.userSuggestionItem {
+  display: flex;
+  flex-direction: column;
+  padding: 7px 10px;
+  cursor: pointer;
+  gap: 1px;
+
+  &:hover {
+    background: #f5f5f5;
+  }
+}
+
+.suggestionName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.suggestionEmail {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.userSelected {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  background: #fafafa;
+  flex-wrap: wrap;
+}
+
+.userSelectedInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: 2px;
+}
+
+.userSelectedName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.userSelectedEmail {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.roleSelect {
+  padding: 4px 6px;
+  border: 1px solid #ccc;
+  font-size: 0.82rem;
+  background: #fff;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #000;
+  }
+}
+
+.saveRoleBtn {
+  margin: 0;
+  width: auto;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  border: 1px solid #ccc;
+  background: transparent;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+
+  &:hover:not(:disabled) {
+    border-color: #000;
+    background: #f5f5f5;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
 // Error text
 
 .errorText {

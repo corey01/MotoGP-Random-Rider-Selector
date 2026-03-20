@@ -54,6 +54,7 @@ const Results = ({ handleReset, selectedRiders, addEntrant }: ResultsProps) => {
         <ResultsRiderCard
           key={`res-${selected.rider.id}`}
           selected={selected}
+          participantName={selected.entrant}
         />
       ))}
       <button className={style.shareButton} onClick={generateShareLink}>

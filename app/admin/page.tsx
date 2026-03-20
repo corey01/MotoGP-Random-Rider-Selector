@@ -8,6 +8,15 @@ import style from "./Admin.module.scss";
 
 // --- Types ---
 
+type UserRole = "user" | "admin" | "legacy";
+
+interface AdminUser {
+  id: number;
+  email: string;
+  displayName: string;
+  role: UserRole;
+}
+
 interface JobRun {
   id: string;
   jobName: string;
@@ -80,6 +89,114 @@ function JobTable({ runs, cols }: { runs: JobRun[]; cols: number }) {
   );
 }
 
+// --- User lookup ---
+
+function UserLookup({ showToast }: { showToast: (msg: string, ok: boolean) => void }) {
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<AdminUser[]>([]);
+  const [selected, setSelected] = useState<AdminUser | null>(null);
+  const [pendingRole, setPendingRole] = useState<UserRole>("user");
+  const [saving, setSaving] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleQueryChange = (value: string) => {
+    setQuery(value);
+    setSelected(null);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (value.trim().length < 2) { setSuggestions([]); return; }
+    debounceRef.current = setTimeout(async () => {
+      try {
+        const res = await fetchWithAuth(`/admin/users?q=${encodeURIComponent(value.trim())}`);
+        const data = await res.json();
+        setSuggestions(res.ok ? data.users : []);
+      } catch {
+        setSuggestions([]);
+      }
+    }, 250);
+  };
+
+  const handleSelect = (user: AdminUser) => {
+    setSelected(user);
+    setQuery(`${user.displayName} (${user.email})`);
+    setPendingRole(user.role);
+    setSuggestions([]);
+  };
+
+  const handleRoleChange = async () => {
+    if (!selected || pendingRole === selected.role) return;
+    setSaving(true);
+    try {
+      const res = await fetchWithAuth(`/admin/users/${selected.id}/role`, {
+        method: "PATCH",
+        body: JSON.stringify({ role: pendingRole }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Update failed");
+      setSelected(data.user);
+      showToast(`${selected.email} → ${pendingRole}`, true);
+    } catch (e) {
+      showToast(e instanceof Error ? e.message : "Update failed", false);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <section className={style.section}>
+      <h2 className={style.sectionTitle}>User Management</h2>
+      <div className={style.userSearchWrap}>
+        <input
+          type="text"
+          placeholder="Search by name or email…"
+          value={query}
+          autoComplete="off"
+          className={style.userSearchInput}
+          onChange={(e) => handleQueryChange(e.target.value)}
+          onBlur={() => setTimeout(() => setSuggestions([]), 150)}
+        />
+        {suggestions.length > 0 && (
+          <ul className={style.userSuggestions}>
+            {suggestions.map((u) => (
+              <li
+                key={u.id}
+                className={style.userSuggestionItem}
+                onMouseDown={() => handleSelect(u)}
+              >
+                <span className={style.suggestionName}>{u.displayName}</span>
+                <span className={style.suggestionEmail}>{u.email}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      {selected && (
+        <div className={style.userSelected}>
+          <div className={style.userSelectedInfo}>
+            <span className={style.userSelectedName}>{selected.displayName}</span>
+            <span className={style.userSelectedEmail}>{selected.email}</span>
+          </div>
+          <select
+            className={style.roleSelect}
+            value={pendingRole}
+            onChange={(e) => setPendingRole(e.target.value as UserRole)}
+          >
+            <option value="user">user</option>
+            <option value="legacy">legacy</option>
+            <option value="admin">admin</option>
+          </select>
+          <button
+            className={style.saveRoleBtn}
+            disabled={pendingRole === selected.role || saving}
+            onClick={handleRoleChange}
+          >
+            {saving ? "Saving…" : "Save"}
+          </button>
+        </div>
+      )}
+    </section>
+  );
+}
+
 // --- Main page ---
 
 const CURRENT_YEAR = new Date().getFullYear();
@@ -88,6 +205,7 @@ type ButtonKey =
   | "motogp-full"
   | "motogp-events"
   | "motogp-riders"
+  | "motogp-grid"
   | "scrape-bsb"
   | "scrape-wsbk"
   | "scrape-f1"
@@ -113,6 +231,12 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       label: "MotoGP Riders",
       path: "/admin/sync/riders",
       hint: "motogp:riders-sync",
+    },
+    {
+      key: "motogp-grid",
+      label: "MotoGP Grid",
+      path: "/admin/sync/grid",
+      hint: "motogp:grid-sync",
     },
     { key: "scrape-bsb", label: "BSB", path: "/admin/scrape/bsb", hint: "scrape:bsb" },
     {
@@ -278,6 +402,9 @@ export default function AdminPage() {
           })}
         </div>
       </section>
+
+      {/* User management */}
+      <UserLookup showToast={showToast} />
 
       {/* Job status */}
       <section className={style.section}>

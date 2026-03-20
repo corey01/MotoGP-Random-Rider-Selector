@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from "react";
 import { getRiderById } from "@/utils/getSelectedRidersByID";
 import { useSearchParams } from "next/navigation";
 import { Rider } from "../../models/rider";
@@ -11,7 +12,7 @@ interface SelectedRider {
   rider: Rider;
 }
 
-const ResultsPage = () => {
+const ResultsContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   let resultsData: SelectedRider[] = [];
@@ -72,4 +73,10 @@ const ResultsPage = () => {
   return <Results handleReset={handleReset} selectedRiders={resultsData} addEntrant={handleAddEntrantAndGenerate} />;
 };
 
-export default ResultsPage;
+export default function ResultsPage() {
+  return (
+    <Suspense>
+      <ResultsContent />
+    </Suspense>
+  );
+}

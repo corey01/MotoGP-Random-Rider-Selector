@@ -6,7 +6,7 @@ const REFRESH_TOKEN_KEY = "auth_refresh_token";
 export interface AuthUser {
   id: string;
   email: string;
-  role: "user" | "admin";
+  role: "user" | "admin" | "legacy";
   displayName: string;
 }
 

@@ -77,6 +77,7 @@ function SweepstakeResultsContent() {
                 <ResultsRiderCard
                   selected={selected}
                   participantPhotoUrl={assignments[i].participantPhotoUrl}
+                  participantName={assignments[i].participantName}
                 />
               ) : (
                 <p className={style.rider}>{assignments[i].riderName}</p>
