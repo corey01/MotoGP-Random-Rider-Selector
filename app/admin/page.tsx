@@ -210,7 +210,8 @@ type ButtonKey =
   | "scrape-wsbk"
   | "scrape-f1"
   | "scrape-speedway"
-  | "scrape-all";
+  | "scrape-all"
+  | "motogp-results";
 
 const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
   [
@@ -237,6 +238,12 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       label: "MotoGP Grid",
       path: "/admin/sync/grid",
       hint: "motogp:grid-sync",
+    },
+    {
+      key: "motogp-results",
+      label: "MotoGP Results",
+      path: "/admin/sync/results",
+      hint: "motogp:results-sync",
     },
     { key: "scrape-bsb", label: "BSB", path: "/admin/scrape/bsb", hint: "scrape:bsb" },
     {

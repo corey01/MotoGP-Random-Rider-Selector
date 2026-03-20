@@ -6,6 +6,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { fetchCalendarEvents, type ApiCalendarEvent } from "@/utils/getCalendarData";
 import { RaceGrid } from "@/app/_components/Grid/RaceGrid";
+import { RaceResults } from "@/app/_components/Results/RaceResults";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -116,6 +117,12 @@ function RacePage() {
           {first.start && ` · ${format(new Date(first.start), "do MMMM yyyy")}`}
         </p>
       </div>
+
+      {/* Race results */}
+      <section style={sectionStyle}>
+        <h2 style={sectionTitleStyle}>Results</h2>
+        <RaceResults roundId={roundId} />
+      </section>
 
       {/* Starting grid */}
       <section style={sectionStyle}>
