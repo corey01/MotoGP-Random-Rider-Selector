@@ -92,7 +92,7 @@ function RacePage() {
   }
 
   const subSeriesOrder = ["motogp", "moto2", "moto3"];
-  const sortedSubSeries = [...bySubSeries.keys()].sort(
+  const sortedSubSeries = Array.from(bySubSeries.keys()).sort(
     (a, b) => subSeriesOrder.indexOf(a) - subSeriesOrder.indexOf(b)
   );
 
