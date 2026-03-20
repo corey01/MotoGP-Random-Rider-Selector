@@ -17,12 +17,28 @@ function formatGap(item: RaceResultItem): string {
   return `+${item.gapFirst}`;
 }
 
+/** Darken a hex colour if it's too light to show on a dark row */
+function safeAccent(hex: string | null): string {
+  if (!hex) return "#444";
+  const h = hex.replace("#", "");
+  if (h.length !== 6) return hex;
+  const r = parseInt(h.slice(0, 2), 16) / 255;
+  const g = parseInt(h.slice(2, 4), 16) / 255;
+  const b = parseInt(h.slice(4, 6), 16) / 255;
+  // Relative luminance
+  const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  if (lum < 0.4) return hex;
+  // Darken by blending 50% toward #222
+  const darken = (c: number) => Math.round(c * 0.5 + 34).toString(16).padStart(2, "0");
+  return `#${darken(parseInt(h.slice(0,2),16))}${darken(parseInt(h.slice(2,4),16))}${darken(parseInt(h.slice(4,6),16))}`;
+}
+
 function ResultRow({ item, index }: { item: RaceResultItem; index: number }) {
   const portrait = item.pictures?.portrait ?? item.pictures?.profile;
   const gap = formatGap(item);
   const isWinner = gap === "WINNER";
   const isDnf = isDNF(item);
-  const accentColor = item.teamColor ?? "#444";
+  const accentColor = safeAccent(item.teamColor);
 
   return (
     <div style={{
@@ -144,7 +160,7 @@ function SessionResults({ label, items }: { label: string; items: RaceResultItem
   return (
     <div style={{ marginBottom: 32 }}>
       <h3 style={{ margin: "0 0 10px", fontSize: "0.85rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", opacity: 0.5 }}>{label}</h3>
-      {items.map((item, i) => <ResultRow key={item.position} item={item} index={i} />)}
+      {items.map((item, i) => <ResultRow key={item.riderExternalId ?? i} item={item} index={i} />)}
     </div>
   );
 }
