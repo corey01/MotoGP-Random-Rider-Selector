@@ -1,5 +1,6 @@
 'use client';
 
+import Link from "next/link";
 import style from "./Modal.module.scss";
 
 interface CalendarEventModalProps {
@@ -80,6 +81,7 @@ export const CalendarEventModal = ({ onClose, event, onCreateSweepstake }: Calen
   const isMainMotoGP = String(event.extendedProps?.subSeries || "").toLowerCase() === "motogp";
   const isGrandPrix = fallbackSession.toLowerCase().includes("grand prix");
   const roundId: number | null = meta.roundId ?? null;
+  const hasGrid: boolean = meta.hasGrid === true;
   const showSweepstakeButton = isMotoGP && isRace && isMainMotoGP && isGrandPrix && roundId !== null && onCreateSweepstake;
 
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -135,6 +137,11 @@ export const CalendarEventModal = ({ onClose, event, onCreateSweepstake }: Calen
                 >
                   View Official Event Page
                 </a>
+              )}
+              {hasGrid && roundId && (
+                <Link className={style.sourceLink} href={`/race?roundId=${roundId}`}>
+                  More race info →
+                </Link>
               )}
             </div>
           )}

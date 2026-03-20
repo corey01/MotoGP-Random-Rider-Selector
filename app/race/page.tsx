@@ -75,7 +75,7 @@ function RacePage() {
     return (
       <div style={pageStyle}>
         <p>Round not found.</p>
-        <Link href="/race-lineup">← Back to race lineup</Link>
+        <Link href="/">← Back to calendar</Link>
       </div>
     );
   }
@@ -106,11 +106,11 @@ function RacePage() {
 
   return (
     <div style={pageStyle}>
-      <Link href="/race-lineup" style={backLinkStyle}>← Back to race lineup</Link>
+      <Link href="/" style={backLinkStyle}>← Back to calendar</Link>
 
       {/* Round header */}
       <div style={headerStyle}>
-        <h1 style={{ margin: "0 0 4px" }}>{round?.name || "Grand Prix"}</h1>
+        <h1 style={{ margin: "0 0 4px", fontFamily: "var(--font-motogp-font)" }}>{round?.name || "Grand Prix"}</h1>
         <p style={{ margin: 0, opacity: 0.7 }}>
           {[round?.circuit, round?.country].filter(Boolean).join(" · ")}
           {first.start && ` · ${format(new Date(first.start), "do MMMM yyyy")}`}

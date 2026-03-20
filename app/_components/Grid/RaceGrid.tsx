@@ -56,14 +56,14 @@ export function RaceGrid({ roundId }: { roundId: number }) {
                     </span>
                   )}
 
-                  {item.pictures?.bike && (
-                    <div className={style.bikeWrap}>
+                  {(item.pictures?.portrait ?? item.pictures?.profile) && (
+                    <div className={style.portraitWrap}>
                       <Image
-                        src={item.pictures.bike}
+                        src={(item.pictures!.portrait ?? item.pictures!.profile)!}
                         alt=""
                         width={80}
-                        height={56}
-                        className={style.bikeImg}
+                        height={110}
+                        className={style.portraitImg}
                         unoptimized
                       />
                     </div>

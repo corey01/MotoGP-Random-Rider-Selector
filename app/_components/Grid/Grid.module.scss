@@ -46,11 +46,11 @@
 .card {
   background: #161616;
   border-radius: 10px;
-  padding: 10px 12px 10px 12px; /* tighter top now that position is outside */
-  height: 90px;
+  padding: 10px 12px 10px 12px;
+  height: 100px;
   width: 100%;
   box-sizing: border-box;
-  display: block; /* avoid flex width issues on children */
+  display: block;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   position: relative;
@@ -98,45 +98,32 @@
   opacity: 0.8;
 }
 
-/* Slightly denser layout on wider screens */
 @media (min-width: 640px) {
   .row {
     column-gap: 14px;
   }
-  .card {
-    height: 100px;
-    padding-left: 60px;
-  }
 }
 
-/* Decorative elements to boost bike visibility without hurting text */
-.bikeWrap {
+.portraitWrap {
   position: absolute;
-  right: 8px;
-  bottom: 8px;
+  left: -46px;
+  top: 10px;
+  height: 300%;
   pointer-events: none;
   z-index: 1;
+  /* fade the left edge into the card background */
+  mask-image: linear-gradient(to right, transparent 0%, black 35%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 35%);
 }
-.bikeImg {
-  height: 56px;
-  filter: brightness(1.15) contrast(1.05)
-    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
-  opacity: 0.32;
+.portraitImg {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  object-position: top center;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
 }
 .bikeBackdrop {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 30%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.04) 0%,
-    rgba(255, 255, 255, 0.08) 40%,
-    rgba(255, 255, 255, 0.04) 100%
-  );
-  opacity: 0.18;
-  z-index: 0;
+  display: none;
 }
 
 .numberPill {
@@ -160,7 +147,11 @@
 .textWrap {
   position: relative;
   z-index: 2;
-  width: auto;
+  width: 150px;
   min-width: 0;
-  margin-right: 35px;
+  margin-left: 90px;
+
+  &>*{
+    white-space: unset !important;
+  }
 }

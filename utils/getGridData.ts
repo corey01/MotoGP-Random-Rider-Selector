@@ -6,12 +6,10 @@ const getBaseUrl = () => {
 
 export interface GridItem {
   position: number;
+  riderExternalId: string | null;
   riderName: string;
   riderNumber: number | null;
   teamName: string | null;
-  manufacturer: string | null;
-  riderId: number | null;
-  riderExternalId: string | null;
   teamColor: string | null;
   textColor: string | null;
   pictures: {
@@ -25,7 +23,6 @@ export interface GridItem {
 
 export interface GridData {
   roundId: number;
-  source: "official" | "derived";
   count: number;
   grid: GridItem[];
 }

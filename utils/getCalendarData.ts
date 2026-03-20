@@ -20,6 +20,7 @@ export interface ApiCalendarEvent {
     country: string | null;
     number: number | null;
     sourceUrl: string | null;
+    hasGrid?: boolean;
   };
 }
 
@@ -44,6 +45,7 @@ export interface CalendarEvent {
       sessionName?: string;
       eventDateLabel?: string;
       sourceUrl?: string;
+      hasGrid?: boolean;
     };
   };
 }
@@ -145,6 +147,7 @@ function toFullCalendarEvent(ev: ApiCalendarEvent): CalendarEvent {
         sessionName: ev.sessionName,
         eventDateLabel: "",
         sourceUrl: ev.round?.sourceUrl ?? "",
+        hasGrid: ev.round?.hasGrid ?? false,
       },
     },
   };
