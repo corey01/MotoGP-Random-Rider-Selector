@@ -53,7 +53,7 @@ export default function SweepstakeApp({ allRiders, seasonYear }: HomeProps) {
         JSON.stringify({ riders: allRiders.allRiders, generatedDate: Date.now(), seasonYear })
       );
     } catch {}
-  }, [allRiders]);
+  }, [allRiders, seasonYear]);
 
   const handleResetAllRiders = () => {
     setRiders(allRiders.standardRiders);

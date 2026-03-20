@@ -96,7 +96,7 @@ function RacePage() {
     (a, b) => subSeriesOrder.indexOf(a) - subSeriesOrder.indexOf(b)
   );
 
-  for (const sessions of bySubSeries.values()) {
+  for (const sessions of Array.from(bySubSeries.values())) {
     sessions.sort((a, b) => {
       const typeOrder = (SESSION_ORDER[a.type] ?? 9) - (SESSION_ORDER[b.type] ?? 9);
       if (typeOrder !== 0) return typeOrder;
