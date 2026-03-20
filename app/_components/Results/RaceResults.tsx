@@ -164,7 +164,7 @@ export function RaceResults({ roundId }: { roundId: number }) {
   if (loading) return <p style={{ opacity: 0.6 }}>Loading results…</p>;
   if (!data) return <p style={{ opacity: 0.6 }}>Results not yet available.</p>;
 
-  const sessionOrder = ["SPR", "RAC"];
+  const sessionOrder = ["RAC", "SPR"];
   const sessionKeys = Object.keys(data.sessions).sort(
     (a, b) => sessionOrder.indexOf(a) - sessionOrder.indexOf(b)
   );
