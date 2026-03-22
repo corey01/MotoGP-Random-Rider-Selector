@@ -145,13 +145,18 @@
 .fc .fc-daygrid-day-top {
   justify-content: flex-end;
   padding: 18px 20px 0;
+  min-height: 42px;
 }
 
 .fc .fc-daygrid-day-number {
+  display: inline-flex !important;
+  align-items: center;
+  min-height: 28px;
   padding: 0 !important;
   color: #9b9b9b !important;
   font-size: 1rem !important;
   font-weight: 500 !important;
+  line-height: 1 !important;
   text-decoration: none !important;
 }
 
@@ -170,6 +175,7 @@
 .fc .fc-day-today .fc-daygrid-day-number {
   color: var(--kc-primary) !important;
   font-weight: 700 !important;
+  font-size: 1.6rem !important;
 }
 
 .fc .fc-day-selected {
@@ -194,13 +200,27 @@
 }
 
 .fc-event {
+  position: relative !important;
   cursor: pointer !important;
   border: none !important;
-  border-radius: 4px !important;
+  border-radius: 2px !important;
   margin: 0 !important;
   padding: 0 !important;
   overflow: hidden !important;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  color: var(--event-text, #fff) !important;
+}
+
+.fc-event::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: var(--event-accent, rgba(255, 255, 255, 0.22));
+  opacity: 0.95;
+  pointer-events: none;
 }
 
 .fc-daygrid-event {
@@ -211,13 +231,15 @@
 
 .fc-daygrid-block-event .fc-event-main {
   padding: 0 !important;
+  color: var(--event-text, #fff) !important;
 }
 
 .event-content {
   display: flex;
   align-items: center;
   min-height: 22px;
-  padding: 0 8px;
+  padding: 0 10px 0 14px;
+  color: var(--event-text, #fff) !important;
 }
 
 .event-title {
@@ -225,35 +247,41 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 0.58rem;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
+  color: var(--event-text, #fff) !important;
 }
 
 .fc-event.motogp-event {
   background: var(--motogp-red) !important;
-  color: #fff !important;
+  --event-accent: color-mix(in srgb, var(--motogp-red) 70%, white);
+  --event-text: #171717;
 }
 
 .fc-event.wsbk-event {
   background: var(--wsbk-blue) !important;
-  color: #fff !important;
+  --event-accent: color-mix(in srgb, var(--wsbk-blue) 72%, white);
+  --event-text: #f5f7fb;
 }
 
 .fc-event.bsb-event {
   background: var(--bsb-green) !important;
-  color: #fff !important;
+  --event-accent: color-mix(in srgb, var(--bsb-green) 72%, white);
+  --event-text: #161616;
 }
 
 .fc-event.speedway-event {
   background: var(--speedway-orange) !important;
-  color: #fff !important;
+  --event-accent: color-mix(in srgb, var(--speedway-orange) 72%, white);
+  --event-text: #171717;
 }
 
 .fc-event.f1-event {
   background: var(--f1-red) !important;
-  color: #fff !important;
+  --event-accent: color-mix(in srgb, var(--f1-red) 72%, white);
+  --event-text: #171717;
 }
 
 .fc .fc-view-harness {
@@ -315,15 +343,18 @@
   }
 
   .fc .fc-daygrid-day-top {
-    padding: 10px 10px 0;
+    padding: 2px 12px 14px 2px;
+    min-height: 38px;
   }
 
   .fc .fc-daygrid-day-number {
-    font-size: 0.82rem !important;
+    min-height: 30px;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
   }
 
   .fc .fc-daygrid-day-frame {
-    min-height: 72px;
+    min-height: 94px;
   }
 
   .fc .fc-daygrid-day-events {
@@ -337,18 +368,18 @@
   }
 
   .fc-daygrid-event {
-    min-height: 18px !important;
+    min-height: 20px !important;
     max-width: calc(100% - 4px) !important;
     margin-left: 2px !important;
   }
 
   .event-content {
-    min-height: 18px;
-    padding: 0 5px;
+    min-height: 20px;
+    padding: 0 8px 0 12px;
   }
 
   .event-title {
-    font-size: 0.48rem;
-    letter-spacing: 0.04em;
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
   }
 }
