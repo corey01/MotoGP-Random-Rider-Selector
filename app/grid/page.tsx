@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import GridPanel from "../_components/Grid/Grid";
 import { getRiderData, type RiderDataResponse } from "@/utils/getRiderData";
+import style from "./page.module.scss";
 
 export default function GridPage() {
   const [riders, setRiders] = useState<RiderDataResponse | null>(null);
@@ -29,8 +30,10 @@ export default function GridPage() {
   if (!riders) return null;
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", padding: 16 }}>
-      <GridPanel riders={[...riders.standardRiders, ...riders.guestRiders]} />
+    <div className={style.page}>
+      <div className={style.panel}>
+        <GridPanel riders={[...riders.standardRiders, ...riders.guestRiders]} />
+      </div>
     </div>
   );
 }

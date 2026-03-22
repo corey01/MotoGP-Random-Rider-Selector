@@ -199,7 +199,7 @@ export const Calendar = ({
             eventClick={handleEventClick}
             dateClick={handleDateClick}
             datesSet={handleDatesSet}
-            dayHeaderFormat={{ weekday: isMobile ? "narrow" : "short" }}
+            dayHeaderFormat={{ weekday: "short" }}
           />
         </div>
       </div>

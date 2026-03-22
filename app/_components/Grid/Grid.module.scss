@@ -121,6 +121,21 @@
   object-fit: contain;
 }
 
+.portraitWrap {
+  position: absolute;
+  left: -6px;
+  bottom: 0;
+  height: 104px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.portraitImg {
+  height: 100% !important;
+  width: auto !important;
+  object-fit: contain;
+}
+
 .bikeBackdrop {
   position: absolute;
   inset: auto auto 0 0;
@@ -228,12 +243,16 @@
 
 @media (max-width: 700px) {
   .rows {
-    gap: 10px;
+    gap: 14px;
   }
 
   .row {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 14px;
+  }
+
+  .cell {
+    padding-top: 18px;
   }
 
   .left,
@@ -242,18 +261,49 @@
     margin-top: 0;
   }
 
-  .cell {
-    padding-top: 0;
-  }
-
   .posLabel {
-    left: auto;
-    right: 14px;
-    top: 10px;
-    z-index: 3;
+    top: 0;
+    left: 2px;
+    right: auto;
+    z-index: 1;
   }
 
   .card {
-    height: 110px;
+    height: 116px;
+    padding: 14px 14px 12px;
+  }
+
+  .bikeWrap {
+    left: 0;
+    bottom: -2px;
+    height: 92px;
+  }
+
+  .portraitWrap {
+    left: -6px;
+    bottom: -2px;
+    height: 104px;
+  }
+
+  .textWrap {
+    margin-left: 92px;
+    padding-right: 52px;
+  }
+
+  .name {
+    font-size: 0.92rem;
+  }
+
+  .meta {
+    font-size: 0.74rem;
+  }
+
+  .numberPill {
+    top: 12px;
+    right: 12px;
+    min-width: 32px;
+    min-height: 26px;
+    padding: 0 8px;
+    font-size: 0.84rem;
   }
 }

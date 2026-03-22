@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import type { Rider } from "@/models/rider";
 import style from "./Grid.module.scss";
@@ -28,6 +28,16 @@ export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
   const [eventName, setEventName] = useState<string | null>(null);
   const [sessions, setSessions] = useState<Sessions>({ Q1: null, Q2: null });
   const [gridData, setGridData] = useState<GridData | null>(null);
+
+  const ridersByExternalId = useMemo(
+    () => new Map(_riders.map((rider) => [rider.id, rider])),
+    [_riders]
+  );
+
+  const ridersByNumber = useMemo(
+    () => new Map(_riders.map((rider) => [rider.number, rider])),
+    [_riders]
+  );
 
   useEffect(() => {
     let alive = true;
@@ -133,9 +143,28 @@ export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
           {gridRows.map((row, rowIndex) => (
             <div key={rowIndex} className={style.row}>
               {row.map((item, colIndex) => {
-                const cardBg = item.teamColor ?? "#161616";
-                const pillBg = item.teamColor ?? "#333";
-                const pillText = item.textColor ?? "#fff";
+                const riderFallback =
+                  (item.riderExternalId ? ridersByExternalId.get(item.riderExternalId) : undefined) ??
+                  (item.riderNumber != null ? ridersByNumber.get(item.riderNumber) : undefined);
+
+                const riderName =
+                  item.riderName?.trim() ||
+                  [riderFallback?.name, riderFallback?.surname].filter(Boolean).join(" ") ||
+                  "Unknown rider";
+                const teamName = item.teamName?.trim() || riderFallback?.sponsoredTeam || null;
+                const riderNumber = item.riderNumber ?? riderFallback?.number ?? null;
+                const teamColor = item.teamColor ?? riderFallback?.teamColor ?? "#161616";
+                const textColor = item.textColor ?? riderFallback?.textColor ?? "#fff";
+                const portraitPicture =
+                  item.pictures?.portrait ??
+                  item.pictures?.profile ??
+                  riderFallback?.pictures.portrait ??
+                  riderFallback?.pictures.profile.main ??
+                  null;
+
+                const cardBg = teamColor;
+                const pillBg = teamColor;
+                const pillText = textColor;
 
                 return (
                   <div
@@ -146,36 +175,36 @@ export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
                     <div className={style.card} style={{ background: cardBg }}>
                       <div className={style.bikeBackdrop} />
 
-                      {item.riderNumber != null && (
+                      {riderNumber != null && (
                         <span
                           className={style.numberPill}
                           style={{ background: pillBg, color: pillText }}
                         >
-                          {item.riderNumber}
+                          {riderNumber}
                         </span>
                       )}
 
-                      {item.pictures?.bike && (
-                        <div className={style.bikeWrap}>
+                      {portraitPicture && (
+                        <div className={style.portraitWrap}>
                           <Image
-                            src={item.pictures.bike}
+                            src={portraitPicture}
                             alt=""
                             width={80}
-                            height={56}
-                            className={style.bikeImg}
+                            height={110}
+                            className={style.portraitImg}
                             unoptimized
                           />
                         </div>
                       )}
 
                         <div className={style.textWrap}>
-                          <div className={style.name}>{item.riderName}</div>
-                          {item.teamName && (
+                          <div className={style.name}>{riderName}</div>
+                          {teamName && (
                             <div
                               className={style.meta}
-                              style={{ color: item.textColor ?? "rgba(255,255,255,0.6)" }}
+                              style={{ color: textColor ?? "rgba(255,255,255,0.6)" }}
                             >
-                              {item.teamName}
+                              {teamName}
                             </div>
                           )}
                       </div>

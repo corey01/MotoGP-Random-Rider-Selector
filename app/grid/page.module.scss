@@ -1,0 +1,25 @@
+.page {
+  min-height: calc(100vh - 52px);
+  background: var(--kc-base);
+  padding: 24px 20px 40px;
+}
+
+.panel {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.01));
+}
+
+@media (max-width: 700px) {
+  .page {
+    padding: 16px 12px 28px;
+  }
+
+  .panel {
+    padding: 18px;
+    border-radius: 14px;
+  }
+}
