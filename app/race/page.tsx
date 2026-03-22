@@ -7,8 +7,7 @@ import { format } from "date-fns";
 import { fetchCalendarEvents, type ApiCalendarEvent } from "@/utils/getCalendarData";
 import { RaceGrid } from "@/app/_components/Grid/RaceGrid";
 import { RaceResults } from "@/app/_components/Results/RaceResults";
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+import style from "./RacePage.module.scss";
 
 const SESSION_ORDER: Record<string, number> = {
   PRACTICE: 0,
@@ -24,10 +23,10 @@ const SUBSERIES_LABEL: Record<string, string> = {
 
 const RACING_TYPES = new Set(["PRACTICE", "QUALIFYING", "RACE"]);
 
-const TYPE_COLOR: Record<string, string> = {
-  PRACTICE:   "#4a9eff",
-  QUALIFYING: "#f5c842",
-  RACE:       "#ff6b35",
+const TYPE_TONE_CLASS: Record<string, string> = {
+  PRACTICE: style.practiceTone,
+  QUALIFYING: style.qualifyingTone,
+  RACE: style.raceTone,
 };
 
 function cleanSessionName(ev: ApiCalendarEvent): string {
@@ -42,22 +41,36 @@ function sessionAbbrev(ev: ApiCalendarEvent): string {
   const name = cleanSessionName(ev).toLowerCase();
   if (/grand prix/i.test(name)) return "GP";
   if (/sprint/i.test(name)) return "SPR";
-  if (/fp(\d)/.test(name)) return name.match(/fp\d/i)![0].toUpperCase();
-  if (/^q(\d)/.test(name)) return name.match(/^q\d/i)![0].toUpperCase();
+  if (/fp(\d)/.test(name)) return name.match(/fp\d/i)?.[0].toUpperCase() ?? "FP";
+  if (/^q(\d)/.test(name)) return name.match(/^q\d/i)?.[0].toUpperCase() ?? "Q";
   if (/warm.?up/i.test(name)) return "WU";
   if (/practice/i.test(name)) return "P";
   return ev.type?.slice(0, 2) ?? "?";
 }
 
 function formatDayHeader(iso: string): string {
-  try { return format(new Date(iso), "EEEE d MMMM"); } catch { return iso; }
+  try {
+    return format(new Date(iso), "EEEE d MMMM");
+  } catch {
+    return iso;
+  }
 }
 
 function formatTime(iso: string): string {
-  try { return format(new Date(iso), "HH:mm 'UTC'"); } catch { return iso; }
+  try {
+    return format(new Date(iso), "HH:mm 'UTC'");
+  } catch {
+    return iso;
+  }
 }
 
-// ─── Inner page (needs Suspense because of useSearchParams) ───────────────────
+function formatDateLabel(iso: string): string {
+  try {
+    return format(new Date(iso), "d MMM yyyy");
+  } catch {
+    return iso;
+  }
+}
 
 function RacePage() {
   const searchParams = useSearchParams();
@@ -69,7 +82,11 @@ function RacePage() {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    if (!roundId) { setNotFound(true); setLoading(false); return; }
+    if (!roundId) {
+      setNotFound(true);
+      setLoading(false);
+      return;
+    }
 
     let alive = true;
     const year = Number(process.env.NEXT_PUBLIC_MOTOGP_SEASON_YEAR || new Date().getFullYear());
@@ -77,38 +94,62 @@ function RacePage() {
     fetchCalendarEvents({ year, series: ["motogp"] })
       .then((all) => {
         if (!alive) return;
-        const forRound = all.filter((e) => e.round?.id === roundId);
-        if (forRound.length === 0) setNotFound(true);
-        else setEvents(forRound);
+        const forRound = all.filter((event) => event.round?.id === roundId);
+        if (forRound.length === 0) {
+          setNotFound(true);
+        } else {
+          setEvents(forRound);
+        }
         setLoading(false);
       })
-      .catch(() => { if (alive) { setNotFound(true); setLoading(false); } });
+      .catch(() => {
+        if (alive) {
+          setNotFound(true);
+          setLoading(false);
+        }
+      });
 
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, [roundId]);
 
   if (loading) {
-    return <div style={pageStyle}><p>Loading…</p></div>;
+    return (
+      <div className={style.page}>
+        <div className={style.statePanel}>
+          <p className={style.stateLabel}>Loading race weekend…</p>
+        </div>
+      </div>
+    );
   }
 
   if (notFound || !roundId) {
     return (
-      <div style={pageStyle}>
-        <p>Round not found.</p>
-        <Link href="/">← Back to calendar</Link>
+      <div className={style.page}>
+        <div className={style.statePanel}>
+          <p className={style.stateLabel}>Round not found.</p>
+          <Link href="/calendar" className={style.backLink}>
+            Back to calendar
+          </Link>
+        </div>
       </div>
     );
   }
 
   const first = events[0];
   const round = first.round;
+  const sortedByStart = [...events].sort(
+    (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
+  );
+  const firstEvent = sortedByStart[0];
+  const lastEvent = sortedByStart[sortedByStart.length - 1];
 
-  // Group sessions by subSeries, sorted by session type then start time
   const bySubSeries = new Map<string, ApiCalendarEvent[]>();
-  for (const ev of events) {
-    const key = ev.subSeries || ev.series || "motogp";
+  for (const event of events) {
+    const key = event.subSeries || event.series || "motogp";
     if (!bySubSeries.has(key)) bySubSeries.set(key, []);
-    bySubSeries.get(key)!.push(ev);
+    bySubSeries.get(key)?.push(event);
   }
 
   const subSeriesOrder = ["motogp", "moto2", "moto3"];
@@ -125,155 +166,147 @@ function RacePage() {
   }
 
   return (
-    <div style={pageStyle}>
-      <Link href="/" style={backLinkStyle}>← Back to calendar</Link>
+    <div className={style.page}>
+      <Link href="/calendar" className={style.backLink}>
+        Back to calendar
+      </Link>
 
-      {/* Round header */}
-      <div style={headerStyle}>
-        <h1 style={{ margin: "0 0 4px", fontFamily: "var(--font-motogp-font)" }}>{round?.name || "Grand Prix"}</h1>
-        <p style={{ margin: 0, opacity: 0.7 }}>
-          {[round?.circuit, round?.country].filter(Boolean).join(" · ")}
-          {first.start && ` · ${format(new Date(first.start), "do MMMM yyyy")}`}
-        </p>
+      <section className={style.hero}>
+        <div className={style.heroBackdrop}>
+          {String(roundId).padStart(2, "0")}
+        </div>
+
+        <div className={style.heroTopline}>
+          <span className={style.eyebrow}>Round Details</span>
+          <span className={style.heroRoundTag}>Round {String(roundId).padStart(2, "0")}</span>
+        </div>
+
+        <div className={style.heroGrid}>
+          <div className={style.heroCopy}>
+            <p className={style.heroLabel}>MotoGP Weekend</p>
+            <h1 className={style.heroTitle}>{round?.name || "Grand Prix"}</h1>
+            <p className={style.heroSummary}>
+              {[round?.circuit, round?.country].filter(Boolean).join(" · ")}
+            </p>
+          </div>
+
+          <div className={style.metrics}>
+            <div className={style.metric}>
+              <span className={style.metricLabel}>Weekend window</span>
+              <strong className={style.metricValue}>
+                {firstEvent?.start ? formatDateLabel(firstEvent.start) : "TBC"}
+              </strong>
+              <span className={style.metricMeta}>
+                {lastEvent?.start ? `to ${formatDateLabel(lastEvent.start)}` : ""}
+              </span>
+            </div>
+            <div className={style.metric}>
+              <span className={style.metricLabel}>Sessions loaded</span>
+              <strong className={style.metricValue}>{events.length}</strong>
+              <span className={style.metricMeta}>Across all classes</span>
+            </div>
+            <div className={style.metric}>
+              <span className={style.metricLabel}>Classes in focus</span>
+              <strong className={style.metricValue}>{sortedSubSeries.length}</strong>
+              <span className={style.metricMeta}>
+                {sortedSubSeries
+                  .map((subSeries) => SUBSERIES_LABEL[subSeries] ?? subSeries.toUpperCase())
+                  .join(" · ")}
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className={style.sectionGrid}>
+        <section className={style.primarySection}>
+          <div className={style.sectionHeader}>
+            <div>
+              <p className={style.sectionEyebrow}>Results</p>
+              <h2 className={style.sectionTitle}>Race classification</h2>
+            </div>
+          </div>
+          <RaceResults roundId={roundId} />
+        </section>
+
+        <section className={style.secondarySection}>
+          <div className={style.sectionHeader}>
+            <div>
+              <p className={style.sectionEyebrow}>Grid</p>
+              <h2 className={style.sectionTitle}>Starting order</h2>
+            </div>
+          </div>
+          <RaceGrid roundId={roundId} />
+        </section>
       </div>
 
-      {/* Race results */}
-      <section style={sectionStyle}>
-        <h2 style={sectionTitleStyle}>Results</h2>
-        <RaceResults roundId={roundId} />
-      </section>
+      <section className={style.scheduleSection}>
+        <div className={style.sectionHeader}>
+          <div>
+            <p className={style.sectionEyebrow}>Schedule</p>
+            <h2 className={style.sectionTitle}>Session timetable</h2>
+          </div>
+        </div>
 
-      {/* Starting grid */}
-      <section style={sectionStyle}>
-        <h2 style={sectionTitleStyle}>Starting Grid</h2>
-        <RaceGrid roundId={roundId} />
-      </section>
+        <div className={style.scheduleBlocks}>
+          {sortedSubSeries.map((subSeries) => {
+            const allSessions = bySubSeries.get(subSeries) ?? [];
+            const sessions = allSessions.filter((event) =>
+              RACING_TYPES.has(event.type?.toUpperCase() ?? "")
+            );
+            if (sessions.length === 0) return null;
 
-      {/* Session schedule */}
-      <section style={sectionStyle}>
-        <h2 style={sectionTitleStyle}>Session Schedule</h2>
-        {sortedSubSeries.map((sub) => {
-          const allSessions = bySubSeries.get(sub)!;
-          const sessions = allSessions.filter((ev) => RACING_TYPES.has(ev.type?.toUpperCase() ?? ""));
-          if (sessions.length === 0) return null;
+            const byDay = new Map<string, ApiCalendarEvent[]>();
+            for (const event of sessions) {
+              const day = formatDayHeader(event.start);
+              if (!byDay.has(day)) byDay.set(day, []);
+              byDay.get(day)?.push(event);
+            }
 
-          // Group by day
-          const byDay = new Map<string, ApiCalendarEvent[]>();
-          for (const ev of sessions) {
-            const day = formatDayHeader(ev.start);
-            if (!byDay.has(day)) byDay.set(day, []);
-            byDay.get(day)!.push(ev);
-          }
+            const label = SUBSERIES_LABEL[subSeries] ?? subSeries.toUpperCase();
 
-          const label = SUBSERIES_LABEL[sub] ?? sub.toUpperCase();
-          return (
-            <div key={sub} style={subSeriesBlockStyle}>
-              <h3 style={subSeriesTitleStyle}>{label}</h3>
-              {Array.from(byDay.entries()).map(([day, daySessions]) => (
-                <div key={day} style={{ marginBottom: 12 }}>
-                  <div style={dayHeaderStyle}>{day}</div>
-                  {daySessions.map((ev) => {
-                    const color = TYPE_COLOR[ev.type?.toUpperCase() ?? ""] ?? "#666";
-                    const isLive = ev.status === "LIVE";
-                    const isDone = ev.status === "COMPLETED";
-                    return (
-                      <div key={ev.id} style={sessionRowStyle}>
-                        <div style={{ width: 36, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          <span style={{
-                            fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.03em",
-                            color, background: `${color}22`, borderRadius: 4,
-                            padding: "2px 5px", textTransform: "uppercase",
-                          }}>
-                            {sessionAbbrev(ev)}
-                          </span>
-                        </div>
-                        <div style={{ flex: 1, fontWeight: 600, fontSize: "0.88rem", minWidth: 0 }}>
-                          {cleanSessionName(ev)}
-                        </div>
-                        <div style={{ fontSize: "0.8rem", opacity: 0.55, flexShrink: 0, fontVariantNumeric: "tabular-nums" }}>
-                          {formatTime(ev.start)}
-                        </div>
-                        {isLive && (
-                          <span style={{ fontSize: "0.7rem", color: "#ff4444", fontWeight: 700, flexShrink: 0, marginLeft: 8 }}>● LIVE</span>
-                        )}
-                        {isDone && (
-                          <span style={{ fontSize: "0.8rem", opacity: 0.35, flexShrink: 0, marginLeft: 8 }}>✓</span>
-                        )}
-                      </div>
-                    );
-                  })}
+            return (
+              <div key={subSeries} className={style.scheduleBlock}>
+                <div className={style.scheduleBlockHeader}>
+                  <h3 className={style.scheduleBlockTitle}>{label}</h3>
                 </div>
-              ))}
-            </div>
-          );
-        })}
+
+                {Array.from(byDay.entries()).map(([day, daySessions]) => (
+                  <div key={day} className={style.dayBlock}>
+                    <div className={style.dayHeader}>{day}</div>
+
+                    <div className={style.sessionList}>
+                      {daySessions.map((event) => {
+                        const typeKey = event.type?.toUpperCase() ?? "";
+                        const toneClass = TYPE_TONE_CLASS[typeKey] ?? "";
+                        const isLive = event.status === "LIVE";
+                        const isDone = event.status === "COMPLETED";
+
+                        return (
+                          <div key={event.id} className={style.sessionRow}>
+                            <span className={`${style.sessionBadge} ${toneClass}`}>
+                              {sessionAbbrev(event)}
+                            </span>
+                            <div className={style.sessionCopy}>
+                              <span className={style.sessionName}>{cleanSessionName(event)}</span>
+                              <span className={style.sessionTime}>{formatTime(event.start)}</span>
+                            </div>
+                            {isLive && <span className={style.liveState}>Live</span>}
+                            {isDone && <span className={style.doneState}>Done</span>}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            );
+          })}
+        </div>
       </section>
     </div>
   );
 }
-
-// ─── Styles ───────────────────────────────────────────────────────────────────
-
-const pageStyle: React.CSSProperties = {
-  maxWidth: 900,
-  margin: "0 auto",
-  padding: "16px 16px 64px",
-  fontFamily: "system-ui, sans-serif",
-};
-
-const backLinkStyle: React.CSSProperties = {
-  display: "inline-block",
-  marginBottom: 20,
-  opacity: 0.7,
-  fontSize: 14,
-};
-
-const headerStyle: React.CSSProperties = {
-  marginBottom: 32,
-};
-
-const sectionStyle: React.CSSProperties = {
-  marginBottom: 40,
-};
-
-const sectionTitleStyle: React.CSSProperties = {
-  margin: "0 0 16px",
-  fontSize: "1.1rem",
-  fontWeight: 700,
-  textTransform: "uppercase",
-  letterSpacing: "0.05em",
-  opacity: 0.6,
-};
-
-const subSeriesBlockStyle: React.CSSProperties = {
-  marginBottom: 24,
-};
-
-const subSeriesTitleStyle: React.CSSProperties = {
-  margin: "0 0 8px",
-  fontSize: "1rem",
-  fontWeight: 700,
-};
-
-const dayHeaderStyle: React.CSSProperties = {
-  fontSize: "0.7rem",
-  fontWeight: 700,
-  textTransform: "uppercase",
-  letterSpacing: "0.08em",
-  opacity: 0.35,
-  marginBottom: 4,
-  paddingLeft: 4,
-};
-
-const sessionRowStyle: React.CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  gap: 10,
-  padding: "7px 4px",
-  borderBottom: "1px solid rgba(128,128,128,0.1)",
-};
-
-// ─── Export ───────────────────────────────────────────────────────────────────
 
 export default function RaceInfoPage() {
   return (
