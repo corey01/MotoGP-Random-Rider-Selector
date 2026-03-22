@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/app/_components/AuthProvider";
 import {
@@ -25,6 +25,7 @@ import { getRiderData, fetchGrid } from "@/utils/getRiderData";
 import type { GridEntry } from "@/utils/getRiderData";
 import type { Rider } from "@/models/rider";
 import RiderCard from "@/app/_components/RiderCard";
+import { buildPathWithReturnTo, getCurrentPath } from "@/utils/returnTo";
 import style from "./SweepstakeWizard.module.scss";
 
 type Round = { id: number; name: string; place: string | null; country: string | null };
@@ -52,6 +53,7 @@ const STEP_LABELS = ["Setup", "Participants", "Riders", "Results"];
 
 function WizardContent() {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const router = useRouter();
   const { isAuthenticated, isLoading } = useAuth();
 
@@ -96,8 +98,12 @@ function WizardContent() {
   const [generateError, setGenerateError] = useState("");
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) router.replace("/login");
-  }, [isLoading, isAuthenticated, router]);
+    if (!isLoading && !isAuthenticated) {
+      router.replace(
+        buildPathWithReturnTo("/login", getCurrentPath(pathname, searchParams)),
+      );
+    }
+  }, [isLoading, isAuthenticated, pathname, router, searchParams]);
 
   // ── Initialise wizard ────────────────────────────────────────────────────────
   useEffect(() => {

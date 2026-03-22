@@ -1,9 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/app/_components/AuthProvider";
 import { fetchWithAuth } from "@/utils/auth";
+import { buildPathWithReturnTo, getCurrentPath } from "@/utils/returnTo";
 import style from "./Admin.module.scss";
 
 // --- Types ---
@@ -270,6 +271,8 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
 export default function AdminPage() {
   const { isAdmin, isAuthenticated, isLoading, user, logout } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const [year, setYear] = useState(CURRENT_YEAR);
   const [running, setRunning] = useState<Set<ButtonKey>>(new Set());
@@ -284,9 +287,11 @@ export default function AdminPage() {
   // hasn't resolved yet or the user lacks the admin role.
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.replace("/login");
+      router.replace(
+        buildPathWithReturnTo("/login", getCurrentPath(pathname, searchParams)),
+      );
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isAuthenticated, isLoading, pathname, router, searchParams]);
 
   const showToast = useCallback((msg: string, ok: boolean) => {
     setToast({ msg, ok });

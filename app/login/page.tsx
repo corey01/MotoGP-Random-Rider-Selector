@@ -2,12 +2,21 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "@/app/_components/AuthProvider";
+import {
+  buildPathWithReturnTo,
+  normalizeReturnTo,
+  RETURN_TO_PARAM,
+} from "@/utils/returnTo";
 import style from "./Login.module.scss";
 
 export default function LoginPage() {
   const { login, loginWithGoogle } = useAuth();
+  const searchParams = useSearchParams();
+  const returnTo = normalizeReturnTo(searchParams.get(RETURN_TO_PARAM));
+  const registerHref = buildPathWithReturnTo("/register", returnTo);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -86,7 +95,7 @@ export default function LoginPage() {
         </button>
 
         <p className={style.registerLink}>
-          Don&apos;t have an account? <Link href="/register">Create one</Link>
+          Don&apos;t have an account? <Link href={registerHref}>Create one</Link>
         </p>
       </form>
     </div>

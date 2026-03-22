@@ -64,14 +64,19 @@ const bySessionOrder = (left: CalendarSession, right: CalendarSession) =>
   (SESSION_ORDER[left.type] ?? 99) - (SESSION_ORDER[right.type] ?? 99) ||
   new Date(left.start).getTime() - new Date(right.start).getTime();
 
-const formatTimezoneLabel = (timezone: string) => {
-  if (!timezone) return "";
-  return timezone === "UTC" ? "GMT" : timezone;
+const getDeviceTimezoneLabel = (date: Date) => {
+  try {
+    const parts = new Intl.DateTimeFormat(undefined, { timeZoneName: "short" }).formatToParts(date);
+    return parts.find((part) => part.type === "timeZoneName")?.value?.toUpperCase() ?? "";
+  } catch {
+    return "";
+  }
 };
 
 const formatSessionTimeRange = (session: CalendarSession) => {
-  const start = format(parseISO(session.start), "HH:mm");
-  const timezoneLabel = formatTimezoneLabel(session.timezone);
+  const startDate = parseISO(session.start);
+  const start = format(startDate, "HH:mm");
+  const timezoneLabel = getDeviceTimezoneLabel(startDate);
 
   if (!session.end || session.end === session.start) {
     return timezoneLabel ? `${start} ${timezoneLabel}` : start;

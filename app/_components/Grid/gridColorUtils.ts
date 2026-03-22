@@ -65,13 +65,14 @@ const contrastRatio = (a: RGB, b: RGB) => {
 
 export const getReadableTextColor = (
   backgroundColor?: string | null,
-  preferredTextColor?: string | null
+  preferredTextColor?: string | null,
+  minContrast = 4.5
 ) => {
   const background = parseColor(backgroundColor);
   if (!background) return preferredTextColor || FALLBACK_LIGHT;
 
   const preferred = parseColor(preferredTextColor);
-  if (preferred && contrastRatio(background, preferred) >= 4.5) {
+  if (preferred && contrastRatio(background, preferred) >= minContrast) {
     return preferredTextColor!;
   }
 
@@ -81,4 +82,23 @@ export const getReadableTextColor = (
   return contrastRatio(background, dark) >= contrastRatio(background, light)
     ? FALLBACK_DARK
     : FALLBACK_LIGHT;
+};
+
+export const getReadableAccentColor = (
+  backgroundColor?: string | null,
+  preferredAccentColor?: string | null,
+  minContrast = 1.5
+) => {
+  const background = parseColor(backgroundColor);
+  const preferred = parseColor(preferredAccentColor);
+
+  if (!background || !preferred) {
+    return getReadableTextColor(backgroundColor, preferredAccentColor);
+  }
+
+  if (contrastRatio(background, preferred) >= minContrast) {
+    return preferredAccentColor!;
+  }
+
+  return getReadableTextColor(backgroundColor, preferredAccentColor);
 };

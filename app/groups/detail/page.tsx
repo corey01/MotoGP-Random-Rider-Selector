@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState, useRef, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/_components/AuthProvider";
 import {
   fetchGroup,
@@ -18,6 +17,7 @@ import {
   type GroupMember,
   type SweepstakeSummary,
 } from "@/utils/groups";
+import { buildPathWithReturnTo, getCurrentPath } from "@/utils/returnTo";
 import style from "./GroupDetail.module.scss";
 
 function formatRoundLabel(s: SweepstakeSummary): string {
@@ -28,6 +28,7 @@ function formatRoundLabel(s: SweepstakeSummary): string {
 
 function GroupDetailContent() {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const groupId = Number(searchParams.get("id"));
 
   const { isAuthenticated, isLoading } = useAuth();
@@ -50,9 +51,11 @@ function GroupDetailContent() {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.replace("/login");
+      router.replace(
+        buildPathWithReturnTo("/login", getCurrentPath(pathname, searchParams)),
+      );
     }
-  }, [isLoading, isAuthenticated, router]);
+  }, [isLoading, isAuthenticated, pathname, router, searchParams]);
 
   useEffect(() => {
     if (!isAuthenticated || !groupId) return;

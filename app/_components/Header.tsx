@@ -1,16 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "./AuthProvider";
+import { buildPathWithReturnTo, getCurrentPath } from "@/utils/returnTo";
 import style from "./Header.module.scss";
 
 export default function Header() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { isAuthenticated, isAdmin, isLegacy, logout, user } = useAuth();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const loginHref = buildPathWithReturnTo("/login", getCurrentPath(pathname, searchParams));
 
   const handleLogout = async () => {
     await logout();
@@ -69,7 +72,7 @@ export default function Header() {
               </button>
             </>
           ) : (
-            <Link href="/login" className={style.signIn}>Sign in</Link>
+            <Link href={loginHref} className={style.signIn}>Sign in</Link>
           )}
 
           {/* Hamburger (mobile) */}
@@ -110,7 +113,7 @@ export default function Header() {
                 </li>
               ) : (
                 <li>
-                  <Link href="/login" onClick={() => setMenuOpen(false)}>Sign in</Link>
+                  <Link href={loginHref} onClick={() => setMenuOpen(false)}>Sign in</Link>
                 </li>
               )}
             </ul>

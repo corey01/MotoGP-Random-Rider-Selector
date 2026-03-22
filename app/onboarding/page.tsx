@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/app/_components/AuthProvider";
 import { apiOnboarding } from "@/utils/auth";
 import { SERIES_GROUPS } from "@/app/_components/Calendar/filterConfig";
+import { normalizeReturnTo, RETURN_TO_PARAM } from "@/utils/returnTo";
 import style from "./Onboarding.module.scss";
 
 const SERIES_COLORS: Record<string, string> = {
@@ -18,6 +19,8 @@ const SERIES_COLORS: Record<string, string> = {
 export default function OnboardingPage() {
   const { updateUser } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnTo = normalizeReturnTo(searchParams.get(RETURN_TO_PARAM));
   const [selected, setSelected] = useState<Set<string>>(new Set(["motogp"]));
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -44,7 +47,7 @@ export default function OnboardingPage() {
     try {
       await apiOnboarding(Array.from(selected));
       updateUser({ onboardingComplete: true });
-      router.replace("/");
+      router.replace(returnTo ?? "/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {

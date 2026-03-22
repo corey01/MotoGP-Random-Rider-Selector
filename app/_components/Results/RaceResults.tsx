@@ -3,7 +3,7 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import { fetchRaceResults, type RaceResultsData, type RaceResultItem } from "@/utils/getRaceResults";
-import { getReadableTextColor } from "@/app/_components/Grid/gridColorUtils";
+import { getReadableAccentColor } from "@/app/_components/Grid/gridColorUtils";
 import style from "./RaceResults.module.scss";
 
 const SESSION_LABEL: Record<string, string> = {
@@ -42,7 +42,7 @@ function ResultRow({ item }: { item: RaceResultItem }) {
   const dnf = isDNF(item);
   const accentColor = safeAccent(item.teamColor);
   const numberBackground = "#262626";
-  const numberColor = getReadableTextColor(numberBackground, item.teamColor);
+  const numberColor = getReadableAccentColor(numberBackground, accentColor, 2.1);
 
   return (
     <div

@@ -2,13 +2,21 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/app/_components/AuthProvider";
+import {
+  buildPathWithReturnTo,
+  normalizeReturnTo,
+  RETURN_TO_PARAM,
+} from "@/utils/returnTo";
 import style from "./Register.module.scss";
 
 export default function RegisterPage() {
   const { register } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnTo = normalizeReturnTo(searchParams.get(RETURN_TO_PARAM));
+  const loginHref = buildPathWithReturnTo("/login", returnTo);
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +34,7 @@ export default function RegisterPage() {
     setSubmitting(true);
     try {
       await register(email, password, displayName);
-      router.replace("/onboarding");
+      router.replace(buildPathWithReturnTo("/onboarding", returnTo));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
     } finally {
@@ -94,7 +102,7 @@ export default function RegisterPage() {
         </button>
 
         <p className={style.loginLink}>
-          Already have an account? <Link href="/login">Sign in</Link>
+          Already have an account? <Link href={loginHref}>Sign in</Link>
         </p>
       </form>
     </div>

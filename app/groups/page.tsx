@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/app/_components/AuthProvider";
 import {
   createGroup,
@@ -13,11 +13,14 @@ import {
   type GroupWithRole,
   type PendingInvite,
 } from "@/utils/groups";
+import { buildPathWithReturnTo, getCurrentPath } from "@/utils/returnTo";
 import style from "./Groups.module.scss";
 
 function GroupsContent() {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const [groups, setGroups] = useState<GroupWithRole[]>([]);
   const [invites, setInvites] = useState<PendingInvite[]>([]);
@@ -33,9 +36,11 @@ function GroupsContent() {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.replace("/login");
+      router.replace(
+        buildPathWithReturnTo("/login", getCurrentPath(pathname, searchParams)),
+      );
     }
-  }, [isLoading, isAuthenticated, router]);
+  }, [isLoading, isAuthenticated, pathname, router, searchParams]);
 
   useEffect(() => {
     if (!isAuthenticated) return;

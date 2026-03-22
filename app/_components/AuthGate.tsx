@@ -1,8 +1,14 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "./AuthProvider";
+import {
+  buildPathWithReturnTo,
+  getCurrentPath,
+  normalizeReturnTo,
+  RETURN_TO_PARAM,
+} from "@/utils/returnTo";
 
 const PUBLIC_PATHS = ["/login", "/register"];
 const ONBOARDING_PATH = "/onboarding";
@@ -10,7 +16,9 @@ const ONBOARDING_PATH = "/onboarding";
 export function AuthGate({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading, user } = useAuth();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const returnTo = normalizeReturnTo(searchParams.get(RETURN_TO_PARAM));
 
   useEffect(() => {
     if (isLoading) return;
@@ -19,19 +27,20 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
     const isOnboarding = pathname === ONBOARDING_PATH;
 
     if (!isAuthenticated && !isPublic && !isOnboarding) {
-      router.replace("/login");
+      const currentPath = getCurrentPath(pathname, searchParams);
+      router.replace(buildPathWithReturnTo("/login", currentPath));
       return;
     }
 
     if (isAuthenticated && user && !user.onboardingComplete && !isOnboarding) {
-      router.replace("/onboarding");
+      router.replace(buildPathWithReturnTo(ONBOARDING_PATH, returnTo));
       return;
     }
 
     if (isAuthenticated && user?.onboardingComplete && (isPublic || isOnboarding)) {
-      router.replace("/");
+      router.replace(returnTo ?? "/");
     }
-  }, [isLoading, isAuthenticated, user, pathname, router]);
+  }, [isLoading, isAuthenticated, pathname, returnTo, router, searchParams, user]);
 
   if (isLoading) {
     return (
