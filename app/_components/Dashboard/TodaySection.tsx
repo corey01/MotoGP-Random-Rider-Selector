@@ -189,28 +189,32 @@ export function TodaySection({ events }: TodaySectionProps) {
                   className={`${style.raceRow} ${status === "done" ? style.past : ""}`}
                   style={{ "--series-color": group.seriesColor } as React.CSSProperties}
                 >
-                  <div className={style.raceLeft}>
-                    <span
-                      className={style.classBadge}
-                      style={{ background: group.seriesColor }}
-                    >
-                      {subLabel}
-                    </span>
-                    <span className={style.raceName}>{sessionLabel}</span>
+                  <div className={style.raceMain}>
+                    <div className={style.raceLeft}>
+                      <span
+                        className={style.classBadge}
+                        style={{ background: group.seriesColor }}
+                      >
+                        {subLabel}
+                      </span>
+                      <span className={style.raceName}>{sessionLabel}</span>
+                    </div>
+                    <div className={style.raceRight}>
+                      <span className={style.raceTime}>
+                        {format(parseISO(ev.start), "HH:mm")}
+                      </span>
+                      {status === "done" && <span className={style.pastTag}>Done</span>}
+                    </div>
                   </div>
-                  <div className={style.raceRight}>
-                    <span className={style.raceTime}>
-                      {format(parseISO(ev.start), "HH:mm")}
-                    </span>
-                    {status === "live" && (
+                  {status === "live" && (
+                    <div className={style.liveRow}>
                       <span className={style.liveTag}>
                         {liveData?.isLive && liveData.remaining > 0
                           ? `Live · ${liveData.remaining} laps remaining`
                           : "Live"}
                       </span>
-                    )}
-                    {status === "done" && <span className={style.pastTag}>Done</span>}
-                  </div>
+                    </div>
+                  )}
                 </div>
               );
             })}
