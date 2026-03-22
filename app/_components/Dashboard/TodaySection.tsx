@@ -1,9 +1,13 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { format, parseISO } from "date-fns";
 import { type ApiCalendarEvent } from "@/utils/getCalendarData";
+import { fetchLiveSession, type LiveSessionData } from "@/utils/getLiveSession";
 import style from "./TodaySection.module.scss";
+
+const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
+const POLL_INTERVAL_MS = 30_000;
 
 const SUB_SERIES_LABELS: Record<string, string> = {
   motogp: "MotoGP",
@@ -26,6 +30,13 @@ const SERIES_COLORS: Record<string, string> = {
   f1: "var(--f1-red)",
 };
 
+// Normalise a category string from the live API to a subSeries slug
+// e.g. "Moto2" → "moto2", "MotoGP" → "motogp"
+function categoryToSubSeries(category: string | null): string | null {
+  if (!category) return null;
+  return category.toLowerCase().replace(/\s/g, "");
+}
+
 interface RoundGroup {
   roundId: number;
   roundName: string;
@@ -36,7 +47,8 @@ interface RoundGroup {
   others: ApiCalendarEvent[];
 }
 
-function getRaceStatus(ev: ApiCalendarEvent, now: number): "upcoming" | "live" | "done" {
+// Fallback heuristic used when the live endpoint hasn't confirmed status yet
+function getFallbackStatus(ev: ApiCalendarEvent, now: number): "upcoming" | "live" | "done" {
   const start = new Date(ev.start).getTime();
   if (start > now) return "upcoming";
   const isSprint = /sprint/i.test(ev.sessionName ?? "");
@@ -44,12 +56,56 @@ function getRaceStatus(ev: ApiCalendarEvent, now: number): "upcoming" | "live" |
   return now < start + minDurationMs ? "live" : "done";
 }
 
+// Returns true if we should be polling the live endpoint for this race
+function isWithinLiveWindow(ev: ApiCalendarEvent, now: number): boolean {
+  const start = new Date(ev.start).getTime();
+  // Within 2 hours before start, or started but fallback still says live
+  return start - now < TWO_HOURS_MS && getFallbackStatus(ev, now) !== "done";
+}
+
 interface TodaySectionProps {
   events: ApiCalendarEvent[];
 }
 
 export function TodaySection({ events }: TodaySectionProps) {
-  const now = Date.now();
+  const [now, setNow] = useState(() => Date.now());
+  const [liveData, setLiveData] = useState<LiveSessionData | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Tick once per minute to keep "now" current (for upcoming/done transitions)
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 60_000);
+    return () => clearInterval(id);
+  }, []);
+
+  // All race events from today
+  const raceEvents = useMemo(
+    () => events.filter((ev) => ev.type === "RACE"),
+    [events]
+  );
+
+  // Start/stop polling based on whether any race is within the live window
+  useEffect(() => {
+    const anyInWindow = raceEvents.some((ev) => isWithinLiveWindow(ev, now));
+
+    if (!anyInWindow) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+        setLiveData(null);
+      }
+      return;
+    }
+
+    // Poll immediately, then on interval
+    const poll = () => fetchLiveSession().then((d) => d && setLiveData(d));
+    poll();
+    intervalRef.current = setInterval(poll, POLL_INTERVAL_MS);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [raceEvents, now]);
 
   const groups = useMemo<RoundGroup[]>(() => {
     const map = new Map<number, RoundGroup>();
@@ -90,6 +146,16 @@ export function TodaySection({ events }: TodaySectionProps) {
   if (!groups.length) return null;
 
   const hasRaces = groups.some((g) => g.races.length > 0);
+  const liveSubSeries = liveData?.isLive ? categoryToSubSeries(liveData.category) : null;
+
+  const getRaceStatus = (ev: ApiCalendarEvent): "upcoming" | "live" | "done" => {
+    // If live endpoint confirms a specific class is live, trust it over the heuristic
+    if (liveData) {
+      if (liveData.isLive && liveSubSeries === ev.subSeries) return "live";
+      if (liveData.isDone && liveSubSeries === ev.subSeries) return "done";
+    }
+    return getFallbackStatus(ev, now);
+  };
 
   return (
     <section className={style.section}>
@@ -114,7 +180,7 @@ export function TodaySection({ events }: TodaySectionProps) {
 
             {/* Race sessions - visually prominent */}
             {group.races.map((ev) => {
-              const status = getRaceStatus(ev, now);
+              const status = getRaceStatus(ev);
               const subLabel = SUB_SERIES_LABELS[ev.subSeries] ?? ev.subSeries;
               const sessionLabel = ev.sessionName || "Race";
               return (
@@ -136,7 +202,13 @@ export function TodaySection({ events }: TodaySectionProps) {
                     <span className={style.raceTime}>
                       {format(parseISO(ev.start), "HH:mm")}
                     </span>
-                    {status === "live" && <span className={style.liveTag}>Live</span>}
+                    {status === "live" && (
+                      <span className={style.liveTag}>
+                        {liveData?.isLive && liveData.remaining > 0
+                          ? `Live · ${liveData.remaining} laps remaining`
+                          : "Live"}
+                      </span>
+                    )}
                     {status === "done" && <span className={style.pastTag}>Done</span>}
                   </div>
                 </div>
