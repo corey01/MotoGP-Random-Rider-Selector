@@ -1,47 +1,100 @@
-.riderList {
-  margin-top: 50px;
+.panel {
+  display: grid;
+  gap: 18px;
 }
 
-@media (min-width: 768px) {
-  .panel {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-
-    &::after {
-      content: "";
-      flex: 0 1 32%;
-      flex: 1;
-    }
-  }
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
+.eyebrow,
+.summary,
 .resetInstruct {
-  font-size: 0.8em;
-  text-align: center;
-  margin-bottom: 1em;
-  color: rgb(60, 60, 60);
+  font-family: var(--font-inter), sans-serif;
 }
 
-.guestTitle {
-  text-align: center;
-  margin: 1em 0;
-  font-weight: 600;
+.eyebrow {
+  margin-bottom: 6px;
+  color: var(--kc-primary);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.title {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.gridTop,
+.gridTopActive,
+.resetButton {
+  min-height: 44px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
 }
 
 .gridTop {
-  border: 2px solid black;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  background: var(--kc-surface-1);
+  color: var(--kc-primary);
 }
 
 .gridTopActive {
-  border: 2px solid black;
-  background-color: black;
-  color: #fff;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  background: linear-gradient(45deg, var(--kc-primary), #ff7856);
+  color: #111;
+}
+
+.resetButton {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--kc-text-1);
+}
+
+.summary {
+  max-width: 58ch;
+  color: var(--kc-text-2);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+
+  @media (min-width: 760px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 1180px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.empty {
+  color: var(--kc-text-2);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.resetInstruct {
+  color: var(--kc-text-3);
+  font-size: 0.84rem;
+  line-height: 1.6;
 }

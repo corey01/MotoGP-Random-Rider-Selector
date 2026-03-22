@@ -86,32 +86,50 @@ const RiderList = ({
 
   return (
     <div className={style.panel}>
-      {gridTopIds && (
-        <button
-          onClick={handleGridTopToggle}
-          className={gridTopActive ? style.gridTopActive : style.gridTop}
-        >
-          {gridTopActive ? "Show All Riders" : "Grid Top 10 Only"}
-        </button>
-      )}
+      <div className={style.header}>
+        <div>
+          <p className={style.eyebrow}>Rider Pool</p>
+          <h2 className={style.title}>Available riders</h2>
+        </div>
+        <div className={style.actions}>
+          {gridTopIds && (
+            <button
+              onClick={handleGridTopToggle}
+              className={gridTopActive ? style.gridTopActive : style.gridTop}
+              type="button"
+            >
+              {gridTopActive ? "Show full field" : "Grid top 10"}
+            </button>
+          )}
+          <button onClick={handleReset} className={style.resetButton} type="button">
+            Reset list
+          </button>
+        </div>
+      </div>
+
+      <p className={style.summary}>
+        {displayedRiders.length} rider{displayedRiders.length === 1 ? "" : "s"} available for the
+        draw. Remove anyone you do not want in the hat.
+      </p>
+
       {displayedRiders.length > 0 ? (
-        displayedRiders
-          .sort(sortRidersByNumber)
-          .map((rider) => (
-            <RiderCard
-              rider={rider}
-              removeEvent={handleRemoveRider}
-              key={rider.id}
-            />
-          ))
+        <div className={style.grid}>
+          {[...displayedRiders]
+            .sort(sortRidersByNumber)
+            .map((rider) => (
+              <RiderCard
+                rider={rider}
+                removeEvent={handleRemoveRider}
+                key={rider.id}
+              />
+            ))}
+        </div>
       ) : (
-        <p>No riders to display.</p>
+        <p className={style.empty}>No riders available in the current selection.</p>
       )}
-      <button onClick={handleReset} className="resetButton">
-        Reset Rider List
-      </button>
+
       <p className={style.resetInstruct}>
-        Note: Resetting the rider list will restore all removed riders.
+        Resetting the rider list restores every removed rider to the active pool.
       </p>
     </div>
   );

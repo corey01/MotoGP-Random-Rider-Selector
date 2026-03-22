@@ -1,50 +1,49 @@
 .listItem {
-  box-sizing: border-box;
-  margin-bottom: 10px;
-  /* border: 1px solid #000; */
-  border-radius: 4px;
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  min-height: 148px;
   overflow: hidden;
-  height: 140px;
-  align-items: center;
-  background-color: #222;
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 48%),
+    var(--kc-surface-1);
 }
 
-@media (min-width: 768px) {
-  .listItem {
-    width: 260px;
-  }
-}
-
-.listItem .remove svg {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  cursor: pointer;
-  width: 25px;
-}
-
-.listItem .details {
-  margin-left: 10px;
-  font-weight: bold;
-  font-size: 26px;
-  color: #fff;
-}
-
-.listItem .entrantPic {
-  height: 140px;
-  width: 140px;
-  position: relative;
-  overflow: hidden;
+.entrantPic {
+  width: 132px;
+  height: 100%;
   object-fit: cover;
 }
 
-.riderPic__img {
-  width: 160px;
+.details {
+  display: flex;
+  align-items: flex-end;
+  padding: 20px 18px;
+  color: var(--kc-text-1);
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.15rem);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
 }
 
-.listItem .team {
-  display: block;
-  font-size: 0.8rem;
+.remove {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--kc-text-1);
+  cursor: pointer;
+}
+
+.remove svg {
+  width: 18px;
+  height: 18px;
 }

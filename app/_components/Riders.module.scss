@@ -1,246 +1,359 @@
 .listItem {
-  margin-bottom: 10px;
-  border: 1px solid #000;
-  border-radius: 4px;
+  --team-accent: var(--kc-primary);
+
   position: relative;
   display: flex;
-  overflow: hidden;
-  padding: 10px 50px 30px 120px;
-  height: 140px;
-  align-items: center;
-  background-color: #222;
-  position: relative;
+  align-items: stretch;
+  min-height: 208px;
   width: 100%;
+  overflow: hidden;
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 48%),
+    linear-gradient(180deg, rgba(255, 143, 115, 0.08), transparent 42%),
+    var(--kc-surface-1);
 
-
-  .bikeImage {
+  &::before {
+    content: "";
     position: absolute;
-    top: 0;
-    right: 0;
-    left: 2em;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    z-index: 0;
-    opacity: 0.4;
-
-    &.altBikeImage {
-      left: 5em !important;
-    }
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: var(--team-accent);
+    opacity: 0.9;
   }
 }
 
-@media (min-width: 600px) {
-  .listItem {
-    width: 320px;
-  }
-}
-@media (min-width: 950px) {
-  .listItem {
-    width: 300px;
-  }
-}
-
-.listItem .remove svg {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  cursor: pointer;
-  width: 25px;
-}
-
-.listItem .details {
-  font-weight: bold;
-  font-size: 26px;
-  color: #fff;
-  width: 100%;
-  max-width: none;
-  position: static;
-  z-index: 1;
-}
-
-.listItem .riderNumber {
-  color: rgb(221, 72, 72);
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  font-size: 20px;
-}
-
-.listItem .riderPic {
-  height: 100px;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-.riderPic__img {
-  width: 250px;
-  position: absolute;
-  left: -60px;
-  display: block;
-  top: 10px;
-}
-
-.listItem .team {
-  display: inline-block;
-  font-size: 0.8rem;
-  line-height: 1.2;
-  margin-top: 2px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
-  max-width: 18ch;
-  white-space: normal;
-  overflow-wrap: break-word;
-  word-break: normal;
-  hyphens: none;
-  vertical-align: top;
-}
-
-.riderName {
-  font-size: 18px;
-  line-height: 0.92;
-  margin-bottom:4px;
-  margin-top: 4px;
-  display: block;
-  max-width: min(100%, 280px);
-  white-space: normal;
-  overflow-wrap: normal;
-  word-break: normal;
-}
-
-.riderNameCompact {
-  font-size: 18px;
-  line-height: 0.94;
-}
-
-@media (max-width: 700px) {
-  .listItem {
-    padding: 10px 52px 24px 116px;
-  }
-
-  .listItem .details {
-    width: 100%;
-    max-width: none;
-  }
-
-  .riderName {
-    font-size: 18px;
-    line-height: 0.92;
-    max-width: 100%;
-  }
-
-  .riderNameCompact {
-    font-size: 18px;
-    line-height: 0.94;
-  }
-
-  .listItem .team {
-    line-height: 1.15;
-    max-width: 16ch;
-  }
-}
-
-.addButton {
-  color: #fff;
-  border-radius: 100%;
-  font-size: 32px;
-  position: absolute;
-  top: 0.5rem;
-  right: 0.25rem;
-  cursor: pointer;
-  width: 35px;
-  height: 35px;
+.guest {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0) 48%),
+    linear-gradient(180deg, rgba(100, 150, 255, 0.12), transparent 42%),
+    var(--kc-surface-1);
 }
 
 .highlightGuest {
-  background-color: rgb(1, 1, 63);
+  --team-accent: #73a7ff;
+}
 
-  .displayGuestTitle {
-    font-size: 0.5em;
+.riderPic__img {
+  position: absolute;
+  left: -20px;
+  top: 10px;
+  width: 240px;
+  max-width: none;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.35));
+}
+
+.details {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  width: 100%;
+  min-height: 208px;
+  padding: 22px 20px 22px 144px;
+  color: var(--kc-text-1);
+}
+
+.kicker {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--kc-text-3);
+  line-height: 1.2;
+}
+
+.riderName {
+  display: block;
+  max-width: 12ch;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: clamp(1.45rem, 2.6vw, 2.15rem);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+
+.riderNameCompact {
+  font-size: clamp(1.3rem, 2.3vw, 1.9rem);
+}
+
+.displayGuestTitle {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.5em;
+  color: var(--kc-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.team {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 34px;
+  max-width: 22ch;
+  padding: 6px 10px 6px 12px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--team-accent);
   }
 }
 
-.resultsCard {
+.teamOutline {
+  color: var(--kc-text-1) !important;
+}
+
+.entrantTitle {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.9rem;
+  color: var(--kc-text-2);
+}
+
+.riderNumber {
+  margin-top: auto;
+  align-self: flex-end;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+.remove,
+.addButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--kc-text-1);
+  cursor: pointer;
+}
+
+.remove svg {
+  width: 18px;
+  height: 18px;
+}
+
+.addButton {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.entrantPic__container {
+  position: absolute;
+}
+
+.entrantPic__img {
   display: block;
+}
 
-  .riderName {
-    font-size: 24px;
-    line-height: 1.1;
-    margin-bottom: 4px;
-  }
+.towerName {
+  position: absolute;
+}
 
-  .entrantTitle {
-    font-size: 11px;
-    opacity: 0.7;
-    white-space: normal;
-    max-width: 14ch;
-    line-height: 1.2;
+.towerBar {
+  background: var(--team-accent);
+}
+
+.resultsCard {
+  --entrant-column: clamp(150px, 24vw, 220px);
+
+  min-height: 252px;
+  padding-right: var(--entrant-column);
+
+  .riderPic__img {
+    left: -12px;
+    width: 260px;
   }
 
   .details {
-    margin-right: 100px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    justify-content: center;
+    min-height: 252px;
+    padding: 24px 24px 24px 150px;
+  }
+
+  .riderName {
+    max-width: 10ch;
+    font-size: clamp(2rem, 4vw, 3.3rem);
+  }
+
+  .riderNameCompact {
+    font-size: clamp(1.75rem, 3.5vw, 2.8rem);
+  }
+
+  .team {
+    max-width: 26ch;
+    font-size: 0.88rem;
+  }
+
+  .entrantTitle {
+    font-size: 0.95rem;
+    color: var(--kc-text-2);
   }
 
   .entrantPic__container {
-    height: 140px;
-    width: 110px;
     position: absolute;
-    overflow: hidden;
     top: 0;
     right: 0;
+    width: var(--entrant-column);
+    height: 100%;
+    overflow: hidden;
+    background: var(--kc-surface-3);
   }
 
   .entrantPic__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top center;
+    object-position: center;
   }
 
   .towerName {
-    font-size: 12px;
-    background: rgb(55,70,67);
-    background: linear-gradient(90deg, rgba(55,70,67,1) 0%, rgba(21,34,22,1) 100%);
-    position: relative;
-    bottom: 34px;
-    z-index: 10;
-    padding: 10px 0 8px 10px;
-    text-align: left;
-    color: #fff;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
     display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 54px;
+    padding: 0 12px;
+    background: linear-gradient(90deg, rgba(23, 38, 29, 0.98), rgba(16, 23, 18, 0.98));
+    color: var(--kc-text-1);
+    font-family: var(--font-space-grotesk), sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
 
     .towerBar {
-      content: '';
       position: absolute;
-      width: 3px;
-      height: 100%;
       left: 0;
       top: 0;
+      bottom: 0;
+      width: 3px;
     }
 
     span {
-      text-align: right;
       margin-left: auto;
-      border-radius: 3px;
-      padding: 2px 3px;
-      margin-right: 4px;
-      margin-top: -1px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 1rem;
+      line-height: 1;
+      font-weight: 700;
     }
   }
 
   .riderNumber {
-    position: relative;
-    inset: 0;
+    align-self: flex-start;
+    margin-top: 0;
+    color: var(--team-accent) !important;
+    font-size: clamp(1.75rem, 3vw, 2.6rem);
   }
 }
 
-.teamOutline {
-  text-shadow: 0px 0px 7px #ffd900;
+@media (max-width: 680px) {
+  .listItem {
+    min-height: 180px;
+  }
+
+  .riderPic__img {
+    width: 190px;
+    left: -24px;
+  }
+
+  .details {
+    min-height: 180px;
+    padding: 18px 16px 18px 112px;
+  }
+
+  .riderName {
+    max-width: 11ch;
+    font-size: 1.55rem;
+  }
+
+  .team {
+    max-width: 16ch;
+    font-size: 0.76rem;
+  }
+
+  .riderNumber {
+    font-size: 1.35rem;
+  }
+
+  .resultsCard {
+    --entrant-column: min(42vw, 176px);
+
+    min-height: 240px;
+    padding-right: var(--entrant-column);
+
+    .riderPic__img {
+      width: 178px;
+      left: -22px;
+    }
+
+    .details {
+      min-height: 240px;
+      justify-content: center;
+      padding: 22px 14px 22px 96px;
+    }
+
+    .riderName {
+      max-width: 8ch;
+      font-size: 1.72rem;
+    }
+
+    .entrantTitle {
+      font-size: 0.82rem;
+    }
+
+    .entrantPic__container {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: var(--entrant-column);
+      height: 100%;
+    }
+
+    .entrantPic__img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .towerName {
+      min-height: 50px;
+      padding: 0 10px;
+      font-size: 0.92rem;
+
+      span {
+        font-size: 0.9rem;
+      }
+    }
+
+    .riderNumber {
+      font-size: 1.8rem;
+    }
+  }
 }

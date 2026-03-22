@@ -8,9 +8,9 @@ export interface AuthUser {
   email: string;
   role: "user" | "admin" | "legacy";
   displayName: string;
+  onboardingComplete: boolean;
+  profilePhotoUrl: string | null;
 }
-
-// --- Token storage ---
 
 export function getAccessToken(): string | null {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -29,8 +29,6 @@ export function clearTokens() {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
   localStorage.removeItem(REFRESH_TOKEN_KEY);
 }
-
-// --- Token refresh ---
 
 async function refreshAccessToken(): Promise<string | null> {
   const refreshToken = getRefreshToken();
@@ -51,9 +49,6 @@ async function refreshAccessToken(): Promise<string | null> {
   saveTokens(data.accessToken, data.refreshToken);
   return data.accessToken;
 }
-
-// --- Authenticated fetch ---
-// Attaches Bearer token, retries once with a refreshed token on 401.
 
 export async function fetchWithAuth(
   path: string,
@@ -83,8 +78,6 @@ export async function fetchWithAuth(
   return res;
 }
 
-// --- Auth API calls ---
-
 export async function apiLogin(
   email: string,
   password: string
@@ -97,6 +90,22 @@ export async function apiLogin(
 
   const data = await res.json();
   if (!res.ok) throw new Error(data.error ?? data.message ?? "Login failed");
+  return data;
+}
+
+export async function apiRegister(
+  email: string,
+  password: string,
+  displayName: string
+): Promise<{ user: AuthUser; accessToken: string; refreshToken: string }> {
+  const res = await fetch(`${API}/auth/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password, displayName }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error ?? data.message ?? "Registration failed");
   return data;
 }
 
@@ -133,4 +142,16 @@ export async function apiGoogleLogin(
   const data = await res.json();
   if (!res.ok) throw new Error(data.error ?? "Google sign-in failed");
   return data;
+}
+
+export async function apiOnboarding(series: string[]): Promise<void> {
+  const res = await fetchWithAuth("/subscriptions/onboarding", {
+    method: "POST",
+    body: JSON.stringify({ series }),
+  });
+
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.error ?? "Onboarding failed");
+  }
 }

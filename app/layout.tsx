@@ -1,11 +1,10 @@
-import Header from "./_components/Header";
-import { AuthProvider } from "./_components/AuthProvider";
-import { GoogleProvider } from "./_components/GoogleProvider";
-import { inter, motoGP } from "./fonts";
+import { Providers } from "./_components/Providers";
+import { inter, spaceGrotesk, motoGP } from "./fonts";
 import "./globals.css";
 
 export const metadata = {
-  title: "MotoGP Sweepstake Generator",
+  title: "RaceCal",
+  description: "Multi-series motorsport calendar",
 };
 
 export default function RootLayout({
@@ -15,16 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <meta name="theme-color" content="#242424" />
-      <body className={`${inter.className} ${inter.variable} ${motoGP.variable}`}>
-        <GoogleProvider>
-          <AuthProvider>
-            <main>
-              <Header />
-              {children}
-            </main>
-          </AuthProvider>
-        </GoogleProvider>
+      <meta name="theme-color" content="#0e0e0e" />
+      <body className={`${inter.variable} ${spaceGrotesk.variable} ${motoGP.variable}`} style={{ fontFamily: 'var(--font-space-grotesk), var(--font-inter), sans-serif' }}>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

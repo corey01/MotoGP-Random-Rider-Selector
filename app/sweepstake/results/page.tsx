@@ -56,15 +56,30 @@ function SweepstakeResultsContent() {
 
   return (
     <div className={style.page}>
-      <h2 className={style.groupName}>{sweepstake.groupName}</h2>
+      <section className={style.hero}>
+        <div className={style.heroBackdrop}>RESULTS</div>
+        <p className={style.eyebrow}>Public Sweepstake</p>
+        <h1 className={style.groupName}>{sweepstake.groupName}</h1>
 
-      <p className={style.round}>
-        {sweepstake.roundName}
-        {sweepstake.roundPlace ? ` · ${sweepstake.roundPlace}` : ""}
-        {sweepstake.roundCountry && sweepstake.roundCountry !== sweepstake.roundPlace
-          ? ` · ${sweepstake.roundCountry}`
-          : ""}
-      </p>
+        <p className={style.round}>
+          {sweepstake.roundName}
+          {sweepstake.roundPlace ? ` · ${sweepstake.roundPlace}` : ""}
+          {sweepstake.roundCountry && sweepstake.roundCountry !== sweepstake.roundPlace
+            ? ` · ${sweepstake.roundCountry}`
+            : ""}
+        </p>
+
+        <div className={style.metaRow}>
+          <div className={style.metaCard}>
+            <span className={style.metaLabel}>Assignments</span>
+            <strong className={style.metaValue}>{assignments.length}</strong>
+          </div>
+          <div className={style.metaCard}>
+            <span className={style.metaLabel}>Share state</span>
+            <strong className={style.metaValue}>Public link ready</strong>
+          </div>
+        </div>
+      </section>
 
       {assignments.length === 0 ? (
         <p className={style.empty}>No assignments yet.</p>
@@ -87,7 +102,7 @@ function SweepstakeResultsContent() {
         </div>
       )}
 
-      <button className={style.copyBtn} onClick={handleCopy}>
+      <button className={style.copyBtn} onClick={handleCopy} type="button">
         {copied ? "Copied!" : "Copy shareable link"}
       </button>
     </div>

@@ -1,67 +1,149 @@
-.card {
+.page {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 40px) clamp(8px, 2vw, 20px) 56px;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(24px, 5vw, 40px);
+  border-radius: 6px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 143, 115, 0.2), transparent 28%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0) 55%),
+    var(--kc-surface-1);
+}
+
+.heroBackdrop {
+  position: absolute;
+  right: clamp(12px, 3vw, 28px);
+  top: clamp(12px, 2vw, 18px);
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: clamp(4rem, 14vw, 9rem);
+  line-height: 0.82;
+  color: rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+  user-select: none;
+}
+
+.eyebrow,
+.summary,
+.metaLabel,
+.note {
+  font-family: var(--font-inter), sans-serif;
+}
+
+.eyebrow {
+  position: relative;
+  z-index: 1;
   margin-bottom: 10px;
-  border-radius: 4px;
-  background-color: #222;
+  color: var(--kc-primary);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
-.card .cardBody {
+.title {
   position: relative;
-  display: flex;
-  overflow: hidden;
-  height: 140px;
-  align-items: center;
-  box-sizing: border-box;
+  z-index: 1;
+  max-width: 11ch;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  line-height: 0.9;
+  letter-spacing: -0.06em;
 }
 
-.card .equal {
-  color: #fff;
-  font-size: 50px;
-  text-align: center;
-  flex: 1;
-}
-
-.card img {
-  height: 140px;
-  width: 140px;
+.summary {
   position: relative;
-  overflow: hidden;
-  object-fit: cover;
+  z-index: 1;
+  margin-top: 18px;
+  max-width: 58ch;
+  color: var(--kc-text-2);
+  font-size: 0.98rem;
+  line-height: 1.7;
 }
 
-.card .details {
-  background-color: #eee;
-  color: #000;
-  padding: 10px;
+.heroMeta {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
 
-  .detailsTop {
-    display: flex;
-
-    justify-content: space-between;
+  @media (min-width: 760px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 540px;
   }
+}
+
+.metaCard {
+  padding: 16px 18px;
+  border-radius: 6px;
+  background: rgba(38, 38, 38, 0.9);
+  backdrop-filter: blur(16px);
+}
+
+.metaLabel {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--kc-text-3);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.metaValue {
+  display: block;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 1.55rem;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
 }
 
 .results {
-  margin-top: 20px;
-  text-align: center;
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
 }
 
-.shareButton {
-  width: auto;
-  border-radius: 6px;
-  border-width: 2px;
-  font-weight: 200;
-  line-height: -10%;
-  margin-left: auto;
-  margin-right: 0;
-  padding: 6px;
-  background-color: #242424;
+.actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
 
-  p {
-    font-weight: 800;
-    color: #fff;
+  @media (min-width: 880px) {
+    grid-template-columns: minmax(0, 1.1fr) repeat(2, minmax(0, 0.7fr));
   }
 }
 
-.expanded {
-  text-align: right;
+.primaryButton,
+.secondaryButton {
+  min-height: 52px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.primaryButton {
+  background: linear-gradient(45deg, var(--kc-primary), #ff7856);
+  color: #111;
+}
+
+.secondaryButton {
+  background: var(--kc-surface-1);
+  color: var(--kc-text-1);
+}
+
+.note {
+  margin-top: 14px;
+  color: var(--kc-text-3);
+  font-size: 0.88rem;
+  line-height: 1.6;
 }

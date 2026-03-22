@@ -1,0 +1,58 @@
+/* Kinetic Chronicle Design Tokens */
+
+:root {
+  /* Surfaces */
+  --kc-base:      #0e0e0e;
+  --kc-surface-1: #131313;
+  --kc-surface-2: #1e1e1e;
+  --kc-surface-3: #262626;
+  --kc-border:    #2e2e2e;
+
+  /* Accent / Primary */
+  --kc-primary:       #ff8f73;
+  --kc-primary-dim:   #ff5d33;
+  --kc-primary-muted: rgba(255, 143, 115, 0.12);
+
+  /* Text */
+  --kc-text-1: #f0f0f0;
+  --kc-text-2: #a8a8a8;
+  --kc-text-3: #6b6b6b;
+
+  /* Series colours (preserved for backward compat) */
+  --motogp-red:      #ff5e7e;
+  --wsbk-blue:       #3b82f6;
+  --bsb-green:       #1db954;
+  --speedway-orange: #f57c00;
+  --f1-red:          #ff8f73;
+
+  /* Typography scale */
+  --kc-text-xs:   0.72rem;
+  --kc-text-sm:   0.85rem;
+  --kc-text-base: 1rem;
+  --kc-text-lg:   1.125rem;
+  --kc-text-xl:   1.375rem;
+  --kc-text-2xl:  1.75rem;
+  --kc-text-3xl:  2.5rem;
+  --kc-text-hero: clamp(3rem, 10vw, 6rem);
+
+  /* Spacing */
+  --kc-space-1: 4px;
+  --kc-space-2: 8px;
+  --kc-space-3: 12px;
+  --kc-space-4: 16px;
+  --kc-space-5: 24px;
+  --kc-space-6: 32px;
+  --kc-space-7: 48px;
+
+  /* Radius */
+  --kc-radius-sm:  4px;
+  --kc-radius-md:  8px;
+  --kc-radius-lg:  12px;
+  --kc-radius-pill: 999px;
+
+  /* Z-index layers */
+  --kc-z-header: 100;
+  --kc-z-panel:  200;
+  --kc-z-modal:  300;
+  --kc-z-toast:  400;
+}

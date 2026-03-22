@@ -1,9 +1,7 @@
 import { SelectedRider } from "@/models/rider";
-import ResultsCard from "./ResultsCard";
 import style from "./ResultsCard.module.scss";
 import { useMemo, useState } from "react";
 import ReturnModal from "../Modals/ReturnModal";
-import RiderCard from "../RiderCard";
 import ResultsRiderCard from "./ResultsRiderCard";
 import AddEntrantModal from "../Modals/AddEntrantModal";
 
@@ -16,23 +14,30 @@ interface ResultsProps {
 const Results = ({ handleReset, selectedRiders, addEntrant }: ResultsProps) => {
   const [returnModalOpen, setReturnModalOpen] = useState(false);
   const [addEntrantModalOpen, setEntrantModalOpen] = useState(false);
+  const [shareState, setShareState] = useState<"idle" | "copied">("idle");
 
-  // Memoize the sorted riders
-  const sortedRiders = useMemo(() => 
+  const sortedRiders = useMemo(() =>
     [...selectedRiders].sort((a, b) => a.rider.number - b.rider.number),
-   [selectedRiders] // Only re-sort when selectedRiders changes
+    [selectedRiders]
   );
 
-  const generateShareLink = () => {
+  const generateShareLink = async () => {
     const url = window.location.href;
 
     try {
-      navigator.share({
+      await navigator.share({
         title: "Check out who you're backing for the Grand Prix!",
         url,
       });
-    } catch (error) {
-      console.log(url);
+      return;
+    } catch {}
+
+    try {
+      await navigator.clipboard.writeText(url);
+      setShareState("copied");
+      setTimeout(() => setShareState("idle"), 2000);
+    } catch {
+      // no-op
     }
   };
 
@@ -49,25 +54,61 @@ const Results = ({ handleReset, selectedRiders, addEntrant }: ResultsProps) => {
 
 
   return (
-    <div className={style.results}>
-      {sortedRiders.map((selected) => (
-        <ResultsRiderCard
-          key={`res-${selected.rider.id}`}
-          selected={selected}
-          participantName={selected.entrant}
-        />
-      ))}
-      <button className={style.shareButton} onClick={generateShareLink}>
-        <p>Share Results</p>
-      </button>
-      <p>
-        Something wrong? Need to change the riders or people entering?
-        <br />
-        Use the button below to clear the results and return to the setup screen
+    <div className={style.page}>
+      <section className={style.hero}>
+        <div className={style.heroBackdrop}>DRAW</div>
+        <p className={style.eyebrow}>Sweepstake Results</p>
+        <h1 className={style.title}>The rider assignments are locked in.</h1>
+        <p className={style.summary}>
+          Share the draw, add a late entrant if needed, or reset and return to the setup panel.
+        </p>
+
+        <div className={style.heroMeta}>
+          <div className={style.metaCard}>
+            <span className={style.metaLabel}>Assignments</span>
+            <strong className={style.metaValue}>{sortedRiders.length}</strong>
+          </div>
+          <div className={style.metaCard}>
+            <span className={style.metaLabel}>Sorted by</span>
+            <strong className={style.metaValue}>Rider number</strong>
+          </div>
+        </div>
+      </section>
+
+      <div className={style.results}>
+        {sortedRiders.map((selected) => (
+          <ResultsRiderCard
+            key={`res-${selected.rider.id}`}
+            selected={selected}
+            participantName={selected.entrant}
+          />
+        ))}
+      </div>
+
+      <section className={style.actions}>
+        <button className={style.primaryButton} onClick={generateShareLink} type="button">
+          {shareState === "copied" ? "Link copied" : "Share results"}
+        </button>
+        <button
+          className={style.secondaryButton}
+          onClick={() => setEntrantModalOpen(true)}
+          type="button"
+        >
+          Add entrant
+        </button>
+        <button
+          className={style.secondaryButton}
+          onClick={() => setReturnModalOpen(true)}
+          type="button"
+        >
+          Reset sweepstake
+        </button>
+      </section>
+
+      <p className={style.note}>
+        Resetting clears the current draw and takes you back to the setup screen.
       </p>
-      <button className="pickButton" onClick={() => setReturnModalOpen(true)}>
-        Reset
-      </button>
+
       <ReturnModal
         confirmAction={handleResetEvFromModal}
         isOpen={returnModalOpen}
@@ -78,12 +119,6 @@ const Results = ({ handleReset, selectedRiders, addEntrant }: ResultsProps) => {
         isOpen={addEntrantModalOpen}
         handleClose={() => setEntrantModalOpen(false)}
       />
-      <p>
-        Forgotten anyone?
-      </p>
-      <button onClick={() => setEntrantModalOpen(true)} className="pickButton">
-        Add Entrant
-      </button>
     </div>
   );
 };

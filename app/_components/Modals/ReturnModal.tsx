@@ -19,12 +19,12 @@ const ReturnModal = ({
     <div onClick={handleOverlayClick} className={style.Overlay}>
       <div className={style.Modal}>
         <p className={style.title}>Are you sure you want to reset?</p>
-        <p>Resetting will lose the current generated results</p>
+        <p className={style.copy}>Resetting will lose the current generated results.</p>
         <div className={style.buttonBar}>
-          <button className="pickButton" onClick={confirmAction}>
+          <button className={style.primaryButton} onClick={confirmAction} type="button">
             Reset Results
-          </button>{" "}
-          <button className="pickButton" onClick={handleClose}>
+          </button>
+          <button className={style.secondaryButton} onClick={handleClose} type="button">
             Cancel
           </button>
         </div>

@@ -361,9 +361,6 @@ export default function AdminPage() {
             Signed in as <strong>{user?.displayName ?? user?.email}</strong>
           </p>
         </div>
-        <button className={style.signOutBtn} onClick={handleLogout}>
-          Sign out
-        </button>
       </header>
 
       {/* Year picker */}

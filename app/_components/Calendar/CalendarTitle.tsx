@@ -1,16 +1,25 @@
-import { motoGP } from '@/app/fonts';
+import { motoGPTextMed } from "@/app/fonts";
 import styles from './CalendarTitle.module.scss';
 
 interface CalendarTitleProps {
   currentDate: Date;
   direction?: 'next' | 'prev' | 'today';
+  onPrev: () => void;
+  onNext: () => void;
+  onToday: () => void;
 }
 
-export const CalendarTitle = ({ currentDate, direction }: CalendarTitleProps) => {
+export const CalendarTitle = ({
+  currentDate,
+  direction,
+  onPrev,
+  onNext,
+  onToday,
+}: CalendarTitleProps) => {
   const formattedDate = new Date(currentDate).toLocaleDateString('en-US', {
     month: 'long',
     year: 'numeric'
-  });
+  }).toUpperCase();
 
   // Only apply animation class if there's a direction
   const animationClass = direction ? (
@@ -20,13 +29,30 @@ export const CalendarTitle = ({ currentDate, direction }: CalendarTitleProps) =>
   ) : '';
 
   return (
-    <div className={`${styles.titleContainer} ${motoGP.className}`}>
-      <span 
-        key={direction ? formattedDate : undefined} // Only use key when animating
-        className={`${styles.animatedText} ${animationClass}`}
-      >
-        {formattedDate}
-      </span>
+    <div className={styles.headerRow}>
+      <div className={styles.titleBlock}>
+        <p className={styles.eyebrow}>World Championship Schedule</p>
+        <div className={`${styles.titleContainer} ${motoGPTextMed.className}`}>
+        <span
+          key={direction ? formattedDate : undefined}
+          className={`${styles.animatedText} ${animationClass}`}
+        >
+          {formattedDate}
+        </span>
+        </div>
+      </div>
+
+      <div className={styles.controls} aria-label="Calendar navigation">
+        <button type="button" className={styles.navButton} onClick={onPrev} aria-label="Previous month">
+          &#8249;
+        </button>
+        <button type="button" className={styles.todayButton} onClick={onToday}>
+          TODAY
+        </button>
+        <button type="button" className={styles.navButton} onClick={onNext} aria-label="Next month">
+          &#8250;
+        </button>
+      </div>
     </div>
   );
 };

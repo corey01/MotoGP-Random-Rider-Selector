@@ -2,10 +2,10 @@
 
 import { SelectedRider } from "@/models/rider";
 import style from "../Riders.module.scss";
-import { motoGP, motoGPTextBold } from "@/app/fonts";
 import classNames from "classnames";
 import { FALLBACK_NUMBER_COLOR, FALLBACK_RIDER_COLOR, FALLBACK_TOWER_COLOR } from "@/app/consts";
 import { getEntrantImage, placeholderImage } from "@/utils/entrants";
+import type { CSSProperties } from "react";
 
 const ResultsRiderCard = ({
   selected: { entrant, rider },
@@ -49,9 +49,12 @@ const ResultsRiderCard = ({
   };
 
   const riderShortName = `${rider.name.slice(0, 1).toUpperCase()} ${buildSurnameCode(rider.name, rider.surname)}`;
+  const cardStyle = {
+    "--team-accent": rider.teamColor || "var(--kc-primary)",
+  } as CSSProperties;
 
   return (
-    <div className={classNames(style.listItem, style.resultsCard)}>
+    <div className={classNames(style.listItem, style.resultsCard)} style={cardStyle}>
       {imgUrl && (
         <img
           alt=""
@@ -62,10 +65,11 @@ const ResultsRiderCard = ({
         />
       )}
       <div className={style.details}>
-        <span className={`${motoGPTextBold.className} ${style.riderName}`}>
+        <span className={style.kicker}>Sweepstake pairing</span>
+        <span className={style.riderName}>
           {rider.name} {rider.surname}
         </span>
-        <span className={classNames(motoGP.className, style.entrantTitle)}>
+        <span className={style.entrantTitle}>
           {entrant}
         </span>
         <span style={{ color: rider.teamColor || FALLBACK_NUMBER_COLOR }} className={style.riderNumber}>
@@ -81,7 +85,7 @@ const ResultsRiderCard = ({
             (e.currentTarget as HTMLImageElement).src = placeholderImage;
           }}
         />
-        <div className={`${motoGP.className} ${style.towerName}`}>
+        <div className={style.towerName}>
           <div style={{ backgroundColor: rider.teamColor || FALLBACK_TOWER_COLOR }} className={style.towerBar} />
           {riderShortName}{" "}
           <span style={{ color: rider.textColor || FALLBACK_RIDER_COLOR, backgroundColor: rider.teamColor || FALLBACK_TOWER_COLOR }}>

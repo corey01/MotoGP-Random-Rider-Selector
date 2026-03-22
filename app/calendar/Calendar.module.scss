@@ -1,0 +1,115 @@
+.layout {
+  display: flex;
+  align-items: stretch;
+  min-height: calc(100vh - 52px);
+  position: relative;
+  background: var(--kc-base);
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.mobileFilterBar {
+  display: flex;
+  padding: var(--kc-space-2) var(--kc-space-3);
+  border-bottom: 1px solid var(--kc-border);
+  position: fixed;
+  top: 52px;
+  left: 0;
+  right: 0;
+  z-index: calc(var(--kc-z-header) - 1);
+  background: var(--kc-base);
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.mobileFilterBtn {
+  all: unset;
+  cursor: pointer;
+  font-size: var(--kc-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--kc-text-2);
+  padding: var(--kc-space-2) var(--kc-space-3);
+  border: 1px solid var(--kc-border);
+  border-radius: var(--kc-radius-sm);
+  background: var(--kc-surface-2);
+  min-height: 36px;
+
+  &:hover {
+    color: var(--kc-text-1);
+    border-color: var(--kc-text-3);
+  }
+}
+
+.sidebarOverlay {
+  display: none;
+
+  @media (max-width: 767px) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: calc(var(--kc-z-panel) - 1);
+  }
+}
+
+.sidebarWrap {
+  width: 220px;
+  flex-shrink: 0;
+
+  @media (max-width: 767px) {
+    position: fixed;
+    left: -240px;
+    top: 52px;
+    bottom: 0;
+    width: 240px;
+    background: var(--kc-surface-1);
+    z-index: var(--kc-z-panel);
+    transition: left 0.25s ease;
+    overflow-y: auto;
+    border-right: 1px solid var(--kc-border);
+  }
+}
+
+.sidebarWrapOpen {
+  @media (max-width: 767px) {
+    left: 0;
+  }
+}
+
+.calendarWrap {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 18px 20px 24px;
+  overflow-x: auto;
+  transition: margin-right 0.28s ease, padding-right 0.28s ease;
+
+  @media (min-width: 961px) {
+    padding-right: 28px;
+  }
+
+  @media (max-width: 767px) {
+    padding-top: calc(var(--kc-space-3) + 44px); // account for mobile filter bar
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+.calendarWrapPanelOpen {
+  @media (min-width: 961px) {
+    margin-right: 356px;
+    padding-right: 24px;
+  }
+}
+
+.loadingHint {
+  margin-top: 12px;
+  color: var(--kc-text-3);
+  font-size: var(--kc-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

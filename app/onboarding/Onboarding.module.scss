@@ -1,0 +1,125 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--kc-space-5);
+}
+
+.container {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--kc-space-6);
+}
+
+.header {
+  text-align: center;
+}
+
+.title {
+  font-size: var(--kc-text-2xl);
+  font-weight: 700;
+  color: var(--kc-text-1);
+  margin-bottom: var(--kc-space-2);
+}
+
+.subtitle {
+  font-size: var(--kc-text-base);
+  color: var(--kc-text-2);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--kc-space-3);
+
+  @media (min-width: 480px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--kc-space-1);
+  padding: var(--kc-space-5) var(--kc-space-3);
+  background: var(--kc-surface-1);
+  border: 2px solid var(--kc-border);
+  border-radius: var(--kc-radius-md);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  min-height: 80px;
+  width: 100%;
+  margin: 0;
+
+  &:hover {
+    border-color: var(--kc-text-3);
+    background: var(--kc-surface-2);
+  }
+}
+
+.cardSelected {
+  border-color: var(--series-color, var(--kc-primary));
+  background: var(--kc-surface-2);
+}
+
+.cardLabel {
+  font-size: var(--kc-text-base);
+  font-weight: 700;
+  color: var(--kc-text-1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cardSub {
+  font-size: var(--kc-text-xs);
+  color: var(--kc-text-3);
+  text-align: center;
+}
+
+.checkmark {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 0.875rem;
+  color: var(--series-color, var(--kc-primary));
+  font-weight: 700;
+  line-height: 1;
+}
+
+.error {
+  font-size: var(--kc-text-sm);
+  color: #ff5555;
+  text-align: center;
+}
+
+.submit {
+  width: 100%;
+  margin: 0;
+  padding: var(--kc-space-4) var(--kc-space-5);
+  background: var(--kc-primary);
+  color: #0e0e0e;
+  border: none;
+  border-radius: var(--kc-radius-md);
+  font-size: var(--kc-text-base);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background 0.15s;
+  min-height: 44px;
+
+  &:hover:not(:disabled) {
+    background: var(--kc-primary-dim);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,92 @@
+.empty {
+  color: var(--kc-text-2);
+  font-size: var(--kc-text-sm);
+  padding: var(--kc-space-5);
+  text-align: center;
+  background: var(--kc-surface-1);
+  border: 1px solid var(--kc-border);
+  border-radius: var(--kc-radius-lg);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--kc-space-3);
+}
+
+.round {
+  background: var(--kc-surface-1);
+  border: 1px solid var(--kc-border);
+  border-radius: var(--kc-radius-md);
+  overflow: hidden;
+}
+
+.roundHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--kc-space-2);
+  padding: var(--kc-space-3) var(--kc-space-4);
+  border-bottom: 1px solid var(--kc-border);
+  flex-wrap: wrap;
+}
+
+.seriesBadge {
+  font-size: var(--kc-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: var(--kc-radius-pill);
+}
+
+.roundName {
+  font-size: var(--kc-text-sm);
+  font-weight: 700;
+  color: var(--kc-text-1);
+  flex: 1;
+}
+
+.country {
+  font-size: var(--kc-text-xs);
+  color: var(--kc-text-3);
+}
+
+.sessions {
+  display: flex;
+  flex-direction: column;
+}
+
+.session {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--kc-space-3) var(--kc-space-4);
+  border-bottom: 1px solid var(--kc-border);
+  gap: var(--kc-space-3);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.sessionRace {
+  border-left: 3px solid var(--kc-primary);
+
+  .sessionName {
+    color: var(--kc-primary);
+    font-weight: 700;
+  }
+}
+
+.sessionName {
+  font-size: var(--kc-text-sm);
+  color: var(--kc-text-2);
+  font-weight: 500;
+}
+
+.sessionTime {
+  font-size: var(--kc-text-xs);
+  color: var(--kc-text-3);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}

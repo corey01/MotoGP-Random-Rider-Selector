@@ -2,78 +2,75 @@
 
 import FullCalendar from "@fullcalendar/react";
 import { EventClickArg } from "@fullcalendar/core";
+import { DateClickArg } from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { useState, useRef } from "react";
-import { CalendarEventModal } from "../Modals/CalendarEventModal";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { isSameDay } from "date-fns";
 import { CalendarTitle } from "./CalendarTitle";
-import { SessionToggle, SessionView } from "./SessionToggle";
-import { SeriesKey, SubSeriesKey } from "./filterConfig";
 
 import { inter } from "@/app/fonts";
 import "./Calendar.css";
-import {
-  type MotoGpSeasonData,
-  type WsbkSeasonData,
-  type BsbSeasonData,
-  type FimSpeedwaySeasonData,
-  type Formula1SeasonData,
-} from "@/utils/getCalendarData";
+import { type CalendarRoundEvent } from "@/utils/getCalendarData";
 
 interface CalendarProps {
-  motoGPData: MotoGpSeasonData;
-  wsbkData: WsbkSeasonData;
-  bsbData: BsbSeasonData;
-  fimSpeedwayData: FimSpeedwaySeasonData;
-  formula1Data: Formula1SeasonData;
-  sessionView: SessionView;
-  onSessionViewChange: (view: SessionView) => void;
-  visibleSubSeries: Record<SubSeriesKey, boolean>;
-  onToggleSeries: (series: SeriesKey) => void;
-  onToggleSubSeries: (subSeries: SubSeriesKey) => void;
-  onCreateSweepstake?: (roundId: number) => void;
+  roundEvents: CalendarRoundEvent[];
+  selectedDate: Date | null;
+  isPanelOpen: boolean;
+  onDaySelect: (date: Date | null) => void;
+  onRoundSelect: (roundId: number, date: Date | null) => void;
+  onMonthChange: (date: Date) => void;
+}
+
+function getClickedDate(clickInfo: EventClickArg) {
+  const dayEl = (clickInfo.jsEvent.target as HTMLElement).closest("[data-date]");
+  const dateStr = dayEl?.getAttribute("data-date");
+
+  if (dateStr && /^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    return new Date(`${dateStr}T12:00:00`);
+  }
+
+  return clickInfo.event.start ? new Date(clickInfo.event.start) : null;
 }
 
 export const Calendar = ({
-  motoGPData,
-  wsbkData,
-  bsbData,
-  fimSpeedwayData,
-  formula1Data,
-  sessionView,
-  onSessionViewChange,
-  visibleSubSeries,
-  onToggleSeries,
-  onToggleSubSeries,
-  onCreateSweepstake,
+  roundEvents,
+  selectedDate,
+  isPanelOpen,
+  onDaySelect,
+  onRoundSelect,
+  onMonthChange,
 }: CalendarProps) => {
-  const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const calendarRef = useRef<any>(null);
   const touchStartRef = useRef({ x: 0, y: 0 });
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(selectedDate ?? new Date());
   const [navigationDirection, setNavigationDirection] = useState<
     "next" | "prev" | "today" | undefined
   >();
   const isAnimatingRef = useRef(false);
 
-  const allEvents = [
-    ...motoGPData,
-    ...wsbkData,
-    ...bsbData,
-    ...fimSpeedwayData,
-    ...formula1Data,
-  ];
+  const handleEventClick = useCallback(
+    (clickInfo: EventClickArg) => {
+      const date = getClickedDate(clickInfo);
+      const roundId = Number(clickInfo.event.extendedProps?.meta?.roundId ?? 0);
 
-  const visibleEvents = allEvents.filter((event: any) => {
-    const subSeries = event?.extendedProps?.subSeries as SubSeriesKey | undefined;
-    if (!subSeries) return true;
-    return !!visibleSubSeries[subSeries];
-  });
+      if (roundId > 0) {
+        onRoundSelect(roundId, date);
+        return;
+      }
 
-  const handleEventClick = (clickInfo: EventClickArg) => {
-    setSelectedEvent(clickInfo.event);
-  };
+      if (date) onDaySelect(date);
+    },
+    [onDaySelect, onRoundSelect]
+  );
+
+  const handleDateClick = useCallback(
+    (arg: DateClickArg) => {
+      onDaySelect(arg.date);
+    },
+    [onDaySelect]
+  );
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartRef.current = {
@@ -99,19 +96,16 @@ export const Calendar = ({
       direction === "next" ? "slide-left-enter" : "slide-right-enter";
     viewEl.classList.add(animationClass);
 
-    // Execute the calendar change immediately
     if (direction === "today") {
       calendarApi.today();
     } else {
       calendarApi[direction]();
     }
 
-    // Update current date immediately after calendar change
     setCurrentDate(calendarApi.getDate());
 
     requestAnimationFrame(() => {
       viewEl.classList.add("slide-center");
-
       setTimeout(() => {
         viewEl.classList.remove(animationClass, "slide-center");
         setNavigationDirection(undefined);
@@ -128,37 +122,40 @@ export const Calendar = ({
     const deltaX = touchStartRef.current.x - touchEndX;
     const deltaY = Math.abs(touchStartRef.current.y - touchEndY);
 
-    // Only handle horizontal swipes (ignore if vertical movement is larger)
     if (deltaY > Math.abs(deltaX)) return;
 
     const direction = deltaX > 100 ? "next" : deltaX < -100 ? "prev" : null;
-
-    if (direction) {
-      animateViewChange(direction);
-    }
+    if (direction) animateViewChange(direction);
   };
 
   const handleDatesSet = (arg: any) => {
-    // Only update the date if we're not in an animation
     if (!isAnimatingRef.current) {
       setCurrentDate(arg.view.currentStart);
     }
+    onMonthChange(arg.view.currentStart);
   };
+
+  useEffect(() => {
+    if (!calendarRef.current) return;
+
+    const timeoutId = window.setTimeout(() => {
+      const calendarApi = calendarRef.current?.getApi();
+      calendarApi?.updateSize();
+    }, 300);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [isPanelOpen]);
 
   const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
 
   return (
     <>
-      <SessionToggle
-        sessionView={sessionView}
-        onSessionViewChange={onSessionViewChange}
-        visibleSubSeries={visibleSubSeries}
-        onToggleSeries={onToggleSeries}
-        onToggleSubSeries={onToggleSubSeries}
-      />
       <CalendarTitle
         currentDate={currentDate}
         direction={navigationDirection}
+        onPrev={() => animateViewChange("prev")}
+        onNext={() => animateViewChange("next")}
+        onToday={() => animateViewChange("today")}
       />
       <div className="calendar-container">
         <div
@@ -170,65 +167,41 @@ export const Calendar = ({
             ref={calendarRef}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
-            events={visibleEvents}
+            events={roundEvents}
             editable={false}
             eventStartEditable={false}
             eventDurationEditable={false}
             selectable={false}
             selectMirror={false}
-            // Calendar settings
             height="auto"
             handleWindowResize={true}
             eventTimeFormat={{
               hour: "2-digit",
               minute: "2-digit",
-              meridiem: "short",
+              meridiem: false,
             }}
             eventContent={(eventInfo) => ({
-              html: `
-              <div class="event-content">
-              <div class="event-time">${eventInfo.timeText}</div>
-              <div class="event-title">${eventInfo.event.title}</div>
-              </div>
-              `,
+              html: `<div class="event-content"><div class="event-title">${eventInfo.event.title}</div></div>`,
             })}
-            customButtons={{
-              prev: {
-                click: () => animateViewChange("prev"),
-              },
-              next: {
-                click: () => animateViewChange("next"),
-              },
-              today: {
-                text: "Current Month",
-                click: () => animateViewChange("today"),
-              },
+            dayCellClassNames={(arg) => {
+              const classNames: string[] = [];
+
+              if (arg.isOther) classNames.push("fc-day-outside-month");
+              if (selectedDate && isSameDay(arg.date, selectedDate)) classNames.push("fc-day-selected");
+
+              return classNames;
             }}
-            headerToolbar={{
-              left: "",
-              center: "prev today next",
-              right: "", // Removed title from header
-            }}
+            headerToolbar={false}
             firstDay={1}
             contentHeight="auto"
             stickyHeaderDates={true}
-            titleFormat={{
-              month: "long",
-              year: "numeric",
-            }}
+            titleFormat={{ month: "long", year: "numeric" }}
             eventClick={handleEventClick}
+            dateClick={handleDateClick}
             datesSet={handleDatesSet}
-            dayHeaderFormat={{
-              weekday: isMobile ? "narrow" : "short", // 'narrow' will show single letter, 'short' shows abbreviated name
-            }}
+            dayHeaderFormat={{ weekday: isMobile ? "narrow" : "short" }}
           />
         </div>
-        <CalendarEventModal
-          isOpen={!!selectedEvent}
-          onClose={() => setSelectedEvent(null)}
-          event={selectedEvent}
-          onCreateSweepstake={onCreateSweepstake}
-        />
       </div>
     </>
   );

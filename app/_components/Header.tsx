@@ -1,80 +1,122 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { inter, motoGP } from "../fonts";
-import style from "./Header.module.scss";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { useAuth } from "./AuthProvider";
+import style from "./Header.module.scss";
 
-
-const Header = () => {
+export default function Header() {
   const pathname = usePathname();
-  const { isAuthenticated, isAdmin, isLegacy, logout } = useAuth();
+  const { isAuthenticated, isAdmin, isLegacy, logout, user } = useAuth();
   const router = useRouter();
-
-  const isGroupsPage = pathname.startsWith("/groups");
-  const isAdminPage = pathname.includes("/admin");
-  const isAuthPage = pathname === "/login";
-  const isSweepstakePage = pathname.startsWith("/sweepstake") || pathname.startsWith("/results");
-
-  const isCalendarPage = !isGroupsPage && !isAdminPage && !isAuthPage && !isSweepstakePage;
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await logout();
+    setMenuOpen(false);
     router.push("/login");
   };
 
+  const navLinks = [
+    { href: "/", label: "Dashboard", show: isAuthenticated },
+    { href: "/calendar", label: "Calendar", show: isAuthenticated },
+    { href: "/sweepstake", label: "Sweepstake", show: isAuthenticated && (isAdmin || isLegacy) },
+    { href: "/settings", label: "Settings", show: isAuthenticated },
+    { href: "/admin", label: "Admin", show: isAdmin },
+  ].filter((l) => l.show);
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  const initials = user?.displayName
+    ? user.displayName.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()
+    : "?";
+
   return (
-    <div className={style.header}>
-      <nav className={`${style.headerNav} ${inter.className}`}>
-        {isCalendarPage && (
-          <div id="calendar-filters-slot" className={style.calendarFiltersSlot} />
-        )}
+    <header className={style.header}>
+      <div className={style.inner}>
+        <Link href="/" className={style.wordmark} onClick={() => setMenuOpen(false)}>
+          Race<span className={style.wordmarkAccent}>Cal</span>
+        </Link>
 
-        <ul>
-          <li className={isCalendarPage ? style.active : undefined}>
-            <Link href="/">Calendar</Link>
-          </li>
-          {isLegacy && (
-            <li className={isSweepstakePage ? style.active : undefined}>
-              <Link href="/sweepstake">Sweepstake</Link>
-            </li>
-          )}
-          {isAuthenticated && (isAdmin || !isLegacy) && (
-            <li className={isGroupsPage ? style.active : undefined}>
-              <Link href="/groups">Groups</Link>
-            </li>
-          )}
+        {/* Desktop nav */}
+        <nav className={style.desktopNav} aria-label="Main navigation">
+          <ul>
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className={isActive(link.href) ? style.active : undefined}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-          {isAdmin && (
-            <li className={isAdminPage ? style.active : undefined}>
-              <Link href="/admin">Admin</Link>
-            </li>
-          )}
+        <div className={style.actions}>
           {isAuthenticated ? (
-            <li>
-              <button className={style.navButton} onClick={handleLogout}>
-                Sign out
+            <>
+              <button className={style.avatar} onClick={handleLogout} title="Sign out" aria-label="Sign out">
+                {user?.profilePhotoUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={user.profilePhotoUrl} alt={user.displayName} className={style.avatarImg} />
+                ) : (
+                  <span className={style.avatarInitials}>{initials}</span>
+                )}
               </button>
-            </li>
+            </>
           ) : (
-            <li className={pathname === "/login" ? style.active : undefined}>
-              <Link href="/login">Sign in</Link>
-            </li>
+            <Link href="/login" className={style.signIn}>Sign in</Link>
           )}
-        </ul>
-      </nav>
-      {!isCalendarPage && (
-        <h1 className={motoGP.className}>
-          {" "}
-          MotoGP
-          <br />
-          Sweepstake
-        </h1>
-      )}
-    </div>
-  );
-};
 
-export default Header;
+          {/* Hamburger (mobile) */}
+          <button
+            className={style.hamburger}
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile drawer */}
+      {menuOpen && (
+        <div className={style.drawer} role="dialog" aria-label="Navigation menu">
+          <nav>
+            <ul>
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={isActive(link.href) ? style.drawerActive : undefined}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              {isAuthenticated ? (
+                <li>
+                  <button className={style.drawerSignOut} onClick={handleLogout}>
+                    Sign out
+                  </button>
+                </li>
+              ) : (
+                <li>
+                  <Link href="/login" onClick={() => setMenuOpen(false)}>Sign in</Link>
+                </li>
+              )}
+            </ul>
+          </nav>
+        </div>
+      )}
+    </header>
+  );
+}

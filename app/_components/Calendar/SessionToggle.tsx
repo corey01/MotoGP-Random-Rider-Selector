@@ -1,7 +1,6 @@
 import style from "./SessionToggle.module.scss";
 import { inter } from "@/app/fonts";
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { useState } from "react";
 import {
   SERIES_GROUPS,
   SeriesKey,
@@ -26,32 +25,23 @@ export const SessionToggle = ({
   onToggleSubSeries,
 }: SessionToggleProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
   const enabledCount = SERIES_GROUPS.filter((group) =>
     group.children.some((child) => visibleSubSeries[child.key])
   ).length;
 
-  useEffect(() => {
-    setPortalTarget(document.getElementById("calendar-filters-slot"));
-  }, []);
-
-  const trigger = (
-    <div className={`${style.toggleContainer} ${inter.className}`}>
-      <button
-        type="button"
-        className={style.triggerButton}
-        onClick={() => setIsOpen(true)}
-        aria-haspopup="dialog"
-        aria-expanded={isOpen}
-      >
-        Filters ({enabledCount})
-      </button>
-    </div>
-  );
-
   return (
     <>
-      {portalTarget ? createPortal(trigger, portalTarget) : trigger}
+      <div className={`${style.toggleContainer} ${inter.className}`}>
+        <button
+          type="button"
+          className={style.triggerButton}
+          onClick={() => setIsOpen(true)}
+          aria-haspopup="dialog"
+          aria-expanded={isOpen}
+        >
+          Filters ({enabledCount})
+        </button>
+      </div>
 
       {isOpen && (
         <div className={style.overlay} onClick={() => setIsOpen(false)}>

@@ -2,8 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 70vh;
-  padding: 1rem;
+  min-height: 80vh;
+  padding: var(--kc-space-5);
 }
 
 .form {
@@ -11,39 +11,44 @@
   max-width: 360px;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--kc-space-4);
 }
 
 .title {
   text-align: center;
-  font-size: 1.25rem;
+  font-size: var(--kc-text-xl);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 0.5rem;
+  color: var(--kc-text-1);
+  margin-bottom: var(--kc-space-1);
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--kc-space-1);
 
   label {
-    font-size: 0.75rem;
+    font-size: var(--kc-text-xs);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: rgba(0, 0, 0, 0.5);
+    color: var(--kc-text-2);
   }
 
   input {
     padding: 10px 12px;
-    border: 1px solid #ccc;
-    font-size: 0.95rem;
+    background: var(--kc-surface-2);
+    border: 1px solid var(--kc-border);
+    color: var(--kc-text-1);
+    font-size: var(--kc-text-sm);
+    border-radius: var(--kc-radius-sm);
     width: 100%;
+    min-height: 44px;
 
     &:focus {
       outline: none;
-      border-color: #000;
+      border-color: var(--kc-primary);
     }
   }
 }
@@ -57,8 +62,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: rgba(0, 0, 0, 0.35);
-  font-size: 0.75rem;
+  color: var(--kc-text-3);
+  font-size: var(--kc-text-xs);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 
@@ -67,35 +72,52 @@
     content: "";
     flex: 1;
     height: 1px;
-    background: #ddd;
+    background: var(--kc-border);
   }
 }
 
 .error {
-  font-size: 0.85rem;
-  color: #c00;
+  font-size: var(--kc-text-sm);
+  color: #ff5555;
   text-align: center;
 }
 
 .submit {
-  margin-top: 0.5rem;
+  margin-top: var(--kc-space-1);
   padding: 12px 20px;
-  background-color: #000;
-  color: #fff;
+  background: var(--kc-primary);
+  color: #0e0e0e;
   border: none;
-  font-size: 0.875rem;
+  border-radius: var(--kc-radius-sm);
+  font-size: var(--kc-text-sm);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   cursor: pointer;
   width: 100%;
+  min-height: 44px;
 
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
   }
 
   &:hover:not(:disabled) {
-    background-color: #333;
+    background: var(--kc-primary-dim);
+  }
+}
+
+.registerLink {
+  text-align: center;
+  font-size: var(--kc-text-sm);
+  color: var(--kc-text-2);
+
+  a {
+    color: var(--kc-primary);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

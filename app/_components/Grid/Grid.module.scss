@@ -1,242 +1,259 @@
 .GridPanel {
-  padding: 16px;
+  display: grid;
+  gap: 18px;
 }
 
 .header {
   display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 12px;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-/* Grid rows */
+.eyebrow,
+.summary,
+.headerMeta,
+.sessionLabel,
+.sessionMeta {
+  font-family: var(--font-inter), sans-serif;
+}
+
+.eyebrow {
+  margin-bottom: 6px;
+  color: var(--kc-primary);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.title {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.summary {
+  max-width: 58ch;
+  color: var(--kc-text-2);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.headerMeta,
+.loading,
+.error {
+  color: var(--kc-text-2);
+  font-size: 0.88rem;
+}
+
 .rows {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
 }
 
 .row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 10px;
-  margin-bottom: 28px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
   align-items: start;
 }
 
 .cell {
   position: relative;
   min-width: 0;
-  width: 100%;
-  padding-top: 14px;
+  padding-top: 18px;
 }
+
 .left {
-  grid-column: 1;
   margin-top: 0;
 }
+
 .center {
-  grid-column: 2;
-  margin-top: 8px;
+  margin-top: 14px;
 }
+
 .right {
-  grid-column: 3;
-  margin-top: 16px;
+  margin-top: 28px;
 }
 
-.card {
-  background: #161616;
-  border-radius: 10px;
-  padding: 10px 12px 10px 12px;
-  height: 100px;
-  width: 100%;
-  box-sizing: border-box;
-  display: block;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-  position: relative;
-  color: #fff;
-}
-
-/* Position label above the card, centered, racetrack style */
 .posLabel {
   position: absolute;
   top: 0;
   left: 0;
-  transform: none;
-  color: #000;
-  font-weight: 900;
-  font-variant-numeric: tabular-nums;
-  font-size: 12px;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
   line-height: 1;
-  z-index: 5;
+  letter-spacing: -0.04em;
+  color: var(--kc-text-2);
 }
 
-.name {
-  font-weight: 800;
-  line-height: 1.15;
-  font-size: 0.8rem;
-  display: -webkit-box; /* enables multi-line clamp */
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+.card {
+  position: relative;
+  height: 122px;
   overflow: hidden;
-  white-space: normal;
-  text-overflow: ellipsis;
-  word-break: break-word;
-  color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-}
-.meta {
-  color: rgba(0, 0, 0, 0.317);
-  font-size: 0.7rem;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  padding: 14px 14px 14px 14px;
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 52%),
+    var(--kc-surface-1);
+  color: #fff;
 }
 
-.loading,
-.error {
-  opacity: 0.8;
-}
-
-/* ── Mobile: single-column compact list ── */
-@media (max-width: 639px) {
-  .rows {
-    gap: 0;
-  }
-
-  .row {
-    grid-template-columns: 1fr;
-    margin-bottom: 0;
-    gap: 4px;
-    margin-bottom: 4px;
-  }
-
-  /* Reset staggered columns + vertical offsets */
-  .left, .center, .right {
-    grid-column: 1 / -1;
-    margin-top: 0;
-  }
-
-  /* Make cell a flex row so posLabel sits inline */
-  .cell {
-    padding-top: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .posLabel {
-    position: static;
-    min-width: 20px;
-    text-align: right;
-    font-size: 11px;
-    color: #888;
-    flex-shrink: 0;
-  }
-
-  .card {
-    flex: 1;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-  }
-
-  /* Hide portrait on mobile — too cramped */
-  .bikeWrap {
-    display: none;
-  }
-
-  .textWrap {
-    margin-left: 0;
-    width: auto;
-    flex: 1;
-    min-width: 0;
-  }
-
-  .name {
-    font-size: 0.78rem;
-    -webkit-line-clamp: 1;
-    white-space: nowrap;
-  }
-
-  .meta {
-    display: none;
-  }
-}
-
-/* ── Tablet and up: wider column gap ── */
-@media (min-width: 640px) {
-  .row {
-    column-gap: 14px;
-  }
-}
-
-.portraitWrap {
-  position: absolute;
-  left: -46px;
-  top: 10px;
-  height: 300%;
-  pointer-events: none;
-  z-index: 1;
-  mask-image: linear-gradient(to right, transparent 0%, black 35%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 35%);
-}
-.portraitImg {
-  height: 100%;
-  width: auto;
-  object-fit: cover;
-  object-position: top center;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
-}
-
-/* Rider portrait (used on desktop) */
 .bikeWrap {
   position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 130%;
+  left: -4px;
+  bottom: -6px;
+  height: 96px;
   pointer-events: none;
   z-index: 1;
-  mask-image: linear-gradient(to right, transparent 0%, black 30%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%);
+  opacity: 0.9;
+  mask-image: linear-gradient(to right, transparent 0%, black 26%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 26%);
 }
+
 .bikeImg {
   height: 100% !important;
   width: auto !important;
-  object-fit: cover;
-  object-position: top center;
+  object-fit: contain;
 }
+
 .bikeBackdrop {
-  display: none;
+  position: absolute;
+  inset: auto auto 0 0;
+  width: 58%;
+  height: 70%;
+  background: linear-gradient(90deg, rgba(14, 14, 14, 0.8), transparent);
+  z-index: 0;
+}
+
+.textWrap {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  margin-left: 96px;
+}
+
+.name {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.meta {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.66);
 }
 
 .numberPill {
   position: absolute;
-  right: 8px;
-  top: 8px;
-  padding: 2px 6px;
-  border-radius: 8px;
-  font-weight: 800;
-  font-size: 0.8rem;
-  border: 1px solid rgba(0, 0, 0, 0.35);
+  top: 10px;
+  right: 10px;
   z-index: 2;
+  min-width: 34px;
+  min-height: 28px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 999px;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Ensure text sits above decorative layers */
-.name,
-.meta {
-  position: relative;
-  z-index: 2;
-}
-.textWrap {
-  position: relative;
-  z-index: 2;
-  width: 150px;
-  min-width: 0;
-  margin-left: 90px;
+.sessionGrid {
+  display: grid;
+  gap: 14px;
 
-  &>*{
-    white-space: unset !important;
+  @media (min-width: 720px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.sessionCard {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 6px;
+  background: var(--kc-surface-1);
+}
+
+.sessionLabel {
+  font-size: 0.74rem;
+  color: var(--kc-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.sessionValue {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 1.35rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.sessionMeta {
+  color: var(--kc-text-2);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+  .row {
+    gap: 12px;
+  }
+
+  .card {
+    height: 112px;
+  }
+
+  .textWrap {
+    margin-left: 82px;
+  }
+}
+
+@media (max-width: 700px) {
+  .rows {
+    gap: 10px;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .left,
+  .center,
+  .right {
+    margin-top: 0;
+  }
+
+  .cell {
+    padding-top: 0;
+  }
+
+  .posLabel {
+    left: auto;
+    right: 14px;
+    top: 10px;
+    z-index: 3;
+  }
+
+  .card {
+    height: 110px;
   }
 }

@@ -1,28 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Link from "next/link";
 import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "@/app/_components/AuthProvider";
 import style from "./Login.module.scss";
 
 export default function LoginPage() {
-  const { login, loginWithGoogle, isAdmin, isAuthenticated, isLoading } = useAuth();
-  const router = useRouter();
+  const { login, loginWithGoogle } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-
-  useEffect(() => {
-    if (!isLoading && isAuthenticated) {
-      router.replace(isAdmin ? "/admin" : "/");
-    }
-  }, [isAuthenticated, isAdmin, isLoading, router]);
-
-  const redirectAfterLogin = (admin: boolean) =>
-    router.push(admin ? "/admin" : "/");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,16 +20,14 @@ export default function LoginPage() {
     setSubmitting(true);
 
     try {
-      const user = await login(email, password);
-      redirectAfterLogin(user.role === "admin");
+      await login(email, password);
+      // AuthGate handles redirect
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
       setSubmitting(false);
     }
   };
-
-  if (isLoading) return null;
 
   return (
     <div className={style.page}>
@@ -53,8 +41,8 @@ export default function LoginPage() {
               if (!response.credential) return;
               setError("");
               try {
-                const user = await loginWithGoogle(response.credential);
-                redirectAfterLogin(user.role === "admin");
+                await loginWithGoogle(response.credential);
+                // AuthGate handles redirect
               } catch (err) {
                 setError(err instanceof Error ? err.message : "Google sign-in failed");
               }
@@ -96,6 +84,10 @@ export default function LoginPage() {
         <button type="submit" className={style.submit} disabled={submitting}>
           {submitting ? "Signing in…" : "Sign in"}
         </button>
+
+        <p className={style.registerLink}>
+          Don&apos;t have an account? <Link href="/register">Create one</Link>
+        </p>
       </form>
     </div>
   );

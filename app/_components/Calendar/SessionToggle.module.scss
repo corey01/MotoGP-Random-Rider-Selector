@@ -7,21 +7,27 @@
 .triggerButton {
   width: auto;
   margin: 0;
-  border: 1px solid #000;
-  background: #fff;
-  color: #000;
+  border: 1px solid var(--kc-border);
+  background: var(--kc-surface-2);
+  color: var(--kc-text-1);
   padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 0.72rem;
+  border-radius: var(--kc-radius-sm);
+  font-size: var(--kc-text-xs);
   line-height: 1;
   cursor: pointer;
+  min-height: 28px;
+
+  &:hover {
+    background: var(--kc-surface-3);
+    border-color: var(--kc-text-3);
+  }
 }
 
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 20;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: var(--kc-z-modal);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,9 +38,9 @@
   width: min(620px, 100%);
   max-height: calc(100vh - 2rem);
   overflow: auto;
-  background: #fff;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+  background: var(--kc-surface-1);
+  border-radius: var(--kc-radius-lg);
+  border: 1px solid var(--kc-border);
   padding: 1rem;
 }
 
@@ -47,20 +53,25 @@
 
 .modalHeader h3 {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--kc-text-base);
   font-weight: 600;
+  color: var(--kc-text-1);
 }
 
 .closeButton {
   width: auto;
   margin: 0;
-  border: 1px solid #000;
-  background: #fff;
-  color: #000;
+  border: 1px solid var(--kc-border);
+  background: var(--kc-surface-2);
+  color: var(--kc-text-1);
   padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 0.75rem;
+  border-radius: var(--kc-radius-sm);
+  font-size: var(--kc-text-xs);
   cursor: pointer;
+
+  &:hover {
+    background: var(--kc-surface-3);
+  }
 }
 
 .section {
@@ -72,9 +83,10 @@
 }
 
 .sectionTitle {
-  font-size: 0.8rem;
+  font-size: var(--kc-text-sm);
   font-weight: 600;
   margin-bottom: 0.4rem;
+  color: var(--kc-text-2);
 }
 
 .sessionSwitchWrap {
@@ -91,9 +103,9 @@
   width: 100%;
   height: 2.25rem;
   margin: 0;
-  border: 1px solid #111;
-  border-radius: 999px;
-  background: #efefef;
+  border: 1px solid var(--kc-border);
+  border-radius: var(--kc-radius-pill);
+  background: var(--kc-surface-2);
   overflow: hidden;
   cursor: pointer;
 }
@@ -104,8 +116,8 @@
   left: 3px;
   width: calc(50% - 3px);
   height: calc(100% - 6px);
-  border-radius: 999px;
-  background: #111;
+  border-radius: var(--kc-radius-pill);
+  background: var(--kc-primary);
   transition: transform 0.2s ease;
 }
 
@@ -121,26 +133,26 @@
   text-align: center;
   font-size: 0.84rem;
   font-weight: 600;
-  color: #222;
+  color: var(--kc-text-2);
   transition: color 0.2s ease;
 }
 
 .sessionSwitchTextLeft {
-  color: #fff;
+  color: #0e0e0e;
 }
 
 .sessionSwitchAll .sessionSwitchTextLeft {
-  color: #222;
+  color: var(--kc-text-2);
 }
 
 .sessionSwitchAll .sessionSwitchTextRight {
-  color: #fff;
+  color: #0e0e0e;
 }
 
 .sessionSwitchState {
   margin: 0;
-  font-size: 0.72rem;
-  color: #666;
+  font-size: var(--kc-text-xs);
+  color: var(--kc-text-3);
 }
 
 .seriesGroups {
@@ -150,22 +162,23 @@
 }
 
 .seriesGroup {
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
+  border: 1px solid var(--kc-border);
+  border-radius: var(--kc-radius-md);
   padding: 0.55rem;
-  background: #fafafa;
+  background: var(--kc-surface-2);
 }
 
 .groupButton {
   width: auto;
   margin: 0 0 0.4rem 0;
-  border: 1px solid #000;
-  background: #fff;
-  color: #000;
+  border: 1px solid var(--kc-border);
+  background: var(--kc-surface-3);
+  color: var(--kc-text-2);
   padding: 4px 10px;
-  border-radius: 999px;
+  border-radius: var(--kc-radius-pill);
   font-size: 0.74rem;
   cursor: pointer;
+  min-height: 28px;
 }
 
 .motogp {}
@@ -179,8 +192,8 @@
 }
 
 .groupButtonActive.motogp {
-  background: #111;
-  border-color: #111;
+  background: #333;
+  border-color: #555;
 }
 
 .groupButtonActive.wsbk {
@@ -204,7 +217,7 @@
 }
 
 .groupButtonPartial {
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
 .subSeriesRow {
@@ -216,30 +229,31 @@
 .subSeriesButton {
   width: auto;
   margin: 0;
-  border: 1px solid #999;
-  background: #fff;
-  color: #555;
+  border: 1px solid var(--kc-border);
+  background: var(--kc-surface-3);
+  color: var(--kc-text-3);
   padding: 3px 9px;
-  border-radius: 999px;
+  border-radius: var(--kc-radius-pill);
   font-size: 0.7rem;
   cursor: pointer;
+  min-height: 28px;
 }
 
 .subSeriesButtonActive {
-  border-color: #000;
-  color: #000;
+  border-color: var(--kc-text-2);
+  color: var(--kc-text-1);
   font-weight: 600;
 }
 
 .filterHint {
   margin-top: 0.45rem;
-  font-size: 0.72rem;
-  color: #666;
+  font-size: var(--kc-text-xs);
+  color: var(--kc-text-3);
 }
 
 @media (min-width: 769px) {
   .triggerButton {
-    font-size: 0.82rem;
+    font-size: var(--kc-text-sm);
   }
 
   .sessionSwitch {

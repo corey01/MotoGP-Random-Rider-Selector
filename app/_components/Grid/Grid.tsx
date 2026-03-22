@@ -107,15 +107,22 @@ export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
   }
 
   return (
-    <div className={`panel ${style.GridPanel}`}>
+    <div className={style.GridPanel}>
       <div className={style.header}>
-        <h3 style={{ margin: 0 }}>{eventName || "Current Grid"}</h3>
+        <div>
+          <p className={style.eyebrow}>Grid Focus</p>
+          <h2 className={style.title}>{eventName || "Current grid"}</h2>
+        </div>
         {!loading && !hasGrid && (
-          <span className={style.meta}>
+          <span className={style.headerMeta}>
             {hasSessionInfo ? "Qualifying upcoming" : "Grid unavailable"}
           </span>
         )}
       </div>
+
+      <p className={style.summary}>
+        Use the qualifying order to preview the sharp end before narrowing the rider pool.
+      </p>
 
       {loading && <div className={style.loading}>Loading…</div>}
       {error && <div className={style.error}>{error}</div>}
@@ -161,16 +168,16 @@ export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
                         </div>
                       )}
 
-                      <div className={style.textWrap}>
-                        <div className={style.name}>{item.riderName}</div>
-                        {item.teamName && (
-                          <div
-                            className={style.meta}
-                            style={{ color: item.textColor ?? "rgba(255,255,255,0.6)" }}
-                          >
-                            {item.teamName}
-                          </div>
-                        )}
+                        <div className={style.textWrap}>
+                          <div className={style.name}>{item.riderName}</div>
+                          {item.teamName && (
+                            <div
+                              className={style.meta}
+                              style={{ color: item.textColor ?? "rgba(255,255,255,0.6)" }}
+                            >
+                              {item.teamName}
+                            </div>
+                          )}
                       </div>
                     </div>
                   </div>
@@ -183,15 +190,30 @@ export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
 
       {/* Fallback: upcoming qualifying session times */}
       {!loading && !hasGrid && hasSessionInfo && (
-        <>
-          <h5>Next sessions</h5>
+        <div className={style.sessionGrid}>
           {sessions.Q1 && (
-            <h6>Q1: {format(new Date(sessions.Q1), "EEEE, d MMMM yy HH:mm aaaaa'm'")}</h6>
+            <div className={style.sessionCard}>
+              <span className={style.sessionLabel}>Q1</span>
+              <strong className={style.sessionValue}>
+                {format(new Date(sessions.Q1), "EEEE, d MMM yy")}
+              </strong>
+              <span className={style.sessionMeta}>
+                {format(new Date(sessions.Q1), "HH:mm")}
+              </span>
+            </div>
           )}
           {sessions.Q2 && (
-            <h6>Q2: {format(new Date(sessions.Q2), "EEEE, d MMMM yy HH:mm aaaaa'm'")}</h6>
+            <div className={style.sessionCard}>
+              <span className={style.sessionLabel}>Q2</span>
+              <strong className={style.sessionValue}>
+                {format(new Date(sessions.Q2), "EEEE, d MMM yy")}
+              </strong>
+              <span className={style.sessionMeta}>
+                {format(new Date(sessions.Q2), "HH:mm")}
+              </span>
+            </div>
           )}
-        </>
+        </div>
       )}
 
       {!loading && !hasGrid && !hasSessionInfo && !error && (

@@ -6,6 +6,7 @@ import style from "./Riders.module.scss";
 import { motoGP } from "@/app/fonts";
 import classNames from "classnames";
 import { FALLBACK_TEAM_COLOR } from "../consts";
+import type { CSSProperties } from "react";
 
 const RiderCard = ({
   rider,
@@ -30,8 +31,6 @@ const RiderCard = ({
   const highlightGuest = !inGuestArray && rider.riderType === "guest";
   const isLongName = `${rider.name} ${rider.surname}`.length > 18;
 
-  const hasBikeImage = !!rider.pictures.bike.main  || rider.teamPicture;
-
   const getContrastText = (hex?: string | null) => {
     if (!hex || !/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(hex)) return "#ffffff";
     let h = hex.slice(1);
@@ -45,6 +44,9 @@ const RiderCard = ({
 
   const teamBg = rider.teamColor || "rgba(255,255,255,0.12)";
   const teamFg = rider.textColor || getContrastText(rider.teamColor || "");
+  const cardStyle = {
+    "--team-accent": rider.teamColor || "var(--kc-primary)",
+  } as CSSProperties;
 
   return (
     <div
@@ -53,6 +55,7 @@ const RiderCard = ({
         isGuest && style.guest,
         highlightGuest && style.highlightGuest,
       )} rider-${rider.name}-${rider.surname}` }
+      style={cardStyle}
     >
       <img
         alt=""
@@ -62,7 +65,10 @@ const RiderCard = ({
         height={375}
       />
       <div className={style.details}>
-        <span className={`${motoGP.className} ${classNames(style.riderName, isLongName && style.riderNameCompact)}`}>
+        <span className={classNames(style.kicker, motoGP.className)}>
+          {isGuest ? "Wildcard entry" : "MotoGP rider"}
+        </span>
+        <span className={classNames(style.riderName, isLongName && style.riderNameCompact)}>
           {rider.name} {rider.surname}
           {highlightGuest && (
             <>
