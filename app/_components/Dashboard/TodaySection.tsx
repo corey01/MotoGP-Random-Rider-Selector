@@ -7,7 +7,7 @@ import { fetchLiveSession, type LiveSessionData } from "@/utils/getLiveSession";
 import style from "./TodaySection.module.scss";
 
 const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
-const POLL_INTERVAL_MS = 30_000;
+const POLL_INTERVAL_MS = 10_000;
 
 const SUB_SERIES_LABELS: Record<string, string> = {
   motogp: "MotoGP",
