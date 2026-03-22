@@ -8,7 +8,7 @@ import { UpcomingEvents } from "./_components/Dashboard/UpcomingEvents";
 import { getDashboardData, type DashboardData } from "@/utils/getDashboardData";
 import style from "./Dashboard.module.scss";
 
-const EMPTY: DashboardData = { nextRace: null, today: [], upcoming: [], subscribedSeries: [] };
+const EMPTY: DashboardData = { nextRace: null, today: [], upcoming: [], upcomingRaces: [], subscribedSeries: [] };
 
 export default function DashboardPage() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -40,7 +40,7 @@ export default function DashboardPage() {
         </section>
         <section className={style.feedSection}>
           <h2 className={style.feedTitle}>Upcoming Events</h2>
-          <UpcomingEvents events={data.upcoming} />
+          <UpcomingEvents allEvents={data.upcoming} raceEvents={data.upcomingRaces} />
         </section>
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { format, parseISO } from "date-fns";
 import { type ApiCalendarEvent } from "@/utils/getCalendarData";
 import style from "./UpcomingEvents.module.scss";
@@ -18,6 +18,18 @@ const SUB_SERIES_LABELS: Record<string, string> = {
   speedway: "Speedway",
 };
 
+// Series that always get a colored badge (using the sub-series label for specificity)
+const COLORED_BADGE_SERIES = new Set(["motogp", "wsbk", "f1"]);
+
+// Prefixed to the round name for context
+const ROUND_PREFIX: Record<string, string> = {
+  motogp: "MotoGP",
+  wsbk: "WorldSBK",
+  f1: "Formula 1",
+  bsb: "BSB",
+  speedway: "FIM Speedway",
+};
+
 const SERIES_COLORS: Record<string, string> = {
   motogp: "var(--motogp-red)",
   wsbk: "var(--wsbk-blue)",
@@ -26,102 +38,125 @@ const SERIES_COLORS: Record<string, string> = {
   f1: "var(--f1-red)",
 };
 
+const SMALL_WORDS = new Set([
+  "a", "an", "the", "and", "but", "or", "for", "nor",
+  "on", "at", "in", "to", "by", "of", "with", "from", "as",
+]);
+
+function toTitleCase(str: string): string {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map((word, i) => {
+      if (i > 0 && SMALL_WORDS.has(word)) return word;
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+}
+
+function formatRoundName(series: string, roundName: string): string {
+  const prefix = ROUND_PREFIX[series];
+  const titled = toTitleCase(roundName);
+  return prefix ? `${prefix} ${titled}` : titled;
+}
+
 interface UpcomingEventsProps {
+  allEvents: ApiCalendarEvent[];
+  raceEvents: ApiCalendarEvent[];
+}
+
+interface DayGroup {
+  date: string;
+  label: string;
   events: ApiCalendarEvent[];
 }
 
-interface RoundGroup {
-  roundId: number;
-  roundName: string;
-  country: string | null;
-  series: string;
-  events: ApiCalendarEvent[];
-}
+export function UpcomingEvents({ allEvents, raceEvents }: UpcomingEventsProps) {
+  const [racesOnly, setRacesOnly] = useState(true);
 
-const SESSION_ORDER: Record<string, number> = {
-  PRACTICE: 0,
-  QUALIFYING: 1,
-  RACE: 2,
-};
-
-export function UpcomingEvents({ events }: UpcomingEventsProps) {
-  const groups = useMemo<RoundGroup[]>(() => {
-    const map = new Map<number, RoundGroup>();
-    for (const ev of events) {
-      const id = ev.round.id;
-      if (!map.has(id)) {
-        map.set(id, {
-          roundId: id,
-          roundName: ev.round.name,
-          country: ev.round.country ?? null,
-          series: ev.series,
-          events: [],
-        });
-      }
-      map.get(id)!.events.push(ev);
+  const days = useMemo<DayGroup[]>(() => {
+    const filtered = racesOnly ? raceEvents : allEvents;
+    const map = new Map<string, ApiCalendarEvent[]>();
+    for (const ev of filtered) {
+      const date = ev.start.slice(0, 10);
+      if (!map.has(date)) map.set(date, []);
+      map.get(date)!.push(ev);
     }
-    return Array.from(map.values())
-      .map((g) => ({
-        ...g,
-        events: [...g.events].sort(
-          (a, b) =>
-            (SESSION_ORDER[a.type] ?? 99) - (SESSION_ORDER[b.type] ?? 99) ||
-            new Date(a.start).getTime() - new Date(b.start).getTime()
+    return Array.from(map.entries())
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([date, evs]) => ({
+        date,
+        label: format(parseISO(date), "EEEE d MMM").toUpperCase(),
+        events: [...evs].sort(
+          (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
         ),
-      }))
-      .sort((a, b) => new Date(a.events[0].start).getTime() - new Date(b.events[0].start).getTime());
-  }, [events]);
-
-  if (!groups.length) {
-    return (
-      <div className={style.empty}>
-        <p>No upcoming events. Adjust your series subscriptions to see events here.</p>
-      </div>
-    );
-  }
+      }));
+  }, [allEvents, raceEvents, racesOnly]);
 
   return (
-    <div className={style.list}>
-      {groups.map((group) => (
-        <div key={group.roundId} className={style.round}>
-          <div className={style.roundHeader}>
-            <span
-              className={style.seriesBadge}
-              style={{ background: SERIES_COLORS[group.series] ?? "#555" }}
-            >
-              {group.series.toUpperCase()}
-            </span>
-            <span className={style.roundName}>{group.roundName}</span>
-            {group.country && (
-              <span className={style.country}>{group.country}</span>
-            )}
-          </div>
-          <div className={style.sessions}>
-            {group.events.map((ev) => {
-              const isRace = ev.type === "RACE";
-              const subLabel = SUB_SERIES_LABELS[ev.subSeries] ?? ev.subSeries;
-              const seriesLabel = SUB_SERIES_LABELS[ev.series] ?? ev.series;
-              const showSubChip = subLabel !== seriesLabel;
-              return (
-                <div
-                  key={ev.id}
-                  className={`${style.session} ${isRace ? style.sessionRace : ""}`}
-                >
-                  <div className={style.sessionLeft}>
-                    {showSubChip && (
-                      <span className={style.subChip}>{subLabel}</span>
-                    )}
-                    <span className={style.sessionName}>{ev.sessionName || ev.type}</span>
-                  </div>
-                  <span className={style.sessionTime}>
-                    {format(parseISO(ev.start), "EEE d MMM, HH:mm")}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
+    <div className={style.root}>
+      <div className={style.toolbar}>
+        <button
+          className={`${style.filterBtn} ${racesOnly ? style.filterBtnActive : ""}`}
+          onClick={() => setRacesOnly((v) => !v)}
+        >
+          Races only
+        </button>
+      </div>
+
+      {days.length === 0 ? (
+        <div className={style.empty}>
+          <p>No upcoming events. Adjust your series subscriptions to see events here.</p>
         </div>
-      ))}
+      ) : (
+        <div className={style.list}>
+          {days.map((day) => (
+            <div key={day.date} className={style.day}>
+              <h3 className={style.dayHeader}>{day.label}</h3>
+              <div className={style.sessions}>
+                {day.events.map((ev) => {
+                  const seriesColor = SERIES_COLORS[ev.series] ?? "#555";
+                  const subLabel = SUB_SERIES_LABELS[ev.subSeries] ?? ev.subSeries;
+                  const seriesLabel = SUB_SERIES_LABELS[ev.series] ?? ev.series;
+                  const useColoredBadge = COLORED_BADGE_SERIES.has(ev.series);
+                  const showSubChip = !useColoredBadge && subLabel !== seriesLabel;
+                  const prefix = subLabel + " - ";
+                  const sessionName = ev.sessionName.startsWith(prefix)
+                    ? ev.sessionName.slice(prefix.length)
+                    : ev.sessionName;
+                  const roundName = formatRoundName(ev.series, ev.round.name);
+                  const isRace = ev.type === "RACE";
+                  return (
+                    <div
+                      key={ev.id}
+                      className={`${style.session} ${isRace ? style.sessionRace : ""}`}
+                      style={{ borderLeftColor: seriesColor }}
+                    >
+                      <div className={style.sessionTop}>
+                        {useColoredBadge && (
+                          <span className={style.seriesBadge} style={{ background: seriesColor }}>
+                            {subLabel}
+                          </span>
+                        )}
+                        {showSubChip && (
+                          <span className={style.subChip}>{subLabel}</span>
+                        )}
+                        <span className={style.sessionName}>{sessionName || ev.type}</span>
+                      </div>
+                      <div className={style.sessionBottom}>
+                        <span className={style.roundName}>{roundName}</span>
+                        <span className={style.sessionTime}>
+                          {format(parseISO(ev.start), "HH:mm")}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

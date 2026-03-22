@@ -5,6 +5,7 @@ export interface DashboardData {
   nextRace: ApiCalendarEvent | null;
   today: ApiCalendarEvent[];
   upcoming: ApiCalendarEvent[];
+  upcomingRaces: ApiCalendarEvent[];
   subscribedSeries: string[];
 }
 
@@ -12,6 +13,7 @@ const EMPTY: DashboardData = {
   nextRace: null,
   today: [],
   upcoming: [],
+  upcomingRaces: [],
   subscribedSeries: [],
 };
 
@@ -24,6 +26,7 @@ export async function getDashboardData(): Promise<DashboardData> {
       nextRace: data.nextRace ?? null,
       today: data.today ?? [],
       upcoming: data.upcoming ?? [],
+      upcomingRaces: data.upcomingRaces ?? [],
       subscribedSeries: data.subscribedSeries ?? [],
     };
   } catch {

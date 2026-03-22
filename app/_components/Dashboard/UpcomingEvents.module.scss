@@ -1,3 +1,42 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--kc-space-3);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--kc-space-2);
+}
+
+.filterBtn {
+  font-size: var(--kc-text-xs);
+  font-weight: 600;
+  color: var(--kc-text-2);
+  background: var(--kc-surface-2);
+  border: 1px solid var(--kc-border);
+  border-radius: var(--kc-radius-pill);
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+
+  &:hover {
+    background: var(--kc-surface-3);
+  }
+}
+
+.filterBtnActive {
+  color: #fff;
+  background: var(--kc-primary);
+  border-color: var(--kc-primary);
+
+  &:hover {
+    background: var(--kc-primary);
+    opacity: 0.9;
+  }
+}
+
 .empty {
   color: var(--kc-text-2);
   font-size: var(--kc-text-sm);
@@ -11,58 +50,41 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: var(--kc-space-3);
+  gap: var(--kc-space-4);
 }
 
-.round {
+.day {
+  display: flex;
+  flex-direction: column;
+  gap: var(--kc-space-2);
+}
+
+.dayHeader {
+  font-size: var(--kc-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--kc-text-3);
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0 var(--kc-space-1);
+}
+
+.sessions {
+  display: flex;
+  flex-direction: column;
   background: var(--kc-surface-1);
   border: 1px solid var(--kc-border);
   border-radius: var(--kc-radius-md);
   overflow: hidden;
 }
 
-.roundHeader {
-  display: flex;
-  align-items: center;
-  gap: var(--kc-space-2);
-  padding: var(--kc-space-3) var(--kc-space-4);
-  border-bottom: 1px solid var(--kc-border);
-  flex-wrap: wrap;
-}
-
-.seriesBadge {
-  font-size: var(--kc-text-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #fff;
-  padding: 2px 8px;
-  border-radius: var(--kc-radius-pill);
-}
-
-.roundName {
-  font-size: var(--kc-text-sm);
-  font-weight: 700;
-  color: var(--kc-text-1);
-  flex: 1;
-}
-
-.country {
-  font-size: var(--kc-text-xs);
-  color: var(--kc-text-3);
-}
-
-.sessions {
-  display: flex;
-  flex-direction: column;
-}
-
 .session {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: var(--kc-space-1);
   padding: var(--kc-space-3) var(--kc-space-4);
   border-bottom: 1px solid var(--kc-border);
-  gap: var(--kc-space-3);
+  border-left: 3px solid transparent;
 
   &:last-child {
     border-bottom: none;
@@ -70,7 +92,6 @@
 }
 
 .sessionRace {
-  border-left: 3px solid var(--kc-primary);
   background: rgba(255, 143, 115, 0.04);
 
   .sessionName {
@@ -79,9 +100,29 @@
   }
 }
 
-.sessionLeft {
+
+.seriesBadge {
+  font-size: var(--kc-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: var(--kc-radius-pill);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sessionTop {
   display: flex;
   align-items: center;
+  gap: var(--kc-space-2);
+  min-width: 0;
+}
+
+.sessionBottom {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
   gap: var(--kc-space-2);
   min-width: 0;
 }
@@ -102,9 +143,19 @@
   font-size: var(--kc-text-sm);
   color: var(--kc-text-2);
   font-weight: 500;
-  white-space: nowrap;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.roundName {
+  font-size: var(--kc-text-xs);
+  color: var(--kc-text-3);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .sessionTime {

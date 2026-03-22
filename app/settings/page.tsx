@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/app/_components/AuthProvider";
-import { fetchSubscriptions, saveSubscriptions } from "@/utils/subscriptions";
+import { fetchSubscriptions, saveSubscriptions, fetchDisabledSubSeries, saveDisabledSubSeries } from "@/utils/subscriptions";
 import { SERIES_GROUPS } from "@/app/_components/Calendar/filterConfig";
-import type { SeriesKey } from "@/app/_components/Calendar/filterConfig";
+import type { SeriesKey, SubSeriesKey } from "@/app/_components/Calendar/filterConfig";
 import style from "./Settings.module.scss";
 import { useRouter } from "next/dist/client/components/navigation";
 
@@ -16,44 +16,95 @@ const SERIES_COLORS: Record<string, string> = {
   f1: "var(--f1-red)",
 };
 
+const CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: string }> = {
+  motogp:   { abbr: "GP",  subtitle: "Premier Class" },
+  moto2:    { abbr: "M2",  subtitle: "Intermediate" },
+  moto3:    { abbr: "M3",  subtitle: "Lightweight" },
+  worldsbk: { abbr: "SBK", subtitle: "Superbike" },
+  worldssp: { abbr: "SSP", subtitle: "Supersport" },
+  worldwcr: { abbr: "WCR", subtitle: "Women's Cup" },
+  worldspb: { abbr: "SPB", subtitle: "300cc" },
+  bsb:      { abbr: "BSB", subtitle: "British SBK" },
+  speedway: { abbr: "SGP", subtitle: "Grand Prix" },
+  f1:       { abbr: "F1",  subtitle: "Single Seater" },
+};
+
+const ALL_CARDS = SERIES_GROUPS.flatMap((group) =>
+  group.children.map((child) => ({
+    parentKey: group.key as SeriesKey,
+    subKey: child.key,
+    label: child.label,
+    color: SERIES_COLORS[group.key],
+    ...CARD_META[child.key],
+  }))
+);
+
 export default function SettingsPage() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const [subscribed, setSubscribed] = useState<Set<SeriesKey>>(new Set());
+  const [disabledSubSeries, setDisabledSubSeries] = useState<Set<SubSeriesKey>>(new Set());
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
-  const [error, setError] = useState("");
+  const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = useCallback((msg: string, ok: boolean) => {
+    setToast({ msg, ok });
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(null), 4000);
+  }, []);
 
   useEffect(() => {
-    fetchSubscriptions().then((series) => {
+    Promise.all([fetchSubscriptions(), fetchDisabledSubSeries()]).then(([series, disabled]) => {
       setSubscribed(new Set(series));
+      setDisabledSubSeries(new Set(disabled));
       setLoading(false);
     });
   }, []);
 
-  const toggle = (key: SeriesKey) => {
-    setSaved(false);
+  const isCardSelected = (parentKey: SeriesKey, subKey: SubSeriesKey) =>
+    subscribed.has(parentKey) && !disabledSubSeries.has(subKey);
+
+  const toggleCard = (parentKey: SeriesKey, subKey: SubSeriesKey) => {
+    const selected = isCardSelected(parentKey, subKey);
+    const siblings = SERIES_GROUPS.find((g) => g.key === parentKey)?.children ?? [];
+
+    setDisabledSubSeries((prev) => {
+      const next = new Set(prev);
+      if (selected) next.add(subKey);
+      else next.delete(subKey);
+      return next;
+    });
+
     setSubscribed((prev) => {
       const next = new Set(prev);
-      if (next.has(key)) next.delete(key);
-      else next.add(key);
+      if (selected) {
+        const nextDisabled = new Set(disabledSubSeries);
+        nextDisabled.add(subKey);
+        const allDisabled = siblings.every((c) => nextDisabled.has(c.key));
+        if (allDisabled) next.delete(parentKey);
+      } else {
+        next.add(parentKey);
+      }
       return next;
     });
   };
 
   const handleSave = async () => {
     if (subscribed.size === 0) {
-      setError("Select at least one series.");
+      showToast("Select at least one series.", false);
       return;
     }
     setSaving(true);
-    setError("");
     try {
-      await saveSubscriptions(Array.from(subscribed) as SeriesKey[]);
-      setSaved(true);
+      await Promise.all([
+        saveSubscriptions(Array.from(subscribed) as SeriesKey[]),
+        saveDisabledSubSeries(Array.from(disabledSubSeries) as SubSeriesKey[]),
+      ]);
+      showToast("Settings saved.", true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Save failed");
+      showToast(err instanceof Error ? err.message : "Save failed", false);
     } finally {
       setSaving(false);
     }
@@ -64,7 +115,6 @@ export default function SettingsPage() {
     router.push("/login");
   };
 
-
   if (loading) return <div className={style.loading}>Loading…</div>;
 
   return (
@@ -72,10 +122,9 @@ export default function SettingsPage() {
       <div className={style.container}>
         <div className={style.header}>
           <div>
-          <h1 className={style.title}>Settings</h1>
-          {user && <p className={style.subtitle}>{user.email}</p>}
+            <h1 className={style.title}>Settings</h1>
+            {user && <p className={style.subtitle}>{user.email}</p>}
           </div>
-
           <button className={style.signOutBtn} onClick={handleLogout}>
             Sign out
           </button>
@@ -83,34 +132,34 @@ export default function SettingsPage() {
 
         <section className={style.section}>
           <h2 className={style.sectionTitle}>Series Subscriptions</h2>
-          <p className={style.sectionDesc}>Choose which series appear in your calendar and dashboard.</p>
+          <p className={style.sectionDesc}>Choose which series and classes appear in your calendar.</p>
 
           <div className={style.grid}>
-            {SERIES_GROUPS.map((group) => {
-              const isSelected = subscribed.has(group.key as SeriesKey);
+            {ALL_CARDS.map(({ parentKey, subKey, label, abbr, subtitle, color }) => {
+              const selected = isCardSelected(parentKey, subKey);
               return (
                 <button
-                  key={group.key}
+                  key={subKey}
                   type="button"
-                  className={`${style.card} ${isSelected ? style.cardSelected : ""}`}
-                  style={{ "--series-color": SERIES_COLORS[group.key] } as React.CSSProperties}
-                  onClick={() => toggle(group.key as SeriesKey)}
-                  aria-pressed={isSelected}
+                  className={`${style.card} ${selected ? style.cardSelected : ""}`}
+                  style={{ "--series-color": color } as React.CSSProperties}
+                  onClick={() => toggleCard(parentKey, subKey)}
+                  aria-pressed={selected}
                 >
-                  <span className={style.cardLabel}>{group.label}</span>
-                  {group.children.length > 1 && (
-                    <span className={style.cardSub}>
-                      {group.children.map((c) => c.label).join(", ")}
+                  <div className={style.cardTop}>
+                    <span className={style.abbr}>{abbr}</span>
+                    <span className={`${style.checkbox} ${selected ? style.checkboxChecked : ""}`} aria-hidden="true">
+                      {selected && "✓"}
                     </span>
-                  )}
-                  {isSelected && <span className={style.checkmark} aria-hidden="true">✓</span>}
+                  </div>
+                  <div className={style.cardBottom}>
+                    <span className={style.cardLabel}>{label}</span>
+                    <span className={style.cardSub}>{subtitle}</span>
+                  </div>
                 </button>
               );
             })}
           </div>
-
-          {error && <p className={style.error}>{error}</p>}
-          {saved && <p className={style.success}>Saved!</p>}
 
           <button
             type="button"
@@ -122,6 +171,12 @@ export default function SettingsPage() {
           </button>
         </section>
       </div>
+
+      {toast && (
+        <div className={`${style.toast} ${toast.ok ? style.toastOk : style.toastError}`}>
+          {toast.msg}
+        </div>
+      )}
     </div>
   );
 }
