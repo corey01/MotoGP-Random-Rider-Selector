@@ -25,7 +25,7 @@ import {
 } from "@/utils/getCalendarData";
 import { useAuth } from "../_components/AuthProvider";
 import { fetchPreferences, savePreferences } from "@/utils/preferences";
-import { fetchSubscriptions } from "@/utils/subscriptions";
+import { fetchSubscriptions, fetchDisabledSubSeries } from "@/utils/subscriptions";
 import style from "./Calendar.module.scss";
 
 const createEmptyVisibility = () =>
@@ -144,13 +144,20 @@ export default function CalendarPage() {
         }
 
         try {
-          const subscriptions = await fetchSubscriptions();
+          const [subscriptions, disabled] = await Promise.all([
+            fetchSubscriptions(),
+            fetchDisabledSubSeries(),
+          ]);
           const subscribedSeries = SERIES_GROUPS
             .map((group) => group.key)
             .filter((key) => subscriptions.includes(key));
 
+          const baseVisibility = visibilityWithinSeries({ ...DEFAULT_SUB_SERIES_VISIBILITY }, subscribedSeries);
+          disabled.forEach((key) => { if (key in baseVisibility) baseVisibility[key] = false; });
+
           setAvailableSeries(subscribedSeries);
-          setVisibleSubSeries((prev) => visibilityWithinSeries(prev, subscribedSeries));
+          setVisibleSubSeries(baseVisibility);
+          if (disabled.length > 0) setUseBackendDefaults(false);
         } catch {
           // ignore — fall back to showing all series
         }
