@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { format, parseISO } from "date-fns";
 import { type ApiCalendarEvent } from "@/utils/getCalendarData";
 import { fetchLiveSession, type LiveSessionData } from "@/utils/getLiveSession";
@@ -98,8 +99,19 @@ export function TodaySection({ events }: TodaySectionProps) {
       return;
     }
 
-    // Poll immediately, then on interval
-    const poll = () => fetchLiveSession().then((d) => d && setLiveData(d));
+    // Poll immediately, then on interval — self-terminates when all races are done
+    const poll = () =>
+      fetchLiveSession().then((d) => {
+        if (!d) return;
+        setLiveData(d);
+        const allRacesDone = raceEvents.every(
+          (ev) => getFallbackStatus(ev, Date.now()) === "done"
+        );
+        if (allRacesDone) {
+          clearInterval(intervalRef.current!);
+          intervalRef.current = null;
+        }
+      });
     poll();
     intervalRef.current = setInterval(poll, POLL_INTERVAL_MS);
 
@@ -173,7 +185,7 @@ export function TodaySection({ events }: TodaySectionProps) {
                 className={style.seriesDot}
                 style={{ background: group.seriesColor }}
               />
-              <span className={style.groupRoundName}>{group.roundName}</span>
+              <Link href={`/race?roundId=${group.roundId}`} className={style.groupRoundName}>{group.roundName}</Link>
               {group.country && (
                 <span className={style.groupCountry}>{group.country}</span>
               )}
