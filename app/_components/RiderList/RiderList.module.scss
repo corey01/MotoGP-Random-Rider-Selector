@@ -29,3 +29,19 @@
   margin: 1em 0;
   font-weight: 600;
 }
+
+.gridTop {
+  border: 2px solid black;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.gridTopActive {
+  border: 2px solid black;
+  background-color: black;
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

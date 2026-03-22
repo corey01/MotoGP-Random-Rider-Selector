@@ -44,42 +44,43 @@ export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
           year,
           series: ["motogp"],
           subSeries: ["motogp"],
-          types: ["QUALIFYING"],
         });
 
         const now = Date.now();
-        const upcoming = events
+
+        // Find the next upcoming race to determine the current active round
+        const upcomingRaces = events
           .filter((event) => {
             const start = parseDateSafe(event.start);
-            return !!start && start.getTime() >= now;
+            return !!start && start.getTime() >= now && event.type?.toUpperCase() === "RACE";
           })
           .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
 
         if (!alive) return;
 
-        if (!upcoming.length) {
+        if (!upcomingRaces.length) {
           setEventName(null);
           setSessions({ Q1: null, Q2: null });
           setGridData(null);
           return;
         }
 
-        const firstEvent = upcoming[0];
-        setEventName(firstEvent.round?.name || firstEvent.title || "Next Qualifying");
+        const nextRace = upcomingRaces[0];
+        const roundId = nextRace.round?.id;
+        setEventName(nextRace.round?.name || nextRace.title || "Next Race");
 
+        // Find Q1/Q2 qualifying times for this round
+        const qualifying = events.filter(
+          (e) => e.round?.id === roundId && e.type?.toUpperCase() === "QUALIFYING"
+        );
         const q1 =
-          upcoming.find((e) => /\bq1\b/i.test(String(e.sessionName || "")))?.start ||
-          upcoming[0]?.start ||
-          null;
+          qualifying.find((e) => /\bq1\b/i.test(String(e.sessionName || "")))?.start || null;
         const q2 =
-          upcoming.find((e) => /\bq2\b/i.test(String(e.sessionName || "")))?.start ||
-          upcoming[1]?.start ||
-          null;
+          qualifying.find((e) => /\bq2\b/i.test(String(e.sessionName || "")))?.start || null;
 
         setSessions({ Q1: q1, Q2: q2 });
 
-        // Try to load grid data for this round
-        const roundId = firstEvent.round?.id;
+        // Load grid data for this round
         if (roundId) {
           const data = await fetchGridData(roundId);
           if (alive) setGridData(data);
