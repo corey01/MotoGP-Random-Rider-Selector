@@ -7,6 +7,7 @@ import { fetchLiveSession, type LiveSessionData } from "@/utils/getLiveSession";
 import style from "./TodaySection.module.scss";
 
 const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
+const NINETY_MINS_MS = 90 * 60 * 1000;
 const POLL_INTERVAL_MS = 10_000;
 
 const SUB_SERIES_LABELS: Record<string, string> = {
@@ -59,8 +60,8 @@ function getFallbackStatus(ev: ApiCalendarEvent, now: number): "upcoming" | "liv
 // Returns true if we should be polling the live endpoint for this race
 function isWithinLiveWindow(ev: ApiCalendarEvent, now: number): boolean {
   const start = new Date(ev.start).getTime();
-  // Within 2 hours before start, or started but fallback still says live
-  return start - now < TWO_HOURS_MS && getFallbackStatus(ev, now) !== "done";
+  // Within 2 hours before start, or up to 90 minutes after start
+  return start - now < TWO_HOURS_MS && now < start + NINETY_MINS_MS;
 }
 
 interface TodaySectionProps {
