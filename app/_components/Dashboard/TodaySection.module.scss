@@ -131,12 +131,32 @@
   font-variant-numeric: tabular-nums;
 }
 
+.liveTag {
+  font-size: var(--kc-text-xs);
+  font-weight: 700;
+  color: #fff;
+  background: #e53935;
+  padding: 2px 8px;
+  border-radius: var(--kc-radius-pill);
+  letter-spacing: 0.05em;
+
+  &::before {
+    content: "● ";
+    animation: livePulse 1.2s ease-in-out infinite;
+  }
+}
+
 .pastTag {
   font-size: var(--kc-text-xs);
   color: var(--kc-text-3);
   background: var(--kc-surface-3);
   padding: 2px 7px;
   border-radius: var(--kc-radius-pill);
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 
 /* Other session rows - compact */

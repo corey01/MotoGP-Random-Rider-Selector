@@ -36,6 +36,14 @@ interface RoundGroup {
   others: ApiCalendarEvent[];
 }
 
+function getRaceStatus(ev: ApiCalendarEvent, now: number): "upcoming" | "live" | "done" {
+  const start = new Date(ev.start).getTime();
+  if (start > now) return "upcoming";
+  const isSprint = /sprint/i.test(ev.sessionName ?? "");
+  const minDurationMs = isSprint ? 20 * 60_000 : 30 * 60_000;
+  return now < start + minDurationMs ? "live" : "done";
+}
+
 interface TodaySectionProps {
   events: ApiCalendarEvent[];
 }
@@ -106,13 +114,13 @@ export function TodaySection({ events }: TodaySectionProps) {
 
             {/* Race sessions - visually prominent */}
             {group.races.map((ev) => {
-              const isPast = new Date(ev.start).getTime() < now;
+              const status = getRaceStatus(ev, now);
               const subLabel = SUB_SERIES_LABELS[ev.subSeries] ?? ev.subSeries;
               const sessionLabel = ev.sessionName || "Race";
               return (
                 <div
                   key={ev.id}
-                  className={`${style.raceRow} ${isPast ? style.past : ""}`}
+                  className={`${style.raceRow} ${status === "done" ? style.past : ""}`}
                   style={{ "--series-color": group.seriesColor } as React.CSSProperties}
                 >
                   <div className={style.raceLeft}>
@@ -128,7 +136,8 @@ export function TodaySection({ events }: TodaySectionProps) {
                     <span className={style.raceTime}>
                       {format(parseISO(ev.start), "HH:mm")}
                     </span>
-                    {isPast && <span className={style.pastTag}>Done</span>}
+                    {status === "live" && <span className={style.liveTag}>Live</span>}
+                    {status === "done" && <span className={style.pastTag}>Done</span>}
                   </div>
                 </div>
               );
