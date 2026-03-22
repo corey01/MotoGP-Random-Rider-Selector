@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import type { Rider } from "@/models/rider";
 import style from "./Grid.module.scss";
+import { getReadableTextColor } from "./gridColorUtils";
 import { format } from "date-fns";
 import { fetchCalendarEvents } from "@/utils/getCalendarData";
 import { fetchGridData, type GridData, type GridItem } from "@/utils/getGridData";
@@ -22,7 +23,15 @@ const parseDateSafe = (value?: string | null) => {
   return date;
 };
 
-export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
+export default function GridPanel({
+  riders: _riders,
+  roundIdOverride,
+  eventNameOverride,
+}: {
+  riders: Rider[];
+  roundIdOverride?: number | null;
+  eventNameOverride?: string | null;
+}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [eventName, setEventName] = useState<string | null>(null);
@@ -58,30 +67,35 @@ export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
 
         const now = Date.now();
 
-        // Find the next upcoming race to determine the current active round
-        const upcomingRaces = events
-          .filter((event) => {
-            const start = parseDateSafe(event.start);
-            return !!start && start.getTime() >= now && event.type?.toUpperCase() === "RACE";
-          })
-          .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+        const targetRoundId = roundIdOverride ?? (() => {
+          const upcomingRaces = events
+            .filter((event) => {
+              const start = parseDateSafe(event.start);
+              return !!start && start.getTime() >= now && event.type?.toUpperCase() === "RACE";
+            })
+            .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+
+          return upcomingRaces[0]?.round?.id ?? null;
+        })();
 
         if (!alive) return;
 
-        if (!upcomingRaces.length) {
-          setEventName(null);
+        if (!targetRoundId) {
+          setEventName(eventNameOverride || null);
           setSessions({ Q1: null, Q2: null });
           setGridData(null);
           return;
         }
 
-        const nextRace = upcomingRaces[0];
-        const roundId = nextRace.round?.id;
-        setEventName(nextRace.round?.name || nextRace.title || "Next Race");
+        const targetRace =
+          events.find((event) => event.round?.id === targetRoundId && event.type?.toUpperCase() === "RACE") ??
+          null;
+
+        setEventName(eventNameOverride || targetRace?.round?.name || targetRace?.title || "Selected grid");
 
         // Find Q1/Q2 qualifying times for this round
         const qualifying = events.filter(
-          (e) => e.round?.id === roundId && e.type?.toUpperCase() === "QUALIFYING"
+          (e) => e.round?.id === targetRoundId && e.type?.toUpperCase() === "QUALIFYING"
         );
         const q1 =
           qualifying.find((e) => /\bq1\b/i.test(String(e.sessionName || "")))?.start || null;
@@ -91,10 +105,8 @@ export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
         setSessions({ Q1: q1, Q2: q2 });
 
         // Load grid data for this round
-        if (roundId) {
-          const data = await fetchGridData(roundId);
-          if (alive) setGridData(data);
-        }
+        const data = await fetchGridData(targetRoundId);
+        if (alive) setGridData(data);
       } catch {
         if (alive) setError("Failed to load grid data.");
       } finally {
@@ -104,7 +116,7 @@ export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
 
     void load();
     return () => { alive = false; };
-  }, []);
+  }, [eventNameOverride, roundIdOverride]);
 
   const hasGrid = (gridData?.grid?.length ?? 0) > 0;
   const hasSessionInfo = sessions.Q1 !== null || sessions.Q2 !== null;
@@ -154,7 +166,10 @@ export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
                 const teamName = item.teamName?.trim() || riderFallback?.sponsoredTeam || null;
                 const riderNumber = item.riderNumber ?? riderFallback?.number ?? null;
                 const teamColor = item.teamColor ?? riderFallback?.teamColor ?? "#161616";
-                const textColor = item.textColor ?? riderFallback?.textColor ?? "#fff";
+                const textColor = getReadableTextColor(
+                  teamColor,
+                  item.textColor ?? riderFallback?.textColor ?? "#fff"
+                );
                 const portraitPicture =
                   item.pictures?.portrait ??
                   item.pictures?.profile ??
@@ -172,7 +187,7 @@ export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
                     className={`${style.cell} ${COL_CLASSES[colIndex]}`}
                   >
                     <span className={style.posLabel}>{item.position}</span>
-                    <div className={style.card} style={{ background: cardBg }}>
+                    <div className={style.card} style={{ background: cardBg, color: textColor }}>
                       <div className={style.bikeBackdrop} />
 
                       {riderNumber != null && (
@@ -202,7 +217,7 @@ export default function GridPanel({ riders: _riders }: { riders: Rider[] }) {
                           {teamName && (
                             <div
                               className={style.meta}
-                              style={{ color: textColor ?? "rgba(255,255,255,0.6)" }}
+                              style={{ color: textColor, opacity: 0.82 }}
                             >
                               {teamName}
                             </div>

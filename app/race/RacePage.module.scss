@@ -283,6 +283,11 @@
   gap: 4px;
 }
 
+.sessionTimes {
+  display: grid;
+  gap: 2px;
+}
+
 .sessionName {
   font-family: var(--font-space-grotesk), sans-serif;
   font-size: 1rem;
@@ -294,6 +299,14 @@
 .sessionTime {
   color: var(--kc-text-2);
   font-size: 0.58rem;
+}
+
+.sessionTimeSecondary {
+  color: var(--kc-text-3);
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.56rem;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
 }
 
 .liveState,

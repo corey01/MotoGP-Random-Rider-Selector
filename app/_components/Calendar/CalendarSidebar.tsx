@@ -3,7 +3,7 @@
 import style from "./CalendarSidebar.module.scss";
 import { SERIES_GROUPS, SeriesKey, SubSeriesKey } from "./filterConfig";
 
-const SERIES_COLORS: Record<string, string> = {
+export const SERIES_COLORS: Record<string, string> = {
   motogp: "var(--motogp-red)",
   wsbk: "var(--wsbk-blue)",
   bsb: "#1db954",
@@ -14,18 +14,24 @@ const SERIES_COLORS: Record<string, string> = {
 interface CalendarSidebarProps {
   visibleSubSeries: Record<SubSeriesKey, boolean>;
   onToggleSeries: (series: SeriesKey) => void;
+  seriesKeys?: SeriesKey[];
 }
 
 export function CalendarSidebar({
   visibleSubSeries,
   onToggleSeries,
+  seriesKeys,
 }: CalendarSidebarProps) {
+  const visibleGroups = SERIES_GROUPS.filter((group) =>
+    seriesKeys ? seriesKeys.includes(group.key) : true
+  );
+
   return (
     <aside className={style.sidebar}>
       <div className={style.section}>
         <p className={style.sectionLabel}>Series Filters</p>
         <ul className={style.seriesList}>
-          {SERIES_GROUPS.map((group) => {
+          {visibleGroups.map((group) => {
             const anyEnabled = group.children.some((c) => visibleSubSeries[c.key]);
             const color = SERIES_COLORS[group.key] ?? "#555";
 

@@ -16,10 +16,10 @@ export const CalendarTitle = ({
   onNext,
   onToday,
 }: CalendarTitleProps) => {
-  const formattedDate = new Date(currentDate).toLocaleDateString('en-US', {
-    month: 'long',
-    year: 'numeric'
+  const formattedMonth = new Date(currentDate).toLocaleDateString("en-US", {
+    month: "long",
   }).toUpperCase();
+  const formattedSeason = `${new Date(currentDate).getFullYear()} SEASON`;
 
   // Only apply animation class if there's a direction
   const animationClass = direction ? (
@@ -31,13 +31,13 @@ export const CalendarTitle = ({
   return (
     <div className={styles.headerRow}>
       <div className={styles.titleBlock}>
-        <p className={styles.eyebrow}>World Championship Schedule</p>
+        <p className={styles.eyebrow}>{formattedSeason}</p>
         <div className={`${styles.titleContainer} ${motoGPTextMed.className}`}>
         <span
-          key={direction ? formattedDate : undefined}
+          key={direction ? `${formattedMonth}-${formattedSeason}` : undefined}
           className={`${styles.animatedText} ${animationClass}`}
         >
-          {formattedDate}
+          {formattedMonth}
         </span>
         </div>
       </div>

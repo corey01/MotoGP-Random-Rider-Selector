@@ -254,12 +254,35 @@
   flex-wrap: wrap;
 }
 
+.roundMetaMain {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
 .roundMetaText {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--kc-text-3);
+}
+
+.roundLink {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--kc-primary);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s ease, opacity 0.15s ease;
+
+  &:hover {
+    color: #ffab95;
+    opacity: 0.96;
+  }
 }
 
 .dayGroup {

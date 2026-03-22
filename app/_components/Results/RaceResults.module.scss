@@ -19,6 +19,8 @@
 
 .row {
   --accent: #444;
+  --number-color: var(--kc-text-1);
+  --number-background: var(--kc-surface-3);
 
   position: relative;
   display: grid;
@@ -118,8 +120,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--kc-surface-3);
-  color: var(--kc-text-1);
+  background: var(--number-background);
+  color: var(--number-color);
   font-size: 0.82rem;
   font-weight: 700;
 }
@@ -164,7 +166,8 @@
   }
 
   .number {
-    justify-self: start;
+    justify-self: center;
+    min-width: 48px;
   }
 
   .rightRail {

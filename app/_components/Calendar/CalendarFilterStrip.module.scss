@@ -1,0 +1,53 @@
+.strip {
+  display: none;
+
+  @media (max-width: 767px) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 20px;
+    margin-bottom: 16px;
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 18px;
+    background: #141414;
+  }
+}
+
+.item {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.62);
+  transition: color 0.18s ease, opacity 0.18s ease;
+
+  &:active {
+    opacity: 0.85;
+  }
+}
+
+.itemActive {
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  opacity: 0.34;
+  transition: opacity 0.18s ease;
+}
+
+.itemActive .dot {
+  opacity: 1;
+}
+
+.label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}

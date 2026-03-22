@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Calendar } from "../_components/Calendar/Calendar";
+import { CalendarFilterStrip } from "../_components/Calendar/CalendarFilterStrip";
 import { CalendarSidebar } from "../_components/Calendar/CalendarSidebar";
 import { DayDetailPanel } from "../_components/Calendar/DayDetailPanel";
 import type { SessionView } from "../_components/Calendar/SessionToggle";
@@ -24,6 +25,7 @@ import {
 } from "@/utils/getCalendarData";
 import { useAuth } from "../_components/AuthProvider";
 import { fetchPreferences, savePreferences } from "@/utils/preferences";
+import { fetchSubscriptions } from "@/utils/subscriptions";
 import style from "./Calendar.module.scss";
 
 const createEmptyVisibility = () =>
@@ -70,6 +72,19 @@ const visibilityFromFilters = (
   return next;
 };
 
+const visibilityWithinSeries = (
+  visibility: Record<SubSeriesKey, boolean>,
+  seriesKeys: SeriesKey[]
+) => {
+  const allowed = new Set(
+    seriesKeys.flatMap((series) => seriesChildren(series).map((child) => child.key))
+  );
+
+  return Object.fromEntries(
+    (Object.keys(visibility) as SubSeriesKey[]).map((key) => [key, allowed.has(key) ? visibility[key] : false])
+  ) as Record<SubSeriesKey, boolean>;
+};
+
 const sameVisibility = (
   left: Record<SubSeriesKey, boolean>,
   right: Record<SubSeriesKey, boolean>
@@ -85,6 +100,9 @@ export default function CalendarPage() {
     () => ({ ...DEFAULT_SUB_SERIES_VISIBILITY })
   );
   const [useBackendDefaults, setUseBackendDefaults] = useState(true);
+  const [availableSeries, setAvailableSeries] = useState<SeriesKey[]>(
+    SERIES_GROUPS.map((group) => group.key)
+  );
   const [preferencesLoaded, setPreferencesLoaded] = useState(false);
   const [roundEvents, setRoundEvents] = useState<CalendarRoundEvent[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -93,7 +111,6 @@ export default function CalendarPage() {
   const [focusedRound, setFocusedRound] = useState<CalendarRound | null>(null);
   const [focusMode, setFocusMode] = useState<FocusMode>("date");
   const [selectedMonth, setSelectedMonth] = useState<Date>(() => monthStart(new Date()));
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMonthLoading, setIsMonthLoading] = useState(false);
   const [isDateLoading, setIsDateLoading] = useState(false);
   const [isRoundLoading, setIsRoundLoading] = useState(false);
@@ -109,12 +126,12 @@ export default function CalendarPage() {
     [useBackendDefaults, visibleSubSeries]
   );
 
-  const syncVisibleSubSeries = (filters: EffectiveCalendarFilters) => {
+  const syncVisibleSubSeries = useCallback((filters: EffectiveCalendarFilters) => {
     setVisibleSubSeries((prev) => {
-      const next = visibilityFromFilters(filters);
+      const next = visibilityWithinSeries(visibilityFromFilters(filters), availableSeries);
       return sameVisibility(prev, next) ? prev : next;
     });
-  };
+  }, [availableSeries]);
 
   useEffect(() => {
     const load = async () => {
@@ -125,12 +142,28 @@ export default function CalendarPage() {
         } catch {
           // ignore — default stays
         }
+
+        try {
+          const subscriptions = await fetchSubscriptions();
+          const subscribedSeries = SERIES_GROUPS
+            .map((group) => group.key)
+            .filter((key) => subscriptions.includes(key));
+
+          setAvailableSeries(subscribedSeries);
+          setVisibleSubSeries((prev) => visibilityWithinSeries(prev, subscribedSeries));
+        } catch {
+          // ignore — fall back to showing all series
+        }
       }
 
       setPreferencesLoaded(true);
     };
     void load();
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    setVisibleSubSeries((prev) => visibilityWithinSeries(prev, availableSeries));
+  }, [availableSeries]);
 
   useEffect(() => {
     if (!preferencesLoaded) return;
@@ -177,7 +210,7 @@ export default function CalendarPage() {
     return () => {
       cancelled = true;
     };
-  }, [selectedMonth, explicitFilters]);
+  }, [selectedMonth, explicitFilters, syncVisibleSubSeries]);
 
   useEffect(() => {
     let cancelled = false;
@@ -222,7 +255,7 @@ export default function CalendarPage() {
     return () => {
       cancelled = true;
     };
-  }, [selectedDate, explicitFilters, focusMode]);
+  }, [selectedDate, explicitFilters, focusMode, syncVisibleSubSeries]);
 
   useEffect(() => {
     let cancelled = false;
@@ -268,30 +301,20 @@ export default function CalendarPage() {
 
   return (
     <div className={style.layout}>
-      <div className={style.mobileFilterBar}>
-        <button
-          className={style.mobileFilterBtn}
-          onClick={() => setSidebarOpen((open) => !open)}
-        >
-          {sidebarOpen ? "Close Filters" : "Filters"}
-        </button>
-      </div>
-
-      {sidebarOpen && (
-        <div
-          className={style.sidebarOverlay}
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      <div className={`${style.sidebarWrap} ${sidebarOpen ? style.sidebarWrapOpen : ""}`}>
+      <div className={style.sidebarWrap}>
         <CalendarSidebar
+          seriesKeys={availableSeries}
           visibleSubSeries={visibleSubSeries}
           onToggleSeries={handleToggleSeries}
         />
       </div>
 
       <div className={`${style.calendarWrap} ${isPanelOpen ? style.calendarWrapPanelOpen : ""}`}>
+        <CalendarFilterStrip
+          seriesKeys={availableSeries}
+          visibleSubSeries={visibleSubSeries}
+          onToggleSeries={handleToggleSeries}
+        />
         <Calendar
           roundEvents={roundEvents}
           selectedDate={selectedDate}
@@ -301,14 +324,12 @@ export default function CalendarPage() {
             setFocusedRoundId(null);
             setFocusedRound(null);
             setSelectedDate(date);
-            setSidebarOpen(false);
           }}
           onRoundSelect={(roundId, date) => {
             setFocusMode("round");
             setFocusedRoundId(roundId);
             setFocusedRound(null);
             if (date) setSelectedDate(date);
-            setSidebarOpen(false);
           }}
           onMonthChange={(date) => {
             const nextMonth = monthStart(date);

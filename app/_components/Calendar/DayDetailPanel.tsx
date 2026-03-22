@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo } from "react";
 import { format, parseISO } from "date-fns";
 import type { CalendarRound, CalendarSession } from "@/utils/getCalendarData";
@@ -224,11 +225,21 @@ export function DayDetailPanel({
           groups.map((group) => (
             <div key={group.groupKey} className={style.roundGroup}>
               <div className={style.roundMeta}>
-                <h3 className={style.roundName}>{group.roundName}</h3>
-                {group.roundNumber ? (
-                  <span className={style.roundMetaText}>
-                    Round {String(group.roundNumber).padStart(2, "0")}
-                  </span>
+                <div className={style.roundMetaMain}>
+                  <h3 className={style.roundName}>{group.roundName}</h3>
+                  {group.roundNumber ? (
+                    <span className={style.roundMetaText}>
+                      Round {String(group.roundNumber).padStart(2, "0")}
+                    </span>
+                  ) : null}
+                </div>
+                {Number(group.groupKey) > 0 ? (
+                  <Link
+                    href={`/round?roundId=${encodeURIComponent(group.groupKey)}`}
+                    className={style.roundLink}
+                  >
+                    Round Info
+                  </Link>
                 ) : null}
               </div>
 

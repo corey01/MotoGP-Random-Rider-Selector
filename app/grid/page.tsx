@@ -1,12 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import GridPanel from "../_components/Grid/Grid";
 import { getRiderData, type RiderDataResponse } from "@/utils/getRiderData";
 import style from "./page.module.scss";
 
 export default function GridPage() {
+  const searchParams = useSearchParams();
   const [riders, setRiders] = useState<RiderDataResponse | null>(null);
+  const roundIdParam = searchParams.get("roundId");
+  const roundId = roundIdParam ? Number(roundIdParam) : null;
+  const eventName = searchParams.get("eventName");
 
   useEffect(() => {
     let cancelled = false;
@@ -32,7 +37,11 @@ export default function GridPage() {
   return (
     <div className={style.page}>
       <div className={style.panel}>
-        <GridPanel riders={[...riders.standardRiders, ...riders.guestRiders]} />
+        <GridPanel
+          riders={[...riders.standardRiders, ...riders.guestRiders]}
+          roundIdOverride={Number.isFinite(roundId) ? roundId : null}
+          eventNameOverride={eventName}
+        />
       </div>
     </div>
   );

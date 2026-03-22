@@ -5,6 +5,7 @@ import Image from "next/image";
 import { fetchGridData, type GridData, type GridItem } from "@/utils/getGridData";
 import style from "./Grid.module.scss";
 import raceStyle from "./RaceGrid.module.scss";
+import { getReadableTextColor } from "./gridColorUtils";
 
 const COL_CLASSES = [style.left, style.center, style.right] as const;
 
@@ -40,12 +41,13 @@ export function RaceGrid({ roundId }: { roundId: number }) {
           {row.map((item, colIndex) => {
             const cardBg = item.teamColor ?? "#161616";
             const pillBg = item.teamColor ?? "#333";
-            const pillText = item.textColor ?? "#fff";
+            const readableText = getReadableTextColor(cardBg, item.textColor ?? "#fff");
+            const pillText = readableText;
 
             return (
               <div key={item.position} className={`${style.cell} ${COL_CLASSES[colIndex]}`}>
                 <span className={style.posLabel}>{item.position}</span>
-                <div className={style.card} style={{ background: cardBg }}>
+                <div className={style.card} style={{ background: cardBg, color: readableText }}>
                   <div className={style.bikeBackdrop} />
 
                   {item.riderNumber != null && (
@@ -75,7 +77,7 @@ export function RaceGrid({ roundId }: { roundId: number }) {
                     {item.teamName && (
                       <div
                         className={style.meta}
-                        style={{ color: item.textColor ?? "rgba(255,255,255,0.6)" }}
+                        style={{ color: readableText, opacity: 0.82 }}
                       >
                         {item.teamName}
                       </div>

@@ -223,7 +223,7 @@ type RawCalendarMonthRound = {
   hasGrid?: boolean;
   startDate?: string;
   endDate?: string;
-  metadata?: Record<string, unknown> | null;
+  metadata?: unknown;
   events?: RawCalendarSession[];
 };
 
@@ -241,6 +241,25 @@ type RawCalendarSession = {
 };
 
 const toDateOnly = (value?: string | null) => String(value || "").slice(0, 10);
+
+const normalizeRoundMetadata = (metadata: unknown): Record<string, unknown> | null => {
+  if (!metadata) return null;
+
+  if (typeof metadata === "string") {
+    try {
+      const parsed = JSON.parse(metadata);
+      return parsed && typeof parsed === "object" && !Array.isArray(parsed)
+        ? (parsed as Record<string, unknown>)
+        : null;
+    } catch {
+      return null;
+    }
+  }
+
+  return metadata && typeof metadata === "object" && !Array.isArray(metadata)
+    ? (metadata as Record<string, unknown>)
+    : null;
+};
 
 const sortSessions = (sessions: CalendarSession[]) =>
   [...sessions].sort((left, right) => new Date(left.start).getTime() - new Date(right.start).getTime());
@@ -288,7 +307,7 @@ const toCalendarRound = (
     number: round.number ?? null,
     hasGrid: round.hasGrid ?? false,
     sourceUrl: round.sourceUrl ?? null,
-    metadata: round.metadata ?? null,
+    metadata: normalizeRoundMetadata(round.metadata),
     events: sortedEvents,
   };
 };

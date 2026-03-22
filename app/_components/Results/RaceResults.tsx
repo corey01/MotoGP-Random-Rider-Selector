@@ -3,6 +3,7 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import { fetchRaceResults, type RaceResultsData, type RaceResultItem } from "@/utils/getRaceResults";
+import { getReadableTextColor } from "@/app/_components/Grid/gridColorUtils";
 import style from "./RaceResults.module.scss";
 
 const SESSION_LABEL: Record<string, string> = {
@@ -40,9 +41,20 @@ function ResultRow({ item }: { item: RaceResultItem }) {
   const isWinner = gap === "WINNER";
   const dnf = isDNF(item);
   const accentColor = safeAccent(item.teamColor);
+  const numberBackground = "#262626";
+  const numberColor = getReadableTextColor(numberBackground, item.teamColor);
 
   return (
-    <div className={style.row} style={{ "--accent": accentColor } as CSSProperties}>
+    <div
+      className={style.row}
+      style={
+        {
+          "--accent": accentColor,
+          "--number-color": numberColor,
+          "--number-background": numberBackground,
+        } as CSSProperties
+      }
+    >
       <div
         className={`${style.position} ${isWinner ? style.positionWinner : ""} ${
           dnf ? style.positionDnf : ""
