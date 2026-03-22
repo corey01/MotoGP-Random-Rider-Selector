@@ -1,49 +1,57 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { format, parseISO } from "date-fns";
 import { type ApiCalendarEvent } from "@/utils/getCalendarData";
 import style from "./CountdownCard.module.scss";
+
+const SUB_SERIES_LABELS: Record<string, string> = {
+  motogp: "MotoGP",
+  moto2: "Moto2",
+  moto3: "Moto3",
+  worldsbk: "WorldSBK",
+  worldssp: "WorldSSP",
+  worldwcr: "WorldWCR",
+  worldspb: "WorldSPB",
+  f1: "Formula 1",
+  bsb: "BSB",
+  speedway: "Speedway",
+};
+
+function getSecondsLeft(target: string): number {
+  return Math.max(0, Math.floor((new Date(target).getTime() - Date.now()) / 1000));
+}
+
+function formatTimeRemaining(seconds: number): string {
+  if (seconds <= 0) return "now";
+  const d = Math.floor(seconds / 86400);
+  const h = Math.floor((seconds % 86400) / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  if (d > 0) return `${d}d ${h}h`;
+  if (h > 0) return `${h}h ${m}m`;
+  if (m > 0) return `${m}m ${s}s`;
+  return `${s}s`;
+}
 
 interface CountdownCardProps {
   nextRace: ApiCalendarEvent | null;
 }
 
-interface TimeLeft {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
-function getTimeLeft(target: string): TimeLeft {
-  const diff = new Date(target).getTime() - Date.now();
-  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-  return {
-    days: Math.floor(diff / 86400000),
-    hours: Math.floor((diff % 86400000) / 3600000),
-    minutes: Math.floor((diff % 3600000) / 60000),
-    seconds: Math.floor((diff % 60000) / 1000),
-  };
-}
-
-function pad(n: number) {
-  return String(n).padStart(2, "0");
-}
-
 export function CountdownCard({ nextRace }: CountdownCardProps) {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(
-    nextRace ? getTimeLeft(nextRace.start) : null
+  const [secondsLeft, setSecondsLeft] = useState<number>(
+    nextRace ? getSecondsLeft(nextRace.start) : 0
   );
 
   useEffect(() => {
     if (!nextRace) return;
-    const tick = () => setTimeLeft(getTimeLeft(nextRace.start));
+    const tick = () => setSecondsLeft(getSecondsLeft(nextRace.start));
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, [nextRace]);
 
-  if (!nextRace || !timeLeft) {
+  if (!nextRace) {
     return (
       <div className={style.card}>
         <p className={style.empty}>No upcoming races</p>
@@ -51,43 +59,45 @@ export function CountdownCard({ nextRace }: CountdownCardProps) {
     );
   }
 
+  const isToday =
+    new Date(nextRace.start).toDateString() === new Date().toDateString();
+  const hasSubSeries = nextRace.subSeries !== nextRace.series;
+  const badgeLabel = hasSubSeries
+    ? (SUB_SERIES_LABELS[nextRace.subSeries] ?? nextRace.subSeries)
+    : nextRace.series.toUpperCase();
+  const sessionLabel = nextRace.sessionName || nextRace.type;
+  const timeStr = isToday
+    ? `Today · ${format(parseISO(nextRace.start), "HH:mm")}`
+    : format(parseISO(nextRace.start), "EEE d MMM · HH:mm");
+
   return (
     <div className={style.card}>
-      <div className={style.meta}>
-        <span className={style.series}>{nextRace.series.toUpperCase()}</span>
-        <span className={style.separator}>·</span>
-        <span className={style.roundName}>{nextRace.round.name}</span>
-        {nextRace.round.country && (
-          <>
-            <span className={style.separator}>·</span>
-            <span className={style.country}>{nextRace.round.country}</span>
-          </>
-        )}
+      <p className={style.eyebrow}>Next Race</p>
+
+      <div className={style.badges}>
+        <span className={`${style.seriesBadge} ${style[`series_${nextRace.series}`] ?? ""}`}>
+          {badgeLabel}
+        </span>
       </div>
+
+      <h2 className={style.roundName}>{nextRace.round.name}</h2>
+
+      <p className={style.sessionRow}>
+        <span className={style.sessionName}>{sessionLabel}</span>
+        <span className={style.dot}>·</span>
+        <span className={style.timeStr}>{timeStr}</span>
+      </p>
 
       <div className={style.countdown}>
-        <div className={style.unit}>
-          <span className={style.number}>{timeLeft.days}</span>
-          <span className={style.label}>Days</span>
-        </div>
-        <span className={style.colon}>:</span>
-        <div className={style.unit}>
-          <span className={style.number}>{pad(timeLeft.hours)}</span>
-          <span className={style.label}>Hrs</span>
-        </div>
-        <span className={style.colon}>:</span>
-        <div className={style.unit}>
-          <span className={style.number}>{pad(timeLeft.minutes)}</span>
-          <span className={style.label}>Min</span>
-        </div>
-        <span className={style.colon}>:</span>
-        <div className={style.unit}>
-          <span className={style.number}>{pad(timeLeft.seconds)}</span>
-          <span className={style.label}>Sec</span>
-        </div>
+        {secondsLeft > 0 ? (
+          <>
+            <span className={style.countdownLabel}>Starts in</span>
+            <span className={style.countdownValue}>{formatTimeRemaining(secondsLeft)}</span>
+          </>
+        ) : (
+          <span className={style.liveIndicator}>Underway</span>
+        )}
       </div>
-
-      <p className={style.eventName}>{nextRace.sessionName || nextRace.title}</p>
     </div>
   );
 }

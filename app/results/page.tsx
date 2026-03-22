@@ -1,11 +1,10 @@
 "use client";
-import { Suspense } from "react";
-import { getRiderById } from "@/utils/getSelectedRidersByID";
+import { Suspense, useState, useEffect, useCallback } from "react";
+import { getRiderData } from "@/utils/getRiderData";
 import { useSearchParams } from "next/navigation";
 import { Rider } from "../../models/rider";
 import Results from "../_components/Results/Results";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect } from "react";
 
 interface SelectedRider {
   entrant: string;
@@ -15,13 +14,13 @@ interface SelectedRider {
 const ResultsContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  let resultsData: SelectedRider[] = [];
-  searchParams.forEach((riderID, name) => {
-    resultsData.push({
-      entrant: name,
-      rider: getRiderById(riderID)!,
-    });
-  });
+  const [allRiders, setAllRiders] = useState<Rider[] | null>(null);
+
+  useEffect(() => {
+    getRiderData()
+      .then((data) => setAllRiders(data.allRiders))
+      .catch(() => setAllRiders([]));
+  }, []);
 
   const setStorageOnArrive = useCallback(() => {
     const previous = localStorage.getItem("savedResults");
@@ -40,37 +39,50 @@ const ResultsContent = () => {
     setStorageOnArrive();
   }, [setStorageOnArrive]);
 
+  if (allRiders === null) return null;
+
+  const resultsData: SelectedRider[] = [];
+  searchParams.forEach((riderID, name) => {
+    const rider = allRiders.find((r) => r.id === riderID);
+    if (rider) resultsData.push({ entrant: name, rider });
+  });
+
   const handleReset = () => {
     localStorage.removeItem("savedResults");
     router.push("/sweepstake");
   };
 
   const handleAddEntrantAndGenerate = (entrant: string) => {
-    const savedRiderList = localStorage.getItem('riderList');
-    const previousResultsJson = localStorage.getItem('savedResults');
+    const savedRiderList = localStorage.getItem("riderList");
+    const previousResultsJson = localStorage.getItem("savedResults");
 
-    if(!savedRiderList || !previousResultsJson){
-      return;
-    }
+    if (!savedRiderList || !previousResultsJson) return;
 
     const riders = JSON.parse(savedRiderList);
-    const previousResults = JSON.parse(previousResultsJson)
-    const currentResults = resultsData.map(({rider}) => rider.id);
-    const remainingRiders = (riders.riders as Rider[]).filter(({ id } )=> !currentResults.includes(id));
+    const previousResults = JSON.parse(previousResultsJson);
+    const currentResults = resultsData.map(({ rider }) => rider.id);
+    const remainingRiders = (riders.riders as Rider[]).filter(
+      ({ id }) => !currentResults.includes(id)
+    );
 
     const riderIdx = Math.floor(Math.random() * remainingRiders.length);
     const selectedRider = remainingRiders[riderIdx].id;
 
-    const newResults = previousResults.results + `&${entrant}=${selectedRider}`
-    const resultObject = {
-      generatedDate: Date.now(),
-      results: newResults
-    };
-    localStorage.setItem("savedResults", JSON.stringify(resultObject));
+    const newResults = previousResults.results + `&${entrant}=${selectedRider}`;
+    localStorage.setItem(
+      "savedResults",
+      JSON.stringify({ generatedDate: Date.now(), results: newResults })
+    );
     router.push(`/results/${newResults}`);
-  }
+  };
 
-  return <Results handleReset={handleReset} selectedRiders={resultsData} addEntrant={handleAddEntrantAndGenerate} />;
+  return (
+    <Results
+      handleReset={handleReset}
+      selectedRiders={resultsData}
+      addEntrant={handleAddEntrantAndGenerate}
+    />
+  );
 };
 
 export default function ResultsPage() {

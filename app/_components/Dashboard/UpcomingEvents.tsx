@@ -5,6 +5,27 @@ import { format, parseISO } from "date-fns";
 import { type ApiCalendarEvent } from "@/utils/getCalendarData";
 import style from "./UpcomingEvents.module.scss";
 
+const SUB_SERIES_LABELS: Record<string, string> = {
+  motogp: "MotoGP",
+  moto2: "Moto2",
+  moto3: "Moto3",
+  worldsbk: "WorldSBK",
+  worldssp: "WorldSSP",
+  worldwcr: "WorldWCR",
+  worldspb: "WorldSPB",
+  f1: "F1",
+  bsb: "BSB",
+  speedway: "Speedway",
+};
+
+const SERIES_COLORS: Record<string, string> = {
+  motogp: "var(--motogp-red)",
+  wsbk: "var(--wsbk-blue)",
+  bsb: "var(--bsb-green)",
+  speedway: "var(--speedway-orange)",
+  f1: "var(--f1-red)",
+};
+
 interface UpcomingEventsProps {
   events: ApiCalendarEvent[];
 }
@@ -23,14 +44,6 @@ const SESSION_ORDER: Record<string, number> = {
   RACE: 2,
 };
 
-const SERIES_COLORS: Record<string, string> = {
-  motogp: "var(--motogp-red)",
-  wsbk: "var(--wsbk-blue)",
-  bsb: "#1db954",
-  speedway: "#f57c00",
-  f1: "var(--f1-red)",
-};
-
 export function UpcomingEvents({ events }: UpcomingEventsProps) {
   const groups = useMemo<RoundGroup[]>(() => {
     const map = new Map<number, RoundGroup>();
@@ -47,7 +60,6 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
       }
       map.get(id)!.events.push(ev);
     }
-    // Sort groups by earliest event, events within group by session order
     return Array.from(map.values())
       .map((g) => ({
         ...g,
@@ -85,17 +97,28 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
             )}
           </div>
           <div className={style.sessions}>
-            {group.events.map((ev) => (
-              <div
-                key={ev.id}
-                className={`${style.session} ${ev.type === "RACE" ? style.sessionRace : ""}`}
-              >
-                <span className={style.sessionName}>{ev.sessionName || ev.type}</span>
-                <span className={style.sessionTime}>
-                  {format(parseISO(ev.start), "EEE d MMM, HH:mm")}
-                </span>
-              </div>
-            ))}
+            {group.events.map((ev) => {
+              const isRace = ev.type === "RACE";
+              const subLabel = SUB_SERIES_LABELS[ev.subSeries] ?? ev.subSeries;
+              const seriesLabel = SUB_SERIES_LABELS[ev.series] ?? ev.series;
+              const showSubChip = subLabel !== seriesLabel;
+              return (
+                <div
+                  key={ev.id}
+                  className={`${style.session} ${isRace ? style.sessionRace : ""}`}
+                >
+                  <div className={style.sessionLeft}>
+                    {showSubChip && (
+                      <span className={style.subChip}>{subLabel}</span>
+                    )}
+                    <span className={style.sessionName}>{ev.sessionName || ev.type}</span>
+                  </div>
+                  <span className={style.sessionTime}>
+                    {format(parseISO(ev.start), "EEE d MMM, HH:mm")}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
       ))}

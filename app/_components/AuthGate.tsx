@@ -12,6 +12,7 @@ import {
 
 const PUBLIC_PATHS = ["/login", "/register"];
 const ONBOARDING_PATH = "/onboarding";
+const ONBOARDING_EXEMPT_PATHS = ["/results"];
 
 function AuthGateInner({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -32,8 +33,14 @@ function AuthGateInner({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    if (isAuthenticated && user && !user.onboardingComplete && !isOnboarding) {
-      router.replace(buildPathWithReturnTo(ONBOARDING_PATH, returnTo));
+    const isOnboardingExempt = ONBOARDING_EXEMPT_PATHS.some((p) => pathname.startsWith(p));
+    const isReturnToExempt = returnTo != null && ONBOARDING_EXEMPT_PATHS.some((p) => returnTo.startsWith(p));
+    if (isAuthenticated && user && !user.onboardingComplete && !isOnboarding && !isOnboardingExempt) {
+      if (isReturnToExempt) {
+        router.replace(returnTo);
+      } else {
+        router.replace(buildPathWithReturnTo(ONBOARDING_PATH, returnTo));
+      }
       return;
     }
 

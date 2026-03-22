@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "./_components/AuthProvider";
 import { CountdownCard } from "./_components/Dashboard/CountdownCard";
+import { TodaySection } from "./_components/Dashboard/TodaySection";
 import { UpcomingEvents } from "./_components/Dashboard/UpcomingEvents";
 import { getDashboardData, type DashboardData } from "@/utils/getDashboardData";
 import style from "./Dashboard.module.scss";
 
-const EMPTY: DashboardData = { nextRace: null, upcoming: [], subscribedSeries: [] };
+const EMPTY: DashboardData = { nextRace: null, today: [], upcoming: [], subscribedSeries: [] };
 
 export default function DashboardPage() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -31,6 +32,8 @@ export default function DashboardPage() {
 
   return (
     <div className={style.page}>
+      <TodaySection events={data.today} />
+
       <div className={style.grid}>
         <section className={style.countdownSection}>
           <CountdownCard nextRace={data.nextRace} />

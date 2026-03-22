@@ -71,6 +71,7 @@
 
 .sessionRace {
   border-left: 3px solid var(--kc-primary);
+  background: rgba(255, 143, 115, 0.04);
 
   .sessionName {
     color: var(--kc-primary);
@@ -78,10 +79,32 @@
   }
 }
 
+.sessionLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--kc-space-2);
+  min-width: 0;
+}
+
+.subChip {
+  font-size: var(--kc-text-xs);
+  font-weight: 600;
+  color: var(--kc-text-2);
+  background: var(--kc-surface-3);
+  border: 1px solid var(--kc-border);
+  padding: 2px 7px;
+  border-radius: var(--kc-radius-pill);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 .sessionName {
   font-size: var(--kc-text-sm);
   color: var(--kc-text-2);
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sessionTime {
@@ -89,4 +112,5 @@
   color: var(--kc-text-3);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
 }
