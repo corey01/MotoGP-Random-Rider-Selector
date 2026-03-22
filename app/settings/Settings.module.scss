@@ -22,6 +22,9 @@
 .header {
   border-bottom: 1px solid var(--kc-border);
   padding-bottom: var(--kc-space-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title {
@@ -145,4 +148,24 @@
 
   &:hover:not(:disabled) { background: var(--kc-primary-dim); }
   &:disabled { opacity: 0.4; cursor: not-allowed; }
+}
+
+.signOutBtn {
+  width: auto;
+  padding: var(--kc-space-3) var(--kc-space-5);
+  background: transparent;
+  color: var(--kc-text-1);
+  border: 1px solid var(--kc-border);
+  border-radius: var(--kc-radius-md);
+  font-size: var(--kc-text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+
+  &:hover { 
+    background: var(--kc-surface-2); 
+    border-color: var(--kc-text-1);
+  }
 }

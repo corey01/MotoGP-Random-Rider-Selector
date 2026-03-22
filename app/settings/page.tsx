@@ -6,6 +6,7 @@ import { fetchSubscriptions, saveSubscriptions } from "@/utils/subscriptions";
 import { SERIES_GROUPS } from "@/app/_components/Calendar/filterConfig";
 import type { SeriesKey } from "@/app/_components/Calendar/filterConfig";
 import style from "./Settings.module.scss";
+import { useRouter } from "next/dist/client/components/navigation";
 
 const SERIES_COLORS: Record<string, string> = {
   motogp: "var(--motogp-red)",
@@ -16,7 +17,8 @@ const SERIES_COLORS: Record<string, string> = {
 };
 
 export default function SettingsPage() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const router = useRouter();
   const [subscribed, setSubscribed] = useState<Set<SeriesKey>>(new Set());
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -57,14 +59,26 @@ export default function SettingsPage() {
     }
   };
 
+  const handleLogout = async () => {
+    await logout();
+    router.push("/login");
+  };
+
+
   if (loading) return <div className={style.loading}>Loading…</div>;
 
   return (
     <div className={style.page}>
       <div className={style.container}>
         <div className={style.header}>
+          <div>
           <h1 className={style.title}>Settings</h1>
           {user && <p className={style.subtitle}>{user.email}</p>}
+          </div>
+
+          <button className={style.signOutBtn} onClick={handleLogout}>
+            Sign out
+          </button>
         </div>
 
         <section className={style.section}>

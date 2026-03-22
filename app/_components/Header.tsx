@@ -62,7 +62,10 @@ export default function Header() {
         <div className={style.actions}>
           {isAuthenticated ? (
             <>
-              <button className={style.avatar} onClick={handleLogout} title="Sign out" aria-label="Sign out">
+              <button className={style.avatar} onClick={() => {
+                router.push("/settings");
+                setMenuOpen(false);
+              }} title="Sign out" aria-label="Sign out">
                 {user?.profilePhotoUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={user.profilePhotoUrl} alt={user.displayName} className={style.avatarImg} />
