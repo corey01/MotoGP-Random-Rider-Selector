@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import { buildPathWithReturnTo, getCurrentPath } from "@/utils/returnTo";
 import style from "./Header.module.scss";
 
-export default function Header() {
+function HeaderInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { isAuthenticated, isAdmin, isLegacy, logout, user } = useAuth();
@@ -124,5 +124,13 @@ export default function Header() {
         </div>
       )}
     </header>
+  );
+}
+
+export default function Header() {
+  return (
+    <Suspense>
+      <HeaderInner />
+    </Suspense>
   );
 }
