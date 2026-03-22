@@ -148,7 +148,8 @@ export const CalendarEventModal = ({ onClose, event, onCreateSweepstake }: Calen
         </div>
 
         <div className={style.buttonBar}>
-          {showSweepstakeButton && (
+          {/* Disable this for now */}
+          {/* {showSweepstakeButton && (
             <button
               className={style.sweepstakeButton}
               onClick={() => {
@@ -158,8 +159,8 @@ export const CalendarEventModal = ({ onClose, event, onCreateSweepstake }: Calen
             >
               Create Sweepstake
             </button>
-          )}
-          <button className="pickButton" onClick={onClose}>
+          )} */}
+          <button className={style.closeButton} onClick={onClose}>
             Close
           </button>
         </div>
