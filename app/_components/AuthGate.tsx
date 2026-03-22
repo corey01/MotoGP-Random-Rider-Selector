@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "./AuthProvider";
 import {
@@ -13,7 +13,7 @@ import {
 const PUBLIC_PATHS = ["/login", "/register"];
 const ONBOARDING_PATH = "/onboarding";
 
-export function AuthGate({ children }: { children: React.ReactNode }) {
+function AuthGateInner({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading, user } = useAuth();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -61,4 +61,12 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   }
 
   return <>{children}</>;
+}
+
+export function AuthGate({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense>
+      <AuthGateInner>{children}</AuthGateInner>
+    </Suspense>
+  );
 }

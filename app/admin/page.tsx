@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/app/_components/AuthProvider";
 import { fetchWithAuth } from "@/utils/auth";
@@ -268,7 +268,7 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
     },
   ];
 
-function AdminPageInner() {
+export default function AdminPage() {
   const { isAdmin, isAuthenticated, isLoading, user, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
@@ -443,13 +443,5 @@ function AdminPageInner() {
         </div>
       )}
     </div>
-  );
-}
-
-export default function AdminPage() {
-  return (
-    <Suspense>
-      <AdminPageInner />
-    </Suspense>
   );
 }
