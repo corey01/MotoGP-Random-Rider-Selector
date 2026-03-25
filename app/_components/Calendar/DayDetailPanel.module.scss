@@ -393,7 +393,7 @@
 
 .sessionMarker {
   position: absolute;
-  top: 0.35rem;
+  top: 3px;
   left: calc(var(--timeline-center) - var(--sessions-indent));
   transform: translateX(-50%);
   width: 8px;
