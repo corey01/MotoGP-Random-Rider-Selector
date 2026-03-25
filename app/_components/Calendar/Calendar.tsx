@@ -113,6 +113,7 @@ export const Calendar = ({
 }: CalendarProps) => {
   const calendarRef = useRef<any>(null);
   const touchStartRef = useRef({ x: 0, y: 0 });
+  const ignoreTapRef = useRef(false);
   const navigationResetRef = useRef<number | null>(null);
   const [currentDate, setCurrentDate] = useState(startOfMonth(selectedDate ?? new Date()));
   const [navigationDirection, setNavigationDirection] = useState<
@@ -222,8 +223,6 @@ export const Calendar = ({
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    if (!calendarRef.current) return;
-
     const touchEndX = e.changedTouches[0].clientX;
     const touchEndY = e.changedTouches[0].clientY;
     const deltaX = touchStartRef.current.x - touchEndX;
@@ -231,8 +230,14 @@ export const Calendar = ({
 
     if (deltaY > Math.abs(deltaX)) return;
 
-    const direction = deltaX > 100 ? "next" : deltaX < -100 ? "prev" : null;
-    if (direction) animateViewChange(direction);
+    const direction = deltaX > 60 ? "next" : deltaX < -60 ? "prev" : null;
+    if (direction) {
+      ignoreTapRef.current = true;
+      window.setTimeout(() => {
+        ignoreTapRef.current = false;
+      }, 250);
+      animateViewChange(direction);
+    }
   };
 
   const handleDatesSet = (arg: any) => {
@@ -343,6 +348,7 @@ export const Calendar = ({
 
   const handleRoundBarClick = useCallback(
     (placement: RoundPlacement, event: React.MouseEvent<HTMLButtonElement>) => {
+      if (ignoreTapRef.current) return;
       const rect = event.currentTarget.getBoundingClientRect();
       const relativeX = event.clientX - rect.left;
       const ratio = rect.width > 0 ? Math.min(Math.max(relativeX / rect.width, 0), 0.999999) : 0;
@@ -354,6 +360,14 @@ export const Calendar = ({
       onRoundSelect(placement.roundId, clickedDate);
     },
     [onRoundSelect]
+  );
+
+  const handleRoundDayClick = useCallback(
+    (day: Date) => {
+      if (ignoreTapRef.current) return;
+      onDaySelect(day);
+    },
+    [onDaySelect]
   );
 
   return (
@@ -368,8 +382,8 @@ export const Calendar = ({
       <div className="calendar-container">
         <div
           className={`calendar-wrapper ${inter.className}`}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
+          onTouchStartCapture={handleTouchStart}
+          onTouchEndCapture={handleTouchEnd}
         >
           {calendarView === "rounds" && roundMonth ? (
             <div className="round-calendar">
@@ -405,7 +419,7 @@ export const Calendar = ({
                         type="button"
                         className={classNames}
                         data-date={day.toISOString().slice(0, 10)}
-                        onClick={() => onDaySelect(day)}
+                        onClick={() => handleRoundDayClick(day)}
                       >
                         <span className="round-calendar-day-number">{day.getDate()}</span>
                       </button>
