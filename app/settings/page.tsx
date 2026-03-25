@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/app/_components/AuthProvider";
-import { fetchSubscriptions, saveSubscriptions, fetchDisabledSubSeries, saveDisabledSubSeries } from "@/utils/subscriptions";
+import { fetchSubscriptions, saveSubscriptions, fetchDisabledSubSeries } from "@/utils/subscriptions";
 import { fetchPreferences, savePreferences } from "@/utils/preferences";
 import { useSubscriptions } from "@/utils/SubscriptionsContext";
 import { SERIES_GROUPS } from "@/app/_components/Calendar/filterConfig";
@@ -14,10 +14,10 @@ import { useRouter } from "next/dist/client/components/navigation";
 const SERIES_COLORS: Record<string, string> = {
   motogp: "var(--motogp-red)",
   wsbk: "var(--wsbk-blue)",
-  bsb: "#1db954",
-  speedway: "#f57c00",
+  bsb: "var(--bsb-green)",
+  speedway: "var(--speedway-orange)",
   f1: "var(--f1-red)",
-  gtwce: "#e8a000",
+  gtwce: "var(--gtwce-gold)",
 };
 
 const CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: string }> = {
@@ -110,8 +110,10 @@ export default function SettingsPage() {
     try {
       await Promise.all([
         saveSubscriptions(Array.from(subscribed) as SeriesKey[]),
-        saveDisabledSubSeries(Array.from(disabledSubSeries) as SubSeriesKey[]),
-        savePreferences({ calendarView }),
+        savePreferences({
+          calendarView,
+          disabledSubSeries: Array.from(disabledSubSeries) as SubSeriesKey[],
+        }),
       ]);
       showToast("Settings saved.", true);
       void reloadSubscriptions();

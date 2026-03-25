@@ -1,5 +1,6 @@
 import { fetchWithAuth } from "./auth";
 import type { SeriesKey, SubSeriesKey } from "@/app/_components/Calendar/filterConfig";
+import { savePreferences } from "./preferences";
 
 export async function fetchSubscriptions(): Promise<SeriesKey[]> {
   try {
@@ -20,10 +21,15 @@ export async function fetchSubscriptions(): Promise<SeriesKey[]> {
 }
 
 export async function saveSubscriptions(series: SeriesKey[]): Promise<void> {
-  await fetchWithAuth("/subscriptions", {
+  const res = await fetchWithAuth("/subscriptions", {
     method: "PUT",
     body: JSON.stringify({ series }),
   });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.error ?? data.message ?? "Failed to save subscriptions");
+  }
 }
 
 export async function fetchDisabledSubSeries(): Promise<SubSeriesKey[]> {
@@ -40,8 +46,5 @@ export async function fetchDisabledSubSeries(): Promise<SubSeriesKey[]> {
 }
 
 export async function saveDisabledSubSeries(disabled: SubSeriesKey[]): Promise<void> {
-  await fetchWithAuth("/user/preferences", {
-    method: "PUT",
-    body: JSON.stringify({ disabledSubSeries: disabled }),
-  });
+  await savePreferences({ disabledSubSeries: disabled });
 }

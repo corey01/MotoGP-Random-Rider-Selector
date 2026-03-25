@@ -75,6 +75,9 @@ export const CalendarEventModal = ({ onClose, event, onCreateSweepstake }: Calen
   } else if (event.classNames?.includes('f1-event')) {
     seriesLabel = 'F1';
     seriesClass = style.f1Tag;
+  } else if (event.classNames?.includes('gtwce-event')) {
+    seriesLabel = 'GTWCE';
+    seriesClass = style.gtwceTag;
   }
 
   const isRace = String(event.extendedProps?.type || "").toUpperCase() === "RACE";

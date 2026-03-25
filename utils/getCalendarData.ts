@@ -92,6 +92,7 @@ export interface CalendarRoundEvent {
   start: string;
   end?: string;
   allDay?: boolean;
+  display?: "auto" | "block" | "list-item";
   className: string;
   extendedProps?: {
     session?: string;
@@ -579,13 +580,16 @@ export function toFullCalendarSessionEvent(
 export function toFullCalendarRoundEvent(round: CalendarRound): CalendarRoundEvent {
   const subSeries = String(round.subSeries || round.series || "").toLowerCase();
   const series = String(round.series || "").toLowerCase();
+  const baseClassName = CLASS_MAP[subSeries] ?? CLASS_MAP[series] ?? `${series}-event`;
+  const isSingleDayRound = round.startDate === round.endDate;
 
   return {
     title: prefixRoundTitle(round.name, subSeries, series),
     start: round.startDate,
     end: toExclusiveEndDate(round.endDate),
     allDay: true,
-    className: CLASS_MAP[subSeries] ?? CLASS_MAP[series] ?? `${series}-event`,
+    display: isSingleDayRound ? "list-item" : "block",
+    className: isSingleDayRound ? `${baseClassName} single-day-round` : baseClassName,
     extendedProps: {
       subSeries: subSeries || series,
       meta: {

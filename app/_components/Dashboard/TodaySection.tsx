@@ -22,6 +22,7 @@ const SUB_SERIES_LABELS: Record<string, string> = {
   f1: "F1",
   bsb: "BSB",
   speedway: "Speedway",
+  gtwce: "GTWCE",
 };
 
 const SERIES_COLORS: Record<string, string> = {
@@ -30,6 +31,7 @@ const SERIES_COLORS: Record<string, string> = {
   bsb: "var(--bsb-green)",
   speedway: "var(--speedway-orange)",
   f1: "var(--f1-red)",
+  gtwce: "var(--gtwce-gold)",
 };
 
 // Normalise a category string from the live API to a subSeries slug

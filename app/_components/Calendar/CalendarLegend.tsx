@@ -11,6 +11,7 @@ const SERIES_OPTIONS: Array<{ key: SeriesKey; label: string; styleKey: string }>
   { key: "wsbk", label: "WSBK", styleKey: "wsbkTag" },
   { key: "bsb", label: "BSB", styleKey: "bsbTag" },
   { key: "speedway", label: "SPEEDWAY", styleKey: "speedwayTag" },
+  { key: "gtwce", label: "GTWCE", styleKey: "gtwceTag" },
 ];
 
 export const CalendarLegend = ({

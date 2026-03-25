@@ -186,6 +186,7 @@
 .bsb {}
 .speedway {}
 .f1 {}
+.gtwce {}
 
 .groupButtonActive {
   color: #fff;
@@ -214,6 +215,12 @@
 .groupButtonActive.f1 {
   background: var(--f1-red);
   border-color: var(--f1-red);
+}
+
+.groupButtonActive.gtwce {
+  background: var(--gtwce-gold);
+  border-color: var(--gtwce-gold);
+  color: #171717;
 }
 
 .groupButtonPartial {

@@ -6,8 +6,22 @@ import { DateClickArg } from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { useState, useRef, useCallback, useEffect } from "react";
-import { isSameDay } from "date-fns";
+import { useState, useRef, useCallback, useEffect, useMemo } from "react";
+import {
+  addDays,
+  addMonths,
+  eachDayOfInterval,
+  endOfMonth,
+  endOfWeek,
+  isBefore,
+  isSameDay,
+  isSameMonth,
+  isToday,
+  startOfMonth,
+  startOfWeek,
+  subDays,
+  subMonths,
+} from "date-fns";
 import { CalendarTitle } from "./CalendarTitle";
 
 import { inter } from "@/app/fonts";
@@ -25,6 +39,24 @@ interface CalendarProps {
   onMonthChange: (date: Date) => void;
 }
 
+interface RoundSpan {
+  roundId: number;
+  title: string;
+  className: string;
+  start: Date;
+  end: Date;
+}
+
+interface RoundPlacement extends RoundSpan {
+  lane: number;
+  columnStart: number;
+  columnSpan: number;
+  segmentStart: Date;
+  segmentEnd: Date;
+  isSegmentStart: boolean;
+  isSegmentEnd: boolean;
+}
+
 function getClickedDate(clickInfo: EventClickArg) {
   const dayEl = (clickInfo.jsEvent.target as HTMLElement).closest("[data-date]");
   const dateStr = dayEl?.getAttribute("data-date");
@@ -34,6 +66,39 @@ function getClickedDate(clickInfo: EventClickArg) {
   }
 
   return clickInfo.event.start ? new Date(clickInfo.event.start) : null;
+}
+
+const weekStartsOn = 1 as const;
+
+function parseCalendarDay(value: string) {
+  return new Date(`${value.slice(0, 10)}T12:00:00`);
+}
+
+function toRoundSpan(event: CalendarRoundEvent): RoundSpan | null {
+  const roundId = Number(event.extendedProps?.meta?.roundId ?? 0);
+  if (roundId <= 0) return null;
+
+  const start = parseCalendarDay(event.start);
+  const end = event.end ? subDays(parseCalendarDay(event.end), 1) : start;
+
+  return {
+    roundId,
+    title: event.title,
+    className: event.className,
+    start,
+    end,
+  };
+}
+
+function compareRoundSpans(left: RoundSpan, right: RoundSpan) {
+  const startDiff = left.start.getTime() - right.start.getTime();
+  if (startDiff !== 0) return startDiff;
+
+  const leftDuration = left.end.getTime() - left.start.getTime();
+  const rightDuration = right.end.getTime() - right.start.getTime();
+  if (leftDuration !== rightDuration) return rightDuration - leftDuration;
+
+  return left.title.localeCompare(right.title);
 }
 
 export const Calendar = ({
@@ -48,7 +113,8 @@ export const Calendar = ({
 }: CalendarProps) => {
   const calendarRef = useRef<any>(null);
   const touchStartRef = useRef({ x: 0, y: 0 });
-  const [currentDate, setCurrentDate] = useState(selectedDate ?? new Date());
+  const navigationResetRef = useRef<number | null>(null);
+  const [currentDate, setCurrentDate] = useState(startOfMonth(selectedDate ?? new Date()));
   const [navigationDirection, setNavigationDirection] = useState<
     "next" | "prev" | "today" | undefined
   >();
@@ -89,7 +155,39 @@ export const Calendar = ({
     };
   };
 
+  const triggerTitleAnimation = useCallback((direction: "next" | "prev" | "today") => {
+    setNavigationDirection(direction);
+    if (navigationResetRef.current) {
+      window.clearTimeout(navigationResetRef.current);
+    }
+    navigationResetRef.current = window.setTimeout(() => {
+      setNavigationDirection(undefined);
+      navigationResetRef.current = null;
+    }, 300);
+  }, []);
+
+  const changeRoundMonth = useCallback(
+    (direction: "next" | "prev" | "today") => {
+      triggerTitleAnimation(direction);
+      const nextDate =
+        direction === "today"
+          ? startOfMonth(new Date())
+          : direction === "next"
+            ? startOfMonth(addMonths(currentDate, 1))
+            : startOfMonth(subMonths(currentDate, 1));
+
+      setCurrentDate(nextDate);
+      onMonthChange(nextDate);
+    },
+    [currentDate, onMonthChange, triggerTitleAnimation]
+  );
+
   const animateViewChange = (direction: "next" | "prev" | "today") => {
+    if (calendarView === "rounds") {
+      changeRoundMonth(direction);
+      return;
+    }
+
     if (!calendarRef.current || isAnimatingRef.current) return;
 
     isAnimatingRef.current = true;
@@ -100,7 +198,7 @@ export const Calendar = ({
       return;
     }
 
-    setNavigationDirection(direction);
+    triggerTitleAnimation(direction);
     void viewEl.offsetHeight;
     const animationClass =
       direction === "next" ? "slide-left-enter" : "slide-right-enter";
@@ -118,7 +216,6 @@ export const Calendar = ({
       viewEl.classList.add("slide-center");
       setTimeout(() => {
         viewEl.classList.remove(animationClass, "slide-center");
-        setNavigationDirection(undefined);
         isAnimatingRef.current = false;
       }, 300);
     });
@@ -140,13 +237,13 @@ export const Calendar = ({
 
   const handleDatesSet = (arg: any) => {
     if (!isAnimatingRef.current) {
-      setCurrentDate(arg.view.currentStart);
+      setCurrentDate(startOfMonth(arg.view.currentStart));
     }
     onMonthChange(arg.view.currentStart);
   };
 
   useEffect(() => {
-    if (!calendarRef.current) return;
+    if (calendarView !== "events" || !calendarRef.current) return;
 
     const timeoutId = window.setTimeout(() => {
       const calendarApi = calendarRef.current?.getApi();
@@ -154,10 +251,10 @@ export const Calendar = ({
     }, 300);
 
     return () => window.clearTimeout(timeoutId);
-  }, [isPanelOpen]);
+  }, [calendarView, isPanelOpen]);
 
   useEffect(() => {
-    if (!calendarRef.current) return;
+    if (calendarView !== "events" || !calendarRef.current) return;
 
     let frameOne = 0;
     let frameTwo = 0;
@@ -175,9 +272,89 @@ export const Calendar = ({
       window.cancelAnimationFrame(frameOne);
       window.cancelAnimationFrame(frameTwo);
     };
-  }, [roundEvents]);
+  }, [calendarView, roundEvents]);
 
-  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+  useEffect(() => {
+    return () => {
+      if (navigationResetRef.current) {
+        window.clearTimeout(navigationResetRef.current);
+      }
+    };
+  }, []);
+
+  const roundMonth = useMemo(() => {
+    if (calendarView !== "rounds") return null;
+
+    const monthStart = startOfMonth(currentDate);
+    const gridStart = startOfWeek(monthStart, { weekStartsOn });
+    const gridEnd = endOfWeek(endOfMonth(monthStart), { weekStartsOn });
+    const days = eachDayOfInterval({ start: gridStart, end: gridEnd });
+    const spans = roundEvents
+      .map(toRoundSpan)
+      .filter((span): span is RoundSpan => span !== null)
+      .sort(compareRoundSpans);
+
+    const weeks = [];
+
+    for (let index = 0; index < days.length; index += 7) {
+      const weekDays = days.slice(index, index + 7);
+      const weekStart = weekDays[0];
+      const weekEnd = weekDays[6];
+      const placements: RoundPlacement[] = [];
+      const laneEnds: Date[] = [];
+
+      for (const span of spans) {
+        if (span.end < weekStart || span.start > weekEnd) continue;
+
+        const segmentStart = span.start > weekStart ? span.start : weekStart;
+        const segmentEnd = span.end < weekEnd ? span.end : weekEnd;
+        let lane = laneEnds.findIndex((laneEnd) => isBefore(laneEnd, segmentStart));
+
+        if (lane === -1) {
+          lane = laneEnds.length;
+          laneEnds.push(segmentEnd);
+        } else {
+          laneEnds[lane] = segmentEnd;
+        }
+
+        placements.push({
+          ...span,
+          lane,
+          columnStart: weekDays.findIndex((day) => isSameDay(day, segmentStart)),
+          columnSpan: weekDays.findIndex((day) => isSameDay(day, segmentEnd)) -
+            weekDays.findIndex((day) => isSameDay(day, segmentStart)) + 1,
+          segmentStart,
+          segmentEnd,
+          isSegmentStart: isSameDay(segmentStart, span.start),
+          isSegmentEnd: isSameDay(segmentEnd, span.end),
+        });
+      }
+
+      weeks.push({
+        key: weekStart.toISOString(),
+        days: weekDays,
+        placements,
+        laneCount: Math.max(placements.length > 0 ? laneEnds.length : 0, 1),
+      });
+    }
+
+    return weeks;
+  }, [calendarView, currentDate, roundEvents]);
+
+  const handleRoundBarClick = useCallback(
+    (placement: RoundPlacement, event: React.MouseEvent<HTMLButtonElement>) => {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const relativeX = event.clientX - rect.left;
+      const ratio = rect.width > 0 ? Math.min(Math.max(relativeX / rect.width, 0), 0.999999) : 0;
+      const dayOffset = Math.min(
+        placement.columnSpan - 1,
+        Math.max(0, Math.floor(ratio * placement.columnSpan))
+      );
+      const clickedDate = addDays(placement.segmentStart, dayOffset);
+      onRoundSelect(placement.roundId, clickedDate);
+    },
+    [onRoundSelect]
+  );
 
   return (
     <>
@@ -194,48 +371,109 @@ export const Calendar = ({
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          <FullCalendar
-            ref={calendarRef}
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            initialView="dayGridMonth"
-            events={roundEvents}
-            editable={false}
-            eventStartEditable={false}
-            eventDurationEditable={false}
-            selectable={false}
-            selectMirror={false}
-            height="auto"
-            expandRows={calendarView === "rounds"}
-            handleWindowResize={true}
-            dayMaxEventRows={calendarView === "rounds" ? true : undefined}
-            eventTimeFormat={{
-              hour: "2-digit",
-              minute: "2-digit",
-              meridiem: false,
-            }}
-            eventContent={(eventInfo) => ({
-              html: `<div class="event-content"><div class="event-title">${eventInfo.event.title}</div></div>`,
-            })}
-            dayCellClassNames={(arg) => {
-              const classNames: string[] = [];
+          {calendarView === "rounds" && roundMonth ? (
+            <div className="round-calendar">
+              <div className="round-calendar-header" role="row">
+                {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((label) => (
+                  <div key={label} className="round-calendar-header-cell" role="columnheader">
+                    {label}
+                  </div>
+                ))}
+              </div>
 
-              if (arg.isOther) classNames.push("fc-day-outside-month");
-              if (selectedDate && isSameDay(arg.date, selectedDate)) classNames.push("fc-day-selected");
+              {roundMonth.map((week) => (
+                <div
+                  key={week.key}
+                  className="round-calendar-week"
+                  style={{ ["--round-lane-count" as string]: String(week.laneCount) }}
+                >
+                  {week.days.map((day) => {
+                    const isOutsideMonth = !isSameMonth(day, currentDate);
+                    const isSelected = selectedDate ? isSameDay(day, selectedDate) : false;
+                    const classNames = [
+                      "round-calendar-day",
+                      isOutsideMonth ? "round-calendar-day-outside" : "",
+                      isToday(day) ? "round-calendar-day-today" : "",
+                      isSelected ? "round-calendar-day-selected" : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ");
 
-              return classNames;
-            }}
-            headerToolbar={false}
-            firstDay={1}
-            contentHeight="auto"
-            stickyHeaderDates={true}
-            eventOrder="-duration,start,allDay,title"
-            eventOrderStrict={true}
-            titleFormat={{ month: "long", year: "numeric" }}
-            eventClick={handleEventClick}
-            dateClick={handleDateClick}
-            datesSet={handleDatesSet}
-            dayHeaderFormat={{ weekday: "short" }}
-          />
+                    return (
+                      <button
+                        key={day.toISOString()}
+                        type="button"
+                        className={classNames}
+                        data-date={day.toISOString().slice(0, 10)}
+                        onClick={() => onDaySelect(day)}
+                      >
+                        <span className="round-calendar-day-number">{day.getDate()}</span>
+                      </button>
+                    );
+                  })}
+
+                  <div className="round-calendar-bars" aria-hidden="true">
+                    {week.placements.map((placement) => (
+                      <button
+                        key={`${placement.roundId}-${placement.segmentStart.toISOString()}`}
+                        type="button"
+                        className={`round-calendar-bar ${placement.className} ${
+                          placement.isSegmentStart ? "round-calendar-bar-start" : ""
+                        } ${placement.isSegmentEnd ? "round-calendar-bar-end" : ""}`}
+                        style={{
+                          gridColumn: `${placement.columnStart + 1} / span ${placement.columnSpan}`,
+                          gridRow: `${placement.lane + 1}`,
+                        }}
+                        onClick={(event) => handleRoundBarClick(placement, event)}
+                        aria-label={placement.title}
+                      >
+                        <span className="round-calendar-bar-label">{placement.title}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <FullCalendar
+              ref={calendarRef}
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              initialView="dayGridMonth"
+              initialDate={currentDate}
+              events={roundEvents}
+              editable={false}
+              eventStartEditable={false}
+              eventDurationEditable={false}
+              selectable={false}
+              selectMirror={false}
+              height="auto"
+              handleWindowResize={true}
+              eventTimeFormat={{
+                hour: "2-digit",
+                minute: "2-digit",
+                meridiem: false,
+              }}
+              eventContent={(eventInfo) => ({
+                html: `<div class="event-content"><div class="event-title">${eventInfo.event.title}</div></div>`,
+              })}
+              dayCellClassNames={(arg) => {
+                const classNames: string[] = [];
+
+                if (arg.isOther) classNames.push("fc-day-outside-month");
+                if (selectedDate && isSameDay(arg.date, selectedDate)) classNames.push("fc-day-selected");
+
+                return classNames;
+              }}
+              headerToolbar={false}
+              firstDay={1}
+              contentHeight="auto"
+              stickyHeaderDates={true}
+              eventClick={handleEventClick}
+              dateClick={handleDateClick}
+              datesSet={handleDatesSet}
+              dayHeaderFormat={{ weekday: "short" }}
+            />
+          )}
         </div>
       </div>
     </>

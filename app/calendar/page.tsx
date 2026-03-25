@@ -327,6 +327,19 @@ export default function CalendarPage() {
     });
   };
 
+  const handleSelectAllSeries = useCallback(() => {
+    setUseBackendDefaults(false);
+    setVisibleSubSeries((prev) => {
+      const next = visibilityWithinSeries({ ...prev }, availableSeries);
+      availableSeries.forEach((series) => {
+        seriesChildren(series).forEach((child) => {
+          next[child.key] = true;
+        });
+      });
+      return sameVisibility(prev, next) ? prev : next;
+    });
+  }, [availableSeries]);
+
   return (
     <div className={style.layout}>
       <div className={style.sidebarWrap}>
@@ -334,6 +347,7 @@ export default function CalendarPage() {
           seriesKeys={availableSeries}
           visibleSubSeries={visibleSubSeries}
           onToggleSeries={handleToggleSeries}
+          onSelectAll={handleSelectAllSeries}
         />
       </div>
 
@@ -342,6 +356,7 @@ export default function CalendarPage() {
           seriesKeys={availableSeries}
           visibleSubSeries={visibleSubSeries}
           onToggleSeries={handleToggleSeries}
+          onSelectAll={handleSelectAllSeries}
           calendarView={calendarView}
           sessionView={sessionView}
           onSessionViewChange={handleSessionViewChange}

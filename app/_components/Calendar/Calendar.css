@@ -7,6 +7,204 @@
   max-width: 100%;
 }
 
+.round-calendar {
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #101010;
+}
+
+.round-calendar-header {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  background: #151515;
+}
+
+.round-calendar-header-cell {
+  padding: 18px 8px;
+  color: #9a9a9a;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.round-calendar-header-cell:last-child {
+  border-right: 0;
+}
+
+.round-calendar-week {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  min-height: max(132px, calc(56px + (var(--round-lane-count) * 30px) + 14px));
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.round-calendar-day {
+  all: unset;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  min-width: 0;
+  min-height: 100%;
+  padding: 18px 20px 12px;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  background: transparent;
+  cursor: pointer;
+}
+
+.round-calendar-day:nth-child(7) {
+  border-right: 0;
+}
+
+.round-calendar-day-number {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  position: relative;
+  z-index: 3;
+  pointer-events: none;
+  color: #9b9b9b;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.round-calendar-day-outside {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.round-calendar-day-outside .round-calendar-day-number {
+  color: #353535;
+}
+
+.round-calendar-day-today {
+  background: rgba(255, 143, 115, 0.04);
+}
+
+.round-calendar-day-today .round-calendar-day-number {
+  color: var(--kc-primary);
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+.round-calendar-day-selected {
+  background: rgba(255, 143, 115, 0.08);
+  box-shadow: inset 0 0 0 2px rgba(255, 143, 115, 0.16);
+}
+
+.round-calendar-day-selected .round-calendar-day-number {
+  color: var(--kc-primary);
+  font-weight: 700;
+}
+
+.round-calendar-bars {
+  position: absolute;
+  top: 56px;
+  right: 0;
+  bottom: 8px;
+  left: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-rows: repeat(var(--round-lane-count), 26px);
+  grid-auto-rows: 26px;
+  gap: 4px 0;
+  pointer-events: none;
+}
+
+.round-calendar-bar {
+  position: relative;
+  min-width: 0;
+  height: 22px;
+  margin: 0 5px;
+  padding: 0 10px 0 14px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  color: var(--event-text, #fff);
+  cursor: pointer;
+  overflow: hidden;
+  text-align: left;
+  pointer-events: auto;
+}
+
+.round-calendar-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+  background: var(--event-accent, rgba(255, 255, 255, 0.22));
+  opacity: 0.95;
+  pointer-events: none;
+}
+
+.round-calendar-bar-start {
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.round-calendar-bar-end {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+.round-calendar-bar-label {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.58rem;
+  font-weight: 800;
+  line-height: 22px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: inherit;
+}
+
+.round-calendar-bar.motogp-event {
+  background: var(--motogp-red);
+  --event-accent: color-mix(in srgb, var(--motogp-red) 70%, white);
+  --event-text: #171717;
+}
+
+.round-calendar-bar.wsbk-event {
+  background: var(--wsbk-blue);
+  --event-accent: color-mix(in srgb, var(--wsbk-blue) 72%, white);
+  --event-text: #f5f7fb;
+}
+
+.round-calendar-bar.bsb-event {
+  background: var(--bsb-green);
+  --event-accent: color-mix(in srgb, var(--bsb-green) 72%, white);
+  --event-text: #161616;
+}
+
+.round-calendar-bar.speedway-event {
+  background: var(--speedway-orange);
+  --event-accent: color-mix(in srgb, var(--speedway-orange) 72%, white);
+  --event-text: #171717;
+}
+
+.round-calendar-bar.f1-event {
+  background: var(--f1-red);
+  --event-accent: color-mix(in srgb, var(--f1-red) 72%, white);
+  --event-text: #171717;
+}
+
+.round-calendar-bar.gtwce-event {
+  background: var(--gtwce-gold);
+  --event-accent: color-mix(in srgb, var(--gtwce-gold) 72%, white);
+  --event-text: #171717;
+}
+
 .fc {
   max-width: 100%;
   width: 100%;
@@ -234,6 +432,22 @@
   color: var(--event-text, #fff) !important;
 }
 
+.fc-daygrid-dot-event.single-day-round {
+  min-height: 22px !important;
+  max-width: calc(100% - 10px) !important;
+  margin-left: 5px !important;
+  padding: 0 !important;
+}
+
+.fc-daygrid-dot-event.single-day-round .fc-daygrid-event-dot,
+.fc-daygrid-dot-event.single-day-round .fc-event-time {
+  display: none !important;
+}
+
+.fc-daygrid-dot-event.single-day-round .fc-event-title {
+  max-width: 100% !important;
+}
+
 .event-content {
   display: flex;
   align-items: center;
@@ -284,6 +498,12 @@
   --event-text: #171717;
 }
 
+.fc-event.gtwce-event {
+  background: var(--gtwce-gold) !important;
+  --event-accent: color-mix(in srgb, var(--gtwce-gold) 72%, white);
+  --event-text: #171717;
+}
+
 .fc .fc-view-harness {
   height: auto !important;
   max-height: none !important;
@@ -313,12 +533,55 @@
 }
 
 @media (max-width: 960px) {
+  .round-calendar-week {
+    min-height: max(124px, calc(52px + (var(--round-lane-count) * 28px) + 12px));
+  }
+
   .fc .fc-daygrid-day-frame {
     min-height: 100px;
   }
 }
 
 @media (max-width: 768px) {
+  .round-calendar-header-cell {
+    padding: 10px 4px;
+    font-size: 0.68rem;
+  }
+
+  .round-calendar-week {
+    min-height: max(116px, calc(44px + (var(--round-lane-count) * 26px) + 10px));
+  }
+
+  .round-calendar-day {
+    padding: 2px 12px 8px 2px;
+  }
+
+  .round-calendar-day-number {
+    min-height: 30px;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .round-calendar-bars {
+    top: 42px;
+    bottom: 6px;
+    grid-template-rows: repeat(var(--round-lane-count), 24px);
+    grid-auto-rows: 24px;
+    gap: 3px 0;
+  }
+
+  .round-calendar-bar {
+    height: 20px;
+    margin: 0 2px;
+    padding: 0 8px 0 12px;
+  }
+
+  .round-calendar-bar-label {
+    font-size: 0.5rem;
+    line-height: 20px;
+    letter-spacing: 0.08em;
+  }
+
   .fc {
     touch-action: pan-y pinch-zoom;
   }
@@ -369,6 +632,11 @@
 
   .fc-daygrid-event {
     min-height: 20px !important;
+    max-width: calc(100% - 4px) !important;
+    margin-left: 2px !important;
+  }
+
+  .fc-daygrid-dot-event.single-day-round {
     max-width: calc(100% - 4px) !important;
     margin-left: 2px !important;
   }

@@ -42,7 +42,7 @@ const SERIES_COLORS: Record<string, string> = {
   bsb: "var(--bsb-green)",
   speedway: "var(--speedway-orange)",
   f1: "var(--f1-red)",
-  gtwce: "#e8a000",
+  gtwce: "var(--gtwce-gold)",
 };
 
 const SMALL_WORDS = new Set([

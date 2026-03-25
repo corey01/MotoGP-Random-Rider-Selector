@@ -22,14 +22,16 @@ const SUB_SERIES_LABELS: Record<string, string> = {
   bsb: "BSB",
   speedway: "Speedway",
   f1: "Formula 1",
+  gtwce: "GT World Challenge",
 };
 
 const SERIES_COLORS: Record<string, string> = {
   motogp: "var(--motogp-red)",
   wsbk: "var(--wsbk-blue)",
-  bsb: "#1db954",
-  speedway: "#f57c00",
+  bsb: "var(--bsb-green)",
+  speedway: "var(--speedway-orange)",
   f1: "var(--f1-red)",
+  gtwce: "var(--gtwce-gold)",
 };
 
 const TYPE_LABELS: Record<string, string> = {

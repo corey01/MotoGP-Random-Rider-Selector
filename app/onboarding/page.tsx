@@ -11,9 +11,10 @@ import style from "./Onboarding.module.scss";
 const SERIES_COLORS: Record<string, string> = {
   motogp: "var(--motogp-red)",
   wsbk: "var(--wsbk-blue)",
-  bsb: "#1db954",
-  speedway: "#f57c00",
+  bsb: "var(--bsb-green)",
+  speedway: "var(--speedway-orange)",
   f1: "var(--f1-red)",
+  gtwce: "var(--gtwce-gold)",
 };
 
 export default function OnboardingPage() {
