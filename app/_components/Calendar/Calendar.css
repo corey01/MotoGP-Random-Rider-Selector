@@ -5,6 +5,7 @@
 .calendar-wrapper {
   width: 100%;
   max-width: 100%;
+  touch-action: pan-y;
 }
 
 .round-calendar {
@@ -12,6 +13,7 @@
   border-radius: 18px;
   overflow: hidden;
   background: #101010;
+  touch-action: pan-y;
 }
 
 .round-calendar-header {
@@ -543,6 +545,11 @@
 }
 
 @media (max-width: 768px) {
+  .calendar-wrapper,
+  .round-calendar {
+    touch-action: pan-y pinch-zoom;
+  }
+
   .round-calendar-header-cell {
     padding: 10px 4px;
     font-size: 0.68rem;
@@ -581,11 +588,6 @@
     line-height: 20px;
     letter-spacing: 0.08em;
   }
-
-  .fc {
-    touch-action: pan-y pinch-zoom;
-  }
-
   .fc .fc-toolbar.fc-header-toolbar {
     margin-bottom: 12px !important;
   }
