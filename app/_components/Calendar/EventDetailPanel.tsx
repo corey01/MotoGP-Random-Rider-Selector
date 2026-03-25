@@ -79,6 +79,47 @@ function getUserTimezoneLabel(isoString: string): string {
   }
 }
 
+function parseGmtOffsetMinutes(timezone?: string | null): number | null {
+  const value = String(timezone || "").trim().toUpperCase();
+  const match = value.match(/^GMT([+-])(\d{2}):(\d{2})$/);
+  if (!match) return null;
+
+  const sign = match[1] === "+" ? 1 : -1;
+  const hours = Number(match[2]);
+  const minutes = Number(match[3]);
+  return sign * (hours * 60 + minutes);
+}
+
+function formatOffsetLabel(offsetMinutes: number): string {
+  const sign = offsetMinutes >= 0 ? "+" : "-";
+  const absolute = Math.abs(offsetMinutes);
+  const hours = String(Math.floor(absolute / 60)).padStart(2, "0");
+  const minutes = String(absolute % 60).padStart(2, "0");
+  return `GMT${sign}${hours}:${minutes}`;
+}
+
+function formatWithOffset(isoString: string, offsetMinutes: number): { time: string; day: string } | null {
+  try {
+    const date = parseISO(isoString);
+    const shifted = new Date(date.getTime() + offsetMinutes * 60_000);
+    const shiftedIso = shifted.toISOString();
+    const [year, month, day] = shiftedIso.slice(0, 10).split("-").map(Number);
+    const localDate = new Date(year, month - 1, day);
+
+    return {
+      time: shiftedIso.slice(11, 16),
+      day: localDate.toLocaleDateString("en-GB", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }),
+    };
+  } catch {
+    return null;
+  }
+}
+
 function formatRoundRange(round: CalendarRound): string {
   try {
     const start = parseISO(`${round.startDate}T12:00:00`);
@@ -99,14 +140,33 @@ export function EventDetailPanel({ session, round, onClose }: EventDetailPanelPr
   const sessionDate = parseISO(session.start);
   const userTime = format(sessionDate, "HH:mm");
   const userTzLabel = getUserTimezoneLabel(session.start);
+  const userDayLabel = format(sessionDate, "EEEE, d MMMM yyyy");
 
-  // Track time (if the session has a timezone and it differs from user's)
-  const trackTimezone = session.timezone && session.timezone !== "UTC" ? session.timezone : null;
-  const trackTime = trackTimezone ? formatInTimezone(session.start, trackTimezone) : null;
-  const trackTzLabel = trackTimezone ? getTimezoneLabel(session.start, trackTimezone) : null;
-  const showTrackTime = trackTime && trackTzLabel && trackTime !== userTime;
-
-  const sessionDayLabel = format(sessionDate, "EEEE, d MMMM yyyy");
+  const trackOffsetMinutes = parseGmtOffsetMinutes(session.timezone);
+  const trackOffsetTime = trackOffsetMinutes !== null ? formatWithOffset(session.start, trackOffsetMinutes) : null;
+  const trackTimezone = trackOffsetMinutes === null && session.timezone && session.timezone !== "UTC"
+    ? session.timezone
+    : null;
+  const trackTime = trackOffsetTime?.time ?? (trackTimezone ? formatInTimezone(session.start, trackTimezone) : null);
+  const trackDayLabel = trackOffsetTime?.day ?? (trackTimezone ? (() => {
+    try {
+      return new Intl.DateTimeFormat("en-GB", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        timeZone: trackTimezone,
+      }).format(sessionDate);
+    } catch {
+      return null;
+    }
+  })() : null);
+  const trackTzLabel = trackOffsetMinutes !== null
+    ? formatOffsetLabel(trackOffsetMinutes)
+    : trackTimezone
+      ? getTimezoneLabel(session.start, trackTimezone)
+      : null;
+  const showTrackTime = trackTime && trackTzLabel && (`${trackTime} ${trackTzLabel}` !== `${userTime} ${userTzLabel}`);
 
   return (
     <div className={style.panel}>
@@ -137,7 +197,7 @@ export function EventDetailPanel({ session, round, onClose }: EventDetailPanelPr
           >
             {session.sessionName || typeLabel}
           </h2>
-          <p className={style.sessionDay}>{sessionDayLabel}</p>
+          <p className={style.sessionDay}>{userDayLabel}</p>
         </div>
 
         {/* Time */}
@@ -147,13 +207,17 @@ export function EventDetailPanel({ session, round, onClose }: EventDetailPanelPr
             <div className={style.timeItem}>
               <span className={style.timeValue}>{userTime}</span>
               <span className={style.timeLabel}>Your time {userTzLabel && `· ${userTzLabel}`}</span>
+              {showTrackTime && trackTime && trackTzLabel && (
+                <>
+                  <span className={style.secondaryTime}>
+                    Circuit local: {trackTime} · {trackTzLabel}
+                  </span>
+                  {trackDayLabel && trackDayLabel !== userDayLabel && (
+                    <span className={style.secondaryTime}>{trackDayLabel}</span>
+                  )}
+                </>
+              )}
             </div>
-            {showTrackTime && (
-              <div className={style.timeItem}>
-                <span className={style.timeValue}>{trackTime}</span>
-                <span className={style.timeLabel}>Track time · {trackTzLabel}</span>
-              </div>
-            )}
           </div>
         </div>
 

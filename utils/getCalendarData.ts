@@ -114,10 +114,7 @@ export interface CalendarRoundEvent {
   };
 }
 
-// WSBK child series already prefix their own event/round names ("WorldSBK Race" etc.)
-const NO_PREFIX_SERIES = new Set(["worldsbk", "worldssp", "worldwcr", "worldspb"]);
-
-const SERIES_PREFIX: Record<string, string> = {
+const SESSION_SERIES_PREFIX: Record<string, string> = {
   motogp: "MotoGP",
   moto2: "Moto2",
   moto3: "Moto3",
@@ -126,10 +123,31 @@ const SERIES_PREFIX: Record<string, string> = {
   f1: "F1",
 };
 
-const prefixTitle = (title: string, subSeries: string): string => {
-  if (NO_PREFIX_SERIES.has(subSeries)) return title;
-  const prefix = SERIES_PREFIX[subSeries];
+const ROUND_SERIES_PREFIX: Record<string, string> = {
+  motogp: "MotoGP",
+  moto2: "Moto2",
+  moto3: "Moto3",
+  wsbk: "WSBK",
+  worldsbk: "WSBK",
+  worldssp: "WSBK",
+  worldwcr: "WSBK",
+  worldspb: "WSBK",
+  bsb: "BSB",
+  speedway: "Speedway",
+  f1: "F1",
+  gtwce: "GTWCE",
+};
+
+const prefixSessionTitle = (title: string, subSeries: string): string => {
+  const prefix = SESSION_SERIES_PREFIX[subSeries];
   if (!prefix) return title;
+  return `${prefix} - ${title}`;
+};
+
+const prefixRoundTitle = (title: string, subSeries: string, series: string): string => {
+  const prefix = ROUND_SERIES_PREFIX[subSeries] ?? ROUND_SERIES_PREFIX[series];
+  if (!prefix) return title;
+  if (title.toLowerCase().startsWith(`${prefix.toLowerCase()} - `)) return title;
   return `${prefix} - ${title}`;
 };
 
@@ -335,16 +353,17 @@ const toCalendarRound = (
   };
 };
 
-const groupLegacyDateEvents = (events: ApiCalendarEvent[]): CalendarRound[] => {
-  const roundMap = new Map<number, ApiCalendarEvent[]>();
+const groupApiCalendarEvents = (events: ApiCalendarEvent[]): CalendarRound[] => {
+  const roundMap = new Map<string, ApiCalendarEvent[]>();
 
   for (const event of events) {
     const roundId = Number(event.round?.id ?? 0);
-    const existing = roundMap.get(roundId);
+    const roundKey = roundId > 0 ? `round:${roundId}` : `event:${event.id}`;
+    const existing = roundMap.get(roundKey);
     if (existing) {
       existing.push(event);
     } else {
-      roundMap.set(roundId, [event]);
+      roundMap.set(roundKey, [event]);
     }
   }
 
@@ -400,7 +419,7 @@ const normalizeDateRounds = (
   }
 
   if (Array.isArray(payload.events)) {
-    return groupLegacyDateEvents(payload.events);
+    return groupApiCalendarEvents(payload.events);
   }
 
   return [];
@@ -514,6 +533,14 @@ export function emptyEffectiveCalendarFilters(): EffectiveCalendarFilters {
   return emptyEffectiveFilters();
 }
 
+export function toCalendarSessionFromApiEvent(event: ApiCalendarEvent): CalendarSession {
+  return toCalendarSession(event);
+}
+
+export function groupApiCalendarEventsByRound(events: ApiCalendarEvent[]): CalendarRound[] {
+  return groupApiCalendarEvents(events);
+}
+
 export function toFullCalendarSessionEvent(
   session: CalendarSession,
   round: CalendarRound
@@ -522,7 +549,7 @@ export function toFullCalendarSessionEvent(
   const series = String(session.series || round.series || "").toLowerCase();
 
   return {
-    title: prefixTitle(session.sessionName || session.title || session.type, subSeries),
+    title: prefixSessionTitle(session.sessionName || session.title || session.type, subSeries),
     start: session.start,
     end: session.end ?? undefined,
     allDay: false,
@@ -554,7 +581,7 @@ export function toFullCalendarRoundEvent(round: CalendarRound): CalendarRoundEve
   const series = String(round.series || "").toLowerCase();
 
   return {
-    title: prefixTitle(round.name, subSeries),
+    title: prefixRoundTitle(round.name, subSeries, series),
     start: round.startDate,
     end: toExclusiveEndDate(round.endDate),
     allDay: true,

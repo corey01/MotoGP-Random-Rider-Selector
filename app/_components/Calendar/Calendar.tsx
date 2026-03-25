@@ -12,10 +12,11 @@ import { CalendarTitle } from "./CalendarTitle";
 
 import { inter } from "@/app/fonts";
 import "./Calendar.css";
-import { type CalendarRoundEvent } from "@/utils/getCalendarData";
+import { type CalendarRoundEvent, type CalendarView } from "@/utils/getCalendarData";
 
 interface CalendarProps {
   roundEvents: CalendarRoundEvent[];
+  calendarView: CalendarView;
   selectedDate: Date | null;
   isPanelOpen: boolean;
   onDaySelect: (date: Date | null) => void;
@@ -37,6 +38,7 @@ function getClickedDate(clickInfo: EventClickArg) {
 
 export const Calendar = ({
   roundEvents,
+  calendarView,
   selectedDate,
   isPanelOpen,
   onDaySelect,
@@ -154,6 +156,27 @@ export const Calendar = ({
     return () => window.clearTimeout(timeoutId);
   }, [isPanelOpen]);
 
+  useEffect(() => {
+    if (!calendarRef.current) return;
+
+    let frameOne = 0;
+    let frameTwo = 0;
+
+    frameOne = window.requestAnimationFrame(() => {
+      const calendarApi = calendarRef.current?.getApi();
+      calendarApi?.updateSize();
+
+      frameTwo = window.requestAnimationFrame(() => {
+        calendarApi?.updateSize();
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frameOne);
+      window.cancelAnimationFrame(frameTwo);
+    };
+  }, [roundEvents]);
+
   const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
 
   return (
@@ -182,7 +205,9 @@ export const Calendar = ({
             selectable={false}
             selectMirror={false}
             height="auto"
+            expandRows={calendarView === "rounds"}
             handleWindowResize={true}
+            dayMaxEventRows={calendarView === "rounds" ? true : undefined}
             eventTimeFormat={{
               hour: "2-digit",
               minute: "2-digit",
@@ -203,6 +228,8 @@ export const Calendar = ({
             firstDay={1}
             contentHeight="auto"
             stickyHeaderDates={true}
+            eventOrder="-duration,start,allDay,title"
+            eventOrderStrict={true}
             titleFormat={{ month: "long", year: "numeric" }}
             eventClick={handleEventClick}
             dateClick={handleDateClick}

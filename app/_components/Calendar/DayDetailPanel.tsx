@@ -33,6 +33,21 @@ interface RoundTimelineGroup {
   sessionCount: number;
 }
 
+const ROUND_SERIES_LABELS: Record<string, string> = {
+  motogp: "MotoGP",
+  moto2: "Moto2",
+  moto3: "Moto3",
+  wsbk: "WSBK",
+  worldsbk: "WSBK",
+  worldssp: "WSBK",
+  worldwcr: "WSBK",
+  worldspb: "WSBK",
+  bsb: "BSB",
+  speedway: "Speedway",
+  f1: "F1",
+  gtwce: "GTWCE",
+};
+
 const SERIES_COLORS: Record<string, string> = {
   motogp: "var(--motogp-red)",
   wsbk: "var(--wsbk-blue)",
@@ -114,6 +129,16 @@ const getSessionDisplayName = (session: CalendarSession) => {
   return `${seriesLabel} • ${sessionName}`;
 };
 
+const getRoundDisplayTitle = (round: CalendarRound) => {
+  const roundName = round.name?.trim() ?? "";
+  const seriesKey = (round.series || round.subSeries || "").trim().toLowerCase();
+  const seriesLabel = ROUND_SERIES_LABELS[seriesKey];
+
+  if (!seriesLabel) return roundName;
+  if (roundName.toLowerCase().startsWith(`${seriesLabel.toLowerCase()} - `)) return roundName;
+  return `${seriesLabel} - ${roundName}`;
+};
+
 const buildDayGroups = (sessions: CalendarSession[]) => {
   const dayMap = new Map<string, CalendarSession[]>();
 
@@ -179,7 +204,7 @@ export function DayDetailPanel({
           <p className={style.focusedLabel}>Currently Focused</p>
           {focusMode === "round" && focusedRound ? (
             <>
-              <h2 className={style.roundHeading}>{focusedRound.name}</h2>
+              <h2 className={style.roundHeading}>{getRoundDisplayTitle(focusedRound)}</h2>
               <div className={style.roundSummary}>
                 <span className={style.selectedBadge}>Round</span>
                 <span className={style.roundRange}>{formatRoundRange(focusedRound)}</span>
@@ -187,6 +212,14 @@ export function DayDetailPanel({
               <p className={style.dateFull}>
                 {[focusedRound.circuit, focusedRound.country].filter(Boolean).join(" · ")}
               </p>
+              {focusedRound.id > 0 ? (
+                <Link
+                  href={`/round?roundId=${encodeURIComponent(focusedRound.id)}`}
+                  className={style.focusedRoundLink}
+                >
+                  Round Info
+                </Link>
+              ) : null}
             </>
           ) : (
             <>
@@ -238,24 +271,26 @@ export function DayDetailPanel({
         ) : (
           groups.map((group) => (
             <div key={group.groupKey} className={style.roundGroup}>
-              <div className={style.roundMeta}>
-                <div className={style.roundMetaMain}>
-                  <h3 className={style.roundName}>{group.roundName}</h3>
-                  {group.roundNumber ? (
-                    <span className={style.roundMetaText}>
-                      Round {String(group.roundNumber).padStart(2, "0")}
-                    </span>
+              {focusMode !== "round" ? (
+                <div className={style.roundMeta}>
+                  <div className={style.roundMetaMain}>
+                    <h3 className={style.roundName}>{group.roundName}</h3>
+                    {group.roundNumber ? (
+                      <span className={style.roundMetaText}>
+                        Round {String(group.roundNumber).padStart(2, "0")}
+                      </span>
+                    ) : null}
+                  </div>
+                  {Number(group.groupKey) > 0 ? (
+                    <Link
+                      href={`/round?roundId=${encodeURIComponent(group.groupKey)}`}
+                      className={style.roundLink}
+                    >
+                      Round Info
+                    </Link>
                   ) : null}
                 </div>
-                {Number(group.groupKey) > 0 ? (
-                  <Link
-                    href={`/round?roundId=${encodeURIComponent(group.groupKey)}`}
-                    className={style.roundLink}
-                  >
-                    Round Info
-                  </Link>
-                ) : null}
-              </div>
+              ) : null}
 
               {group.dayGroups.map((dayGroup) => (
                 <div

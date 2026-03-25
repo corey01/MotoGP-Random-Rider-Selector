@@ -51,8 +51,6 @@ const activeCalendarFilters = (visibleSubSeries: Record<SubSeriesKey, boolean>) 
 };
 
 const monthStart = (date: Date) => new Date(date.getFullYear(), date.getMonth(), 1);
-const isMobileViewport = () =>
-  typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
 
 const visibilityFromFilters = (
   filters: EffectiveCalendarFilters
@@ -134,11 +132,6 @@ export default function CalendarPage() {
   const [isDateLoading, setIsDateLoading] = useState(false);
   const [isRoundLoading, setIsRoundLoading] = useState(false);
   const isPanelOpen = selectedDate !== null;
-
-  useEffect(() => {
-    if (isMobileViewport()) return;
-    setSelectedDate((current) => current ?? new Date());
-  }, []);
 
   const explicitFilters = useMemo(
     () => (useBackendDefaults ? null : activeCalendarFilters(visibleSubSeries)),
@@ -349,9 +342,13 @@ export default function CalendarPage() {
           seriesKeys={availableSeries}
           visibleSubSeries={visibleSubSeries}
           onToggleSeries={handleToggleSeries}
+          calendarView={calendarView}
+          sessionView={sessionView}
+          onSessionViewChange={handleSessionViewChange}
         />
         <Calendar
           roundEvents={roundEvents}
+          calendarView={calendarView}
           selectedDate={selectedDate}
           isPanelOpen={isPanelOpen}
           onDaySelect={(date) => {

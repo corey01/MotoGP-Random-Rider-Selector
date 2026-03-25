@@ -2,7 +2,14 @@
 
 import { useEffect, useRef, useMemo, useState } from "react";
 import { format, parseISO } from "date-fns";
-import { type ApiCalendarEvent } from "@/utils/getCalendarData";
+import {
+  groupApiCalendarEventsByRound,
+  toCalendarSessionFromApiEvent,
+  type ApiCalendarEvent,
+  type CalendarRound,
+  type CalendarSession,
+} from "@/utils/getCalendarData";
+import { EventDetailPanel } from "@/app/_components/Calendar/EventDetailPanel";
 import style from "./UpcomingEvents.module.scss";
 
 const SUB_SERIES_LABELS: Record<string, string> = {
@@ -93,6 +100,10 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
   const [activeSeries, setActiveSeries] = useState<string>("all");
   const [racesOnly, setRacesOnly] = useState(false);
   const [filterHeight, setFilterHeight] = useState(0);
+  const [selectedEvent, setSelectedEvent] = useState<{
+    session: CalendarSession;
+    round: CalendarRound;
+  } | null>(null);
   const filterRef = useRef<HTMLDivElement>(null);
 
   const HEADER_HEIGHT = 52;
@@ -112,6 +123,17 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
   }, [events]);
 
   const tzLabel = useMemo(() => getTimezoneLabel(), []);
+  const eventDetailsById = useMemo(() => {
+    const lookup = new Map<string, { session: CalendarSession; round: CalendarRound }>();
+
+    for (const round of groupApiCalendarEventsByRound(events)) {
+      for (const session of round.events) {
+        lookup.set(session.id, { session, round });
+      }
+    }
+
+    return lookup;
+  }, [events]);
 
   const days = useMemo<DayGroup[]>(() => {
     let filtered = activeSeries === "all" ? events : events.filter((ev) => ev.series === activeSeries);
@@ -138,106 +160,137 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
       });
   }, [events, activeSeries, racesOnly]);
 
+  const openEventDetail = (event: ApiCalendarEvent) => {
+    const existing = eventDetailsById.get(event.id);
+
+    if (existing) {
+      setSelectedEvent(existing);
+      return;
+    }
+
+    const [fallbackRound] = groupApiCalendarEventsByRound([event]);
+    if (!fallbackRound) return;
+
+    setSelectedEvent({
+      session: toCalendarSessionFromApiEvent(event),
+      round: fallbackRound,
+    });
+  };
+
   return (
-    <div className={style.root}>
-      <div className={style.header}>
-        <span className={style.title}>Weekend Feed</span>
-        <span className={style.tz}>Times in local ({tzLabel})</span>
-      </div>
+    <>
+      <div className={style.root}>
+        <div className={style.header}>
+          <span className={style.title}>Weekend Feed</span>
+          <span className={style.tz}>Times in local ({tzLabel})</span>
+        </div>
 
-      <div className={style.filterRow} ref={filterRef}>
-        <div className={style.filters}>
-          <button
-            className={`${style.filterBtn} ${activeSeries === "all" ? style.filterBtnActive : ""}`}
-            onClick={() => setActiveSeries("all")}
-          >
-            All Series
-          </button>
-          {seriesOptions.map((s) => (
+        <div className={style.filterRow} ref={filterRef}>
+          <div className={style.filters}>
             <button
-              key={s}
-              className={`${style.filterBtn} ${activeSeries === s ? style.filterBtnActive : ""}`}
-              onClick={() => setActiveSeries(s)}
+              className={`${style.filterBtn} ${activeSeries === "all" ? style.filterBtnActive : ""}`}
+              onClick={() => setActiveSeries("all")}
             >
-              {SERIES_LABELS[s] ?? s}
+              All Series
             </button>
-          ))}
+            {seriesOptions.map((s) => (
+              <button
+                key={s}
+                className={`${style.filterBtn} ${activeSeries === s ? style.filterBtnActive : ""}`}
+                onClick={() => setActiveSeries(s)}
+              >
+                {SERIES_LABELS[s] ?? s}
+              </button>
+            ))}
+          </div>
+          <button
+            className={`${style.racesToggle} ${racesOnly ? style.racesToggleActive : ""}`}
+            onClick={() => setRacesOnly((v) => !v)}
+          >
+            Races only
+            <span className={style.toggleTrack}>
+              <span className={style.toggleKnob} />
+            </span>
+          </button>
         </div>
-        <button
-          className={`${style.racesToggle} ${racesOnly ? style.racesToggleActive : ""}`}
-          onClick={() => setRacesOnly((v) => !v)}
-        >
-          Races only
-          <span className={style.toggleTrack}>
-            <span className={style.toggleKnob} />
-          </span>
-        </button>
-      </div>
 
-      {days.length === 0 ? (
-        <div className={style.empty}>
-          <p>No events this weekend.</p>
-        </div>
-      ) : (
-        <div className={style.list}>
-          {days.map((day) => (
-            <div key={day.date} className={style.day}>
-              <div className={style.dayHeader} style={{ top: HEADER_HEIGHT + filterHeight }}>
-                <span className={style.dayNum}>{day.dayNum}</span>
-                <div className={style.dayMeta}>
-                  <span className={style.dayName}>{day.dayName}</span>
-                  <span className={style.monthYear}>{day.monthYear}</span>
+        {days.length === 0 ? (
+          <div className={style.empty}>
+            <p>No events this weekend.</p>
+          </div>
+        ) : (
+          <div className={style.list}>
+            {days.map((day) => (
+              <div key={day.date} className={style.day}>
+                <div className={style.dayHeader} style={{ top: HEADER_HEIGHT + filterHeight }}>
+                  <span className={style.dayNum}>{day.dayNum}</span>
+                  <div className={style.dayMeta}>
+                    <span className={style.dayName}>{day.dayName}</span>
+                    <span className={style.monthYear}>{day.monthYear}</span>
+                  </div>
+                </div>
+
+                <div className={style.sessions}>
+                  {day.events.map((ev) => {
+                    const seriesColor = SERIES_COLORS[ev.series] ?? "#555";
+                    const subLabel = SUB_SERIES_LABELS[ev.subSeries] ?? ev.subSeries.toUpperCase();
+                    const prefix = `${subLabel} - `;
+                    const rawSession = ev.sessionName || ev.type;
+                    const sessionLabel = rawSession.startsWith(prefix)
+                      ? rawSession.slice(prefix.length).toUpperCase()
+                      : rawSession.toUpperCase();
+                    const roundName = toTitleCase(ev.round.name);
+                    const isLive = ev.status?.toLowerCase() === "live";
+                    const isRace = ev.type === "RACE";
+                    const duration = formatDuration(ev.start, ev.end);
+
+                    return (
+                      <button
+                        key={ev.id}
+                        type="button"
+                        className={`${style.session} ${selectedEvent?.session.id === ev.id ? style.sessionSelected : ""}`}
+                        onClick={() => openEventDetail(ev)}
+                      >
+                        {isRace && (
+                          <div className={style.sessionAccent} style={{ background: seriesColor }} />
+                        )}
+                        <div className={style.sessionContent}>
+                          <div className={style.sessionLeft}>
+                            <span className={style.sessionMeta}>
+                              {[roundName, ev.round.circuit].filter(Boolean).join(" • ")}
+                            </span>
+                            <span className={style.roundName}>{subLabel} • {sessionLabel}</span>
+                          </div>
+                          <div className={style.sessionRight}>
+                            <span className={style.sessionTime}>
+                              {format(parseISO(ev.start), "HH:mm")}
+                            </span>
+                            {isLive ? (
+                              <span className={style.sessionSub} style={{ color: seriesColor }}>
+                                Live
+                              </span>
+                            ) : duration ? (
+                              <span className={style.sessionSub}>{duration}</span>
+                            ) : null}
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
+            ))}
+          </div>
+        )}
+      </div>
 
-              <div className={style.sessions}>
-                {day.events.map((ev) => {
-                  const seriesColor = SERIES_COLORS[ev.series] ?? "#555";
-                  const subLabel = SUB_SERIES_LABELS[ev.subSeries] ?? ev.subSeries.toUpperCase();
-                  const seriesLabel = (SERIES_LABELS[ev.series] ?? ev.series).toUpperCase();
-                  const prefix = `${subLabel} - `;
-                  const rawSession = ev.sessionName || ev.type;
-                  const sessionLabel = rawSession.startsWith(prefix)
-                    ? rawSession.slice(prefix.length).toUpperCase()
-                    : rawSession.toUpperCase();
-                  const roundName = toTitleCase(ev.round.name);
-                  const isLive = ev.status?.toLowerCase() === "live";
-                  const isRace = ev.type === "RACE";
-                  const duration = formatDuration(ev.start, ev.end);
-
-                  return (
-                    <div key={ev.id} className={style.session}>
-                      {isRace && (
-                        <div className={style.sessionAccent} style={{ background: seriesColor }} />
-                      )}
-                      <div className={style.sessionContent}>
-                        <div className={style.sessionLeft}>
-                          <span className={style.sessionMeta}>
-                            {roundName} • {ev.round.circuit}
-                          </span>
-                          <span className={style.roundName}>{subLabel} • {sessionLabel}</span>
-                        </div>
-                        <div className={style.sessionRight}>
-                          <span className={style.sessionTime}>
-                            {format(parseISO(ev.start), "HH:mm")}
-                          </span>
-                          {isLive ? (
-                            <span className={style.sessionSub} style={{ color: seriesColor }}>
-                              Live
-                            </span>
-                          ) : duration ? (
-                            <span className={style.sessionSub}>{duration}</span>
-                          ) : null}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
+      {selectedEvent && (
+        <EventDetailPanel
+          session={selectedEvent.session}
+          round={selectedEvent.round}
+          onClose={() => setSelectedEvent(null)}
+        />
       )}
-    </div>
+    </>
   );
 }
