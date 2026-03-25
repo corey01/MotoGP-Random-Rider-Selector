@@ -188,8 +188,6 @@ export default function GridPanel({
                   >
                     <span className={style.posLabel}>{item.position}</span>
                     <div className={style.card} style={{ background: cardBg, color: textColor }}>
-                      <div className={style.bikeBackdrop} />
-
                       {riderNumber != null && (
                         <span
                           className={style.numberPill}

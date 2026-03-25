@@ -136,14 +136,6 @@
   object-fit: contain;
 }
 
-.bikeBackdrop {
-  position: absolute;
-  inset: auto auto 0 0;
-  width: 58%;
-  height: 70%;
-  background: linear-gradient(90deg, rgba(14, 14, 14, 0.8), transparent);
-  z-index: 0;
-}
 
 .textWrap {
   position: relative;
@@ -247,18 +239,11 @@
   }
 
   .row {
-    grid-template-columns: 1fr;
     gap: 14px;
   }
 
   .cell {
     padding-top: 18px;
-  }
-
-  .left,
-  .center,
-  .right {
-    margin-top: 0;
   }
 
   .posLabel {

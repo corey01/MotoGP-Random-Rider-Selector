@@ -1,5 +1,8 @@
 // Fetches calendar data from the RaceCal API.
 
+export type CalendarView = "rounds" | "events";
+export type SessionView = "races" | "all";
+
 import { fetchWithAuth, getAccessToken } from "./auth";
 
 // Mirrors the shape returned by GET /calendar-events
@@ -92,6 +95,7 @@ export interface CalendarRoundEvent {
   className: string;
   extendedProps?: {
     session?: string;
+    sessionId?: string;
     type?: string;
     subSeries?: string;
     meta?: {
@@ -109,6 +113,25 @@ export interface CalendarRoundEvent {
     };
   };
 }
+
+// WSBK child series already prefix their own event/round names ("WorldSBK Race" etc.)
+const NO_PREFIX_SERIES = new Set(["worldsbk", "worldssp", "worldwcr", "worldspb"]);
+
+const SERIES_PREFIX: Record<string, string> = {
+  motogp: "MotoGP",
+  moto2: "Moto2",
+  moto3: "Moto3",
+  bsb: "BSB",
+  speedway: "Speedway",
+  f1: "F1",
+};
+
+const prefixTitle = (title: string, subSeries: string): string => {
+  if (NO_PREFIX_SERIES.has(subSeries)) return title;
+  const prefix = SERIES_PREFIX[subSeries];
+  if (!prefix) return title;
+  return `${prefix} - ${title}`;
+};
 
 const CLASS_MAP: Record<string, string> = {
   motogp: "motogp-event",
@@ -355,7 +378,14 @@ const groupLegacyDateEvents = (events: ApiCalendarEvent[]): CalendarRound[] => {
 };
 
 const normalizeMonthRounds = (rounds?: RawCalendarMonthRound[] | null): CalendarRound[] =>
-  Array.isArray(rounds) ? rounds.map((round) => toCalendarRound(round, [])) : [];
+  Array.isArray(rounds)
+    ? rounds.map((round) =>
+        toCalendarRound(
+          round,
+          Array.isArray(round.events) ? round.events.map(toCalendarSession) : []
+        )
+      )
+    : [];
 
 const normalizeDateRounds = (
   payload: Partial<CalendarDatePayload> & { events?: ApiCalendarEvent[]; rounds?: RawCalendarMonthRound[] }
@@ -484,12 +514,47 @@ export function emptyEffectiveCalendarFilters(): EffectiveCalendarFilters {
   return emptyEffectiveFilters();
 }
 
+export function toFullCalendarSessionEvent(
+  session: CalendarSession,
+  round: CalendarRound
+): CalendarRoundEvent {
+  const subSeries = String(session.subSeries || round.subSeries || round.series || "").toLowerCase();
+  const series = String(session.series || round.series || "").toLowerCase();
+
+  return {
+    title: prefixTitle(session.sessionName || session.title || session.type, subSeries),
+    start: session.start,
+    end: session.end ?? undefined,
+    allDay: false,
+    className: CLASS_MAP[subSeries] ?? CLASS_MAP[series] ?? `${series}-event`,
+    extendedProps: {
+      session: session.sessionName,
+      sessionId: session.id,
+      type: session.type,
+      subSeries: subSeries || series,
+      meta: {
+        round: round.name,
+        roundId: round.id ?? null,
+        name: round.name,
+        deviceTime: session.start,
+        deviceEndTime: session.end ?? null,
+        raceTime: session.start,
+        country: round.country ?? "",
+        sessionName: session.sessionName,
+        eventDateLabel: "",
+        sourceUrl: round.sourceUrl ?? "",
+        hasGrid: round.hasGrid ?? false,
+      },
+    },
+  };
+}
+
 export function toFullCalendarRoundEvent(round: CalendarRound): CalendarRoundEvent {
   const subSeries = String(round.subSeries || round.series || "").toLowerCase();
   const series = String(round.series || "").toLowerCase();
 
   return {
-    title: round.name,
+    title: prefixTitle(round.name, subSeries),
     start: round.startDate,
     end: toExclusiveEndDate(round.endDate),
     allDay: true,

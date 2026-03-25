@@ -3,8 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/app/_components/AuthProvider";
 import { fetchSubscriptions, saveSubscriptions, fetchDisabledSubSeries, saveDisabledSubSeries } from "@/utils/subscriptions";
+import { fetchPreferences, savePreferences } from "@/utils/preferences";
+import { useSubscriptions } from "@/utils/SubscriptionsContext";
 import { SERIES_GROUPS } from "@/app/_components/Calendar/filterConfig";
 import type { SeriesKey, SubSeriesKey } from "@/app/_components/Calendar/filterConfig";
+import type { CalendarView } from "@/utils/getCalendarData";
 import style from "./Settings.module.scss";
 import { useRouter } from "next/dist/client/components/navigation";
 
@@ -14,6 +17,7 @@ const SERIES_COLORS: Record<string, string> = {
   bsb: "#1db954",
   speedway: "#f57c00",
   f1: "var(--f1-red)",
+  gtwce: "#e8a000",
 };
 
 const CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: string }> = {
@@ -27,6 +31,7 @@ const CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: string }> = {
   bsb:      { abbr: "BSB", subtitle: "British SBK" },
   speedway: { abbr: "SGP", subtitle: "Grand Prix" },
   f1:       { abbr: "F1",  subtitle: "Single Seater" },
+  gtwce:    { abbr: "GT",  subtitle: "GT3 / GT4" },
 };
 
 const ALL_CARDS = SERIES_GROUPS.flatMap((group) =>
@@ -41,9 +46,11 @@ const ALL_CARDS = SERIES_GROUPS.flatMap((group) =>
 
 export default function SettingsPage() {
   const { user, logout } = useAuth();
+  const { reload: reloadSubscriptions } = useSubscriptions();
   const router = useRouter();
   const [subscribed, setSubscribed] = useState<Set<SeriesKey>>(new Set());
   const [disabledSubSeries, setDisabledSubSeries] = useState<Set<SubSeriesKey>>(new Set());
+  const [calendarView, setCalendarView] = useState<CalendarView>("rounds");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null);
@@ -56,11 +63,14 @@ export default function SettingsPage() {
   }, []);
 
   useEffect(() => {
-    Promise.all([fetchSubscriptions(), fetchDisabledSubSeries()]).then(([series, disabled]) => {
-      setSubscribed(new Set(series));
-      setDisabledSubSeries(new Set(disabled));
-      setLoading(false);
-    });
+    Promise.all([fetchSubscriptions(), fetchDisabledSubSeries(), fetchPreferences()]).then(
+      ([series, disabled, prefs]) => {
+        setSubscribed(new Set(series));
+        setDisabledSubSeries(new Set(disabled));
+        if (prefs.calendarView) setCalendarView(prefs.calendarView);
+        setLoading(false);
+      }
+    );
   }, []);
 
   const isCardSelected = (parentKey: SeriesKey, subKey: SubSeriesKey) =>
@@ -101,8 +111,10 @@ export default function SettingsPage() {
       await Promise.all([
         saveSubscriptions(Array.from(subscribed) as SeriesKey[]),
         saveDisabledSubSeries(Array.from(disabledSubSeries) as SubSeriesKey[]),
+        savePreferences({ calendarView }),
       ]);
       showToast("Settings saved.", true);
+      void reloadSubscriptions();
     } catch (err) {
       showToast(err instanceof Error ? err.message : "Save failed", false);
     } finally {
@@ -129,6 +141,33 @@ export default function SettingsPage() {
             Sign out
           </button>
         </div>
+
+        <section className={style.section}>
+          <h2 className={style.sectionTitle}>Calendar Preferences</h2>
+          <p className={style.sectionDesc}>Choose how events are displayed on the calendar by default.</p>
+
+          <div className={style.prefRow}>
+            <div className={style.prefLabel}>
+              <span className={style.prefLabelText}>Default View</span>
+              <span className={style.prefLabelSub}>
+                {calendarView === "rounds" ? "Shows one entry per race weekend" : "Shows individual sessions"}
+              </span>
+            </div>
+            <button
+              type="button"
+              className={`${style.prefSwitch} ${calendarView === "events" ? style.prefSwitchOn : ""}`}
+              onClick={() => setCalendarView(calendarView === "rounds" ? "events" : "rounds")}
+              role="switch"
+              aria-checked={calendarView === "events"}
+            >
+              <span className={style.prefSwitchThumb} />
+              <span className={style.prefSwitchLabels}>
+                <span>Rounds</span>
+                <span>Events</span>
+              </span>
+            </button>
+          </div>
+        </section>
 
         <section className={style.section}>
           <h2 className={style.sectionTitle}>Series Subscriptions</h2>

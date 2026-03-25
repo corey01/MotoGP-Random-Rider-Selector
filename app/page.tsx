@@ -8,7 +8,7 @@ import { UpcomingEvents } from "./_components/Dashboard/UpcomingEvents";
 import { getDashboardData, type DashboardData } from "@/utils/getDashboardData";
 import style from "./Dashboard.module.scss";
 
-const EMPTY: DashboardData = { nextRace: null, today: [], upcoming: [], upcomingRaces: [], subscribedSeries: [] };
+const EMPTY: DashboardData = { nextRace: null, today: [], thisWeekend: [], subscribedSeries: [] };
 
 export default function DashboardPage() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -39,8 +39,7 @@ export default function DashboardPage() {
           <CountdownCard nextRace={data.nextRace} />
         </section>
         <section className={style.feedSection}>
-          <h2 className={style.feedTitle}>Upcoming Events</h2>
-          <UpcomingEvents allEvents={data.upcoming} raceEvents={data.upcomingRaces} />
+          <UpcomingEvents events={data.thisWeekend} />
         </section>
       </div>
     </div>

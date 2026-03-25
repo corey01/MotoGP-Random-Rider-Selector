@@ -2,6 +2,7 @@ import { fetchWithAuth } from "./auth";
 
 export interface UserPreferences {
   sessionView?: "races" | "all";
+  calendarView?: "rounds" | "events";
 }
 
 export async function fetchPreferences(): Promise<UserPreferences> {

@@ -13,6 +13,7 @@ interface DayDetailPanelProps {
   focusedRound: CalendarRound | null;
   sessionView: "races" | "all";
   onSessionViewChange: (view: "races" | "all") => void;
+  showSessionToggle?: boolean;
   isLoading?: boolean;
   onClose: () => void;
 }
@@ -143,6 +144,7 @@ export function DayDetailPanel({
   focusedRound,
   sessionView,
   onSessionViewChange,
+  showSessionToggle = false,
   isLoading = false,
   onClose,
 }: DayDetailPanelProps) {
@@ -200,21 +202,28 @@ export function DayDetailPanel({
       </div>
 
       <div className={style.panelBody}>
-        <div className={style.sessionToggleRow}>
-          <button
-            type="button"
-            className={`${style.sessionSwitch} ${sessionView === "all" ? style.sessionSwitchAll : ""}`}
-            onClick={() => onSessionViewChange(sessionView === "races" ? "all" : "races")}
-            role="switch"
-            aria-checked={sessionView === "all"}
-          >
-            <span className={style.sessionSwitchThumb} />
-            <span className={style.switchLabels}>
-              <span>Races Only</span>
-              <span>All Events</span>
-            </span>
-          </button>
-        </div>
+        {showSessionToggle && (
+          <div className={style.sessionToggleRow}>
+            <div className={style.segmentedControl} role="group" aria-label="Session filter">
+              <button
+                type="button"
+                className={`${style.segmentBtn} ${sessionView === "races" ? style.segmentBtnActive : ""}`}
+                onClick={() => onSessionViewChange("races")}
+                aria-pressed={sessionView === "races"}
+              >
+                Races Only
+              </button>
+              <button
+                type="button"
+                className={`${style.segmentBtn} ${sessionView === "all" ? style.segmentBtnActive : ""}`}
+                onClick={() => onSessionViewChange("all")}
+                aria-pressed={sessionView === "all"}
+              >
+                All Events
+              </button>
+            </div>
+          </div>
+        )}
 
         {isLoading ? (
           <p className={style.emptyMsg}>

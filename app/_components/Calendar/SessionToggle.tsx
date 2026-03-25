@@ -6,8 +6,8 @@ import {
   SeriesKey,
   SubSeriesKey,
 } from "./filterConfig";
-
-export type SessionView = "races" | "all";
+import { SessionView } from "@/utils/getCalendarData";
+export type { SessionView } from "@/utils/getCalendarData";
 
 interface SessionToggleProps {
   sessionView: SessionView;
@@ -15,6 +15,7 @@ interface SessionToggleProps {
   visibleSubSeries: Record<SubSeriesKey, boolean>;
   onToggleSeries: (series: SeriesKey) => void;
   onToggleSubSeries: (subSeries: SubSeriesKey) => void;
+  seriesKeys?: SeriesKey[];
 }
 
 export const SessionToggle = ({
@@ -23,9 +24,13 @@ export const SessionToggle = ({
   visibleSubSeries,
   onToggleSeries,
   onToggleSubSeries,
+  seriesKeys,
 }: SessionToggleProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const enabledCount = SERIES_GROUPS.filter((group) =>
+  const visibleGroups = seriesKeys
+    ? SERIES_GROUPS.filter((group) => seriesKeys.includes(group.key))
+    : SERIES_GROUPS;
+  const enabledCount = visibleGroups.filter((group) =>
     group.children.some((child) => visibleSubSeries[child.key])
   ).length;
 
@@ -93,7 +98,7 @@ export const SessionToggle = ({
             <div className={style.section}>
               <p className={style.sectionTitle}>Series</p>
               <div className={style.seriesGroups} aria-label="Series visibility groups">
-                {SERIES_GROUPS.map((group) => {
+                {visibleGroups.map((group) => {
                   const enabledChildren = group.children.filter((child) => visibleSubSeries[child.key]).length;
                   const isAnyEnabled = enabledChildren > 0;
                   const isAllEnabled = enabledChildren === group.children.length;

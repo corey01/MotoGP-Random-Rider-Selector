@@ -1,4 +1,4 @@
-export type SeriesKey = "motogp" | "wsbk" | "bsb" | "speedway" | "f1";
+export type SeriesKey = "motogp" | "wsbk" | "bsb" | "speedway" | "f1" | "gtwce";
 
 export type SubSeriesKey =
   | "motogp"
@@ -10,7 +10,8 @@ export type SubSeriesKey =
   | "worldspb"
   | "bsb"
   | "speedway"
-  | "f1";
+  | "f1"
+  | "gtwce";
 
 export type SeriesGroup = {
   key: SeriesKey;
@@ -53,6 +54,11 @@ export const SERIES_GROUPS: SeriesGroup[] = [
     label: "F1",
     children: [{ key: "f1", label: "F1" }],
   },
+  {
+    key: "gtwce",
+    label: "GT World Challenge Europe",
+    children: [{ key: "gtwce", label: "GT World Challenge Europe" }],
+  },
 ];
 
 export const DEFAULT_SUB_SERIES_VISIBILITY: Record<SubSeriesKey, boolean> = {
@@ -66,6 +72,7 @@ export const DEFAULT_SUB_SERIES_VISIBILITY: Record<SubSeriesKey, boolean> = {
   bsb: true,
   speedway: true,
   f1: true,
+  gtwce: true,
 };
 
 export const seriesChildren = (series: SeriesKey) =>

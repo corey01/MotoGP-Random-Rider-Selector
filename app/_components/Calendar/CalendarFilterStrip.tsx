@@ -17,10 +17,8 @@ export function CalendarFilterStrip({
 }: CalendarFilterStripProps) {
   const visibleGroups = SERIES_GROUPS.filter((group) => seriesKeys.includes(group.key));
 
-  if (visibleGroups.length === 0) return null;
-
   return (
-    <div className={style.strip} aria-label="Series filters">
+    <div className={style.strip} aria-label="Calendar filters">
       {visibleGroups.map((group) => {
         const isActive = group.children.some((child) => visibleSubSeries[child.key]);
         const color = SERIES_COLORS[group.key] ?? "#555";

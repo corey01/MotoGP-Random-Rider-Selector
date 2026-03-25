@@ -211,6 +211,7 @@ type ButtonKey =
   | "scrape-wsbk"
   | "scrape-f1"
   | "scrape-speedway"
+  | "scrape-gtwce"
   | "scrape-all"
   | "motogp-results";
 
@@ -261,10 +262,16 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       hint: "scrape:speedway",
     },
     {
+      key: "scrape-gtwce",
+      label: "GT WC Europe",
+      path: "/admin/scrape/gtwce",
+      hint: "scrape:gtwce",
+    },
+    {
       key: "scrape-all",
       label: "Scrape All",
       path: "/admin/scrape/all",
-      hint: "bsb + wsbk + f1 + speedway",
+      hint: "bsb + wsbk + f1 + speedway + gtwce",
     },
   ];
 

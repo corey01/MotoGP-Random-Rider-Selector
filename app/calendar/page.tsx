@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Calendar } from "../_components/Calendar/Calendar";
 import { CalendarFilterStrip } from "../_components/Calendar/CalendarFilterStrip";
 import { CalendarSidebar } from "../_components/Calendar/CalendarSidebar";
 import { DayDetailPanel } from "../_components/Calendar/DayDetailPanel";
-import type { SessionView } from "../_components/Calendar/SessionToggle";
+import { EventDetailPanel } from "../_components/Calendar/EventDetailPanel";
+import type { CalendarView, SessionView } from "@/utils/getCalendarData";
 import {
   DEFAULT_SUB_SERIES_VISIBILITY,
   SERIES_GROUPS,
@@ -19,13 +20,15 @@ import {
   fetchCalendarMonth,
   fetchRoundById,
   toFullCalendarRoundEvent,
+  toFullCalendarSessionEvent,
   type CalendarRound,
   type CalendarRoundEvent,
+  type CalendarSession,
   type EffectiveCalendarFilters,
 } from "@/utils/getCalendarData";
 import { useAuth } from "../_components/AuthProvider";
 import { fetchPreferences, savePreferences } from "@/utils/preferences";
-import { fetchSubscriptions, fetchDisabledSubSeries } from "@/utils/subscriptions";
+import { useSubscriptions } from "@/utils/SubscriptionsContext";
 import style from "./Calendar.module.scss";
 
 const createEmptyVisibility = () =>
@@ -91,10 +94,12 @@ const sameVisibility = (
 ) =>
   (Object.keys(left) as SubSeriesKey[]).every((key) => left[key] === right[key]);
 
-type FocusMode = "date" | "round";
+type FocusMode = "date" | "round" | "session";
 
 export default function CalendarPage() {
   const { isAuthenticated } = useAuth();
+  const { subscribedSeries, disabledSubSeries, isLoaded: subscriptionsLoaded } = useSubscriptions();
+  const [calendarView, setCalendarView] = useState<CalendarView>("rounds");
   const [sessionView, setSessionView] = useState<SessionView>("races");
   const [visibleSubSeries, setVisibleSubSeries] = useState<Record<SubSeriesKey, boolean>>(
     () => ({ ...DEFAULT_SUB_SERIES_VISIBILITY })
@@ -104,11 +109,25 @@ export default function CalendarPage() {
     SERIES_GROUPS.map((group) => group.key)
   );
   const [preferencesLoaded, setPreferencesLoaded] = useState(false);
-  const [roundEvents, setRoundEvents] = useState<CalendarRoundEvent[]>([]);
+  const userChangedPrefsRef = useRef(false);
+  const [monthRounds, setMonthRounds] = useState<CalendarRound[]>([]);
+  const roundEvents = useMemo<CalendarRoundEvent[]>(() => {
+    if (calendarView === "rounds") {
+      return monthRounds.map(toFullCalendarRoundEvent);
+    }
+    return monthRounds.flatMap((round) => {
+      const sessions =
+        sessionView === "races"
+          ? round.events.filter((s) => s.type === "RACE")
+          : round.events;
+      return sessions.map((s) => toFullCalendarSessionEvent(s, round));
+    });
+  }, [monthRounds, calendarView, sessionView]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedDateRounds, setSelectedDateRounds] = useState<CalendarRound[]>([]);
   const [focusedRoundId, setFocusedRoundId] = useState<number | null>(null);
   const [focusedRound, setFocusedRound] = useState<CalendarRound | null>(null);
+  const [focusedSession, setFocusedSession] = useState<{ session: CalendarSession; round: CalendarRound } | null>(null);
   const [focusMode, setFocusMode] = useState<FocusMode>("date");
   const [selectedMonth, setSelectedMonth] = useState<Date>(() => monthStart(new Date()));
   const [isMonthLoading, setIsMonthLoading] = useState(false);
@@ -134,48 +153,33 @@ export default function CalendarPage() {
   }, [availableSeries]);
 
   useEffect(() => {
-    const load = async () => {
-      if (isAuthenticated) {
-        try {
-          const prefs = await fetchPreferences();
-          if (prefs.sessionView) setSessionView(prefs.sessionView);
-        } catch {
-          // ignore — default stays
-        }
-
-        try {
-          const [subscriptions, disabled] = await Promise.all([
-            fetchSubscriptions(),
-            fetchDisabledSubSeries(),
-          ]);
-          const subscribedSeries = SERIES_GROUPS
-            .map((group) => group.key)
-            .filter((key) => subscriptions.includes(key));
-
-          const baseVisibility = visibilityWithinSeries({ ...DEFAULT_SUB_SERIES_VISIBILITY }, subscribedSeries);
-          disabled.forEach((key) => { if (key in baseVisibility) baseVisibility[key] = false; });
-
-          setAvailableSeries(subscribedSeries);
-          setVisibleSubSeries(baseVisibility);
-          if (disabled.length > 0) setUseBackendDefaults(false);
-        } catch {
-          // ignore — fall back to showing all series
-        }
-      }
-
-      setPreferencesLoaded(true);
-    };
-    void load();
+    if (!isAuthenticated) return;
+    fetchPreferences()
+      .then((prefs) => {
+        if (prefs.sessionView) setSessionView(prefs.sessionView);
+        if (prefs.calendarView) setCalendarView(prefs.calendarView);
+      })
+      .catch(() => {})
+      .finally(() => setPreferencesLoaded(true));
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (!subscriptionsLoaded) return;
+    const baseVisibility = visibilityWithinSeries({ ...DEFAULT_SUB_SERIES_VISIBILITY }, subscribedSeries);
+    disabledSubSeries.forEach((key) => { if (key in baseVisibility) baseVisibility[key] = false; });
+    setAvailableSeries(subscribedSeries);
+    setVisibleSubSeries(baseVisibility);
+    if (disabledSubSeries.length > 0) setUseBackendDefaults(false);
+  }, [subscriptionsLoaded, subscribedSeries, disabledSubSeries]);
 
   useEffect(() => {
     setVisibleSubSeries((prev) => visibilityWithinSeries(prev, availableSeries));
   }, [availableSeries]);
 
   useEffect(() => {
-    if (!preferencesLoaded) return;
-    if (isAuthenticated) void savePreferences({ sessionView }).catch(() => {});
-  }, [preferencesLoaded, sessionView, isAuthenticated]);
+    if (!userChangedPrefsRef.current) return;
+    if (isAuthenticated) void savePreferences({ sessionView, calendarView }).catch(() => {});
+  }, [sessionView, calendarView, isAuthenticated]);
 
   useEffect(() => {
     let cancelled = false;
@@ -183,7 +187,7 @@ export default function CalendarPage() {
     const loadMonth = async () => {
       if (explicitFilters && explicitFilters.subSeries.length === 0) {
         if (!cancelled) {
-          setRoundEvents([]);
+          setMonthRounds([]);
           syncVisibleSubSeries(emptyEffectiveCalendarFilters());
         }
         return;
@@ -201,11 +205,11 @@ export default function CalendarPage() {
 
         if (cancelled) return;
 
-        setRoundEvents(payload.rounds.map(toFullCalendarRoundEvent));
+        setMonthRounds(payload.rounds);
         syncVisibleSubSeries(payload.effectiveFilters);
       } catch {
         if (!cancelled) {
-          setRoundEvents([]);
+          setMonthRounds([]);
         }
       } finally {
         if (!cancelled) setIsMonthLoading(false);
@@ -293,6 +297,30 @@ export default function CalendarPage() {
     };
   }, [focusMode, focusedRoundId]);
 
+  const handleSessionSelect = useCallback(
+    (sessionId: string, roundId: number, date: Date | null) => {
+      const round = monthRounds.find((r) => r.id === roundId) ?? null;
+      const session = round?.events.find((s) => s.id === sessionId) ?? null;
+      if (!session || !round) return;
+      setFocusMode("session");
+      setFocusedSession({ session, round });
+      setFocusedRoundId(null);
+      setFocusedRound(null);
+      if (date) setSelectedDate(date);
+    },
+    [monthRounds]
+  );
+
+  const handleCalendarViewChange = (view: CalendarView) => {
+    userChangedPrefsRef.current = true;
+    setCalendarView(view);
+  };
+
+  const handleSessionViewChange = (view: SessionView) => {
+    userChangedPrefsRef.current = true;
+    setSessionView(view);
+  };
+
   const handleToggleSeries = (series: SeriesKey) => {
     setUseBackendDefaults(false);
     setVisibleSubSeries((prev) => {
@@ -330,14 +358,17 @@ export default function CalendarPage() {
             setFocusMode("date");
             setFocusedRoundId(null);
             setFocusedRound(null);
+            setFocusedSession(null);
             setSelectedDate(date);
           }}
           onRoundSelect={(roundId, date) => {
             setFocusMode("round");
             setFocusedRoundId(roundId);
             setFocusedRound(null);
+            setFocusedSession(null);
             if (date) setSelectedDate(date);
           }}
+          onSessionSelect={handleSessionSelect}
           onMonthChange={(date) => {
             const nextMonth = monthStart(date);
             setSelectedMonth((prev) =>
@@ -351,19 +382,33 @@ export default function CalendarPage() {
         {isMonthLoading && <div className={style.loadingHint}>Loading month…</div>}
       </div>
 
-      {selectedDate && (
+      {selectedDate && focusMode === "session" && focusedSession && (
+        <EventDetailPanel
+          session={focusedSession.session}
+          round={focusedSession.round}
+          onClose={() => {
+            setSelectedDate(null);
+            setFocusedSession(null);
+            setFocusMode("date");
+          }}
+        />
+      )}
+
+      {selectedDate && focusMode !== "session" && (
         <DayDetailPanel
           date={selectedDate}
           rounds={focusMode === "round" ? (focusedRound ? [focusedRound] : []) : selectedDateRounds}
           focusMode={focusMode}
           focusedRound={focusMode === "round" ? focusedRound : null}
           sessionView={sessionView}
-          onSessionViewChange={setSessionView}
+          onSessionViewChange={handleSessionViewChange}
+          showSessionToggle={calendarView === "events"}
           isLoading={focusMode === "round" ? isRoundLoading : isDateLoading}
           onClose={() => {
             setSelectedDate(null);
             setFocusedRoundId(null);
             setFocusedRound(null);
+            setFocusedSession(null);
             setFocusMode("date");
           }}
         />

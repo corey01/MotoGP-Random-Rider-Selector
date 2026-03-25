@@ -20,6 +20,7 @@ interface CalendarProps {
   isPanelOpen: boolean;
   onDaySelect: (date: Date | null) => void;
   onRoundSelect: (roundId: number, date: Date | null) => void;
+  onSessionSelect: (sessionId: string, roundId: number, date: Date | null) => void;
   onMonthChange: (date: Date) => void;
 }
 
@@ -40,6 +41,7 @@ export const Calendar = ({
   isPanelOpen,
   onDaySelect,
   onRoundSelect,
+  onSessionSelect,
   onMonthChange,
 }: CalendarProps) => {
   const calendarRef = useRef<any>(null);
@@ -54,6 +56,12 @@ export const Calendar = ({
     (clickInfo: EventClickArg) => {
       const date = getClickedDate(clickInfo);
       const roundId = Number(clickInfo.event.extendedProps?.meta?.roundId ?? 0);
+      const sessionId = clickInfo.event.extendedProps?.sessionId as string | undefined;
+
+      if (sessionId && roundId > 0) {
+        onSessionSelect(sessionId, roundId, date);
+        return;
+      }
 
       if (roundId > 0) {
         onRoundSelect(roundId, date);
@@ -62,7 +70,7 @@ export const Calendar = ({
 
       if (date) onDaySelect(date);
     },
-    [onDaySelect, onRoundSelect]
+    [onDaySelect, onRoundSelect, onSessionSelect]
   );
 
   const handleDateClick = useCallback(

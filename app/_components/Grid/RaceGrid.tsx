@@ -47,12 +47,10 @@ export function RaceGrid({ roundId }: { roundId: number }) {
             return (
               <div key={item.position} className={`${style.cell} ${COL_CLASSES[colIndex]}`}>
                 <span className={style.posLabel}>{item.position}</span>
-                <div className={style.card} style={{ background: cardBg, color: readableText }}>
-                  <div className={style.bikeBackdrop} />
-
+                <div className={`${style.card} ${raceStyle.card}`} style={{ background: cardBg, color: readableText }}>
                   {item.riderNumber != null && (
                     <span
-                      className={style.numberPill}
+                      className={`${style.numberPill} ${raceStyle.numberPill}`}
                       style={{ background: pillBg, color: pillText }}
                     >
                       {item.riderNumber}
@@ -72,8 +70,8 @@ export function RaceGrid({ roundId }: { roundId: number }) {
                     </div>
                   )}
 
-                  <div className={style.textWrap}>
-                    <div className={style.name}>{item.riderName}</div>
+                  <div className={`${style.textWrap} ${raceStyle.textWrap}`}>
+                    <div className={`${style.name} ${raceStyle.name}`}>{item.riderName}</div>
                     {item.teamName && (
                       <div
                         className={style.meta}
