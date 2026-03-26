@@ -76,7 +76,7 @@ export function CalendarFilterStrip({
             aria-checked={sessionView === "races"}
             aria-label={`Session mode: ${sessionView === "races" ? "Races only" : "All events"}`}
           >
-            Races only
+            {sessionView === "races" ? "Races only" : "All events"}
             <span className={style.toggleTrack} aria-hidden="true">
               <span className={style.toggleKnob} />
             </span>

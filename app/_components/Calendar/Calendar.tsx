@@ -101,6 +101,26 @@ function compareRoundSpans(left: RoundSpan, right: RoundSpan) {
   return left.title.localeCompare(right.title);
 }
 
+function escapeCalendarHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function getCompactEventTitle(eventInfo: EventClickArg["event"] | any) {
+  const subSeries = String(eventInfo.extendedProps?.subSeries || "").toLowerCase();
+  const shortTitle = String(eventInfo.extendedProps?.session || eventInfo.title || "");
+
+  if (["wsbk", "worldsbk", "worldssp", "worldwcr", "worldspb"].includes(subSeries)) {
+    return shortTitle.replace(/\bRace\s+Nr\.?\s+(\d+)/gi, "Race $1");
+  }
+
+  return String(eventInfo.title || shortTitle).replace(/\bRace\s+Nr\.?\s+(\d+)/gi, "Race $1");
+}
+
 export const Calendar = ({
   roundEvents,
   calendarView,
@@ -116,6 +136,7 @@ export const Calendar = ({
   const ignoreTapRef = useRef(false);
   const navigationResetRef = useRef<number | null>(null);
   const [currentDate, setCurrentDate] = useState(startOfMonth(selectedDate ?? new Date()));
+  const [isCompactEventCalendar, setIsCompactEventCalendar] = useState(false);
   const [navigationDirection, setNavigationDirection] = useState<
     "next" | "prev" | "today" | undefined
   >();
@@ -246,6 +267,23 @@ export const Calendar = ({
     }
     onMonthChange(arg.view.currentStart);
   };
+
+  useEffect(() => {
+    if (calendarView !== "events") {
+      setIsCompactEventCalendar(false);
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(max-width: 1100px)");
+    const syncCompactMode = () => setIsCompactEventCalendar(mediaQuery.matches);
+
+    syncCompactMode();
+    mediaQuery.addEventListener("change", syncCompactMode);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncCompactMode);
+    };
+  }, [calendarView]);
 
   useEffect(() => {
     if (calendarView !== "events" || !calendarRef.current) return;
@@ -381,7 +419,9 @@ export const Calendar = ({
       />
       <div className="calendar-container">
         <div
-          className={`calendar-wrapper ${inter.className}`}
+          className={`calendar-wrapper ${inter.className} ${
+            calendarView === "events" ? "calendar-wrapper-events" : "calendar-wrapper-rounds"
+          }`}
           onTouchStartCapture={handleTouchStart}
           onTouchEndCapture={handleTouchEnd}
         >
@@ -465,11 +505,21 @@ export const Calendar = ({
               eventTimeFormat={{
                 hour: "2-digit",
                 minute: "2-digit",
-                meridiem: false,
+                hour12: false,
               }}
-              eventContent={(eventInfo) => ({
-                html: `<div class="event-content"><div class="event-title">${eventInfo.event.title}</div></div>`,
-              })}
+              eventContent={(eventInfo) => {
+                const displayTitle = escapeCalendarHtml(getCompactEventTitle(eventInfo.event));
+                const timeText = eventInfo.event.allDay ? "" : escapeCalendarHtml(eventInfo.timeText);
+                const hasTime = timeText.length > 0;
+
+                return {
+                  html: `<div class="event-content ${
+                    hasTime ? "event-content-with-time" : ""
+                  }">${
+                    hasTime ? `<span class="event-time">${timeText}</span>` : ""
+                  }<div class="event-title">${displayTitle}</div></div>`,
+                };
+              }}
               dayCellClassNames={(arg) => {
                 const classNames: string[] = [];
 
@@ -486,6 +536,7 @@ export const Calendar = ({
               dateClick={handleDateClick}
               datesSet={handleDatesSet}
               dayHeaderFormat={{ weekday: "short" }}
+              dayHeaderContent={(arg) => (isCompactEventCalendar ? arg.text.charAt(0) : arg.text)}
             />
           )}
         </div>

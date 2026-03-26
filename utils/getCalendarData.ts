@@ -120,8 +120,10 @@ const SESSION_SERIES_PREFIX: Record<string, string> = {
   moto2: "Moto2",
   moto3: "Moto3",
   bsb: "BSB",
+  baggers: "Baggers",
   speedway: "Speedway",
   f1: "F1",
+  gtwce: "GT WCE",
 };
 
 const ROUND_SERIES_PREFIX: Record<string, string> = {
@@ -134,14 +136,16 @@ const ROUND_SERIES_PREFIX: Record<string, string> = {
   worldwcr: "WSBK",
   worldspb: "WSBK",
   bsb: "BSB",
+  baggers: "Baggers",
   speedway: "Speedway",
   f1: "F1",
-  gtwce: "GTWCE",
+  gtwce: "GT WCE",
 };
 
 const prefixSessionTitle = (title: string, subSeries: string): string => {
   const prefix = SESSION_SERIES_PREFIX[subSeries];
   if (!prefix) return title;
+  if (title.toLowerCase().startsWith(`${prefix.toLowerCase()} - `)) return title;
   return `${prefix} - ${title}`;
 };
 

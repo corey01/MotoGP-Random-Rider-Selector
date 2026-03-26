@@ -222,7 +222,7 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
           <div className={style.list}>
             {days.map((day) => (
               <div key={day.date} className={style.day}>
-                <div className={style.dayHeader} style={{ top: HEADER_HEIGHT + filterHeight }}>
+                <div className={style.dayHeader} style={{ top: HEADER_HEIGHT + filterHeight - 1 }}>
                   <span className={style.dayNum}>{day.dayNum}</span>
                   <div className={style.dayMeta}>
                     <span className={style.dayName}>{day.dayName}</span>

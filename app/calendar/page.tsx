@@ -304,11 +304,6 @@ export default function CalendarPage() {
     [monthRounds]
   );
 
-  const handleCalendarViewChange = (view: CalendarView) => {
-    userChangedPrefsRef.current = true;
-    setCalendarView(view);
-  };
-
   const handleSessionViewChange = (view: SessionView) => {
     userChangedPrefsRef.current = true;
     setSessionView(view);
@@ -348,6 +343,9 @@ export default function CalendarPage() {
           visibleSubSeries={visibleSubSeries}
           onToggleSeries={handleToggleSeries}
           onSelectAll={handleSelectAllSeries}
+          calendarView={calendarView}
+          sessionView={sessionView}
+          onSessionViewChange={handleSessionViewChange}
         />
       </div>
 
