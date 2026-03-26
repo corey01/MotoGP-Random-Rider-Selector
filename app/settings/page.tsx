@@ -24,6 +24,7 @@ const CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: string }> = {
   motogp:   { abbr: "GP",  subtitle: "Premier Class" },
   moto2:    { abbr: "M2",  subtitle: "Intermediate" },
   moto3:    { abbr: "M3",  subtitle: "Lightweight" },
+  baggers:  { abbr: "BAG", subtitle: "Bagger Racing" },
   worldsbk: { abbr: "SBK", subtitle: "Superbike" },
   worldssp: { abbr: "SSP", subtitle: "Supersport" },
   worldwcr: { abbr: "WCR", subtitle: "Women's Cup" },

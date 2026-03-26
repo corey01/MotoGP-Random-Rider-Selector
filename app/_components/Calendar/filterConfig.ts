@@ -4,6 +4,7 @@ export type SubSeriesKey =
   | "motogp"
   | "moto2"
   | "moto3"
+  | "baggers"
   | "worldsbk"
   | "worldssp"
   | "worldwcr"
@@ -27,6 +28,7 @@ export const SERIES_GROUPS: SeriesGroup[] = [
       { key: "motogp", label: "MotoGP" },
       { key: "moto2", label: "Moto2" },
       { key: "moto3", label: "Moto3" },
+      { key: "baggers", label: "Baggers" },
     ],
   },
   {
@@ -65,6 +67,7 @@ export const DEFAULT_SUB_SERIES_VISIBILITY: Record<SubSeriesKey, boolean> = {
   motogp: true,
   moto2: true,
   moto3: true,
+  baggers: true,
   worldsbk: true,
   worldssp: true,
   worldwcr: true,
