@@ -78,5 +78,69 @@ export const DEFAULT_SUB_SERIES_VISIBILITY: Record<SubSeriesKey, boolean> = {
   gtwce: true,
 };
 
+export const SERIES_LABELS: Record<string, string> = {
+  motogp: "MotoGP",
+  wsbk: "WorldSBK",
+  bsb: "BSB",
+  speedway: "FIM Speedway",
+  f1: "Formula 1",
+  gtwce: "GT World Challenge",
+};
+
+export const SERIES_SHORT_LABELS: Record<string, string> = {
+  motogp: "MotoGP",
+  wsbk: "WSBK",
+  bsb: "BSB",
+  speedway: "Speedway",
+  f1: "F1",
+  gtwce: "GTWCE",
+};
+
+export const SUB_SERIES_LABELS: Record<string, string> = {
+  motogp: "MotoGP",
+  moto2: "Moto2",
+  moto3: "Moto3",
+  baggers: "Baggers",
+  worldsbk: "WorldSBK",
+  worldssp: "WorldSSP",
+  worldwcr: "WorldWCR",
+  worldspb: "WorldSPB",
+  bsb: "BSB",
+  speedway: "Speedway",
+  f1: "Formula 1",
+  gtwce: "GT World Challenge",
+};
+
+export const SUB_SERIES_SHORT_LABELS: Record<string, string> = {
+  ...SUB_SERIES_LABELS,
+  f1: "F1",
+  gtwce: "GTWCE",
+};
+
+export const ROUND_SERIES_LABELS: Record<string, string> = {
+  motogp: "MotoGP",
+  moto2: "Moto2",
+  moto3: "Moto3",
+  baggers: "Baggers",
+  wsbk: "WSBK",
+  worldsbk: "WSBK",
+  worldssp: "WSBK",
+  worldwcr: "WSBK",
+  worldspb: "WSBK",
+  bsb: "BSB",
+  speedway: "Speedway",
+  f1: "F1",
+  gtwce: "GTWCE",
+};
+
+export const SERIES_COLORS: Record<string, string> = {
+  motogp: "var(--motogp-red)",
+  wsbk: "var(--wsbk-blue)",
+  bsb: "var(--bsb-green)",
+  speedway: "var(--speedway-orange)",
+  f1: "var(--f1-red)",
+  gtwce: "var(--gtwce-gold)",
+};
+
 export const seriesChildren = (series: SeriesKey) =>
   SERIES_GROUPS.find((group) => group.key === series)?.children || [];

@@ -1,5 +1,5 @@
 import { fetchWithAuth } from "./auth";
-import type { SeriesKey, SubSeriesKey } from "@/app/_components/Calendar/filterConfig";
+import type { SeriesKey, SubSeriesKey } from "@/consts/series";
 import { savePreferences } from "./preferences";
 
 export async function fetchSubscriptions(): Promise<SeriesKey[]> {

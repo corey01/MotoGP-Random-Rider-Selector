@@ -1,8 +1,8 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { SERIES_GROUPS, type SeriesKey, type SubSeriesKey } from "@/consts/series";
 import { fetchSubscriptions, fetchDisabledSubSeries } from "@/utils/subscriptions";
-import { SERIES_GROUPS, type SeriesKey, type SubSeriesKey } from "@/app/_components/Calendar/filterConfig";
 import { useAuth } from "@/app/_components/AuthProvider";
 
 interface SubscriptionsContextValue {

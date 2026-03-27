@@ -9,6 +9,8 @@ import {
   type CalendarRound,
   type CalendarSession,
 } from "@/utils/getCalendarData";
+import { getSeriesDisplayLabel } from "@/utils/series";
+import { getDeviceTimezoneLabel } from "@/utils/timezone";
 import { RaceGrid } from "@/app/_components/Grid/RaceGrid";
 import { RaceResults } from "@/app/_components/Results/RaceResults";
 import style from "./RacePage.module.scss";
@@ -19,31 +21,12 @@ const SESSION_ORDER: Record<string, number> = {
   RACE: 2,
 };
 
-const SUBSERIES_LABEL: Record<string, string> = {
-  motogp: "MotoGP",
-  moto2: "Moto2",
-  moto3: "Moto3",
-};
-
 const RACING_TYPES = new Set(["PRACTICE", "QUALIFYING", "RACE"]);
 
 const TYPE_TONE_CLASS: Record<string, string> = {
   PRACTICE: style.practiceTone,
   QUALIFYING: style.qualifyingTone,
   RACE: style.raceTone,
-};
-
-const SERIES_LABEL: Record<string, string> = {
-  motogp: "MotoGP",
-  moto2: "Moto2",
-  moto3: "Moto3",
-  worldsbk: "WorldSBK",
-  worldssp: "WorldSSP",
-  worldwcr: "WorldWCR",
-  worldspb: "WorldSPB",
-  bsb: "BSB",
-  speedway: "Speedway",
-  f1: "Formula 1",
 };
 
 function cleanSessionName(ev: CalendarSession): string {
@@ -140,15 +123,6 @@ const getTrackInstant = (event: CalendarSession) => {
   return Number.isNaN(date.getTime()) ? null : date;
 };
 
-const getDeviceTimezoneLabel = (date: Date) => {
-  try {
-    const parts = new Intl.DateTimeFormat(undefined, { timeZoneName: "short" }).formatToParts(date);
-    return parts.find((part) => part.type === "timeZoneName")?.value?.toUpperCase() ?? "LOCAL";
-  } catch {
-    return "LOCAL";
-  }
-};
-
 function getSessionTimes(event: CalendarSession) {
   const timezoneLabel = formatTimezoneLabel(event.timezone) ?? "UTC";
   const instant = getTrackInstant(event);
@@ -172,7 +146,7 @@ function getSessionTimes(event: CalendarSession) {
   }
 
   const deviceClock = format(instant, "HH:mm");
-  const deviceLabel = getDeviceTimezoneLabel(instant);
+  const deviceLabel = getDeviceTimezoneLabel(instant) || "LOCAL";
   const secondary =
     `${trackClock} ${timezoneLabel}` === `${deviceClock} ${deviceLabel}` ? null : trackClock;
 
@@ -298,10 +272,7 @@ function RacePage() {
     });
   }
 
-  const weekendLabel =
-    SERIES_LABEL[round?.subSeries || ""] ??
-    SERIES_LABEL[round?.series || ""] ??
-    "Race";
+  const weekendLabel = getSeriesDisplayLabel(round?.subSeries || round?.series, { fallback: "Race" });
 
   return (
     <div className={style.page}>
@@ -348,7 +319,7 @@ function RacePage() {
               <strong className={style.metricValue}>{sortedSubSeries.length}</strong>
               <span className={style.metricMeta}>
                 {sortedSubSeries
-                  .map((subSeries) => SUBSERIES_LABEL[subSeries] ?? subSeries.toUpperCase())
+                  .map((subSeries) => getSeriesDisplayLabel(subSeries))
                   .join(" · ")}
               </span>
             </div>
@@ -401,7 +372,7 @@ function RacePage() {
               byDay.get(day)?.push(event);
             }
 
-            const label = SUBSERIES_LABEL[subSeries] ?? subSeries.toUpperCase();
+            const label = getSeriesDisplayLabel(subSeries);
 
             return (
               <div key={subSeries} className={style.scheduleBlock}>

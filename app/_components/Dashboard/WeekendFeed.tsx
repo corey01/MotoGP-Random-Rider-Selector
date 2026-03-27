@@ -9,41 +9,10 @@ import {
   type CalendarRound,
   type CalendarSession,
 } from "@/utils/getCalendarData";
+import { getSeriesColor, getSeriesDisplayLabel } from "@/utils/series";
+import { getCurrentGmtOffsetLabel } from "@/utils/timezone";
 import { EventDetailPanel } from "@/app/_components/Calendar/EventDetailPanel";
 import style from "./WeekendFeed.module.scss";
-
-const SUB_SERIES_LABELS: Record<string, string> = {
-  motogp: "MotoGP",
-  moto2: "Moto2",
-  moto3: "Moto3",
-  worldsbk: "WorldSBK",
-  worldssp: "WorldSSP",
-  worldwcr: "WorldWCR",
-  worldspb: "WorldSPB",
-  f1: "F1",
-  bsb: "BSB",
-  speedway: "Speedway",
-  gtwce: "GTWCE",
-  baggers: "Baggers",
-};
-
-const SERIES_LABELS: Record<string, string> = {
-  motogp: "MotoGP",
-  wsbk: "WorldSBK",
-  f1: "Formula 1",
-  bsb: "BSB",
-  speedway: "FIM Speedway",
-  gtwce: "GT World Challenge",
-};
-
-const SERIES_COLORS: Record<string, string> = {
-  motogp: "var(--motogp-red)",
-  wsbk: "var(--wsbk-blue)",
-  bsb: "var(--bsb-green)",
-  speedway: "var(--speedway-orange)",
-  f1: "var(--f1-red)",
-  gtwce: "var(--gtwce-gold)",
-};
 
 const EVENT_BUFFER_MS: Record<string, number> = {
   RACE: 2 * 60 * 60 * 1000,
@@ -77,17 +46,6 @@ function toTitleCase(str: string): string {
       return word.charAt(0).toUpperCase() + word.slice(1);
     })
     .join(" ");
-}
-
-function getTimezoneLabel(): string {
-  const offset = -new Date().getTimezoneOffset();
-  const sign = offset >= 0 ? "+" : "-";
-  const abs = Math.abs(offset);
-  const hours = Math.floor(abs / 60);
-  const mins = abs % 60;
-  return mins === 0
-    ? `GMT${sign}${hours}`
-    : `GMT${sign}${hours}:${String(mins).padStart(2, "0")}`;
 }
 
 function formatDuration(start: string, end: string | null): string | null {
@@ -150,7 +108,7 @@ export function WeekendFeed({ events }: WeekendFeedProps) {
     return Array.from(seen).sort();
   }, [allEvents]);
 
-  const tzLabel = useMemo(() => getTimezoneLabel(), []);
+  const tzLabel = useMemo(() => getCurrentGmtOffsetLabel(), []);
   const eventDetailsById = useMemo(() => {
     const lookup = new Map<string, { session: CalendarSession; round: CalendarRound }>();
 
@@ -228,7 +186,7 @@ export function WeekendFeed({ events }: WeekendFeedProps) {
                 className={`${style.filterBtn} ${activeSeries === s ? style.filterBtnActive : ""}`}
                 onClick={() => setActiveSeries(s)}
               >
-                {SERIES_LABELS[s] ?? s}
+                {getSeriesDisplayLabel(s, { fallback: s })}
               </button>
             ))}
           </div>
@@ -267,8 +225,8 @@ export function WeekendFeed({ events }: WeekendFeedProps) {
                     const prevPast = isToday && index > 0 && isEventOver(day.events[index - 1], now);
                     const showNowLine = prevPast && !past && !active;
 
-                    const seriesColor = SERIES_COLORS[ev.series] ?? "#555";
-                    const subLabel = SUB_SERIES_LABELS[ev.subSeries] ?? ev.subSeries.toUpperCase();
+                    const seriesColor = getSeriesColor(ev.series, "#555");
+                    const subLabel = getSeriesDisplayLabel(ev.subSeries, { variant: "short" });
                     const prefix = `${subLabel} - `;
                     const rawSession = ev.sessionName || ev.type;
                     const sessionLabel = rawSession.startsWith(prefix)

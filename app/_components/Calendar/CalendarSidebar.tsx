@@ -1,17 +1,8 @@
 "use client";
 
+import { SERIES_COLORS, SERIES_GROUPS, type SeriesKey, type SubSeriesKey } from "@/consts/series";
 import { type CalendarView, type SessionView } from "@/utils/getCalendarData";
 import style from "./CalendarSidebar.module.scss";
-import { SERIES_GROUPS, SeriesKey, SubSeriesKey } from "./filterConfig";
-
-export const SERIES_COLORS: Record<string, string> = {
-  motogp: "var(--motogp-red)",
-  wsbk: "var(--wsbk-blue)",
-  bsb: "var(--bsb-green)",
-  speedway: "var(--speedway-orange)",
-  f1: "var(--f1-red)",
-  gtwce: "var(--gtwce-gold)",
-};
 
 interface CalendarSidebarProps {
   visibleSubSeries: Record<SubSeriesKey, boolean>;

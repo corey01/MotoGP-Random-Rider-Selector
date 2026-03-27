@@ -6,14 +6,14 @@ import { CalendarFilterStrip } from "../_components/Calendar/CalendarFilterStrip
 import { CalendarSidebar } from "../_components/Calendar/CalendarSidebar";
 import { DayDetailPanel } from "../_components/Calendar/DayDetailPanel";
 import { EventDetailPanel } from "../_components/Calendar/EventDetailPanel";
-import type { CalendarView, SessionView } from "@/utils/getCalendarData";
 import {
   DEFAULT_SUB_SERIES_VISIBILITY,
   SERIES_GROUPS,
-  SeriesKey,
-  SubSeriesKey,
+  type SeriesKey,
+  type SubSeriesKey,
   seriesChildren,
-} from "../_components/Calendar/filterConfig";
+} from "@/consts/series";
+import type { CalendarView, SessionView } from "@/utils/getCalendarData";
 import {
   emptyEffectiveCalendarFilters,
   fetchCalendarDate,

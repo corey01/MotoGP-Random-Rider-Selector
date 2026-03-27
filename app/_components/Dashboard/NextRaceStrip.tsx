@@ -3,20 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { format, parseISO } from "date-fns";
 import { type ApiCalendarEvent } from "@/utils/getCalendarData";
+import { getSeriesDisplayLabel } from "@/utils/series";
 import style from "./NextRaceStrip.module.scss";
-
-const SUB_SERIES_LABELS: Record<string, string> = {
-  motogp: "MotoGP",
-  moto2: "Moto2",
-  moto3: "Moto3",
-  worldsbk: "WorldSBK",
-  worldssp: "WorldSSP",
-  worldwcr: "WorldWCR",
-  worldspb: "WorldSPB",
-  f1: "Formula 1",
-  bsb: "BSB",
-  speedway: "Speedway",
-};
 
 function getSecondsLeft(target: string): number {
   return Math.max(0, Math.floor((new Date(target).getTime() - Date.now()) / 1000));
@@ -46,9 +34,10 @@ function RaceCard({ race }: { race: ApiCalendarEvent }) {
 
   const isToday = new Date(race.start).toDateString() === new Date().toDateString();
   const hasSubSeries = race.subSeries !== race.series;
-  const badgeLabel = hasSubSeries
-    ? (SUB_SERIES_LABELS[race.subSeries] ?? race.subSeries)
-    : race.series.toUpperCase();
+  const badgeLabel = getSeriesDisplayLabel(hasSubSeries ? race.subSeries : race.series, {
+    variant: hasSubSeries ? "full" : "short",
+    fallback: hasSubSeries ? race.subSeries : race.series.toUpperCase(),
+  });
   const sessionLabel = race.sessionName || race.type;
   const timeStr = isToday
     ? `Today · ${format(parseISO(race.start), "HH:mm")}`

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { format, parseISO } from "date-fns";
 import type { CalendarRound, CalendarSession } from "@/utils/getCalendarData";
+import { getSeriesColor, getSeriesDisplayLabel } from "@/utils/series";
+import { getDeviceTimezoneLabel } from "@/utils/timezone";
 import style from "./DayDetailPanel.module.scss";
 
 interface DayDetailPanelProps {
@@ -33,44 +35,6 @@ interface RoundTimelineGroup {
   sessionCount: number;
 }
 
-const ROUND_SERIES_LABELS: Record<string, string> = {
-  motogp: "MotoGP",
-  moto2: "Moto2",
-  moto3: "Moto3",
-  wsbk: "WSBK",
-  worldsbk: "WSBK",
-  worldssp: "WSBK",
-  worldwcr: "WSBK",
-  worldspb: "WSBK",
-  bsb: "BSB",
-  speedway: "Speedway",
-  f1: "F1",
-  gtwce: "GTWCE",
-};
-
-const SERIES_COLORS: Record<string, string> = {
-  motogp: "var(--motogp-red)",
-  wsbk: "var(--wsbk-blue)",
-  bsb: "var(--bsb-green)",
-  speedway: "var(--speedway-orange)",
-  f1: "var(--f1-red)",
-  gtwce: "var(--gtwce-gold)",
-};
-
-const SUB_SERIES_LABELS: Record<string, string> = {
-  motogp: "MotoGP",
-  moto2: "Moto2",
-  moto3: "Moto3",
-  worldsbk: "WorldSBK",
-  worldssp: "WorldSSP",
-  worldwcr: "WorldWCR",
-  worldspb: "WorldSPB",
-  bsb: "BSB",
-  speedway: "Speedway",
-  f1: "Formula 1",
-  gtwce: "GT World Challenge",
-};
-
 const SESSION_ORDER: Record<string, number> = {
   PRACTICE: 0,
   QUALIFYING: 1,
@@ -81,15 +45,6 @@ const SESSION_ORDER: Record<string, number> = {
 const bySessionOrder = (left: CalendarSession, right: CalendarSession) =>
   (SESSION_ORDER[left.type] ?? 99) - (SESSION_ORDER[right.type] ?? 99) ||
   new Date(left.start).getTime() - new Date(right.start).getTime();
-
-const getDeviceTimezoneLabel = (date: Date) => {
-  try {
-    const parts = new Intl.DateTimeFormat(undefined, { timeZoneName: "short" }).formatToParts(date);
-    return parts.find((part) => part.type === "timeZoneName")?.value?.toUpperCase() ?? "";
-  } catch {
-    return "";
-  }
-};
 
 const formatSessionTimeRange = (session: CalendarSession) => {
   const startDate = parseISO(session.start);
@@ -123,7 +78,7 @@ const formatDayLabel = (dayKey: string) => {
 };
 
 const getSessionDisplayName = (session: CalendarSession) => {
-  const seriesLabel = SUB_SERIES_LABELS[session.subSeries] ?? session.subSeries.toUpperCase();
+  const seriesLabel = getSeriesDisplayLabel(session.subSeries);
   const sessionName = session.sessionName?.trim();
 
   if (!sessionName) return seriesLabel;
@@ -134,7 +89,7 @@ const getSessionDisplayName = (session: CalendarSession) => {
 const getRoundDisplayTitle = (round: CalendarRound) => {
   const roundName = round.name?.trim() ?? "";
   const seriesKey = (round.series || round.subSeries || "").trim().toLowerCase();
-  const seriesLabel = ROUND_SERIES_LABELS[seriesKey];
+  const seriesLabel = getSeriesDisplayLabel(seriesKey, { variant: "round", fallback: "" });
 
   if (!seriesLabel) return roundName;
   if (roundName.toLowerCase().startsWith(`${seriesLabel.toLowerCase()} - `)) return roundName;
@@ -298,7 +253,7 @@ export function DayDetailPanel({
                 <div
                   key={`${group.groupKey}-${dayGroup.dayKey}`}
                   className={style.dayGroup}
-                  style={{ "--group-color": SERIES_COLORS[dayGroup.series] ?? "var(--kc-primary)" } as React.CSSProperties}
+                  style={{ "--group-color": getSeriesColor(dayGroup.series) } as React.CSSProperties}
                 >
                   {focusMode === "round" || group.dayGroups.length > 1 ? (
                     <p className={style.dayHeading}>{dayGroup.dayLabel}</p>

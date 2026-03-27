@@ -2,23 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/app/_components/AuthProvider";
+import { SERIES_COLORS, SERIES_GROUPS, type SeriesKey, type SubSeriesKey } from "@/consts/series";
 import { fetchSubscriptions, saveSubscriptions, fetchDisabledSubSeries } from "@/utils/subscriptions";
 import { fetchPreferences, savePreferences } from "@/utils/preferences";
 import { useSubscriptions } from "@/utils/SubscriptionsContext";
-import { SERIES_GROUPS } from "@/app/_components/Calendar/filterConfig";
-import type { SeriesKey, SubSeriesKey } from "@/app/_components/Calendar/filterConfig";
 import type { CalendarView } from "@/utils/getCalendarData";
 import style from "./Settings.module.scss";
 import { useRouter } from "next/dist/client/components/navigation";
-
-const SERIES_COLORS: Record<string, string> = {
-  motogp: "var(--motogp-red)",
-  wsbk: "var(--wsbk-blue)",
-  bsb: "var(--bsb-green)",
-  speedway: "var(--speedway-orange)",
-  f1: "var(--f1-red)",
-  gtwce: "var(--gtwce-gold)",
-};
 
 const CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: string }> = {
   motogp:   { abbr: "GP",  subtitle: "Premier Class" },

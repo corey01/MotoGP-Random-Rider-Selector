@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { format, parseISO } from "date-fns";
 import type { CalendarRound, CalendarSession } from "@/utils/getCalendarData";
+import { getSeriesColor, getSeriesDisplayLabel } from "@/utils/series";
+import { getDeviceTimezoneLabel } from "@/utils/timezone";
 import style from "./EventDetailPanel.module.scss";
 
 interface EventDetailPanelProps {
@@ -10,29 +12,6 @@ interface EventDetailPanelProps {
   round: CalendarRound;
   onClose: () => void;
 }
-
-const SUB_SERIES_LABELS: Record<string, string> = {
-  motogp: "MotoGP",
-  moto2: "Moto2",
-  moto3: "Moto3",
-  worldsbk: "WorldSBK",
-  worldssp: "WorldSSP",
-  worldwcr: "WorldWCR",
-  worldspb: "WorldSPB",
-  bsb: "BSB",
-  speedway: "Speedway",
-  f1: "Formula 1",
-  gtwce: "GT World Challenge",
-};
-
-const SERIES_COLORS: Record<string, string> = {
-  motogp: "var(--motogp-red)",
-  wsbk: "var(--wsbk-blue)",
-  bsb: "var(--bsb-green)",
-  speedway: "var(--speedway-orange)",
-  f1: "var(--f1-red)",
-  gtwce: "var(--gtwce-gold)",
-};
 
 const TYPE_LABELS: Record<string, string> = {
   RACE: "Race",
@@ -68,16 +47,6 @@ function getTimezoneLabel(isoString: string, timezone: string): string {
     return parts.find((p) => p.type === "timeZoneName")?.value?.toUpperCase() ?? "";
   } catch {
     return timezone;
-  }
-}
-
-function getUserTimezoneLabel(isoString: string): string {
-  try {
-    const date = parseISO(isoString);
-    const parts = new Intl.DateTimeFormat("default", { timeZoneName: "short" }).formatToParts(date);
-    return parts.find((p) => p.type === "timeZoneName")?.value?.toUpperCase() ?? "";
-  } catch {
-    return "";
   }
 }
 
@@ -134,14 +103,14 @@ function formatRoundRange(round: CalendarRound): string {
 
 export function EventDetailPanel({ session, round, onClose }: EventDetailPanelProps) {
   const subSeries = session.subSeries || round.subSeries || round.series;
-  const seriesColor = SERIES_COLORS[round.series] ?? "var(--kc-primary)";
-  const seriesLabel = SUB_SERIES_LABELS[subSeries] ?? subSeries.toUpperCase();
+  const seriesColor = getSeriesColor(round.series);
+  const seriesLabel = getSeriesDisplayLabel(subSeries);
   const typeLabel = TYPE_LABELS[session.type] ?? session.type;
   const isRace = session.type === "RACE";
 
   const sessionDate = parseISO(session.start);
   const userTime = format(sessionDate, "HH:mm");
-  const userTzLabel = getUserTimezoneLabel(session.start);
+  const userTzLabel = getDeviceTimezoneLabel(sessionDate);
   const userDayLabel = format(sessionDate, "EEEE, d MMMM yyyy");
 
   const trackOffsetMinutes = parseGmtOffsetMinutes(session.timezone);

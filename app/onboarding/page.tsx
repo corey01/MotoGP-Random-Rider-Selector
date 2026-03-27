@@ -3,19 +3,10 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/app/_components/AuthProvider";
+import { SERIES_COLORS, SERIES_GROUPS } from "@/consts/series";
 import { apiOnboarding } from "@/utils/auth";
-import { SERIES_GROUPS } from "@/app/_components/Calendar/filterConfig";
 import { normalizeReturnTo, RETURN_TO_PARAM } from "@/utils/returnTo";
 import style from "./Onboarding.module.scss";
-
-const SERIES_COLORS: Record<string, string> = {
-  motogp: "var(--motogp-red)",
-  wsbk: "var(--wsbk-blue)",
-  bsb: "var(--bsb-green)",
-  speedway: "var(--speedway-orange)",
-  f1: "var(--f1-red)",
-  gtwce: "var(--gtwce-gold)",
-};
 
 export default function OnboardingPage() {
   const { updateUser } = useAuth();

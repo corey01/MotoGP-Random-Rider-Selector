@@ -1,17 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { SeriesKey } from "@/consts/series";
 import { useSubscriptions } from "@/utils/SubscriptionsContext";
 import { getStandings, type StandingsData, type StandingsEntry } from "@/utils/getStandings";
-import type { SeriesKey } from "@/app/_components/Calendar/filterConfig";
+import { getSeriesDisplayLabel } from "@/utils/series";
 import style from "./ChampionshipStandings.module.scss";
-
-const SERIES_LABEL: Record<string, string> = {
-  motogp: "MotoGP",
-  f1: "Formula 1",
-  wsbk: "WorldSBK",
-  bsb: "BSB",
-};
 
 const PREVIEW_COUNT = 5;
 
@@ -76,7 +70,7 @@ export function ChampionshipStandings({ series, year }: ChampionshipStandingsPro
 
   if (!isLoaded || !isSubscribed) return null;
 
-  const label = SERIES_LABEL[series] ?? series.toUpperCase();
+  const label = getSeriesDisplayLabel(series);
   const allStandings = data?.standings ?? [];
   const visibleStandings = showAll ? allStandings : allStandings.slice(0, PREVIEW_COUNT);
   const hasMore = allStandings.length > PREVIEW_COUNT;

@@ -1,4 +1,4 @@
-import type { SubSeriesKey } from "@/app/_components/Calendar/filterConfig";
+import type { SubSeriesKey } from "@/consts/series";
 import { fetchWithAuth } from "./auth";
 
 export interface UserPreferences {

@@ -3,9 +3,9 @@ import { inter } from "@/app/fonts";
 import { useState } from "react";
 import {
   SERIES_GROUPS,
-  SeriesKey,
-  SubSeriesKey,
-} from "./filterConfig";
+  type SeriesKey,
+  type SubSeriesKey,
+} from "@/consts/series";
 import { SessionView } from "@/utils/getCalendarData";
 export type { SessionView } from "@/utils/getCalendarData";
 

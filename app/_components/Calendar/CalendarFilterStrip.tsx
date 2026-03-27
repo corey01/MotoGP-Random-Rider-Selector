@@ -1,8 +1,7 @@
 "use client";
 
+import { SERIES_COLORS, SERIES_GROUPS, type SeriesKey, type SubSeriesKey } from "@/consts/series";
 import { type CalendarView, type SessionView } from "@/utils/getCalendarData";
-import { SERIES_GROUPS, SeriesKey, SubSeriesKey } from "./filterConfig";
-import { SERIES_COLORS } from "./CalendarSidebar";
 import style from "./CalendarFilterStrip.module.scss";
 
 interface CalendarFilterStripProps {

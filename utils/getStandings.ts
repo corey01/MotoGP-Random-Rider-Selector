@@ -1,5 +1,5 @@
 import { fetchWithAuth } from "./auth";
-import type { SeriesKey } from "@/app/_components/Calendar/filterConfig";
+import type { SeriesKey } from "@/consts/series";
 
 export interface StandingsRider {
   id: string;
