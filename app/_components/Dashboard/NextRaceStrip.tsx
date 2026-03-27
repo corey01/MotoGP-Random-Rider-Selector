@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { format, parseISO } from "date-fns";
 import { type ApiCalendarEvent } from "@/utils/getCalendarData";
-import style from "./CountdownCard.module.scss";
+import style from "./NextRaceStrip.module.scss";
 
 const SUB_SERIES_LABELS: Record<string, string> = {
   motogp: "MotoGP",
@@ -91,30 +91,34 @@ interface NextRaceStripProps {
 export function NextRaceStrip({ races }: NextRaceStripProps) {
   const stripRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const sortedRaces = useMemo(
+    () => [...races].sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()),
+    [races],
+  );
 
   useEffect(() => {
     const el = stripRef.current;
-    if (!el || races.length <= 1) return;
+    if (!el || sortedRaces.length <= 1) return;
     const onScroll = () => {
       const index = Math.round(el.scrollLeft / el.offsetWidth);
       setActiveIndex(index);
     };
     el.addEventListener("scroll", onScroll, { passive: true });
     return () => el.removeEventListener("scroll", onScroll);
-  }, [races.length]);
+  }, [sortedRaces.length]);
 
-  if (races.length === 0) return null;
+  if (sortedRaces.length === 0) return null;
 
   return (
     <div className={style.stripWrapper}>
       <div ref={stripRef} className={style.strip}>
-        {races.map((race) => (
+        {sortedRaces.map((race) => (
           <RaceCard key={race.id} race={race} />
         ))}
       </div>
-      {races.length > 1 && (
+      {sortedRaces.length > 1 && (
         <div className={style.dots}>
-          {races.map((_, i) => (
+          {sortedRaces.map((_, i) => (
             <span
               key={i}
               className={`${style.pip} ${i === activeIndex ? style.pipActive : ""}`}

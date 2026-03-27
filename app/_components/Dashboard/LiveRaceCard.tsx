@@ -1,6 +1,6 @@
 "use client";
 
-import style from "./LiveCard.module.scss";
+import style from "./LiveRaceCard.module.scss";
 import type { LiveSessionData } from "@/utils/getLiveSession";
 
 function extractSurname(fullName: string): string {
@@ -8,7 +8,7 @@ function extractSurname(fullName: string): string {
   return (parts[parts.length - 1] ?? fullName).toUpperCase();
 }
 
-interface LiveCardProps {
+interface LiveRaceCardProps {
   liveData: LiveSessionData;
   roundName: string;
   circuit: string | null;
@@ -16,7 +16,7 @@ interface LiveCardProps {
   seriesColor: string;
 }
 
-export function LiveCard({ liveData, roundName, circuit, seriesLabel, seriesColor }: LiveCardProps) {
+export function LiveRaceCard({ liveData, roundName, circuit, seriesLabel, seriesColor }: LiveRaceCardProps) {
   const leader = liveData.topThree[0] ?? null;
   const p2 = liveData.topThree[1] ?? null;
 

@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "./_components/AuthProvider";
-import { NextRaceStrip } from "./_components/Dashboard/CountdownCard";
-import { TodaySection } from "./_components/Dashboard/TodaySection";
-import { UpcomingEvents } from "./_components/Dashboard/UpcomingEvents";
+import { NextRaceStrip } from "./_components/Dashboard/NextRaceStrip";
+import { LiveSection } from "./_components/Dashboard/LiveSection";
+import { WeekendFeed } from "./_components/Dashboard/WeekendFeed";
 import { getDashboardData, type DashboardData } from "@/utils/getDashboardData";
-import { StandingsWidget } from "./_components/Dashboard/StandingsWidget";
+import { ChampionshipStandings } from "./_components/Dashboard/ChampionshipStandings";
 import style from "./Dashboard.module.scss";
 
 const EMPTY: DashboardData = { nextRace: null, nextPerSeries: [], today: [], thisWeekend: [], subscribedSeries: [] };
@@ -33,10 +33,10 @@ export default function DashboardPage() {
 
   return (
     <div className={style.page}>
-      <TodaySection events={data.today} />
+      <LiveSection events={data.today} />
       <NextRaceStrip races={data.nextPerSeries} />
-      <StandingsWidget series="motogp" />
-      <UpcomingEvents events={data.thisWeekend} />
+      <ChampionshipStandings series="motogp" />
+      <WeekendFeed events={data.thisWeekend} />
     </div>
   );
 }

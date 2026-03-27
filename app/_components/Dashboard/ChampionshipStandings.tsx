@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSubscriptions } from "@/utils/SubscriptionsContext";
 import { getStandings, type StandingsData, type StandingsEntry } from "@/utils/getStandings";
 import type { SeriesKey } from "@/app/_components/Calendar/filterConfig";
-import style from "./StandingsWidget.module.scss";
+import style from "./ChampionshipStandings.module.scss";
 
 const SERIES_LABEL: Record<string, string> = {
   motogp: "MotoGP",
@@ -15,7 +15,7 @@ const SERIES_LABEL: Record<string, string> = {
 
 const PREVIEW_COUNT = 5;
 
-interface StandingsWidgetProps {
+interface ChampionshipStandingsProps {
   series: SeriesKey;
   year?: number;
 }
@@ -59,7 +59,7 @@ function RiderRow({ entry }: { entry: StandingsEntry }) {
   );
 }
 
-export function StandingsWidget({ series, year }: StandingsWidgetProps) {
+export function ChampionshipStandings({ series, year }: ChampionshipStandingsProps) {
   const { subscribedSeries, isLoaded } = useSubscriptions();
   const [data, setData] = useState<StandingsData | null>(null);
   const [loading, setLoading] = useState(true);

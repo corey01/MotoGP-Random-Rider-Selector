@@ -3,7 +3,7 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { type ApiCalendarEvent } from "@/utils/getCalendarData";
 import { fetchLiveSession, type LiveSessionData } from "@/utils/getLiveSession";
-import { LiveCard } from "./LiveCard";
+import { LiveRaceCard } from "./LiveRaceCard";
 
 const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
 const NINETY_MINS_MS = 90 * 60 * 1000;
@@ -54,7 +54,7 @@ interface TodaySectionProps {
   events: ApiCalendarEvent[];
 }
 
-export function TodaySection({ events }: TodaySectionProps) {
+export function LiveSection({ events }: TodaySectionProps) {
   const [now, setNow] = useState(() => Date.now());
   const [liveData, setLiveData] = useState<LiveSessionData | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -109,7 +109,7 @@ export function TodaySection({ events }: TodaySectionProps) {
     : null;
 
   return (
-    <LiveCard
+    <LiveRaceCard
       liveData={liveData}
       roundName={liveRoundEvent?.round.name ?? ""}
       circuit={liveRoundEvent?.round.circuit ?? null}

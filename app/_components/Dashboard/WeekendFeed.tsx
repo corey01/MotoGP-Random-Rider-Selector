@@ -10,7 +10,7 @@ import {
   type CalendarSession,
 } from "@/utils/getCalendarData";
 import { EventDetailPanel } from "@/app/_components/Calendar/EventDetailPanel";
-import style from "./UpcomingEvents.module.scss";
+import style from "./WeekendFeed.module.scss";
 
 const SUB_SERIES_LABELS: Record<string, string> = {
   motogp: "MotoGP",
@@ -110,11 +110,11 @@ interface DayGroup {
   events: ApiCalendarEvent[];
 }
 
-interface UpcomingEventsProps {
+interface WeekendFeedProps {
   events: ApiCalendarEvent[];
 }
 
-export function UpcomingEvents({ events }: UpcomingEventsProps) {
+export function WeekendFeed({ events }: WeekendFeedProps) {
   const [activeSeries, setActiveSeries] = useState<string>("all");
   const [racesOnly, setRacesOnly] = useState(true);
   const [filterHeight, setFilterHeight] = useState(0);
