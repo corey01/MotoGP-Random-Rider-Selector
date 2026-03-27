@@ -1,0 +1,232 @@
+.card {
+  position: relative;
+  overflow: hidden;
+  background: var(--kc-surface-1);
+  border: 1px solid var(--kc-border);
+  border-left: 4px solid var(--series-color, #555);
+  border-radius: 0;
+  padding: var(--kc-space-4);
+  margin-bottom: var(--kc-space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  // Faint greyscale background image
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/live.jpg');
+    background-size: cover;
+    background-position: center right;
+    filter: grayscale(1) opacity(0.08);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Series colour tint overlay
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--series-color, transparent);
+    opacity: 0.07;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Keep all content above the pseudo-element layers
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--kc-space-1);
+}
+
+.badge {
+  font-size: var(--kc-text-xs);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--kc-text-1);
+  background: var(--kc-surface-3);
+  padding: 4px 8px;
+  border-radius: 0;
+  text-transform: uppercase;
+}
+
+.liveNow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--kc-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #e8856a;
+}
+
+.liveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e8856a;
+  animation: livePulse 1.2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.roundName {
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: var(--kc-text-1);
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: 0;
+}
+
+.circuit {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--kc-text-3);
+  margin-bottom: var(--kc-space-2);
+  margin-top: -5px;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  margin: 0;
+}
+
+/* LAP + LEADER row — no background, side by side */
+.mainStats {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--kc-space-4);
+  margin-left: var(--kc-space-2);
+  margin-right: var(--kc-space-2);
+}
+
+.mainStat {
+  display: flex;
+  flex-direction: column;
+
+  &:first-child {
+    flex-shrink: 0;
+  }
+
+  &:last-child {
+    align-items: flex-end;
+    text-align: right;
+    min-width: 0;
+  }
+
+  .statLabel {
+    font-size: 0.65rem;
+  }
+}
+
+.statLabel {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--kc-text-3);
+  text-transform: uppercase;
+}
+
+.lapValue {
+  display: flex;
+  align-items: baseline;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.lapCurrent {
+  font-size: var(--kc-text-2xl);
+  font-weight: 800;
+  color: var(--kc-text-1);
+}
+
+.lapTotal {
+  margin-left: 4px;
+  font-size: var(--kc-text-lg);
+  font-weight: 700;
+  color: var(--kc-text-3);
+}
+
+.leaderValue {
+  font-size: var(--kc-text-2xl);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.leader {
+  color: #e8856a;
+}
+
+
+.gapBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--kc-space-4);
+  background: rgba(0, 0, 0, 0.35);
+  padding: var(--kc-space-1) var(--kc-space-2);
+  margin-left: var(--kc-space-2);
+  width: calc(100% - var(--kc-space-2) * 2);
+  box-sizing: border-box;
+}
+
+.gapLeft {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.gap {
+  font-size: var(--kc-text-sm);
+  font-weight: 800;
+  color: #4caf50;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.65rem;
+}
+
+.gapRiders {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--kc-space-1);
+  row-gap: 3px;
+  align-items: baseline;
+}
+
+.gapRider {
+  display: contents;
+}
+
+.gapPos {
+  font-size: var(--kc-text-2xs);
+  font-weight: 700;
+  color: var(--kc-text-3);
+  flex-shrink: 0;
+  font-size: 0.65rem;
+}
+
+.gapName {
+  font-size: var(--kc-text-sm);
+  font-weight: 700;
+  color: var(--kc-text-2);
+  letter-spacing: 0.05em;
+  text-align: right;
+  font-size: 0.65rem;
+  margin-left: 2px;
+}

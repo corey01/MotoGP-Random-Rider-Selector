@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { format, parseISO } from "date-fns";
 import { type ApiCalendarEvent } from "@/utils/getCalendarData";
 import style from "./CountdownCard.module.scss";
@@ -34,53 +34,35 @@ function formatTimeRemaining(seconds: number): string {
   return `${s}s`;
 }
 
-interface CountdownCardProps {
-  nextRace: ApiCalendarEvent | null;
-}
-
-export function CountdownCard({ nextRace }: CountdownCardProps) {
-  const [secondsLeft, setSecondsLeft] = useState<number>(
-    nextRace ? getSecondsLeft(nextRace.start) : 0
-  );
+function RaceCard({ race }: { race: ApiCalendarEvent }) {
+  const [secondsLeft, setSecondsLeft] = useState<number>(getSecondsLeft(race.start));
 
   useEffect(() => {
-    if (!nextRace) return;
-    const tick = () => setSecondsLeft(getSecondsLeft(nextRace.start));
+    const tick = () => setSecondsLeft(getSecondsLeft(race.start));
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, [nextRace]);
+  }, [race.start]);
 
-  if (!nextRace) {
-    return (
-      <div className={style.card}>
-        <p className={style.empty}>No upcoming races</p>
-      </div>
-    );
-  }
-
-  const isToday =
-    new Date(nextRace.start).toDateString() === new Date().toDateString();
-  const hasSubSeries = nextRace.subSeries !== nextRace.series;
+  const isToday = new Date(race.start).toDateString() === new Date().toDateString();
+  const hasSubSeries = race.subSeries !== race.series;
   const badgeLabel = hasSubSeries
-    ? (SUB_SERIES_LABELS[nextRace.subSeries] ?? nextRace.subSeries)
-    : nextRace.series.toUpperCase();
-  const sessionLabel = nextRace.sessionName || nextRace.type;
+    ? (SUB_SERIES_LABELS[race.subSeries] ?? race.subSeries)
+    : race.series.toUpperCase();
+  const sessionLabel = race.sessionName || race.type;
   const timeStr = isToday
-    ? `Today · ${format(parseISO(nextRace.start), "HH:mm")}`
-    : format(parseISO(nextRace.start), "EEE d MMM · HH:mm");
+    ? `Today · ${format(parseISO(race.start), "HH:mm")}`
+    : format(parseISO(race.start), "EEE d MMM · HH:mm");
 
   return (
     <div className={style.card}>
-      <p className={style.eyebrow}>Next Race</p>
-
       <div className={style.badges}>
-        <span className={`${style.seriesBadge} ${style[`series_${nextRace.series}`] ?? ""}`}>
+        <span className={`${style.seriesBadge} ${style[`series_${race.series}`] ?? ""}`}>
           {badgeLabel}
         </span>
       </div>
 
-      <h2 className={style.roundName}>{nextRace.round.name}</h2>
+      <h2 className={style.roundName}>{race.round.name}</h2>
 
       <p className={style.sessionRow}>
         <span className={style.sessionName}>{sessionLabel}</span>
@@ -98,6 +80,48 @@ export function CountdownCard({ nextRace }: CountdownCardProps) {
           <span className={style.liveIndicator}>Underway</span>
         )}
       </div>
+    </div>
+  );
+}
+
+interface NextRaceStripProps {
+  races: ApiCalendarEvent[];
+}
+
+export function NextRaceStrip({ races }: NextRaceStripProps) {
+  const stripRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const el = stripRef.current;
+    if (!el || races.length <= 1) return;
+    const onScroll = () => {
+      const index = Math.round(el.scrollLeft / el.offsetWidth);
+      setActiveIndex(index);
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, [races.length]);
+
+  if (races.length === 0) return null;
+
+  return (
+    <div className={style.stripWrapper}>
+      <div ref={stripRef} className={style.strip}>
+        {races.map((race) => (
+          <RaceCard key={race.id} race={race} />
+        ))}
+      </div>
+      {races.length > 1 && (
+        <div className={style.dots}>
+          {races.map((_, i) => (
+            <span
+              key={i}
+              className={`${style.pip} ${i === activeIndex ? style.pipActive : ""}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

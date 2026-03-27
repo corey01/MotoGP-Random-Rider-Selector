@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useMemo, useState } from "react";
+import { Fragment, useEffect, useRef, useMemo, useState } from "react";
 import { format, parseISO } from "date-fns";
 import {
   groupApiCalendarEventsByRound,
@@ -44,6 +44,24 @@ const SERIES_COLORS: Record<string, string> = {
   f1: "var(--f1-red)",
   gtwce: "var(--gtwce-gold)",
 };
+
+const EVENT_BUFFER_MS: Record<string, number> = {
+  RACE: 2 * 60 * 60 * 1000,
+  QUALIFYING: 60 * 60 * 1000,
+  PRACTICE: 60 * 60 * 1000,
+  SESSION: 45 * 60 * 1000,
+};
+
+function isEventOver(ev: ApiCalendarEvent, now: Date): boolean {
+  const nowMs = now.getTime();
+  if (ev.end) return new Date(ev.end).getTime() < nowMs;
+  const buffer = EVENT_BUFFER_MS[ev.type.toUpperCase()] ?? 60 * 60 * 1000;
+  return new Date(ev.start).getTime() + buffer < nowMs;
+}
+
+function isEventActive(ev: ApiCalendarEvent, now: Date): boolean {
+  return new Date(ev.start).getTime() <= now.getTime() && !isEventOver(ev, now);
+}
 
 const SMALL_WORDS = new Set([
   "a", "an", "the", "and", "but", "or", "for", "nor",
@@ -98,15 +116,21 @@ interface UpcomingEventsProps {
 
 export function UpcomingEvents({ events }: UpcomingEventsProps) {
   const [activeSeries, setActiveSeries] = useState<string>("all");
-  const [racesOnly, setRacesOnly] = useState(false);
+  const [racesOnly, setRacesOnly] = useState(true);
   const [filterHeight, setFilterHeight] = useState(0);
   const [selectedEvent, setSelectedEvent] = useState<{
     session: CalendarSession;
     round: CalendarRound;
   } | null>(null);
+  const [now, setNow] = useState(() => new Date());
   const filterRef = useRef<HTMLDivElement>(null);
 
   const HEADER_HEIGHT = 52;
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 60_000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     const el = filterRef.current;
@@ -116,27 +140,31 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
     return () => observer.disconnect();
   }, []);
 
+  const todayStr = format(now, "yyyy-MM-dd");
+
+  const allEvents = events;
+
   const seriesOptions = useMemo(() => {
     const seen = new Set<string>();
-    for (const ev of events) seen.add(ev.series);
+    for (const ev of allEvents) seen.add(ev.series);
     return Array.from(seen).sort();
-  }, [events]);
+  }, [allEvents]);
 
   const tzLabel = useMemo(() => getTimezoneLabel(), []);
   const eventDetailsById = useMemo(() => {
     const lookup = new Map<string, { session: CalendarSession; round: CalendarRound }>();
 
-    for (const round of groupApiCalendarEventsByRound(events)) {
+    for (const round of groupApiCalendarEventsByRound(allEvents)) {
       for (const session of round.events) {
         lookup.set(session.id, { session, round });
       }
     }
 
     return lookup;
-  }, [events]);
+  }, [allEvents]);
 
   const days = useMemo<DayGroup[]>(() => {
-    let filtered = activeSeries === "all" ? events : events.filter((ev) => ev.series === activeSeries);
+    let filtered = activeSeries === "all" ? allEvents : allEvents.filter((ev) => ev.series === activeSeries);
     if (racesOnly) filtered = filtered.filter((ev) => ev.type === "RACE");
     const map = new Map<string, ApiCalendarEvent[]>();
     for (const ev of filtered) {
@@ -146,6 +174,7 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
     }
     return Array.from(map.entries())
       .sort(([a], [b]) => a.localeCompare(b))
+      .filter(([date]) => date >= todayStr)
       .map(([date, evs]) => {
         const parsed = parseISO(date);
         return {
@@ -158,7 +187,7 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
           ),
         };
       });
-  }, [events, activeSeries, racesOnly]);
+  }, [allEvents, activeSeries, racesOnly, todayStr]);
 
   const openEventDetail = (event: ApiCalendarEvent) => {
     const existing = eventDetailsById.get(event.id);
@@ -231,7 +260,13 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
                 </div>
 
                 <div className={style.sessions}>
-                  {day.events.map((ev) => {
+                  {day.events.map((ev, index) => {
+                    const isToday = day.date === todayStr;
+                    const past = isToday && isEventOver(ev, now);
+                    const active = isToday && isEventActive(ev, now);
+                    const prevPast = isToday && index > 0 && isEventOver(day.events[index - 1], now);
+                    const showNowLine = prevPast && !past && !active;
+
                     const seriesColor = SERIES_COLORS[ev.series] ?? "#555";
                     const subLabel = SUB_SERIES_LABELS[ev.subSeries] ?? ev.subSeries.toUpperCase();
                     const prefix = `${subLabel} - `;
@@ -245,36 +280,49 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
                     const duration = formatDuration(ev.start, ev.end);
 
                     return (
-                      <button
-                        key={ev.id}
-                        type="button"
-                        className={`${style.session} ${selectedEvent?.session.id === ev.id ? style.sessionSelected : ""}`}
-                        onClick={() => openEventDetail(ev)}
-                      >
-                        {isRace && (
-                          <div className={style.sessionAccent} style={{ background: seriesColor }} />
+                      <Fragment key={ev.id}>
+                        {showNowLine && (
+                          <div className={style.nowLine}>
+                            <span>Now</span>
+                          </div>
                         )}
-                        <div className={style.sessionContent}>
-                          <div className={style.sessionLeft}>
-                            <span className={style.sessionMeta}>
-                              {[roundName, ev.round.circuit].filter(Boolean).join(" • ")}
-                            </span>
-                            <span className={style.roundName}>{subLabel} • {sessionLabel}</span>
-                          </div>
-                          <div className={style.sessionRight}>
-                            <span className={style.sessionTime}>
-                              {format(parseISO(ev.start), "HH:mm")}
-                            </span>
-                            {isLive ? (
-                              <span className={style.sessionSub} style={{ color: seriesColor }}>
-                                Live
+                        <button
+                          type="button"
+                          className={`${style.session} ${past ? style.sessionPast : ""} ${selectedEvent?.session.id === ev.id ? style.sessionSelected : ""}`}
+                          onClick={() => openEventDetail(ev)}
+                        >
+                          {active && (
+                            <div className={style.nowBar}>
+                              <span>Now</span>
+                            </div>
+                          )}
+                          {isRace && (
+                            <div className={style.sessionAccent} style={{ background: seriesColor }} />
+                          )}
+                          <div className={style.sessionContent}>
+                            <div className={style.sessionLeft}>
+                              {!past && (
+                                <span className={style.sessionMeta}>
+                                  {[roundName, ev.round.circuit].filter(Boolean).join(" • ")}
+                                </span>
+                              )}
+                              <span className={style.roundName}>{subLabel} • {sessionLabel}</span>
+                            </div>
+                            <div className={style.sessionRight}>
+                              <span className={style.sessionTime}>
+                                {format(parseISO(ev.start), "HH:mm")}
                               </span>
-                            ) : duration ? (
-                              <span className={style.sessionSub}>{duration}</span>
-                            ) : null}
+                              {!past && (isLive ? (
+                                <span className={style.sessionSub} style={{ color: seriesColor }}>
+                                  Live
+                                </span>
+                              ) : duration ? (
+                                <span className={style.sessionSub}>{duration}</span>
+                              ) : null)}
+                            </div>
                           </div>
-                        </div>
-                      </button>
+                        </button>
+                      </Fragment>
                     );
                   })}
                 </div>

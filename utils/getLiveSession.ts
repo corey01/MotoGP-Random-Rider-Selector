@@ -1,15 +1,23 @@
 import { fetchWithAuth } from "./auth";
 
+export interface LiveTopThreeEntry {
+  position: number;
+  abbreviation: string;
+  fullName: string;
+  team: string;
+  teamColour: string | null;
+  gapToLeader: string | null;
+}
+
 export interface LiveSessionData {
   ok: boolean;
-  category: string | null;
+  series: string | null;
   sessionName: string | null;
-  sessionShortname: string | null;
-  numLaps: number;
-  remaining: number;
-  statusId: string | null;
   isLive: boolean;
   isDone: boolean;
+  currentLap: number | null;
+  totalLaps: number | null;
+  topThree: LiveTopThreeEntry[];
 }
 
 export async function fetchLiveSession(): Promise<LiveSessionData | null> {

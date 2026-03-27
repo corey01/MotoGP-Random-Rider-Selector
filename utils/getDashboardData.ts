@@ -3,6 +3,7 @@ import { fetchWithAuth } from "./auth";
 
 export interface DashboardData {
   nextRace: ApiCalendarEvent | null;
+  nextPerSeries: ApiCalendarEvent[];
   today: ApiCalendarEvent[];
   thisWeekend: ApiCalendarEvent[];
   subscribedSeries: string[];
@@ -10,6 +11,7 @@ export interface DashboardData {
 
 const EMPTY: DashboardData = {
   nextRace: null,
+  nextPerSeries: [],
   today: [],
   thisWeekend: [],
   subscribedSeries: [],
@@ -22,6 +24,7 @@ export async function getDashboardData(): Promise<DashboardData> {
     const data = await res.json();
     return {
       nextRace: data.nextRace ?? null,
+      nextPerSeries: data.nextPerSeries ?? [],
       today: data.today ?? [],
       thisWeekend: data.thisWeekend ?? [],
       subscribedSeries: data.subscribedSeries ?? [],

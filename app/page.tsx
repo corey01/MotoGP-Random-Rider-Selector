@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "./_components/AuthProvider";
-import { CountdownCard } from "./_components/Dashboard/CountdownCard";
+import { NextRaceStrip } from "./_components/Dashboard/CountdownCard";
 import { TodaySection } from "./_components/Dashboard/TodaySection";
 import { UpcomingEvents } from "./_components/Dashboard/UpcomingEvents";
 import { getDashboardData, type DashboardData } from "@/utils/getDashboardData";
+import { StandingsWidget } from "./_components/Dashboard/StandingsWidget";
 import style from "./Dashboard.module.scss";
 
-const EMPTY: DashboardData = { nextRace: null, today: [], thisWeekend: [], subscribedSeries: [] };
+const EMPTY: DashboardData = { nextRace: null, nextPerSeries: [], today: [], thisWeekend: [], subscribedSeries: [] };
 
 export default function DashboardPage() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -33,15 +34,9 @@ export default function DashboardPage() {
   return (
     <div className={style.page}>
       <TodaySection events={data.today} />
-
-      <div className={style.grid}>
-        <section className={style.countdownSection}>
-          <CountdownCard nextRace={data.nextRace} />
-        </section>
-        <section className={style.feedSection}>
-          <UpcomingEvents events={data.thisWeekend} />
-        </section>
-      </div>
+      <NextRaceStrip races={data.nextPerSeries} />
+      <StandingsWidget series="motogp" />
+      <UpcomingEvents events={data.thisWeekend} />
     </div>
   );
 }
