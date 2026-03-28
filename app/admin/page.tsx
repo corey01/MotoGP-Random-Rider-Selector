@@ -209,6 +209,7 @@ type ButtonKey =
   | "motogp-grid"
   | "scrape-bsb"
   | "scrape-wsbk"
+  | "wsbk-riders"
   | "scrape-f1"
   | "scrape-speedway"
   | "scrape-gtwce"
@@ -250,9 +251,15 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
     { key: "scrape-bsb", label: "BSB", path: "/admin/scrape/bsb", hint: "scrape:bsb" },
     {
       key: "scrape-wsbk",
-      label: "WSBK",
+      label: "WSBK Calendar",
       path: "/admin/scrape/wsbk",
       hint: "scrape:wsbk",
+    },
+    {
+      key: "wsbk-riders",
+      label: "WSBK Riders",
+      path: "/admin/sync/wsbk-riders",
+      hint: "sync:wsbk-riders",
     },
     { key: "scrape-f1", label: "F1", path: "/admin/scrape/f1", hint: "scrape:f1" },
     {
