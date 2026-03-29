@@ -213,6 +213,7 @@ type ButtonKey =
   | "scrape-f1"
   | "scrape-speedway"
   | "scrape-gtwce"
+  | "scrape-nls"
   | "scrape-all"
   | "motogp-results";
 
@@ -275,10 +276,16 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       hint: "scrape:gtwce",
     },
     {
+      key: "scrape-nls",
+      label: "NLS",
+      path: "/admin/scrape/nls",
+      hint: "scrape:nls",
+    },
+    {
       key: "scrape-all",
       label: "Scrape All",
       path: "/admin/scrape/all",
-      hint: "bsb + wsbk + f1 + speedway + gtwce",
+      hint: "bsb + wsbk + f1 + speedway + gtwce + nls",
     },
   ];
 

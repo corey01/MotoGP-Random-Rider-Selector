@@ -207,6 +207,12 @@
   --event-text: #171717;
 }
 
+.round-calendar-bar.nls-event {
+  background: var(--nls-green);
+  --event-accent: color-mix(in srgb, var(--nls-green) 72%, white);
+  --event-text: #f0f0f0;
+}
+
 .fc {
   max-width: 100%;
   width: 100%;
@@ -517,6 +523,12 @@
   background: var(--gtwce-gold) !important;
   --event-accent: color-mix(in srgb, var(--gtwce-gold) 72%, white);
   --event-text: #171717;
+}
+
+.fc-event.nls-event {
+  background: var(--nls-green) !important;
+  --event-accent: color-mix(in srgb, var(--nls-green) 72%, white);
+  --event-text: #f0f0f0;
 }
 
 .fc .fc-view-harness {

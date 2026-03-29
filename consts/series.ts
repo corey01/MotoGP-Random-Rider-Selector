@@ -1,4 +1,4 @@
-export type SeriesKey = "motogp" | "wsbk" | "bsb" | "speedway" | "f1" | "gtwce";
+export type SeriesKey = "motogp" | "wsbk" | "bsb" | "speedway" | "f1" | "gtwce" | "nls";
 
 export type SubSeriesKey =
   | "motogp"
@@ -12,7 +12,8 @@ export type SubSeriesKey =
   | "bsb"
   | "speedway"
   | "f1"
-  | "gtwce";
+  | "gtwce"
+  | "nls";
 
 export type SeriesGroup = {
   key: SeriesKey;
@@ -61,6 +62,11 @@ export const SERIES_GROUPS: SeriesGroup[] = [
     label: "GT World Challenge Europe",
     children: [{ key: "gtwce", label: "GT World Challenge Europe" }],
   },
+  {
+    key: "nls",
+    label: "NLS",
+    children: [{ key: "nls", label: "NLS" }],
+  },
 ];
 
 export const DEFAULT_SUB_SERIES_VISIBILITY: Record<SubSeriesKey, boolean> = {
@@ -76,6 +82,7 @@ export const DEFAULT_SUB_SERIES_VISIBILITY: Record<SubSeriesKey, boolean> = {
   speedway: true,
   f1: true,
   gtwce: true,
+  nls: true,
 };
 
 export const SERIES_LABELS: Record<string, string> = {
@@ -85,6 +92,7 @@ export const SERIES_LABELS: Record<string, string> = {
   speedway: "FIM Speedway",
   f1: "Formula 1",
   gtwce: "GT World Challenge",
+  nls: "Nürburgring Langstrecken-Serie",
 };
 
 export const SERIES_SHORT_LABELS: Record<string, string> = {
@@ -94,6 +102,7 @@ export const SERIES_SHORT_LABELS: Record<string, string> = {
   speedway: "Speedway",
   f1: "F1",
   gtwce: "GTWCE",
+  nls: "NLS",
 };
 
 export const SUB_SERIES_LABELS: Record<string, string> = {
@@ -109,12 +118,14 @@ export const SUB_SERIES_LABELS: Record<string, string> = {
   speedway: "Speedway",
   f1: "Formula 1",
   gtwce: "GT World Challenge",
+  nls: "NLS",
 };
 
 export const SUB_SERIES_SHORT_LABELS: Record<string, string> = {
   ...SUB_SERIES_LABELS,
   f1: "F1",
   gtwce: "GTWCE",
+  nls: "NLS",
 };
 
 export const ROUND_SERIES_LABELS: Record<string, string> = {
@@ -131,6 +142,7 @@ export const ROUND_SERIES_LABELS: Record<string, string> = {
   speedway: "Speedway",
   f1: "F1",
   gtwce: "GTWCE",
+  nls: "NLS",
 };
 
 export const SERIES_COLORS: Record<string, string> = {
@@ -140,6 +152,7 @@ export const SERIES_COLORS: Record<string, string> = {
   speedway: "var(--speedway-orange)",
   f1: "var(--f1-red)",
   gtwce: "var(--gtwce-gold)",
+  nls: "var(--nls-green)",
 };
 
 export const seriesChildren = (series: SeriesKey) =>

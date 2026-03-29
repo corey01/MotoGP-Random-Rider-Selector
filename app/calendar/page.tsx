@@ -412,7 +412,7 @@ export default function CalendarPage() {
           focusedRound={focusMode === "round" ? focusedRound : null}
           sessionView={sessionView}
           onSessionViewChange={handleSessionViewChange}
-          showSessionToggle={calendarView === "events"}
+          showSessionToggle={calendarView === "rounds"}
           isLoading={focusMode === "round" ? isRoundLoading : isDateLoading}
           onClose={() => {
             setSelectedDate(null);

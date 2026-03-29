@@ -124,6 +124,7 @@ const SESSION_SERIES_PREFIX: Record<string, string> = {
   speedway: "Speedway",
   f1: "F1",
   gtwce: "GT WCE",
+  nls: "NLS",
 };
 
 const ROUND_SERIES_PREFIX: Record<string, string> = {
@@ -140,6 +141,7 @@ const ROUND_SERIES_PREFIX: Record<string, string> = {
   speedway: "Speedway",
   f1: "F1",
   gtwce: "GT WCE",
+  nls: "NLS",
 };
 
 const prefixSessionTitle = (title: string, subSeries: string): string => {
@@ -168,6 +170,8 @@ const CLASS_MAP: Record<string, string> = {
   bsb: "bsb-event",
   speedway: "speedway-event",
   f1: "f1-event",
+  gtwce: "gtwce-event",
+  nls: "nls-event",
 };
 
 const getBaseUrl = () => {

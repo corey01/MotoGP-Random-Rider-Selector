@@ -14,17 +14,29 @@ import { getCurrentGmtOffsetLabel } from "@/utils/timezone";
 import { EventDetailPanel } from "@/app/_components/Calendar/EventDetailPanel";
 import style from "./WeekendFeed.module.scss";
 
-const EVENT_BUFFER_MS: Record<string, number> = {
-  RACE: 2 * 60 * 60 * 1000,
-  QUALIFYING: 60 * 60 * 1000,
-  PRACTICE: 60 * 60 * 1000,
-  SESSION: 45 * 60 * 1000,
+const NON_RACE_BUFFER_MS: Record<string, number> = {
+  QUALIFYING: 60 * 60 * 1000,  // 1 hour
+  PRACTICE: 60 * 60 * 1000,    // 1 hour
+  SESSION: 45 * 60 * 1000,     // 45 mins
 };
+
+function getRaceBufferMs(ev: ApiCalendarEvent): number {
+  // Sprint races across all series are short
+  if (/sprint/i.test(ev.sessionName)) return 25 * 60_000;
+
+  const series = ev.series.toLowerCase();
+  if (series === 'f1')  return 2 * 60 * 60_000;   // up to 2 hours
+  if (series === 'nls') return 6 * 60 * 60_000;   // 4h or 6h race
+  if (series === 'motogp') return 40 * 60_000;   // MotoGP, Moto2, Moto3
+  if (series === 'wsbk') return 40 * 60_000;
+  return 40 * 60_000;                             // Baggers, WorldSSP, GTWCE, etc.
+}
 
 function isEventOver(ev: ApiCalendarEvent, now: Date): boolean {
   const nowMs = now.getTime();
   if (ev.end) return new Date(ev.end).getTime() < nowMs;
-  const buffer = EVENT_BUFFER_MS[ev.type.toUpperCase()] ?? 60 * 60 * 1000;
+  const type = ev.type.toUpperCase();
+  const buffer = type === 'RACE' ? getRaceBufferMs(ev) : (NON_RACE_BUFFER_MS[type] ?? 60 * 60_000);
   return new Date(ev.start).getTime() + buffer < nowMs;
 }
 
