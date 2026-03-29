@@ -12,7 +12,16 @@ const POLL_INTERVAL_MS = 10_000;
 
 function categoryToSubSeries(category: string | null): string | null {
   if (!category) return null;
-  return category.toLowerCase().replace(/\s/g, "");
+  const normalized = category.toLowerCase().replace(/\s/g, "");
+  return normalized === "worldsbk" ? "wsbk" : normalized;
+}
+
+function normalizeSessionName(value: string | null | undefined): string {
+  return String(value ?? "")
+    .toLowerCase()
+    .replace(/live timing/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 }
 
 function isWithinLiveWindow(ev: ApiCalendarEvent, now: number): boolean {
@@ -79,12 +88,36 @@ export function LiveSection({ events }: TodaySectionProps) {
     };
   }, [raceEvents, now]);
 
-  if (!liveData?.isLive) return null;
+  const liveSubSeries = categoryToSubSeries(liveData?.series ?? null);
+  const liveRoundEvent = useMemo(() => {
+    if (!liveData?.isLive || !liveSubSeries) return null;
 
-  const liveSubSeries = categoryToSubSeries(liveData.series);
-  const liveRoundEvent = liveSubSeries
-    ? events.find((ev) => ev.subSeries === liveSubSeries)
-    : null;
+    const candidates = events.filter((ev) => {
+      const eventSubSeries = categoryToSubSeries(ev.subSeries || ev.series);
+      return ev.type === "RACE" && eventSubSeries === liveSubSeries;
+    });
+    if (candidates.length === 0) return null;
+
+    const liveSessionName = normalizeSessionName(liveData.sessionName);
+    const sessionMatchedCandidates = liveSessionName
+      ? candidates.filter((ev) => {
+          const eventSessionName = normalizeSessionName(ev.sessionName);
+          return (
+            eventSessionName === liveSessionName ||
+            eventSessionName.endsWith(liveSessionName) ||
+            liveSessionName.endsWith(eventSessionName)
+          );
+        })
+      : candidates;
+
+    const startedCandidates = (sessionMatchedCandidates.length > 0 ? sessionMatchedCandidates : candidates)
+      .filter((ev) => new Date(ev.start).getTime() <= now)
+      .sort((a, b) => new Date(b.start).getTime() - new Date(a.start).getTime());
+
+    return startedCandidates[0] ?? null;
+  }, [events, liveData, liveSubSeries, now]);
+
+  if (!liveData?.isLive || !liveRoundEvent) return null;
 
   return (
     <LiveRaceCard

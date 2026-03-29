@@ -207,6 +207,12 @@
   --event-text: #171717;
 }
 
+.round-calendar-bar.iomtt-event {
+  background: var(--iomtt-amber);
+  --event-accent: color-mix(in srgb, var(--iomtt-amber) 72%, white);
+  --event-text: #171717;
+}
+
 .round-calendar-bar.nls-event {
   background: var(--nls-green);
   --event-accent: color-mix(in srgb, var(--nls-green) 72%, white);
@@ -522,6 +528,12 @@
 .fc-event.gtwce-event {
   background: var(--gtwce-gold) !important;
   --event-accent: color-mix(in srgb, var(--gtwce-gold) 72%, white);
+  --event-text: #171717;
+}
+
+.fc-event.iomtt-event {
+  background: var(--iomtt-amber) !important;
+  --event-accent: color-mix(in srgb, var(--iomtt-amber) 72%, white);
   --event-text: #171717;
 }
 

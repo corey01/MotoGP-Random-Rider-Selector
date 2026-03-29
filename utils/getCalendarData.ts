@@ -124,6 +124,7 @@ const SESSION_SERIES_PREFIX: Record<string, string> = {
   speedway: "Speedway",
   f1: "F1",
   gtwce: "GT WCE",
+  iomtt: "IoMTT",
   nls: "NLS",
 };
 
@@ -141,6 +142,7 @@ const ROUND_SERIES_PREFIX: Record<string, string> = {
   speedway: "Speedway",
   f1: "F1",
   gtwce: "GT WCE",
+  iomtt: "IoMTT",
   nls: "NLS",
 };
 
@@ -171,6 +173,7 @@ const CLASS_MAP: Record<string, string> = {
   speedway: "speedway-event",
   f1: "f1-event",
   gtwce: "gtwce-event",
+  iomtt: "iomtt-event",
   nls: "nls-event",
 };
 

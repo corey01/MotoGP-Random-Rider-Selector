@@ -21,11 +21,17 @@ const NON_RACE_BUFFER_MS: Record<string, number> = {
 };
 
 function getRaceBufferMs(ev: ApiCalendarEvent): number {
-  // Sprint races across all series are short
-  if (/sprint/i.test(ev.sessionName)) return 25 * 60_000;
+  const sessionName = ev.sessionName ?? "";
+  const isWsbkSuperpoleRace = ["wsbk", "worldsbk"].includes(
+    String(ev.subSeries || ev.series || "").toLowerCase()
+  ) && /\bsuperpole race\b/i.test(sessionName);
+
+  // Sprint races across all series are short. WSBK Superpole Race uses the same buffer.
+  if (/sprint/i.test(sessionName) || isWsbkSuperpoleRace) return 25 * 60_000;
 
   const series = ev.series.toLowerCase();
   if (series === 'f1')  return 2 * 60 * 60_000;   // up to 2 hours
+  if (series === 'iomtt') return 150 * 60_000;    // 3-6 lap TT races can run well beyond 2 hours
   if (series === 'nls') return 6 * 60 * 60_000;   // 4h or 6h race
   if (series === 'motogp') return 40 * 60_000;   // MotoGP, Moto2, Moto3
   if (series === 'wsbk') return 40 * 60_000;

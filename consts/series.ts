@@ -1,4 +1,4 @@
-export type SeriesKey = "motogp" | "wsbk" | "bsb" | "speedway" | "f1" | "gtwce" | "nls";
+export type SeriesKey = "motogp" | "wsbk" | "bsb" | "speedway" | "f1" | "gtwce" | "iomtt" | "nls";
 
 export type SubSeriesKey =
   | "motogp"
@@ -13,6 +13,7 @@ export type SubSeriesKey =
   | "speedway"
   | "f1"
   | "gtwce"
+  | "iomtt"
   | "nls";
 
 export type SeriesGroup = {
@@ -63,6 +64,11 @@ export const SERIES_GROUPS: SeriesGroup[] = [
     children: [{ key: "gtwce", label: "GT World Challenge Europe" }],
   },
   {
+    key: "iomtt",
+    label: "IoMTT",
+    children: [{ key: "iomtt", label: "Isle of Man TT" }],
+  },
+  {
     key: "nls",
     label: "NLS",
     children: [{ key: "nls", label: "NLS" }],
@@ -82,6 +88,7 @@ export const DEFAULT_SUB_SERIES_VISIBILITY: Record<SubSeriesKey, boolean> = {
   speedway: true,
   f1: true,
   gtwce: true,
+  iomtt: true,
   nls: true,
 };
 
@@ -92,6 +99,7 @@ export const SERIES_LABELS: Record<string, string> = {
   speedway: "FIM Speedway",
   f1: "Formula 1",
   gtwce: "GT World Challenge",
+  iomtt: "Isle of Man TT",
   nls: "Nürburgring Langstrecken-Serie",
 };
 
@@ -102,6 +110,7 @@ export const SERIES_SHORT_LABELS: Record<string, string> = {
   speedway: "Speedway",
   f1: "F1",
   gtwce: "GTWCE",
+  iomtt: "IoMTT",
   nls: "NLS",
 };
 
@@ -118,6 +127,7 @@ export const SUB_SERIES_LABELS: Record<string, string> = {
   speedway: "Speedway",
   f1: "Formula 1",
   gtwce: "GT World Challenge",
+  iomtt: "Isle of Man TT",
   nls: "NLS",
 };
 
@@ -125,6 +135,7 @@ export const SUB_SERIES_SHORT_LABELS: Record<string, string> = {
   ...SUB_SERIES_LABELS,
   f1: "F1",
   gtwce: "GTWCE",
+  iomtt: "IoMTT",
   nls: "NLS",
 };
 
@@ -142,6 +153,7 @@ export const ROUND_SERIES_LABELS: Record<string, string> = {
   speedway: "Speedway",
   f1: "F1",
   gtwce: "GTWCE",
+  iomtt: "IoMTT",
   nls: "NLS",
 };
 
@@ -152,6 +164,7 @@ export const SERIES_COLORS: Record<string, string> = {
   speedway: "var(--speedway-orange)",
   f1: "var(--f1-red)",
   gtwce: "var(--gtwce-gold)",
+  iomtt: "var(--iomtt-amber)",
   nls: "var(--nls-green)",
 };
 

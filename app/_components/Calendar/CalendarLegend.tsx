@@ -12,6 +12,7 @@ const SERIES_OPTIONS: Array<{ key: SeriesKey; label: string; styleKey: string }>
   { key: "bsb", label: "BSB", styleKey: "bsbTag" },
   { key: "speedway", label: "SPEEDWAY", styleKey: "speedwayTag" },
   { key: "gtwce", label: "GTWCE", styleKey: "gtwceTag" },
+  { key: "iomtt", label: "IoMTT", styleKey: "iomttTag" },
 ];
 
 export const CalendarLegend = ({

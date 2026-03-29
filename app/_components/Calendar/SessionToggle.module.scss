@@ -187,6 +187,7 @@
 .speedway {}
 .f1 {}
 .gtwce {}
+.iomtt {}
 
 .groupButtonActive {
   color: #fff;
@@ -220,6 +221,12 @@
 .groupButtonActive.gtwce {
   background: var(--gtwce-gold);
   border-color: var(--gtwce-gold);
+  color: #171717;
+}
+
+.groupButtonActive.iomtt {
+  background: var(--iomtt-amber);
+  border-color: var(--iomtt-amber);
   color: #171717;
 }
 

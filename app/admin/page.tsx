@@ -214,6 +214,7 @@ type ButtonKey =
   | "scrape-f1"
   | "scrape-speedway"
   | "scrape-gtwce"
+  | "scrape-iomtt"
   | "scrape-nls"
   | "scrape-all"
   | "motogp-results";
@@ -283,6 +284,12 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       hint: "scrape:gtwce",
     },
     {
+      key: "scrape-iomtt",
+      label: "Isle of Man TT",
+      path: "/admin/scrape/iomtt",
+      hint: "scrape:iomtt",
+    },
+    {
       key: "scrape-nls",
       label: "NLS",
       path: "/admin/scrape/nls",
@@ -292,7 +299,7 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       key: "scrape-all",
       label: "Scrape All",
       path: "/admin/scrape/all",
-      hint: "bsb + wsbk + f1 + speedway + gtwce + nls",
+      hint: "bsb + wsbk + f1 + speedway + gtwce + iomtt + nls",
     },
   ];
 

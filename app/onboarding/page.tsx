@@ -23,6 +23,7 @@ const CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: string }> = {
   speedway: { abbr: "SGP", subtitle: "Grand Prix" },
   f1:       { abbr: "F1",  subtitle: "Single Seater" },
   gtwce:    { abbr: "GT",  subtitle: "GT3 / GT4" },
+  iomtt:    { abbr: "IoMTT",  subtitle: "Road Racing" },
   nls:      { abbr: "NLS", subtitle: "Endurance" },
 };
 
