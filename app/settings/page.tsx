@@ -43,6 +43,7 @@ export default function SettingsPage() {
   const [subscribed, setSubscribed] = useState<Set<SeriesKey>>(new Set());
   const [disabledSubSeries, setDisabledSubSeries] = useState<Set<SubSeriesKey>>(new Set());
   const [calendarView, setCalendarView] = useState<CalendarView>("rounds");
+  const [showMotoGPChampionship, setShowMotoGPChampionship] = useState(true);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null);
@@ -60,6 +61,9 @@ export default function SettingsPage() {
         setSubscribed(new Set(series));
         setDisabledSubSeries(new Set(disabled));
         if (prefs.calendarView) setCalendarView(prefs.calendarView);
+        if (typeof prefs.showMotoGPChampionship === "boolean") {
+          setShowMotoGPChampionship(prefs.showMotoGPChampionship);
+        }
         setLoading(false);
       }
     );
@@ -67,6 +71,7 @@ export default function SettingsPage() {
 
   const isCardSelected = (parentKey: SeriesKey, subKey: SubSeriesKey) =>
     subscribed.has(parentKey) && !disabledSubSeries.has(subKey);
+  const showMotoGPChampionshipPreference = subscribed.has("motogp");
 
   const toggleCard = (parentKey: SeriesKey, subKey: SubSeriesKey) => {
     const selected = isCardSelected(parentKey, subKey);
@@ -105,6 +110,7 @@ export default function SettingsPage() {
         savePreferences({
           calendarView,
           disabledSubSeries: Array.from(disabledSubSeries) as SubSeriesKey[],
+          showMotoGPChampionship,
         }),
       ]);
       showToast("Settings saved.", true);
@@ -161,6 +167,30 @@ export default function SettingsPage() {
               </span>
             </button>
           </div>
+
+          {showMotoGPChampionshipPreference && (
+            <div className={style.prefRow}>
+              <div className={style.prefLabel}>
+                <span className={style.prefLabelText}>MotoGP Championship</span>
+                <span className={style.prefLabelSub}>
+                  Show or hide the MotoGP standings card on your dashboard
+                </span>
+              </div>
+              <button
+                type="button"
+                className={`${style.prefSwitch} ${showMotoGPChampionship ? style.prefSwitchOn : ""}`}
+                onClick={() => setShowMotoGPChampionship((value) => !value)}
+                role="switch"
+                aria-checked={showMotoGPChampionship}
+              >
+                <span className={style.prefSwitchThumb} />
+                <span className={style.prefSwitchLabels}>
+                  <span>Off</span>
+                  <span>On</span>
+                </span>
+              </button>
+            </div>
+          )}
         </section>
 
         <section className={style.section}>

@@ -7,6 +7,7 @@ export interface DashboardData {
   today: ApiCalendarEvent[];
   thisWeekend: ApiCalendarEvent[];
   subscribedSeries: string[];
+  showMotoGPChampionship: boolean;
 }
 
 const EMPTY: DashboardData = {
@@ -15,6 +16,7 @@ const EMPTY: DashboardData = {
   today: [],
   thisWeekend: [],
   subscribedSeries: [],
+  showMotoGPChampionship: true,
 };
 
 export async function getDashboardData(): Promise<DashboardData> {
@@ -28,6 +30,7 @@ export async function getDashboardData(): Promise<DashboardData> {
       today: data.today ?? [],
       thisWeekend: data.thisWeekend ?? [],
       subscribedSeries: data.subscribedSeries ?? [],
+      showMotoGPChampionship: data.showMotoGPChampionship ?? true,
     };
   } catch {
     return EMPTY;

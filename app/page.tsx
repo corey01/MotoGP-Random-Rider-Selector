@@ -9,7 +9,14 @@ import { getDashboardData, type DashboardData } from "@/utils/getDashboardData";
 import { ChampionshipStandings } from "./_components/Dashboard/ChampionshipStandings";
 import style from "./Dashboard.module.scss";
 
-const EMPTY: DashboardData = { nextRace: null, nextPerSeries: [], today: [], thisWeekend: [], subscribedSeries: [] };
+const EMPTY: DashboardData = {
+  nextRace: null,
+  nextPerSeries: [],
+  today: [],
+  thisWeekend: [],
+  subscribedSeries: [],
+  showMotoGPChampionship: true,
+};
 
 export default function DashboardPage() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -35,7 +42,7 @@ export default function DashboardPage() {
     <div className={style.page}>
       <LiveSection events={data.today} />
       <NextRaceStrip races={data.nextPerSeries} />
-      <ChampionshipStandings series="motogp" />
+      {data.showMotoGPChampionship && <ChampionshipStandings series="motogp" />}
       <WeekendFeed events={data.thisWeekend} />
     </div>
   );

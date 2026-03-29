@@ -207,6 +207,7 @@ type ButtonKey =
   | "motogp-events"
   | "motogp-riders"
   | "motogp-grid"
+  | "standings-refresh"
   | "scrape-bsb"
   | "scrape-wsbk"
   | "wsbk-riders"
@@ -248,6 +249,12 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       label: "MotoGP Results",
       path: "/admin/sync/results",
       hint: "motogp:results-sync",
+    },
+    {
+      key: "standings-refresh",
+      label: "MotoGP Standings",
+      path: "/admin/sync/standings",
+      hint: "clears standings cache",
     },
     { key: "scrape-bsb", label: "BSB", path: "/admin/scrape/bsb", hint: "scrape:bsb" },
     {

@@ -5,6 +5,7 @@ export interface UserPreferences {
   sessionView?: "races" | "all";
   calendarView?: "rounds" | "events";
   disabledSubSeries?: SubSeriesKey[];
+  showMotoGPChampionship?: boolean;
 }
 
 export async function fetchPreferences(): Promise<UserPreferences> {
