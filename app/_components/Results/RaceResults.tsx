@@ -10,35 +10,47 @@ const SESSION_LABEL: Record<string, string> = {
   RAC: "Race Result",
   SPR: "Sprint Result",
 };
+const COLLAPSED_COUNT = 3;
+
+function ToggleIcon() {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      fill="none"
+      aria-hidden="true"
+      className={style.toggleIcon}
+    >
+      <path d="M5 6.5L10 11.5L15 6.5" />
+      <path d="M5 10.5L10 15.5L15 10.5" />
+    </svg>
+  );
+}
 
 const isDNF = (item: RaceResultItem) => item.position === null;
+const isWinner = (item: RaceResultItem) => item.position === 1;
 
-function formatGap(item: RaceResultItem): string {
+function formatGap(item: RaceResultItem, leaderLaps: number | null): string {
   if (isDNF(item)) return "DNF";
-  if (!item.gapFirst || item.gapFirst === "0.000") return "WINNER";
-  return `+${item.gapFirst}`;
+  if (isWinner(item)) return "WINNER";
+
+  if (
+    leaderLaps != null &&
+    item.totalLaps != null &&
+    item.totalLaps < leaderLaps
+  ) {
+    const lapsDown = leaderLaps - item.totalLaps;
+    return `+${lapsDown} lap${lapsDown === 1 ? "" : "s"}`;
+  }
+
+  if (item.gapFirst) return `+${item.gapFirst}`;
+
+  return "";
 }
 
-function safeAccent(hex: string | null): string {
-  if (!hex) return "#444";
-  const h = hex.replace("#", "");
-  if (h.length !== 6) return hex;
-  const r = parseInt(h.slice(0, 2), 16) / 255;
-  const g = parseInt(h.slice(2, 4), 16) / 255;
-  const b = parseInt(h.slice(4, 6), 16) / 255;
-  const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  if (lum < 0.4) return hex;
-  const darken = (channel: number) =>
-    Math.round(channel * 0.5 + 34)
-      .toString(16)
-      .padStart(2, "0");
-  return `#${darken(parseInt(h.slice(0, 2), 16))}${darken(parseInt(h.slice(2, 4), 16))}${darken(parseInt(h.slice(4, 6), 16))}`;
-}
-
-function ResultRow({ item }: { item: RaceResultItem }) {
-  const portrait = item.pictures?.portrait ?? item.pictures?.profile;
-  const gap = formatGap(item);
-  const isWinner = gap === "WINNER";
+function ResultRow({ item, leaderLaps }: { item: RaceResultItem; leaderLaps: number | null }) {
+  const portrait = item.pictures?.portrait ?? item.pictures?.profile ?? null;
+  const gap = formatGap(item, leaderLaps);
+  const winner = isWinner(item);
   const dnf = isDNF(item);
   const accentColor = safeAccent(item.teamColor);
   const numberBackground = "#262626";
@@ -56,7 +68,7 @@ function ResultRow({ item }: { item: RaceResultItem }) {
       }
     >
       <div
-        className={`${style.position} ${isWinner ? style.positionWinner : ""} ${
+        className={`${style.position} ${winner ? style.positionWinner : ""} ${
           dnf ? style.positionDnf : ""
         }`}
       >
@@ -87,7 +99,7 @@ function ResultRow({ item }: { item: RaceResultItem }) {
       <div className={style.rightRail}>
         <div className={style.points}>{item.points > 0 ? `${item.points} pts` : ""}</div>
         <div
-          className={`${style.gap} ${isWinner ? style.gapWinner : ""} ${dnf ? style.gapDnf : ""}`}
+          className={`${style.gap} ${winner ? style.gapWinner : ""} ${dnf ? style.gapDnf : ""}`}
         >
           {gap}
         </div>
@@ -96,23 +108,56 @@ function ResultRow({ item }: { item: RaceResultItem }) {
   );
 }
 
-function SessionResults({ label, items }: { label: string; items: RaceResultItem[] }) {
+function SessionResults({
+  label,
+  items,
+  collapsed,
+}: {
+  label: string;
+  items: RaceResultItem[];
+  collapsed: boolean;
+}) {
+  const leaderLaps = items.find((item) => isWinner(item))?.totalLaps ?? null;
+  const visibleItems = collapsed ? items.slice(0, COLLAPSED_COUNT) : items;
+
   return (
     <div className={style.session}>
       <h3 className={style.sessionTitle}>{label}</h3>
-      {items.map((item, index) => (
-        <ResultRow key={item.riderExternalId ?? `${label}-${index}`} item={item} />
+      {visibleItems.map((item, index) => (
+        <ResultRow
+          key={item.riderExternalId ?? `${label}-${index}`}
+          item={item}
+          leaderLaps={leaderLaps}
+        />
       ))}
     </div>
   );
 }
 
+function safeAccent(hex: string | null): string {
+  if (!hex) return "#444";
+  const h = hex.replace("#", "");
+  if (h.length !== 6) return hex;
+  const r = parseInt(h.slice(0, 2), 16) / 255;
+  const g = parseInt(h.slice(2, 4), 16) / 255;
+  const b = parseInt(h.slice(4, 6), 16) / 255;
+  const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  if (lum < 0.4) return hex;
+  const darken = (channel: number) =>
+    Math.round(channel * 0.5 + 34)
+      .toString(16)
+      .padStart(2, "0");
+  return `#${darken(parseInt(h.slice(0, 2), 16))}${darken(parseInt(h.slice(2, 4), 16))}${darken(parseInt(h.slice(4, 6), 16))}`;
+}
+
 export function RaceResults({ roundId }: { roundId: number }) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<RaceResultsData | null>(null);
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     let alive = true;
+    setExpanded(false);
     fetchRaceResults(roundId)
       .then((result) => {
         if (alive) {
@@ -136,12 +181,29 @@ export function RaceResults({ roundId }: { roundId: number }) {
   const sessionKeys = Object.keys(data.sessions).sort(
     (a, b) => sessionOrder.indexOf(a) - sessionOrder.indexOf(b)
   );
+  const canExpand = sessionKeys.some((key) => (data.sessions[key]?.length ?? 0) > COLLAPSED_COUNT);
 
   return (
     <div className={style.root}>
       {sessionKeys.map((key) => (
-        <SessionResults key={key} label={SESSION_LABEL[key] ?? key} items={data.sessions[key]} />
+        <SessionResults
+          key={key}
+          label={SESSION_LABEL[key] ?? key}
+          items={data.sessions[key]}
+          collapsed={!expanded}
+        />
       ))}
+      {canExpand && (
+        <button
+          type="button"
+          className={style.toggle}
+          onClick={() => setExpanded((current) => !current)}
+          aria-expanded={expanded}
+          aria-label={expanded ? "Collapse classification preview" : "Expand full classification"}
+        >
+          <ToggleIcon />
+        </button>
+      )}
     </div>
   );
 }
