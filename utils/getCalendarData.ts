@@ -3,6 +3,10 @@
 export type CalendarView = "rounds" | "events";
 export type SessionView = "races" | "all";
 
+import {
+  getMotoGPSpecialSubSeriesLabel,
+  normalizeMotoGPSubSeriesSlug,
+} from "@/consts/series";
 import { fetchWithAuth, getAccessToken } from "./auth";
 
 // Mirrors the shape returned by GET /calendar-events
@@ -120,12 +124,12 @@ const SESSION_SERIES_PREFIX: Record<string, string> = {
   moto2: "Moto2",
   moto3: "Moto3",
   bsb: "BSB",
-  baggers: "Baggers",
   speedway: "Speedway",
   f1: "F1",
   gtwce: "GT WCE",
   iomtt: "IoMTT",
   nls: "NLS",
+  rookiescup: "Rookies Cup",
 };
 
 const ROUND_SERIES_PREFIX: Record<string, string> = {
@@ -138,23 +142,48 @@ const ROUND_SERIES_PREFIX: Record<string, string> = {
   worldwcr: "WSBK",
   worldspb: "WSBK",
   bsb: "BSB",
-  baggers: "Baggers",
   speedway: "Speedway",
   f1: "F1",
   gtwce: "GT WCE",
   iomtt: "IoMTT",
   nls: "NLS",
+  rookiescup: "Rookies Cup",
 };
 
-const prefixSessionTitle = (title: string, subSeries: string): string => {
-  const prefix = SESSION_SERIES_PREFIX[subSeries];
+const SPECIAL_MOTOGP_TITLE_PATTERN = /\b(?:king\s+of\s+the\s+baggers|baggers)\b/i;
+
+const normalizeSeriesSlug = (value?: string | null) =>
+  String(value ?? "").trim().toLowerCase();
+
+const normalizeCalendarSubSeries = (subSeries?: string | null, series?: string | null) => {
+  const normalizedSeries = normalizeSeriesSlug(series);
+  const fallback = normalizeSeriesSlug(subSeries ?? series);
+  if (normalizedSeries !== "motogp") return fallback;
+
+  const normalized = normalizeMotoGPSubSeriesSlug(subSeries ?? series);
+  return getMotoGPSpecialSubSeriesLabel(normalized) ? "motogp" : normalized;
+};
+
+const getMotoGPSpecialTitleLabel = (value?: string | null) =>
+  SPECIAL_MOTOGP_TITLE_PATTERN.test(String(value ?? ""))
+    ? "King of the Baggers"
+    : null;
+
+const prefixSessionTitle = (title: string, subSeries: string, series: string): string => {
+  const specialLabel = getMotoGPSpecialSubSeriesLabel(subSeries) ?? getMotoGPSpecialTitleLabel(title);
+  if (specialLabel) {
+    if (title.toLowerCase().includes(specialLabel.toLowerCase())) return title;
+    return `${specialLabel} - ${title}`;
+  }
+
+  const prefix = SESSION_SERIES_PREFIX[normalizeCalendarSubSeries(subSeries, series)];
   if (!prefix) return title;
   if (title.toLowerCase().startsWith(`${prefix.toLowerCase()} - `)) return title;
   return `${prefix} - ${title}`;
 };
 
 const prefixRoundTitle = (title: string, subSeries: string, series: string): string => {
-  const prefix = ROUND_SERIES_PREFIX[subSeries] ?? ROUND_SERIES_PREFIX[series];
+  const prefix = ROUND_SERIES_PREFIX[normalizeCalendarSubSeries(subSeries, series)] ?? ROUND_SERIES_PREFIX[series];
   if (!prefix) return title;
   if (title.toLowerCase().startsWith(`${prefix.toLowerCase()} - `)) return title;
   return `${prefix} - ${title}`;
@@ -175,6 +204,7 @@ const CLASS_MAP: Record<string, string> = {
   gtwce: "gtwce-event",
   iomtt: "iomtt-event",
   nls: "nls-event",
+  rookiescup: "rookiescup-event",
 };
 
 const getBaseUrl = () => {
@@ -324,8 +354,8 @@ const toCalendarSession = (event: RawCalendarSession): CalendarSession => ({
   start: String(event.start ?? ""),
   end: event.end ?? null,
   timezone: String(event.timezone ?? "UTC"),
-  series: String(event.series ?? ""),
-  subSeries: String(event.subSeries ?? event.series ?? ""),
+  series: normalizeSeriesSlug(event.series),
+  subSeries: normalizeCalendarSubSeries(event.subSeries, event.series),
   type: String(event.type ?? ""),
   status: String(event.status ?? ""),
 });
@@ -342,8 +372,11 @@ const toCalendarRound = (
     id: Number(round.id ?? round.roundId ?? 0),
     externalId: round.externalId ?? null,
     name: String(round.name ?? round.roundName ?? firstEvent?.title ?? ""),
-    series: String(round.series ?? firstEvent?.series ?? ""),
-    subSeries: String(round.subSeries ?? firstEvent?.subSeries ?? firstEvent?.series ?? round.series ?? ""),
+    series: normalizeSeriesSlug(round.series ?? firstEvent?.series),
+    subSeries: normalizeCalendarSubSeries(
+      round.subSeries ?? firstEvent?.subSeries,
+      round.series ?? firstEvent?.series
+    ),
     place: round.place ?? null,
     startDate: String(
       round.startDate ??
@@ -557,11 +590,11 @@ export function toFullCalendarSessionEvent(
   session: CalendarSession,
   round: CalendarRound
 ): CalendarRoundEvent {
-  const subSeries = String(session.subSeries || round.subSeries || round.series || "").toLowerCase();
-  const series = String(session.series || round.series || "").toLowerCase();
+  const series = normalizeSeriesSlug(session.series || round.series);
+  const subSeries = normalizeCalendarSubSeries(session.subSeries || round.subSeries, series);
 
   return {
-    title: prefixSessionTitle(session.sessionName || session.title || session.type, subSeries),
+    title: prefixSessionTitle(session.sessionName || session.title || session.type, session.subSeries, series),
     start: session.start,
     end: session.end ?? undefined,
     allDay: false,
@@ -589,13 +622,13 @@ export function toFullCalendarSessionEvent(
 }
 
 export function toFullCalendarRoundEvent(round: CalendarRound): CalendarRoundEvent {
-  const subSeries = String(round.subSeries || round.series || "").toLowerCase();
-  const series = String(round.series || "").toLowerCase();
+  const series = normalizeSeriesSlug(round.series);
+  const subSeries = normalizeCalendarSubSeries(round.subSeries, round.series);
   const baseClassName = CLASS_MAP[subSeries] ?? CLASS_MAP[series] ?? `${series}-event`;
   const isSingleDayRound = round.startDate === round.endDate;
 
   return {
-    title: prefixRoundTitle(round.name, subSeries, series),
+    title: prefixRoundTitle(round.name, round.subSeries, series),
     start: round.startDate,
     end: toExclusiveEndDate(round.endDate),
     allDay: true,

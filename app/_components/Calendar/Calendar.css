@@ -219,6 +219,12 @@
   --event-text: #f0f0f0;
 }
 
+.round-calendar-bar.rookiescup-event {
+  background: var(--rookiescup-teal);
+  --event-accent: color-mix(in srgb, var(--rookiescup-teal) 72%, white);
+  --event-text: #171717;
+}
+
 .fc {
   max-width: 100%;
   width: 100%;
@@ -541,6 +547,12 @@
   background: var(--nls-green) !important;
   --event-accent: color-mix(in srgb, var(--nls-green) 72%, white);
   --event-text: #f0f0f0;
+}
+
+.fc-event.rookiescup-event {
+  background: var(--rookiescup-teal) !important;
+  --event-accent: color-mix(in srgb, var(--rookiescup-teal) 72%, white);
+  --event-text: #171717;
 }
 
 .fc .fc-view-harness {

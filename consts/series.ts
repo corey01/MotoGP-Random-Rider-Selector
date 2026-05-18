@@ -1,10 +1,9 @@
-export type SeriesKey = "motogp" | "wsbk" | "bsb" | "speedway" | "f1" | "gtwce" | "iomtt" | "nls";
+export type SeriesKey = "motogp" | "wsbk" | "bsb" | "speedway" | "f1" | "gtwce" | "iomtt" | "nls" | "rookiescup";
 
 export type SubSeriesKey =
   | "motogp"
   | "moto2"
   | "moto3"
-  | "baggers"
   | "worldsbk"
   | "worldssp"
   | "worldwcr"
@@ -14,7 +13,8 @@ export type SubSeriesKey =
   | "f1"
   | "gtwce"
   | "iomtt"
-  | "nls";
+  | "nls"
+  | "rookiescup";
 
 export type SeriesGroup = {
   key: SeriesKey;
@@ -30,7 +30,6 @@ export const SERIES_GROUPS: SeriesGroup[] = [
       { key: "motogp", label: "MotoGP" },
       { key: "moto2", label: "Moto2" },
       { key: "moto3", label: "Moto3" },
-      { key: "baggers", label: "Baggers" },
     ],
   },
   {
@@ -73,13 +72,17 @@ export const SERIES_GROUPS: SeriesGroup[] = [
     label: "NLS",
     children: [{ key: "nls", label: "NLS" }],
   },
+  {
+    key: "rookiescup",
+    label: "Rookies Cup",
+    children: [{ key: "rookiescup", label: "Red Bull Rookies Cup" }],
+  },
 ];
 
 export const DEFAULT_SUB_SERIES_VISIBILITY: Record<SubSeriesKey, boolean> = {
   motogp: true,
   moto2: true,
   moto3: true,
-  baggers: true,
   worldsbk: true,
   worldssp: true,
   worldwcr: true,
@@ -90,6 +93,7 @@ export const DEFAULT_SUB_SERIES_VISIBILITY: Record<SubSeriesKey, boolean> = {
   gtwce: true,
   iomtt: true,
   nls: true,
+  rookiescup: true,
 };
 
 export const SERIES_LABELS: Record<string, string> = {
@@ -101,6 +105,7 @@ export const SERIES_LABELS: Record<string, string> = {
   gtwce: "GT World Challenge",
   iomtt: "Isle of Man TT",
   nls: "Nürburgring Langstrecken-Serie",
+  rookiescup: "Red Bull Rookies Cup",
 };
 
 export const SERIES_SHORT_LABELS: Record<string, string> = {
@@ -112,13 +117,18 @@ export const SERIES_SHORT_LABELS: Record<string, string> = {
   gtwce: "GTWCE",
   iomtt: "IoMTT",
   nls: "NLS",
+  rookiescup: "Rookies Cup",
 };
 
 export const SUB_SERIES_LABELS: Record<string, string> = {
   motogp: "MotoGP",
   moto2: "Moto2",
   moto3: "Moto3",
-  baggers: "Baggers",
+  baggers: "King of the Baggers",
+  baggerscup: "King of the Baggers",
+  bwc: "King of the Baggers",
+  kingofthebaggers: "King of the Baggers",
+  missionkingofthebaggers: "King of the Baggers",
   worldsbk: "WorldSBK",
   worldssp: "WorldSSP",
   worldwcr: "WorldWCR",
@@ -129,6 +139,7 @@ export const SUB_SERIES_LABELS: Record<string, string> = {
   gtwce: "GT World Challenge",
   iomtt: "Isle of Man TT",
   nls: "NLS",
+  rookiescup: "Red Bull Rookies Cup",
 };
 
 export const SUB_SERIES_SHORT_LABELS: Record<string, string> = {
@@ -137,13 +148,18 @@ export const SUB_SERIES_SHORT_LABELS: Record<string, string> = {
   gtwce: "GTWCE",
   iomtt: "IoMTT",
   nls: "NLS",
+  rookiescup: "Redbull Rookies",
 };
 
 export const ROUND_SERIES_LABELS: Record<string, string> = {
   motogp: "MotoGP",
   moto2: "Moto2",
   moto3: "Moto3",
-  baggers: "Baggers",
+  baggers: "MotoGP",
+  baggerscup: "MotoGP",
+  bwc: "MotoGP",
+  kingofthebaggers: "MotoGP",
+  missionkingofthebaggers: "MotoGP",
   wsbk: "WSBK",
   worldsbk: "WSBK",
   worldssp: "WSBK",
@@ -155,6 +171,7 @@ export const ROUND_SERIES_LABELS: Record<string, string> = {
   gtwce: "GTWCE",
   iomtt: "IoMTT",
   nls: "NLS",
+  rookiescup: "Rookies",
 };
 
 export const SERIES_COLORS: Record<string, string> = {
@@ -166,7 +183,37 @@ export const SERIES_COLORS: Record<string, string> = {
   gtwce: "var(--gtwce-gold)",
   iomtt: "var(--iomtt-amber)",
   nls: "var(--nls-green)",
+  rookiescup: "var(--rookiescup-teal)",
 };
 
 export const seriesChildren = (series: SeriesKey) =>
   SERIES_GROUPS.find((group) => group.key === series)?.children || [];
+
+export const SELECTABLE_SUB_SERIES_KEYS = new Set<SubSeriesKey>(
+  SERIES_GROUPS.flatMap((group) => group.children.map((child) => child.key))
+);
+
+const MOTOGP_SPECIAL_SUB_SERIES_LABELS: Record<string, string> = {
+  baggers: "King of the Baggers",
+  baggerscup: "King of the Baggers",
+  bwc: "King of the Baggers",
+  kingofthebaggers: "King of the Baggers",
+  missionkingofthebaggers: "King of the Baggers",
+};
+
+export function isSelectableSubSeriesKey(value: string): value is SubSeriesKey {
+  return SELECTABLE_SUB_SERIES_KEYS.has(value as SubSeriesKey);
+}
+
+export function normalizeMotoGPSubSeriesSlug(value?: string | null): string {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "");
+}
+
+export function getMotoGPSpecialSubSeriesLabel(value?: string | null): string | null {
+  const normalized = normalizeMotoGPSubSeriesSlug(value);
+  if (!normalized) return null;
+  return MOTOGP_SPECIAL_SUB_SERIES_LABELS[normalized] ?? null;
+}

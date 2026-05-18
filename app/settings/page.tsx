@@ -14,7 +14,6 @@ const CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: string }> = {
   motogp:   { abbr: "GP",  subtitle: "Premier Class" },
   moto2:    { abbr: "M2",  subtitle: "Intermediate" },
   moto3:    { abbr: "M3",  subtitle: "Lightweight" },
-  baggers:  { abbr: "BAG", subtitle: "Bagger Racing" },
   worldsbk: { abbr: "SBK", subtitle: "Superbike" },
   worldssp: { abbr: "SSP", subtitle: "Supersport" },
   worldwcr: { abbr: "WCR", subtitle: "Women's Cup" },
@@ -25,6 +24,7 @@ const CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: string }> = {
   gtwce:    { abbr: "GT",  subtitle: "GT3 / GT4" },
   iomtt:    { abbr: "IoMTT",  subtitle: "Road Racing" },
   nls:      { abbr: "NLS", subtitle: "Endurance" },
+  rookiescup: { abbr: "RRC", subtitle: "Junior Grand Prix" },
 };
 
 const ALL_CARDS = SERIES_GROUPS.flatMap((group) =>

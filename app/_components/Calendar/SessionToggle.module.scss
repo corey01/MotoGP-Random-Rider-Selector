@@ -188,6 +188,8 @@
 .f1 {}
 .gtwce {}
 .iomtt {}
+.nls {}
+.rookiescup {}
 
 .groupButtonActive {
   color: #fff;
@@ -227,6 +229,17 @@
 .groupButtonActive.iomtt {
   background: var(--iomtt-amber);
   border-color: var(--iomtt-amber);
+  color: #171717;
+}
+
+.groupButtonActive.nls {
+  background: var(--nls-green);
+  border-color: var(--nls-green);
+}
+
+.groupButtonActive.rookiescup {
+  background: var(--rookiescup-teal);
+  border-color: var(--rookiescup-teal);
   color: #171717;
 }
 

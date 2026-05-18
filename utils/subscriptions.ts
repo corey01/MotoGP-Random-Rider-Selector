@@ -1,5 +1,5 @@
 import { fetchWithAuth } from "./auth";
-import type { SeriesKey, SubSeriesKey } from "@/consts/series";
+import { isSelectableSubSeriesKey, type SeriesKey, type SubSeriesKey } from "@/consts/series";
 import { savePreferences } from "./preferences";
 
 export async function fetchSubscriptions(): Promise<SeriesKey[]> {
@@ -38,7 +38,11 @@ export async function fetchDisabledSubSeries(): Promise<SubSeriesKey[]> {
     if (!res.ok) return [];
     const data = await res.json();
     const disabled = data?.preferences?.disabledSubSeries;
-    if (Array.isArray(disabled)) return disabled as SubSeriesKey[];
+    if (Array.isArray(disabled)) {
+      return disabled
+        .map((value) => String(value).trim().toLowerCase())
+        .filter(isSelectableSubSeriesKey);
+    }
     return [];
   } catch {
     return [];
