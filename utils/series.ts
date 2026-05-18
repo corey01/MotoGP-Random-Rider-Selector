@@ -1,4 +1,5 @@
 import {
+  getMotoGPSpecialSubSeriesLabel,
   ROUND_SERIES_LABELS,
   SERIES_COLORS,
   SERIES_LABELS,
@@ -6,6 +7,7 @@ import {
   SUB_SERIES_LABELS,
   SUB_SERIES_SHORT_LABELS,
 } from "@/consts/series";
+import type { SessionMetadata } from "@/utils/getCalendarData";
 
 export type SeriesLabelVariant = "full" | "short" | "round";
 
@@ -34,6 +36,21 @@ export function getSeriesDisplayLabel(
   }
 
   return fallback ?? normalized.toUpperCase();
+}
+
+export function getSessionSeriesDisplayLabel(input: {
+  series?: string | null;
+  subSeries?: string | null;
+  metadata?: SessionMetadata | null;
+}, options: { variant?: SeriesLabelVariant; fallback?: string } = {}): string {
+  const specialLabel = getMotoGPSpecialSubSeriesLabel(
+    input.metadata?.motogp?.categoryName
+      ?? input.metadata?.motogp?.categoryAcronym
+      ?? input.metadata?.motogp?.categorySlug
+  );
+
+  if (specialLabel) return specialLabel;
+  return getSeriesDisplayLabel(input.subSeries ?? input.series, options);
 }
 
 export function getSeriesColor(value?: string | null, fallback = "var(--kc-primary)"): string {

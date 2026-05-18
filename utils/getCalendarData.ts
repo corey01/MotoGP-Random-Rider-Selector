@@ -9,6 +9,15 @@ import {
 } from "@/consts/series";
 import { fetchWithAuth, getAccessToken } from "./auth";
 
+export interface SessionMetadata {
+  motogp?: {
+    categoryId?: string | null;
+    categoryAcronym?: string | null;
+    categoryName?: string | null;
+    categorySlug?: string | null;
+  } | null;
+}
+
 // Mirrors the shape returned by GET /calendar-events
 export interface ApiCalendarEvent {
   id: string;
@@ -21,6 +30,7 @@ export interface ApiCalendarEvent {
   subSeries: string;
   type: string;
   status: string;
+  metadata?: SessionMetadata | null;
   round: {
     id: number;
     name: string;
@@ -48,6 +58,7 @@ export interface CalendarSession {
   subSeries: string;
   type: string;
   status: string;
+  metadata?: SessionMetadata | null;
 }
 
 export interface CalendarRound {
@@ -321,6 +332,7 @@ type RawCalendarSession = {
   subSeries?: string;
   type?: string;
   status?: string;
+  metadata?: SessionMetadata | null;
 };
 
 const toDateOnly = (value?: string | null) => String(value || "").slice(0, 10);
@@ -358,6 +370,7 @@ const toCalendarSession = (event: RawCalendarSession): CalendarSession => ({
   subSeries: normalizeCalendarSubSeries(event.subSeries, event.series),
   type: String(event.type ?? ""),
   status: String(event.status ?? ""),
+  metadata: event.metadata ?? null,
 });
 
 const toCalendarRound = (
@@ -592,9 +605,18 @@ export function toFullCalendarSessionEvent(
 ): CalendarRoundEvent {
   const series = normalizeSeriesSlug(session.series || round.series);
   const subSeries = normalizeCalendarSubSeries(session.subSeries || round.subSeries, series);
+  const specialLabel = getMotoGPSpecialSubSeriesLabel(
+    session.metadata?.motogp?.categoryName
+      ?? session.metadata?.motogp?.categoryAcronym
+      ?? session.metadata?.motogp?.categorySlug
+  );
 
   return {
-    title: prefixSessionTitle(session.sessionName || session.title || session.type, session.subSeries, series),
+    title: prefixSessionTitle(
+      session.sessionName || session.title || session.type,
+      specialLabel ?? session.subSeries,
+      series,
+    ),
     start: session.start,
     end: session.end ?? undefined,
     allDay: false,

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { format, parseISO } from "date-fns";
 import type { CalendarRound, CalendarSession } from "@/utils/getCalendarData";
-import { getSeriesColor, getSeriesDisplayLabel } from "@/utils/series";
+import { getSeriesColor, getSessionSeriesDisplayLabel } from "@/utils/series";
 import { getDeviceTimezoneLabel } from "@/utils/timezone";
 import style from "./EventDetailPanel.module.scss";
 
@@ -104,7 +104,7 @@ function formatRoundRange(round: CalendarRound): string {
 export function EventDetailPanel({ session, round, onClose }: EventDetailPanelProps) {
   const subSeries = session.subSeries || round.subSeries || round.series;
   const seriesColor = getSeriesColor(round.series);
-  const seriesLabel = getSeriesDisplayLabel(subSeries);
+  const seriesLabel = getSessionSeriesDisplayLabel(session, { fallback: subSeries });
   const typeLabel = TYPE_LABELS[session.type] ?? session.type;
   const isRace = session.type === "RACE";
 

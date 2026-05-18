@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { format, parseISO } from "date-fns";
 import { type ApiCalendarEvent } from "@/utils/getCalendarData";
-import { getSeriesDisplayLabel } from "@/utils/series";
+import { getSeriesDisplayLabel, getSessionSeriesDisplayLabel } from "@/utils/series";
 import style from "./NextRaceStrip.module.scss";
 
 function getSecondsLeft(target: string): number {
@@ -34,7 +34,7 @@ function RaceCard({ race }: { race: ApiCalendarEvent }) {
 
   const isToday = new Date(race.start).toDateString() === new Date().toDateString();
   const hasSubSeries = race.subSeries !== race.series;
-  const badgeLabel = getSeriesDisplayLabel(hasSubSeries ? race.subSeries : race.series, {
+  const badgeLabel = getSessionSeriesDisplayLabel(race, {
     variant: hasSubSeries ? "full" : "short",
     fallback: hasSubSeries ? race.subSeries : race.series.toUpperCase(),
   });

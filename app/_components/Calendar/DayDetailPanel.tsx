@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { format, parseISO } from "date-fns";
 import type { CalendarRound, CalendarSession } from "@/utils/getCalendarData";
-import { getSeriesColor, getSeriesDisplayLabel } from "@/utils/series";
+import { getSeriesColor, getSeriesDisplayLabel, getSessionSeriesDisplayLabel } from "@/utils/series";
 import { getDeviceTimezoneLabel } from "@/utils/timezone";
 import style from "./DayDetailPanel.module.scss";
 
@@ -78,7 +78,7 @@ const formatDayLabel = (dayKey: string) => {
 };
 
 const getSessionDisplayName = (session: CalendarSession) => {
-  const seriesLabel = getSeriesDisplayLabel(session.subSeries);
+  const seriesLabel = getSessionSeriesDisplayLabel(session);
   const sessionName = session.sessionName?.trim();
 
   if (!sessionName) return seriesLabel;

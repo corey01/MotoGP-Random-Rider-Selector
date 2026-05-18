@@ -9,7 +9,7 @@ import {
   type CalendarRound,
   type CalendarSession,
 } from "@/utils/getCalendarData";
-import { getSeriesColor, getSeriesDisplayLabel } from "@/utils/series";
+import { getSeriesColor, getSeriesDisplayLabel, getSessionSeriesDisplayLabel } from "@/utils/series";
 import { getCurrentGmtOffsetLabel } from "@/utils/timezone";
 import { EventDetailPanel } from "@/app/_components/Calendar/EventDetailPanel";
 import style from "./WeekendFeed.module.scss";
@@ -244,7 +244,7 @@ export function WeekendFeed({ events }: WeekendFeedProps) {
                     const showNowLine = prevPast && !past && !active;
 
                     const seriesColor = getSeriesColor(ev.series, "#555");
-                    const subLabel = getSeriesDisplayLabel(ev.subSeries, { variant: "short" });
+                    const subLabel = getSessionSeriesDisplayLabel(ev, { variant: "short", fallback: ev.subSeries });
                     const prefix = `${subLabel} - `;
                     const rawSession = ev.sessionName || ev.type;
                     const sessionLabel = rawSession.startsWith(prefix)
