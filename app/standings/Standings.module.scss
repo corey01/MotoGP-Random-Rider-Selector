@@ -1,0 +1,73 @@
+.page {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--kc-text-2);
+  font-size: 13px;
+  text-decoration: none;
+  &:visited { color: var(--kc-text-2); }
+  &:hover { color: var(--kc-primary); }
+  &:focus-visible { outline: 2px solid var(--kc-primary); outline-offset: 4px; }
+}
+.hero {
+  padding: 32px 0;
+  h1 { margin: 10px 0 14px; font-size: clamp(32px, 4vw, 52px); line-height: 1.1; letter-spacing: -0.045em; }
+}
+.eyebrow {
+  margin: 0;
+  color: var(--kc-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  font-size: 11px;
+}
+.intro { margin: 0; color: var(--kc-text-2); line-height: 1.6; font-size: 15px; }
+.controls {
+  display: flex;
+  gap: 20px;
+  padding: 22px 24px;
+  border: 1px solid var(--kc-border);
+  border-radius: var(--kc-radius-md);
+  background: var(--kc-surface-1);
+  margin-bottom: 36px;
+  label { display: grid; gap: 10px; flex: 1; font-size: 12px; font-weight: 600; color: var(--kc-text-2); }
+  select {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 10px 14px;
+    border: 1px solid var(--kc-border);
+    border-radius: 8px;
+    background: var(--kc-surface-2);
+    color: var(--kc-text-1);
+    font: inherit;
+    font-size: 15px;
+    color-scheme: dark;
+    cursor: pointer;
+    &:hover { border-color: var(--kc-text-3); }
+    &:focus-visible { outline: 2px solid var(--kc-primary); outline-offset: 3px; }
+  }
+  .season { flex: 0 0 160px; }
+}
+.resultHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+  h2 { margin: 8px 0 0; font-size: clamp(24px, 3vw, 34px); letter-spacing: -0.035em; line-height: 1.15; }
+}
+.badge { padding: 8px 12px; background: var(--kc-primary-muted); color: var(--kc-primary); border-radius: var(--kc-radius-pill); font-size: 11px; font-weight: 600; white-space: nowrap; }
+@media (max-width: 599px) {
+  .page { padding: 16px 16px 40px; }
+  .hero { padding: 22px 0 28px; }
+  .controls { padding: 16px; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; label { flex-basis: 100%; } .season { flex-basis: 100%; } }
+  .resultHeading { align-items: flex-start; flex-direction: column; }
+}
