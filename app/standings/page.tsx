@@ -5,6 +5,7 @@ import { ClassStandings } from "../race/ClassStandings";
 import style from "./Standings.module.scss";
 
 const championships = [
+  {label: "Formula 1", options: [["f1:f1", "F1 Drivers"], ["f1:f1-constructors", "F1 Constructors"]]},
   {label: "WorldSBK", options: [["wsbk:worldsbk", "WorldSBK"], ["wsbk:worldssp", "WorldSSP"], ["wsbk:worldspb", "WorldSPB"], ["wsbk:worldwcr", "WorldWCR"]]},
   { label: "British Superbike", options: [["bsb:bsb", "British Superbike"], ["bsb:bsb-supersport", "British Supersport"]] },
   { label: "MotoGP", options: [["motogp:motogp", "MotoGP"], ["motogp:moto2", "Moto2"], ["motogp:moto3", "Moto3"]] },

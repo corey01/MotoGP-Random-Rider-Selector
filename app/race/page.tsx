@@ -1,4 +1,5 @@
 "use client";
+import {F1Classification} from "./F1Classification";
 import {WsbkClassification} from "./WsbkClassification";
 import {BsbClassification} from "./BsbClassification";
 
@@ -332,7 +333,7 @@ function RacePage() {
       {round?.series === "motogp" && <div className={style.classSelector} role="group" aria-label="Championship class">
         {["motogp", "moto2", "moto3"].map(cls => <button key={cls} type="button" aria-pressed={selectedClass === cls} onClick={() => setSelectedClass(cls)}>{getSeriesDisplayLabel(cls)}</button>)}
       </div>}
-      {round?.series === "wsbk" ? <WsbkClassification key={roundId} roundId={roundId} /> : round?.series === "bsb" ? <BsbClassification key={roundId} roundId={roundId} /> : <div className={style.sectionGrid}>
+      {round?.series === "f1" ? <F1Classification key={roundId} roundId={roundId} /> : round?.series === "wsbk" ? <WsbkClassification key={roundId} roundId={roundId} /> : round?.series === "bsb" ? <BsbClassification key={roundId} roundId={roundId} /> : <div className={style.sectionGrid}>
         <section className={style.primarySection}>
           <div className={style.sectionHeader}>
             <div>
