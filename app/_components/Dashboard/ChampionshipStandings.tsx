@@ -26,7 +26,13 @@ function SkeletonRow() {
 }
 
 function RiderRow({ entry }: { entry: StandingsEntry }) {
-  const portrait = entry.rider.pictures?.portrait ?? entry.rider.pictures?.profile ?? null;
+  const portrait = entry.rider.pictures?.portrait || entry.rider.pictures?.profile || null;
+  const [failedPortrait, setFailedPortrait] = useState<string | null>(null);
+  const fullName = entry.rider.fullName?.trim() || "Unknown rider";
+  const nameParts = entry.rider.fullName?.trim().split(/\s+/).filter(Boolean) ?? [];
+  const initials = nameParts.length
+    ? (nameParts[0][0] + (nameParts.length > 1 ? nameParts[nameParts.length - 1][0] : "")).toUpperCase()
+    : "?";
   const flag = entry.rider.country?.iso
     ? `https://flagcdn.com/24x18/${entry.rider.country.iso.toLowerCase()}.png`
     : null;
@@ -34,16 +40,18 @@ function RiderRow({ entry }: { entry: StandingsEntry }) {
   return (
     <div className={style.row}>
       <span className={style.pos}>{entry.position}</span>
-      {portrait && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img className={style.portrait} src={portrait} alt="" aria-hidden />
-      )}
+      <span className={style.portraitSlot} aria-hidden="true">
+        {portrait && failedPortrait !== portrait ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img className={style.portrait} src={portrait} alt="" onError={() => setFailedPortrait(portrait)} />
+        ) : <span className={style.portraitFallback}>{initials}</span>}
+      </span>
       <span className={style.name}>
         {flag && (
           // eslint-disable-next-line @next/next/no-img-element
           <img className={style.flag} src={flag} alt={entry.rider.country?.name ?? ""} />
         )}
-        <span className={style.fullName}>{entry.rider.fullName}</span>
+        <span className={style.fullName}>{fullName}</span>
         {entry.rider.number != null && (
           <span className={style.number}>#{entry.rider.number}</span>
         )}
