@@ -150,7 +150,7 @@ function safeAccent(hex: string | null): string {
   return `#${darken(parseInt(h.slice(0, 2), 16))}${darken(parseInt(h.slice(2, 4), 16))}${darken(parseInt(h.slice(4, 6), 16))}`;
 }
 
-export function RaceResults({ roundId }: { roundId: number }) {
+export function RaceResults({ roundId, subSeries = "motogp" }: { roundId: number; subSeries?: string }) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<RaceResultsData | null>(null);
   const [expanded, setExpanded] = useState(false);
@@ -158,7 +158,9 @@ export function RaceResults({ roundId }: { roundId: number }) {
   useEffect(() => {
     let alive = true;
     setExpanded(false);
-    fetchRaceResults(roundId)
+    setLoading(true);
+    setData(null);
+    fetchRaceResults(roundId, subSeries)
       .then((result) => {
         if (alive) {
           setData(result);
@@ -172,7 +174,7 @@ export function RaceResults({ roundId }: { roundId: number }) {
     return () => {
       alive = false;
     };
-  }, [roundId]);
+  }, [roundId, subSeries]);
 
   if (loading) return <p className={style.state}>Loading results…</p>;
   if (!data) return <p className={style.state}>Results not yet available.</p>;

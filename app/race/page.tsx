@@ -13,6 +13,7 @@ import { getSeriesDisplayLabel } from "@/utils/series";
 import { getDeviceTimezoneLabel } from "@/utils/timezone";
 import { RaceGrid } from "@/app/_components/Grid/RaceGrid";
 import { RaceResults } from "@/app/_components/Results/RaceResults";
+import { ClassStandings } from "./ClassStandings";
 import style from "./RacePage.module.scss";
 
 const SESSION_ORDER: Record<string, number> = {
@@ -183,6 +184,7 @@ function RacePage() {
   const roundIdParam = searchParams.get("roundId");
   const roundId = roundIdParam ? parseInt(roundIdParam, 10) : null;
 
+  const [selectedClass, setSelectedClass] = useState("motogp");
   const [round, setRound] = useState<CalendarRound | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -324,6 +326,9 @@ function RacePage() {
         </div>
       </section>
 
+      {round?.series === "motogp" && <div className={style.classSelector} role="group" aria-label="Championship class">
+        {["motogp", "moto2", "moto3"].map(cls => <button key={cls} type="button" aria-pressed={selectedClass === cls} onClick={() => setSelectedClass(cls)}>{getSeriesDisplayLabel(cls)}</button>)}
+      </div>}
       <div className={style.sectionGrid}>
         <section className={style.primarySection}>
           <div className={style.sectionHeader}>
@@ -332,7 +337,7 @@ function RacePage() {
               <h2 className={style.sectionTitle}>Race classification</h2>
             </div>
           </div>
-          <RaceResults roundId={roundId} />
+          {events.some(e => e.subSeries === selectedClass && e.type === "RACE" && e.status === "CANCELLED") && !events.some(e => e.subSeries === selectedClass && e.type === "RACE" && e.status === "COMPLETED") ? <p>Race cancelled. No classification was issued.</p> : <RaceResults key={roundId + selectedClass} roundId={roundId} subSeries={selectedClass} />}
         </section>
 
         <section className={style.secondarySection}>
@@ -342,10 +347,11 @@ function RacePage() {
               <h2 className={style.sectionTitle}>Starting order</h2>
             </div>
           </div>
-          <RaceGrid roundId={roundId} />
+          <RaceGrid key={roundId + selectedClass} roundId={roundId} subSeries={selectedClass} />
         </section>
       </div>
 
+      {round?.series === "motogp" && <ClassStandings key={roundId + selectedClass} subSeries={selectedClass} year={Number(round.startDate.slice(0, 4)) || new Date().getFullYear()} />}
       <section className={style.scheduleSection}>
         <div className={style.sectionHeader}>
           <div>
@@ -387,6 +393,7 @@ function RacePage() {
                         const toneClass = TYPE_TONE_CLASS[typeKey] ?? "";
                         const isLive = event.status === "LIVE";
                         const isDone = event.status === "COMPLETED";
+                        const isCancelled = event.status === "CANCELLED";
                         const sessionTimes = getSessionTimes(event);
 
                         return (
@@ -409,6 +416,7 @@ function RacePage() {
                             </div>
                             {isLive && <span className={style.liveState}>Live</span>}
                             {isDone && <span className={style.doneState}>Done</span>}
+                            {isCancelled && <span className={style.cancelledState}>Cancelled</span>}
                           </div>
                         );
                       })}
