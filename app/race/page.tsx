@@ -351,7 +351,7 @@ function RacePage() {
         </section>
       </div>
 
-      {round?.series === "motogp" && <ClassStandings key={roundId + selectedClass} subSeries={selectedClass} year={Number(round.startDate.slice(0, 4)) || new Date().getFullYear()} />}
+      {round?.series === "motogp" && <ClassStandings roundId={roundId} key={roundId + selectedClass} subSeries={selectedClass} year={Number(round.startDate.slice(0, 4)) || new Date().getFullYear()} />}
       <section className={style.scheduleSection}>
         <div className={style.sectionHeader}>
           <div>
