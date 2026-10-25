@@ -1,8 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import style from "./RacePage.module.scss";
-type Entry = { position: number; points: number; rider: { id: string; fullName: string | null }; team: string | null };
-export function ClassStandings({ year, subSeries, series = "motogp", roundId }: { year: number; subSeries: string; series?: string; roundId?: number }) {
+import { StandingsTable } from "../standings/StandingsTable";
+import type { StandingsEntry } from "@/utils/getStandings";
+type Entry = StandingsEntry;
+export function ClassStandings({ year, subSeries, series = "motogp", roundId, standalone = false }: { year: number; subSeries: string; series?: string; roundId?: number; standalone?: boolean }) {
   const [snapshot, setSnapshot] = useState<{asOfDate?: string; asOfSession?: string; unchanged?: boolean; sourceUrl?: string; fetchedAt?: string; stale?: boolean; refreshFailed?: boolean}>({});
   const [entries, setEntries] = useState<Entry[] | null>(null);
   const [failed, setFailed] = useState(false);
@@ -15,15 +17,15 @@ export function ClassStandings({ year, subSeries, series = "motogp", roundId }: 
       .catch(() => { if (!controller.signal.aborted) setFailed(true); });
     return () => controller.abort();
   }, [year, subSeries, series, roundId]);
-  return <section className={style.scheduleSection}>
-    <h2 className={style.sectionTitle}>{roundId ? (!snapshot.unchanged && snapshot.asOfSession === "SPR" ? "Championship standings after the sprint" : "Championship standings after this round") : `${year} championship standings`}</h2>
+  return <section className={standalone ? undefined : style.scheduleSection} aria-label="Championship standings" aria-busy={!failed && entries === null}>
+    {!standalone && <h2 className={style.sectionTitle}>{roundId ? (!snapshot.unchanged && snapshot.asOfSession === "SPR" ? "Championship standings after the sprint" : "Championship standings after this round") : `${year} championship standings`}</h2>}
     {roundId && snapshot.asOfDate && <p>As of {new Date(snapshot.asOfDate + "T12:00:00").toLocaleDateString("en-GB", {day:"numeric",month:"short",year:"numeric"})}{snapshot.unchanged ? " · No points awarded this round" : ""}</p>}
     {!roundId && entries && snapshot.fetchedAt && <p className={style.standingsFreshness}>
       Updated {new Date(snapshot.fetchedAt).toLocaleString("en-GB")}
       {snapshot.stale ? " · Refresh delayed. Showing the last successful update." : ""}
     </p>}
     {failed ? <p>{roundId ? "Historical standings are not available for this round." : "Standings unavailable. Please try again later."}</p> : !entries ? <p>Loading standings…</p> : !entries.length ? <p>Standings not yet published.</p> :
-    <table className={style.standingsTable}><thead><tr><th scope="col">Pos</th><th scope="col">Rider</th><th scope="col">Points</th></tr></thead><tbody>
+    standalone ? <StandingsTable entries={entries} /> : <table className={style.standingsTable}><thead><tr><th scope="col">Pos</th><th scope="col">Rider</th><th scope="col">Points</th></tr></thead><tbody>
       {entries.map(entry => <tr key={entry.rider.id}><td>{entry.position}</td><td>{entry.rider.fullName || "Unknown rider"}</td><td>{entry.points}</td></tr>)}
     </tbody></table>}
   </section>;

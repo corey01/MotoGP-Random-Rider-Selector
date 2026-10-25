@@ -1,0 +1,39 @@
+.container { border: 1px solid var(--kc-border); border-radius: var(--kc-radius-md); overflow: hidden; background: var(--kc-surface-1); }
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 14px;
+  th { text-align: left; background: var(--kc-surface-2); padding: 15px 16px; color: var(--kc-text-3); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  td { padding: 14px 16px; border-top: 1px solid var(--kc-border); }
+  tbody tr { transition: background 120ms; &:hover { background: var(--kc-surface-2); } }
+  tbody tr[data-position='1'] { background: var(--kc-primary-muted); }
+  tr[data-position='1'] .position { color: #f5c842; }
+  tr[data-position='2'] .position { color: #c7c7c7; }
+  tr[data-position='3'] .position { color: #cd9564; }
+  .position { width: 38px; text-align: center; font-variant-numeric: tabular-nums; font-weight: 700; color: var(--kc-text-3); }
+  .team { width: 24%; color: var(--kc-text-2); font-size: 12px; overflow-wrap: anywhere; }
+  .gap { width: 60px; text-align: right; font-variant-numeric: tabular-nums; color: var(--kc-text-3); font-size: 12px; }
+  .points { width: 70px; text-align: right; font-variant-numeric: tabular-nums; }
+  td.points { font-weight: 700; font-size: 18px; letter-spacing: -0.035em; }
+}
+.rider { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.portraitSlot { width: 38px; height: 42px; flex: 0 0 38px; display: grid; place-items: center; img { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; } > span { width: 34px; height: 34px; border-radius: 50%; background: var(--kc-surface-3); color: var(--kc-text-2); display: grid; place-items: center; font-size: 11px; font-weight: 600; } }
+.identity { min-width: 0; }
+.nameLine { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.fullName { font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
+.flag { width: 18px; height: 13px; object-fit: cover; border-radius: 2px; }
+.number { color: var(--kc-text-3); font-size: 11px; }
+.mobileTeam { display: none; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+@media (max-width: 800px) {
+  .table .team { display: none; }
+  .mobileTeam { display: block; margin-top: 4px; color: var(--kc-text-3); font-size: 10px; line-height: 1.5; }
+}
+@media (max-width: 599px) {
+  .table { font-size: 12px; th, td { padding: 12px 8px; } .position { width: 22px; } .gap { display: none; } .points { width: 44px; } td.points { font-size: 16px; } }
+  .rider { gap: 8px; }
+  .portraitSlot { width: 28px; height: 36px; flex-basis: 28px; > span { width: 28px; height: 28px; font-size: 9px; } }
+  .nameLine { gap: 6px; }
+  .flag { width: 16px; height: 12px; }
+}
