@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ClassStandings } from "../race/ClassStandings";
 import style from "../race/RacePage.module.scss";
 const classes = [
- ["motogp:motogp","MotoGP"],["motogp:moto2","Moto2"],["motogp:moto3","Moto3"],
+ ["motogp:motogp","MotoGP"],["motogp:moto2","Moto2"],["motogp:moto3","Moto3"], ["rookiescup:rookiescup","Red Bull Rookies Cup"],
  ...["superbike","superbike-cup","supersport","talent-cup","king-of-the-baggers","twins-cup","super-hooligan","build-train-race"].map(cls=>["motoamerica:"+cls,"MotoAmerica "+cls.split("-").map(s=>s[0].toUpperCase()+s.slice(1)).join(" ")])
 ];
 export default function StandingsPage() {
