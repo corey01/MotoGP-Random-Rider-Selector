@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { SeriesKey } from "@/consts/series";
 import { useSubscriptions } from "@/utils/SubscriptionsContext";
@@ -80,6 +81,7 @@ export function ChampionshipStandings({ series, year }: ChampionshipStandingsPro
       <div className={style.header}>
         <span className={style.heading}>{label} Championship</span>
         {data?.year && <span className={style.season}>{data.year}</span>}
+        <Link href="/standings">Browse championships →</Link>
       </div>
 
       <div className={style.list}>
