@@ -278,7 +278,7 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       path: "/admin/sync/motoamerica-standings",
       hint: "Force all 8 classes · hourly at :35 UTC",
     },
-    { key: "bsb-timing", label: "BSB / Supersport Timing", path: "/admin/sync/bsb-timing", hint: "Grids, race results and standings · latest weekend every 6 hours" },
+    { key: "bsb-timing", label: "BSB / Supersport Timing", path: "/admin/sync/bsb-timing", hint: "Full season grids, race results and standings · every 6 hours" },
     { key: "scrape-bsb", label: "BSB", path: "/admin/scrape/bsb", hint: "scrape:bsb" },
     {
       key: "scrape-wsbk",
@@ -338,8 +338,6 @@ export default function AdminPage() {
   const searchParams = useSearchParams();
 
   const [year, setYear] = useState(CURRENT_YEAR);
-  const [bsbRoundId,setBsbRoundId] = useState("");
-  const [bsbClass,setBsbClass] = useState("");
   const [running, setRunning] = useState<Set<ButtonKey>>(new Set());
   const [lastResult, setLastResult] = useState<Record<string, string>>({});
   const [jobs, setJobs] = useState<JobRun[]>([]);
@@ -388,10 +386,6 @@ export default function AdminPage() {
 
       try {
         const params = new URLSearchParams({year:String(year)});
-        if(key === "bsb-timing") {
-          if(bsbRoundId)params.set("roundId",bsbRoundId);
-          if(bsbClass)params.set("subSeries",bsbClass);
-        }
         const res = await fetchWithAuth(`${path}?${params}`, {
           method: "POST",
         });
@@ -417,7 +411,7 @@ export default function AdminPage() {
         });
       }
     },
-    [year, bsbRoundId, bsbClass, loadJobs, showToast]
+    [year, loadJobs, showToast]
   );
 
   const handleLogout = async () => {
@@ -452,12 +446,6 @@ export default function AdminPage() {
         />
       </div>
 
-      <fieldset className={style.bsbScope}>
-        <legend>BSB timing scope</legend>
-        <label>BSB round ID <input type="number" min="1" value={bsbRoundId} onChange={event=>setBsbRoundId(event.target.value)} placeholder="All rounds" /></label>
-        <label>BSB class <select value={bsbClass} onChange={event=>setBsbClass(event.target.value)}><option value="">Both classes</option><option value="bsb">Superbike</option><option value="bsb-supersport">Supersport</option></select></label>
-        <p>Applies to BSB / Supersport Timing only. Leave the round ID blank to sync the selected season.</p>
-      </fieldset>
       {/* Action buttons */}
       <section className={style.section}>
         <h2 className={style.sectionTitle}>Sync &amp; Scrape</h2>

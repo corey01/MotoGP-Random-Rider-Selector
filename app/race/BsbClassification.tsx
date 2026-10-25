@@ -20,6 +20,7 @@ type Payload = {
   asOfDate: string;
   sourceUrl: string;
   provisional: boolean;
+  documents?: Array<{label:string;provisional?:boolean}>;
   stale: boolean;
   grids: Record<string, Row[]>;
   results: Record<string, Row[]>;
@@ -59,6 +60,8 @@ export function BsbClassification({ roundId }: { roundId: number }) {
   }, [roundId, cls]);
   const sessions = data ? (tab === "grid" ? data.grids : data.results) : {};
   const selected = sessions[race] ? race : Object.keys(sessions)[0];
+  const currentDocument = tab === "standings" ? "Championship Points" : tab === "grid" ? `Grid for ${selected}` : `${selected} Result`;
+  const isProvisional = data?.documents?.find(doc => doc.label === currentDocument)?.provisional === true;
   return (
     <section className={style.scheduleSection}>
       <p className={style.sectionEyebrow}>British championship</p>
@@ -107,7 +110,7 @@ export function BsbClassification({ roundId }: { roundId: number }) {
       ) : (
         <>
           <p className={style.standingsFreshness}>
-            {data.provisional ? "Provisional · " : ""}As of{" "}
+            {isProvisional ? "Provisional · " : ""}As of{" "}
             {new Date(data.asOfDate + "T12:00:00").toLocaleDateString("en-GB", {
               day: "numeric",
               month: "short",
