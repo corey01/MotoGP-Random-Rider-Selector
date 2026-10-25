@@ -27,9 +27,10 @@ export interface GridData {
   grid: GridItem[];
 }
 
-export async function fetchGridData(roundId: number): Promise<GridData | null> {
-  const url = `${getBaseUrl()}/grid?roundId=${roundId}`;
-  const res = await fetch(url, { cache: "no-store" });
+export async function fetchGridData(roundId: number, subSeries = "motogp"): Promise<GridData | null> {
+  const url = `${getBaseUrl()}/grid?roundId=${roundId}&subSeries=${encodeURIComponent(subSeries)}`;
+  let res = await fetch(url, { cache: "no-store" });
+  if (res.status === 404) res = await fetch(`${url}&refresh=true`, { cache: "no-store" });
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`grid fetch failed (${res.status})`);
   const payload = (await res.json()) as { ok: boolean } & GridData;

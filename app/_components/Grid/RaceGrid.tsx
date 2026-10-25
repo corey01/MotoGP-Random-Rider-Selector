@@ -24,7 +24,7 @@ function ToggleIcon() {
   );
 }
 
-export function RaceGrid({ roundId }: { roundId: number }) {
+export function RaceGrid({ roundId, subSeries = "motogp" }: { roundId: number; subSeries?: string }) {
   const [loading, setLoading] = useState(true);
   const [gridData, setGridData] = useState<GridData | null>(null);
   const [expanded, setExpanded] = useState(false);
@@ -33,13 +33,15 @@ export function RaceGrid({ roundId }: { roundId: number }) {
     let alive = true;
     setLoading(true);
     setExpanded(false);
+    setLoading(true);
+    setGridData(null);
 
-    fetchGridData(roundId)
+    fetchGridData(roundId, subSeries)
       .then((data) => { if (alive) { setGridData(data); setLoading(false); } })
       .catch(() => { if (alive) setLoading(false); });
 
     return () => { alive = false; };
-  }, [roundId]);
+  }, [roundId, subSeries]);
 
   if (loading) return <p className={style.loading}>Loading grid…</p>;
   if (!gridData || gridData.grid.length === 0) {

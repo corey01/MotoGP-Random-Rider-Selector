@@ -31,9 +31,10 @@ export interface RaceResultsData {
   sessions: Record<string, RaceResultItem[]>;
 }
 
-export async function fetchRaceResults(roundId: number): Promise<RaceResultsData | null> {
-  const url = `${getBaseUrl()}/results?roundId=${roundId}`;
-  const res = await fetch(url, { cache: "no-store" });
+export async function fetchRaceResults(roundId: number, subSeries = "motogp"): Promise<RaceResultsData | null> {
+  const url = `${getBaseUrl()}/results?roundId=${roundId}&subSeries=${encodeURIComponent(subSeries)}`;
+  let res = await fetch(url, { cache: "no-store" });
+  if (res.status === 404) res = await fetch(`${url}&refresh=true`, { cache: "no-store" });
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`results fetch failed (${res.status})`);
   const payload = (await res.json()) as { ok: boolean } & RaceResultsData;
