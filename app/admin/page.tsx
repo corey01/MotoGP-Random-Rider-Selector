@@ -25,6 +25,7 @@ interface JobRun {
   startedAt: string | null;
   completedAt: string | null;
   errorMessage: string | null;
+  meta?: {scope?:string;roundId?:number;subSeries?:string;snapshotsWritten?:number;gridRows?:number;resultRows?:number;standingsRows?:number;results?:Array<{roundId?:number;roundNumber?:number;subSeries?:string;status?:string;error?:string;gridRows?:number;resultRows?:number;standingsRows?:number}>};
 }
 
 interface JobsResponse {
@@ -75,7 +76,11 @@ function JobTable({ runs, cols }: { runs: JobRun[]; cols: number }) {
         <tbody>
           {runs.map((run) => (
             <tr key={run.id}>
-              <td><code>{run.jobName}</code></td>
+              <td><code>{run.jobName}</code>{run.jobName === "timing:bsb" && run.meta && <details className={style.timingSummary}>
+                <summary>{run.meta.snapshotsWritten ?? 0} snapshots written · {run.meta.resultRows ?? 0} results · {run.meta.gridRows ?? 0} grid rows · {run.meta.standingsRows ?? 0} standings rows</summary>
+                <p>Scope: {run.meta.scope ?? "unknown"}{run.meta.roundId ? ` · Round ID ${run.meta.roundId}` : ""}{run.meta.subSeries ? ` · ${run.meta.subSeries}` : ""}</p>
+                <ul>{run.meta.results?.map((entry,index)=><li key={index}>Round {entry.roundNumber ?? entry.roundId ?? "?"} · {entry.subSeries ?? "all classes"} · {entry.status}{entry.error ? `: ${entry.error}` : `: ${entry.resultRows ?? 0} results, ${entry.gridRows ?? 0} grid rows, ${entry.standingsRows ?? 0} standings rows`}</li>)}</ul>
+              </details>}</td>
               <td><StatusBadge status={run.status} /></td>
               <td>{fmtDate(run.startedAt)}</td>
               <td>{fmtDuration(run.startedAt, run.completedAt)}</td>
@@ -333,6 +338,8 @@ export default function AdminPage() {
   const searchParams = useSearchParams();
 
   const [year, setYear] = useState(CURRENT_YEAR);
+  const [bsbRoundId,setBsbRoundId] = useState("");
+  const [bsbClass,setBsbClass] = useState("");
   const [running, setRunning] = useState<Set<ButtonKey>>(new Set());
   const [lastResult, setLastResult] = useState<Record<string, string>>({});
   const [jobs, setJobs] = useState<JobRun[]>([]);
@@ -380,16 +387,21 @@ export default function AdminPage() {
       setLastResult((prev) => ({ ...prev, [key]: "running" }));
 
       try {
-        const res = await fetchWithAuth(`${path}?year=${year}`, {
+        const params = new URLSearchParams({year:String(year)});
+        if(key === "bsb-timing") {
+          if(bsbRoundId)params.set("roundId",bsbRoundId);
+          if(bsbClass)params.set("subSeries",bsbClass);
+        }
+        const res = await fetchWithAuth(`${path}?${params}`, {
           method: "POST",
         });
         const data = await res.json();
-        if (!res.ok) {
+        if (!res.ok || (key === "bsb-timing" && (data.job?.status !== "success" || !(data.job?.meta?.snapshotsWritten > 0)))) {
           const msg = data.error ?? data.message ?? res.status;
           showToast(`${label} failed: ${msg}`, false);
           setLastResult((prev) => ({ ...prev, [key]: "failed" }));
         } else {
-          showToast(`${label} completed (${year})`, true);
+          showToast(key === "bsb-timing" ? `${label}: ${data.job.meta.snapshotsWritten} snapshots written, ${data.job.meta.resultRows} results, ${data.job.meta.gridRows} grid rows` : `${label} completed (${year})`, true);
           setLastResult((prev) => ({ ...prev, [key]: "ok" }));
         }
       } catch (e) {
@@ -405,7 +417,7 @@ export default function AdminPage() {
         });
       }
     },
-    [year, loadJobs, showToast]
+    [year, bsbRoundId, bsbClass, loadJobs, showToast]
   );
 
   const handleLogout = async () => {
@@ -440,6 +452,12 @@ export default function AdminPage() {
         />
       </div>
 
+      <fieldset className={style.bsbScope}>
+        <legend>BSB timing scope</legend>
+        <label>BSB round ID <input type="number" min="1" value={bsbRoundId} onChange={event=>setBsbRoundId(event.target.value)} placeholder="All rounds" /></label>
+        <label>BSB class <select value={bsbClass} onChange={event=>setBsbClass(event.target.value)}><option value="">Both classes</option><option value="bsb">Superbike</option><option value="bsb-supersport">Supersport</option></select></label>
+        <p>Applies to BSB / Supersport Timing only. Leave the round ID blank to sync the selected season.</p>
+      </fieldset>
       {/* Action buttons */}
       <section className={style.section}>
         <h2 className={style.sectionTitle}>Sync &amp; Scrape</h2>

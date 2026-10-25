@@ -41,15 +41,11 @@ export function BsbClassification({ roundId }: { roundId: number }) {
       { signal: controller.signal },
     )
       .then(async (response) => {
-        if (response.status === 404)
-          throw new Error(
-            "Timing data has not been published or synced for this weekend yet.",
-          );
-        if (!response.ok)
-          throw new Error(
-            "Timing data is unavailable. Please try again later.",
-          );
-        return response.json();
+        const value = await response.json();
+        if (!response.ok) throw new Error(
+          typeof value.error === "string" ? value.error : "Timing data is unavailable for this weekend and class.",
+        );
+        return value;
       })
       .then((value) => {
         if (value.roundId !== roundId || value.subSeries !== cls)
