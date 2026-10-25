@@ -5,7 +5,7 @@
   table-layout: fixed;
   font-size: 14px;
   th { text-align: left; background: var(--kc-surface-2); padding: 15px 16px; color: var(--kc-text-3); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
-  td { padding: 14px 16px; border-top: 1px solid var(--kc-border); }
+  td { vertical-align: middle; padding: 14px 16px; border-top: 1px solid var(--kc-border); }
   tbody tr { transition: background 120ms; &:hover { background: var(--kc-surface-2); } }
   tbody tr[data-position='1'] { background: var(--kc-primary-muted); }
   tr[data-position='1'] .position { color: #f5c842; }
