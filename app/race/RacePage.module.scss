@@ -60,8 +60,6 @@
 .eyebrow,
 .heroRoundTag,
 .heroLabel,
-.metricLabel,
-.metricMeta,
 .sectionEyebrow,
 .dayHeader,
 .sessionTime,
@@ -85,7 +83,7 @@
 
   @media (min-width: 920px) {
     grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.8fr);
-    align-items: flex-end;
+    align-items: center;
   }
 }
 
@@ -101,10 +99,10 @@
 
 .heroTitle {
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(2.6rem, 6vw, 5rem);
-  line-height: 0.9;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.05;
   letter-spacing: -0.06em;
-  max-width: 11ch;
+  max-width: 24ch;
   text-wrap: balance;
 }
 
@@ -117,39 +115,32 @@
   line-height: 1.7;
 }
 
-.metrics {
+.weekendFacts {
+  margin: 0;
   display: grid;
-  gap: 12px;
-}
-
-.metric {
-  padding: 16px 18px;
-  background: rgba(38, 38, 38, 0.9);
-  backdrop-filter: blur(16px);
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
 }
-
-.metricLabel {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--kc-text-3);
-  font-size: 0.66rem;
-}
-
-.metricValue {
-  display: block;
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
-  line-height: 0.95;
-  letter-spacing: -0.05em;
-}
-
-.metricMeta {
-  display: block;
-  margin-top: 8px;
-  color: var(--kc-text-2);
-  font-size: 0.6rem;
-  line-height: 1.5;
+.fact {
+  min-width: 0;
+  dt {
+    margin-bottom: 6px;
+    color: var(--kc-text-3);
+    font-family: var(--font-inter), sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  dd {
+    margin: 0;
+    font-family: var(--font-space-grotesk), sans-serif;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
 }
 
 .sectionGrid {
