@@ -1,4 +1,4 @@
-export type SeriesKey = "motogp" | "wsbk" | "bsb" | "speedway" | "f1" | "gtwce" | "iomtt" | "nls" | "rookiescup";
+export type SeriesKey = "motogp" | "wsbk" | "bsb" | "speedway" | "f1" | "gtwce" | "iomtt" | "nls" | "rookiescup" | "motoamerica";
 
 export type SubSeriesKey =
   | "motogp"
@@ -14,7 +14,16 @@ export type SubSeriesKey =
   | "gtwce"
   | "iomtt"
   | "nls"
-  | "rookiescup";
+  | "rookiescup"
+  | "superbike"
+  | "superbike-cup"
+  | "supersport"
+  | "talent-cup"
+  | "king-of-the-baggers"
+  | "twins-cup"
+  | "super-hooligan"
+  | "build-train-race"
+  | "bsb-supersport";
 
 export type SeriesGroup = {
   key: SeriesKey;
@@ -23,6 +32,21 @@ export type SeriesGroup = {
 };
 
 export const SERIES_GROUPS: SeriesGroup[] = [
+  {
+    key: "motoamerica",
+    label: "MotoAmerica",
+    children: [
+      { key: "superbike", label: "Superbike" },
+      { key: "superbike-cup", label: "Superbike Cup" },
+      { key: "supersport", label: "Supersport" },
+      { key: "talent-cup", label: "Talent Cup" },
+      { key: "king-of-the-baggers", label: "King of the Baggers" },
+      { key: "twins-cup", label: "Twins Cup" },
+      { key: "super-hooligan", label: "Super Hooligan" },
+      { key: "build-train-race", label: "Build. Train. Race." },
+    ],
+  },
+
   {
     key: "motogp",
     label: "MotoGP",
@@ -45,7 +69,7 @@ export const SERIES_GROUPS: SeriesGroup[] = [
   {
     key: "bsb",
     label: "BSB",
-    children: [{ key: "bsb", label: "BSB" }],
+    children: [{ key: "bsb", label: "Superbike" }, { key: "bsb-supersport", label: "British Supersport" }],
   },
   {
     key: "speedway",
@@ -94,9 +118,20 @@ export const DEFAULT_SUB_SERIES_VISIBILITY: Record<SubSeriesKey, boolean> = {
   iomtt: true,
   nls: true,
   rookiescup: true,
+  "bsb-supersport": true,
+  "superbike": true,
+  "superbike-cup": true,
+  "supersport": true,
+  "talent-cup": true,
+  "king-of-the-baggers": true,
+  "twins-cup": true,
+  "super-hooligan": true,
+  "build-train-race": true,
+
 };
 
 export const SERIES_LABELS: Record<string, string> = {
+  motoamerica: "MotoAmerica",
   motogp: "MotoGP",
   wsbk: "WorldSBK",
   bsb: "BSB",
@@ -109,6 +144,7 @@ export const SERIES_LABELS: Record<string, string> = {
 };
 
 export const SERIES_SHORT_LABELS: Record<string, string> = {
+  motoamerica: "MotoAmerica",
   motogp: "MotoGP",
   wsbk: "WSBK",
   bsb: "BSB",
@@ -121,6 +157,16 @@ export const SERIES_SHORT_LABELS: Record<string, string> = {
 };
 
 export const SUB_SERIES_LABELS: Record<string, string> = {
+  "bsb-supersport": "British Supersport",
+  "superbike": "Superbike",
+  "superbike-cup": "Superbike Cup",
+  "supersport": "Supersport",
+  "talent-cup": "Talent Cup",
+  "king-of-the-baggers": "King of the Baggers",
+  "twins-cup": "Twins Cup",
+  "super-hooligan": "Super Hooligan",
+  "build-train-race": "Build. Train. Race.",
+
   motogp: "MotoGP",
   moto2: "Moto2",
   moto3: "Moto3",
@@ -143,6 +189,16 @@ export const SUB_SERIES_LABELS: Record<string, string> = {
 };
 
 export const SUB_SERIES_SHORT_LABELS: Record<string, string> = {
+  "bsb-supersport": "British Supersport",
+  "superbike": "Superbike",
+  "superbike-cup": "Superbike Cup",
+  "supersport": "Supersport",
+  "talent-cup": "Talent Cup",
+  "king-of-the-baggers": "King of the Baggers",
+  "twins-cup": "Twins Cup",
+  "super-hooligan": "Super Hooligan",
+  "build-train-race": "Build. Train. Race.",
+
   ...SUB_SERIES_LABELS,
   f1: "F1",
   gtwce: "GTWCE",
@@ -152,6 +208,17 @@ export const SUB_SERIES_SHORT_LABELS: Record<string, string> = {
 };
 
 export const ROUND_SERIES_LABELS: Record<string, string> = {
+  motoamerica: "MotoAmerica",
+  "bsb-supersport": "BSB",
+  "superbike": "MotoAmerica",
+  "superbike-cup": "MotoAmerica",
+  "supersport": "MotoAmerica",
+  "talent-cup": "MotoAmerica",
+  "king-of-the-baggers": "MotoAmerica",
+  "twins-cup": "MotoAmerica",
+  "super-hooligan": "MotoAmerica",
+  "build-train-race": "MotoAmerica",
+
   motogp: "MotoGP",
   moto2: "Moto2",
   moto3: "Moto3",
@@ -175,6 +242,7 @@ export const ROUND_SERIES_LABELS: Record<string, string> = {
 };
 
 export const SERIES_COLORS: Record<string, string> = {
+  motoamerica: "#729aff",
   motogp: "var(--motogp-red)",
   wsbk: "var(--wsbk-blue)",
   bsb: "var(--bsb-green)",
@@ -217,3 +285,30 @@ export function getMotoGPSpecialSubSeriesLabel(value?: string | null): string | 
   if (!normalized) return null;
   return MOTOGP_SPECIAL_SUB_SERIES_LABELS[normalized] ?? null;
 }
+
+export const SERIES_CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: string }> = {
+  motogp:   { abbr: "GP",  subtitle: "Premier Class" },
+  moto2:    { abbr: "M2",  subtitle: "Intermediate" },
+  moto3:    { abbr: "M3",  subtitle: "Lightweight" },
+  worldsbk: { abbr: "SBK", subtitle: "Superbike" },
+  worldssp: { abbr: "SSP", subtitle: "Supersport" },
+  worldwcr: { abbr: "WCR", subtitle: "Women's Cup" },
+  worldspb: { abbr: "SPB", subtitle: "Sportbike" },
+  bsb:      { abbr: "BSB", subtitle: "British SBK" },
+  speedway: { abbr: "SGP", subtitle: "Grand Prix" },
+  f1:       { abbr: "F1",  subtitle: "Single Seater" },
+  gtwce:    { abbr: "GT",  subtitle: "GT3 / GT4" },
+  iomtt:    { abbr: "IoMTT",  subtitle: "Road Racing" },
+  nls:      { abbr: "NLS", subtitle: "Endurance" },
+  rookiescup: { abbr: "RRC", subtitle: "Junior Grand Prix" },
+  "bsb-supersport": { abbr: "BSS", subtitle: "British Supersport" },
+  "superbike": { abbr: "MA", subtitle: "MotoAmerica standings" },
+  "superbike-cup": { abbr: "MA", subtitle: "MotoAmerica standings" },
+  "supersport": { abbr: "MA", subtitle: "MotoAmerica standings" },
+  "talent-cup": { abbr: "MA", subtitle: "MotoAmerica standings" },
+  "king-of-the-baggers": { abbr: "MA", subtitle: "MotoAmerica standings" },
+  "twins-cup": { abbr: "MA", subtitle: "MotoAmerica standings" },
+  "super-hooligan": { abbr: "MA", subtitle: "MotoAmerica standings" },
+  "build-train-race": { abbr: "MA", subtitle: "MotoAmerica standings" },
+
+};

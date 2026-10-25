@@ -210,6 +210,7 @@ type ButtonKey =
   | "standings-refresh"
   | "rookies-standings"
   | "motoamerica-standings"
+  | "bsb-timing"
   | "scrape-bsb"
   | "scrape-wsbk"
   | "wsbk-riders"
@@ -272,6 +273,7 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       path: "/admin/sync/motoamerica-standings",
       hint: "Force all 8 classes · hourly at :35 UTC",
     },
+    { key: "bsb-timing", label: "BSB / Supersport Timing", path: "/admin/sync/bsb-timing", hint: "Grids, race results and standings · latest weekend every 6 hours" },
     { key: "scrape-bsb", label: "BSB", path: "/admin/scrape/bsb", hint: "scrape:bsb" },
     {
       key: "scrape-wsbk",

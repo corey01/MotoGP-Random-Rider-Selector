@@ -1,4 +1,5 @@
 "use client";
+import {BsbClassification} from "./BsbClassification";
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -330,7 +331,7 @@ function RacePage() {
       {round?.series === "motogp" && <div className={style.classSelector} role="group" aria-label="Championship class">
         {["motogp", "moto2", "moto3"].map(cls => <button key={cls} type="button" aria-pressed={selectedClass === cls} onClick={() => setSelectedClass(cls)}>{getSeriesDisplayLabel(cls)}</button>)}
       </div>}
-      <div className={style.sectionGrid}>
+      {round?.series === "bsb" ? <BsbClassification key={roundId} roundId={roundId} /> : <div className={style.sectionGrid}>
         <section className={style.primarySection}>
           <div className={style.sectionHeader}>
             <div>
@@ -350,7 +351,7 @@ function RacePage() {
           </div>
           <RaceGrid key={roundId + selectedClass} roundId={roundId} subSeries={selectedClass} />
         </section>
-      </div>
+      </div>}
 
       {round?.series === "motogp" && <ClassStandings roundId={roundId} key={roundId + selectedClass} subSeries={selectedClass} year={Number(round.startDate.slice(0, 4)) || new Date().getFullYear()} />}
       <section className={style.scheduleSection}>
