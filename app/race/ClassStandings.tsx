@@ -11,7 +11,7 @@ export function ClassStandings({ year, subSeries, series = "motogp", roundId }: 
     setEntries(null); setFailed(false);
     fetch(`${process.env.NEXT_PUBLIC_RACECAL_URL}/standings?year=${year}&subSeries=${subSeries}&series=${series}${roundId ? `&roundId=${roundId}` : ""}`, { signal: controller.signal })
       .then(async response => { if (!response.ok) throw new Error(); return response.json(); })
-      .then(data => { if (!controller.signal.aborted) { setEntries(data.standings); setSnapshot(data); } })
+      .then(data => { if (roundId && (data.roundId !== roundId || data.subSeries !== subSeries || !data.asOfSession)) throw new Error("Wrong standings snapshot"); if (!controller.signal.aborted) { setEntries(data.standings); setSnapshot(data); } })
       .catch(() => { if (!controller.signal.aborted) setFailed(true); });
     return () => controller.abort();
   }, [year, subSeries, series, roundId]);
