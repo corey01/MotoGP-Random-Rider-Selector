@@ -7,6 +7,7 @@
     content: '';
     display: block;
     width: 100%;
+    flex-basis: 100%;
     height: 1px;
     background: var(--kc-border);
     margin-bottom: var(--kc-space-3);
@@ -14,8 +15,10 @@
 
 
   display: flex;
-  align-items: baseline;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-bottom: var(--kc-space-3);
   margin-top: 2rem;
 }
@@ -179,4 +182,33 @@
 @keyframes skeletonPulse {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.4; }
+}
+
+.headingBlock {
+  display: grid;
+  gap: 6px;
+}
+
+.browseLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--kc-border);
+  border-radius: var(--kc-radius-md);
+  background: var(--kc-surface-2);
+  color: var(--kc-primary);
+  font-family: inherit;
+  font-size: var(--kc-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 150ms, border-color 150ms, color 150ms;
+
+  &:visited { color: var(--kc-primary); text-decoration: none; }
+  &:hover { color: #111; background: var(--kc-primary); border-color: var(--kc-primary); text-decoration: none; }
+  &:focus-visible { outline: 2px solid var(--kc-primary); outline-offset: 3px; }
 }
