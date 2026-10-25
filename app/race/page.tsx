@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import {
   fetchRoundById,
   type CalendarRound,
@@ -160,7 +160,7 @@ function getSessionTimes(event: CalendarSession) {
 
 function formatDateLabel(iso: string): string {
   try {
-    return format(new Date(iso), "d MMM yyyy");
+    return format(parseISO(iso.slice(0, 10)), "EEE d MMM yyyy");
   } catch {
     return iso;
   }
@@ -243,7 +243,7 @@ function RacePage() {
   }
 
   const events = round?.events ?? [];
-  const displayRoundNumber = getRoundSequence(round) ?? roundId;
+  const displayRoundNumber = getRoundSequence(round);
   const sortedByStart = [...events].sort(
     (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
   );
@@ -272,6 +272,14 @@ function RacePage() {
     });
   }
 
+  const startDate = round?.startDate || firstEvent?.start;
+  const endDate = round?.endDate || lastEvent?.start;
+  let country = round?.country || "";
+  if (/^[A-Z]{2}$/i.test(country)) {
+    try {
+      country = new Intl.DisplayNames(["en-GB"], { type: "region" }).of(country.toUpperCase()) || country;
+    } catch { /* Keep the supplied country if it cannot be expanded. */ }
+  }
   const weekendLabel = getSeriesDisplayLabel(round?.subSeries || round?.series, { fallback: "Race" });
 
   return (
@@ -281,13 +289,13 @@ function RacePage() {
       </Link>
 
       <section className={style.hero}>
-        <div className={style.heroBackdrop}>
+        {displayRoundNumber != null && <div className={style.heroBackdrop}>
           {String(displayRoundNumber).padStart(2, "0")}
-        </div>
+        </div>}
 
         <div className={style.heroTopline}>
           <span className={style.eyebrow}>Round Details</span>
-          <span className={style.heroRoundTag}>Round {String(displayRoundNumber).padStart(2, "0")}</span>
+          {displayRoundNumber != null && <span className={style.heroRoundTag}>Round {displayRoundNumber}</span>}
         </div>
 
         <div className={style.heroGrid}>
@@ -295,35 +303,24 @@ function RacePage() {
             <p className={style.heroLabel}>{weekendLabel} Weekend</p>
             <h1 className={style.heroTitle}>{round?.name || "Grand Prix"}</h1>
             <p className={style.heroSummary}>
-              {[round?.place, round?.circuit, round?.country].filter(Boolean).join(" · ")}
+              {[...new Set([round?.place, country].filter(Boolean))].join(" · ")}
             </p>
           </div>
 
-          <div className={style.metrics}>
-            <div className={style.metric}>
-              <span className={style.metricLabel}>Weekend window</span>
-              <strong className={style.metricValue}>
-                {firstEvent?.start ? formatDateLabel(firstEvent.start) : "TBC"}
-              </strong>
-              <span className={style.metricMeta}>
-                {lastEvent?.start ? `to ${formatDateLabel(lastEvent.start)}` : ""}
-              </span>
+          <dl className={style.weekendFacts}>
+            <div className={style.fact}>
+              <dt>Weekend dates</dt>
+              <dd>{startDate ? formatDateLabel(startDate) : "Dates to be confirmed"}
+                {endDate && endDate.slice(0, 10) !== startDate?.slice(0, 10) ? <> – {formatDateLabel(endDate)}</> : null}
+              </dd>
             </div>
-            <div className={style.metric}>
-              <span className={style.metricLabel}>Sessions loaded</span>
-              <strong className={style.metricValue}>{events.length}</strong>
-              <span className={style.metricMeta}>Across all classes</span>
-            </div>
-            <div className={style.metric}>
-              <span className={style.metricLabel}>Classes in focus</span>
-              <strong className={style.metricValue}>{sortedSubSeries.length}</strong>
-              <span className={style.metricMeta}>
-                {sortedSubSeries
-                  .map((subSeries) => getSeriesDisplayLabel(subSeries))
-                  .join(" · ")}
-              </span>
-            </div>
-          </div>
+            {round?.circuit && <div className={style.fact}>
+              <dt>Circuit</dt><dd>{round.circuit}</dd>
+            </div>}
+            {country && <div className={style.fact}>
+              <dt>Country</dt><dd>{country}</dd>
+            </div>}
+          </dl>
         </div>
       </section>
 
