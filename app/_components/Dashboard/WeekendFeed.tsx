@@ -39,6 +39,7 @@ function getRaceBufferMs(ev: ApiCalendarEvent): number {
 }
 
 function isEventOver(ev: ApiCalendarEvent, now: Date): boolean {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(ev.start)) return now > new Date(ev.start + "T23:59:59");
   const nowMs = now.getTime();
   if (ev.end) return new Date(ev.end).getTime() < nowMs;
   const type = ev.type.toUpperCase();
@@ -47,6 +48,7 @@ function isEventOver(ev: ApiCalendarEvent, now: Date): boolean {
 }
 
 function isEventActive(ev: ApiCalendarEvent, now: Date): boolean {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(ev.start)) return false;
   return new Date(ev.start).getTime() <= now.getTime() && !isEventOver(ev, now);
 }
 
@@ -286,7 +288,7 @@ export function WeekendFeed({ events }: WeekendFeedProps) {
                             </div>
                             <div className={style.sessionRight}>
                               <span className={style.sessionTime}>
-                                {format(parseISO(ev.start), "HH:mm")}
+                                {/^\d{4}-\d{2}-\d{2}$/.test(ev.start) ? "Time TBC" : format(parseISO(ev.start), "HH:mm")}
                               </span>
                               {!past && (isLive ? (
                                 <span className={style.sessionSub} style={{ color: seriesColor }}>

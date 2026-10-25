@@ -125,6 +125,7 @@ const getTrackInstant = (event: CalendarSession) => {
 };
 
 function getSessionTimes(event: CalendarSession) {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(event.start)) return { primary: "Time TBC", primaryLabel: "", secondary: null, secondaryLabel: null };
   const timezoneLabel = formatTimezoneLabel(event.timezone) ?? "UTC";
   const instant = getTrackInstant(event);
 
