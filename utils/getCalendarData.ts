@@ -10,6 +10,7 @@ import {
 import { fetchWithAuth, getAccessToken } from "./auth";
 
 export interface SessionMetadata {
+  timing?: { timeKnown: boolean; date?: string };
   motogp?: {
     categoryId?: string | null;
     categoryAcronym?: string | null;

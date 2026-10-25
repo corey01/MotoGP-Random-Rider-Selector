@@ -47,6 +47,7 @@ const bySessionOrder = (left: CalendarSession, right: CalendarSession) =>
   new Date(left.start).getTime() - new Date(right.start).getTime();
 
 const formatSessionTimeRange = (session: CalendarSession) => {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(session.start)) return "Time TBC";
   const startDate = parseISO(session.start);
   const start = format(startDate, "HH:mm");
   const timezoneLabel = getDeviceTimezoneLabel(startDate);

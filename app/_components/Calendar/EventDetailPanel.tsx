@@ -109,7 +109,8 @@ export function EventDetailPanel({ session, round, onClose }: EventDetailPanelPr
   const isRace = session.type === "RACE";
 
   const sessionDate = parseISO(session.start);
-  const userTime = format(sessionDate, "HH:mm");
+  const timeKnown = !/^\d{4}-\d{2}-\d{2}$/.test(session.start);
+  const userTime = timeKnown ? format(sessionDate, "HH:mm") : "Time TBC";
   const userTzLabel = getDeviceTimezoneLabel(sessionDate);
   const userDayLabel = format(sessionDate, "EEEE, d MMMM yyyy");
 
@@ -137,7 +138,7 @@ export function EventDetailPanel({ session, round, onClose }: EventDetailPanelPr
     : trackTimezone
       ? getTimezoneLabel(session.start, trackTimezone)
       : null;
-  const showTrackTime = trackTime && trackTzLabel && (`${trackTime} ${trackTzLabel}` !== `${userTime} ${userTzLabel}`);
+  const showTrackTime = timeKnown && trackTime && trackTzLabel && (`${trackTime} ${trackTzLabel}` !== `${userTime} ${userTzLabel}`);
 
   return (
     <div className={style.panel}>
