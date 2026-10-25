@@ -1,3 +1,10 @@
+## Agent and project documentation
+
+Start with [AGENTS.md](AGENTS.md) and [project structure](docs/PROJECT.md).
+The shared [roadmap](https://github.com/corey01/racecal-api/blob/main/docs/ROADMAP.md)
+and [handoff](https://github.com/corey01/racecal-api/blob/main/docs/HANDOFF.md)
+track goals, coverage, blockers and current work across all three repositories.
+
 Simple sweepstake web app to randomly assign MotoGP riders to entrants.
 
 ## Getting Started

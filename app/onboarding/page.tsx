@@ -3,29 +3,14 @@
 import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/app/_components/AuthProvider";
-import { SERIES_COLORS, SERIES_GROUPS, type SeriesKey, type SubSeriesKey } from "@/consts/series";
+import { SERIES_COLORS, SERIES_GROUPS, SERIES_CARD_META, type SeriesKey, type SubSeriesKey } from "@/consts/series";
 import { apiOnboarding } from "@/utils/auth";
 import { savePreferences } from "@/utils/preferences";
 import { normalizeReturnTo, RETURN_TO_PARAM } from "@/utils/returnTo";
 import { useSubscriptions } from "@/utils/SubscriptionsContext";
 import style from "./Onboarding.module.scss";
 
-const CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: string }> = {
-  motogp:   { abbr: "GP",  subtitle: "Premier Class" },
-  moto2:    { abbr: "M2",  subtitle: "Intermediate" },
-  moto3:    { abbr: "M3",  subtitle: "Lightweight" },
-  worldsbk: { abbr: "SBK", subtitle: "Superbike" },
-  worldssp: { abbr: "SSP", subtitle: "Supersport" },
-  worldwcr: { abbr: "WCR", subtitle: "Women's Cup" },
-  worldspb: { abbr: "SPB", subtitle: "300cc" },
-  bsb:      { abbr: "BSB", subtitle: "British SBK" },
-  speedway: { abbr: "SGP", subtitle: "Grand Prix" },
-  f1:       { abbr: "F1",  subtitle: "Single Seater" },
-  gtwce:    { abbr: "GT",  subtitle: "GT3 / GT4" },
-  iomtt:    { abbr: "IoMTT",  subtitle: "Road Racing" },
-  nls:      { abbr: "NLS", subtitle: "Endurance" },
-  rookiescup: { abbr: "RRC", subtitle: "Junior Grand Prix" },
-};
+
 
 const ALL_CARDS = SERIES_GROUPS.flatMap((group) =>
   group.children.map((child) => ({
@@ -33,7 +18,7 @@ const ALL_CARDS = SERIES_GROUPS.flatMap((group) =>
     subKey: child.key,
     label: child.label,
     color: SERIES_COLORS[group.key],
-    ...CARD_META[child.key],
+    ...SERIES_CARD_META[child.key],
   }))
 );
 

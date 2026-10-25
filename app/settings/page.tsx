@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/app/_components/AuthProvider";
-import { SERIES_COLORS, SERIES_GROUPS, type SeriesKey, type SubSeriesKey } from "@/consts/series";
+import { SERIES_COLORS, SERIES_GROUPS, SERIES_CARD_META, type SeriesKey, type SubSeriesKey } from "@/consts/series";
 import { fetchSubscriptions, saveSubscriptions, fetchDisabledSubSeries } from "@/utils/subscriptions";
 import { fetchPreferences, savePreferences } from "@/utils/preferences";
 import { useSubscriptions } from "@/utils/SubscriptionsContext";
@@ -10,22 +10,7 @@ import type { CalendarView } from "@/utils/getCalendarData";
 import style from "./Settings.module.scss";
 import { useRouter } from "next/dist/client/components/navigation";
 
-const CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: string }> = {
-  motogp:   { abbr: "GP",  subtitle: "Premier Class" },
-  moto2:    { abbr: "M2",  subtitle: "Intermediate" },
-  moto3:    { abbr: "M3",  subtitle: "Lightweight" },
-  worldsbk: { abbr: "SBK", subtitle: "Superbike" },
-  worldssp: { abbr: "SSP", subtitle: "Supersport" },
-  worldwcr: { abbr: "WCR", subtitle: "Women's Cup" },
-  worldspb: { abbr: "SPB", subtitle: "300cc" },
-  bsb:      { abbr: "BSB", subtitle: "British SBK" },
-  speedway: { abbr: "SGP", subtitle: "Grand Prix" },
-  f1:       { abbr: "F1",  subtitle: "Single Seater" },
-  gtwce:    { abbr: "GT",  subtitle: "GT3 / GT4" },
-  iomtt:    { abbr: "IoMTT",  subtitle: "Road Racing" },
-  nls:      { abbr: "NLS", subtitle: "Endurance" },
-  rookiescup: { abbr: "RRC", subtitle: "Junior Grand Prix" },
-};
+
 
 const ALL_CARDS = SERIES_GROUPS.flatMap((group) =>
   group.children.map((child) => ({
@@ -33,7 +18,7 @@ const ALL_CARDS = SERIES_GROUPS.flatMap((group) =>
     subKey: child.key,
     label: child.label,
     color: SERIES_COLORS[group.key],
-    ...CARD_META[child.key],
+    ...SERIES_CARD_META[child.key],
   }))
 );
 
@@ -80,6 +65,7 @@ export default function SettingsPage() {
 
     setDisabledSubSeries((prev) => {
       const next = new Set(prev);
+      if (!subscribed.has(parentKey)) siblings.forEach(child => next.add(child.key));
       if (selected) next.add(subKey);
       else next.delete(subKey);
       return next;
@@ -196,7 +182,7 @@ export default function SettingsPage() {
 
         <section className={style.section}>
           <h2 className={style.sectionTitle}>Series Subscriptions</h2>
-          <p className={style.sectionDesc}>Choose which series and classes appear in your calendar.</p>
+          <p className={style.sectionDesc}>Choose championships and classes to follow. Some currently offer standings and timing data only.</p>
 
           <div className={style.grid}>
             {ALL_CARDS.map(({ parentKey, subKey, label, abbr, subtitle, color }) => {
