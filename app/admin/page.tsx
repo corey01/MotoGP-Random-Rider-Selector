@@ -21,7 +21,7 @@ interface AdminUser {
 interface JobRun {
   id: string;
   jobName: string;
-  status: "success" | "failed" | "running";
+  status: "success" | "error" | "failed" | "running";
   startedAt: string | null;
   completedAt: string | null;
   errorMessage: string | null;
@@ -50,7 +50,7 @@ function fmtDuration(start: string | null, end: string | null): string {
 // --- Components ---
 
 function StatusBadge({ status }: { status: JobRun["status"] }) {
-  return <span className={`${style.badge} ${style[status]}`}>{status}</span>;
+  return <span className={`${style.badge} ${style[status === "error" ? "failed" : status]}`}>{status}</span>;
 }
 
 function JobTable({ runs, cols }: { runs: JobRun[]; cols: number }) {
@@ -208,6 +208,8 @@ type ButtonKey =
   | "motogp-riders"
   | "motogp-grid"
   | "standings-refresh"
+  | "rookies-standings"
+  | "motoamerica-standings"
   | "scrape-bsb"
   | "scrape-wsbk"
   | "wsbk-riders"
@@ -224,9 +226,9 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
   [
     {
       key: "motogp-full",
-      label: "MotoGP Full Sync",
+      label: "Full Data Sync",
       path: "/admin/sync",
-      hint: "motogp:full-sync",
+      hint: "Calendars, riders, grids, results and new championship standings",
     },
     {
       key: "motogp-events",
@@ -242,21 +244,33 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
     },
     {
       key: "motogp-grid",
-      label: "MotoGP Grid",
+      label: "MotoGP / Moto2 / Moto3 Grids",
       path: "/admin/sync/grid",
       hint: "motogp:grid-sync",
     },
     {
       key: "motogp-results",
-      label: "MotoGP Results",
+      label: "MotoGP / Moto2 / Moto3 Results",
       path: "/admin/sync/results",
       hint: "motogp:results-sync",
     },
     {
       key: "standings-refresh",
-      label: "MotoGP Standings",
+      label: "MotoGP / Moto2 / Moto3 Standings",
       path: "/admin/sync/standings",
-      hint: "clears standings cache",
+      hint: "motogp:standings-sync",
+    },
+    {
+      key: "rookies-standings",
+      label: "Rookies Cup Standings",
+      path: "/admin/sync/rookiescup-standings",
+      hint: "Force refresh · hourly at :15 UTC",
+    },
+    {
+      key: "motoamerica-standings",
+      label: "MotoAmerica Standings",
+      path: "/admin/sync/motoamerica-standings",
+      hint: "Force all 8 classes · hourly at :35 UTC",
     },
     { key: "scrape-bsb", label: "BSB", path: "/admin/scrape/bsb", hint: "scrape:bsb" },
     {
@@ -375,13 +389,13 @@ export default function AdminPage() {
         } else {
           showToast(`${label} completed (${year})`, true);
           setLastResult((prev) => ({ ...prev, [key]: "ok" }));
-          void loadJobs();
         }
       } catch (e) {
         const msg = e instanceof Error ? e.message : "Error";
         if (msg !== "Session expired") showToast(`${label}: ${msg}`, false);
         setLastResult((prev) => ({ ...prev, [key]: "failed" }));
       } finally {
+        void loadJobs();
         setRunning((prev) => {
           const next = new Set(prev);
           next.delete(key);

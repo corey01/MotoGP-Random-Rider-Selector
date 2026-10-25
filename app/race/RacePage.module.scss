@@ -350,3 +350,10 @@
   th { color: var(--kc-text-2); }
 }
 .cancelledState { color: #ff8f73; font-size: 0.75rem; }
+
+.standingsFreshness {
+  margin: 14px 0;
+  color: var(--kc-text-2);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}

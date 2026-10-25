@@ -79,9 +79,11 @@ export function ChampionshipStandings({ series, year }: ChampionshipStandingsPro
   return (
     <section className={`${style.section} ${style[`series_${series}`] ?? ""}`}>
       <div className={style.header}>
-        <span className={style.heading}>{label} Championship</span>
-        {data?.year && <span className={style.season}>{data.year}</span>}
-        <Link href="/standings">Browse championships →</Link>
+        <div className={style.headingBlock}>
+          <span className={style.heading}>{label} Championship</span>
+          {data?.year && <span className={style.season}>{data.year}</span>}
+        </div>
+        <Link href="/standings" className={style.browseLink}>Browse championships <span aria-hidden="true">→</span></Link>
       </div>
 
       <div className={style.list}>
