@@ -31,7 +31,7 @@ export default function StandingsPage() {
     <header className={style.hero}>
       <p className={style.eyebrow}>Championships</p>
       <h1>Championship standings</h1>
-      <p className={style.intro}>Explore rider standings across championships and seasons.</p>
+      <p className={style.intro}>Explore championship standings across series and seasons.</p>
     </header>
     <div className={style.controls}>
       <label>Championship
@@ -50,7 +50,7 @@ export default function StandingsPage() {
     <div className={style.results}>
       <div className={style.resultHeading}>
         <div><p className={style.eyebrow}>{year} season</p><h2>{title}</h2></div>
-        <span className={style.badge}>Rider standings</span>
+        <span className={style.badge}>{series === "f1" ? subSeries === "f1-constructors" ? "Constructor standings" : "Driver standings" : "Rider standings"}</span>
       </div>
       <ClassStandings key={choice + year} series={series} subSeries={subSeries} year={year} standalone />
     </div>

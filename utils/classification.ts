@@ -8,7 +8,7 @@ export const sessionLabel=(key:string)=>(({RAC:'Race',SPR:'Sprint'} as Record<st
 export function classificationStatus(status?:string|null){
  if(!status)return null;const raw=status.trim(),value=raw.toUpperCase();
  const mapped=({OUTSTND:'DNF',RETIRED:'DNF',RET:'DNF','NOT FINISHED':'DNF','DID NOT FINISH':'DNF',NS:'DNS','NOT STARTED':'DNS','DID NOT START':'DNS',DSQ:'DSQ',DQ:'DSQ',DISQUALIFIED:'DSQ',DNF:'DNF',DNS:'DNS',NC:'NC','NOT CLASSIFIED':'NC','PIT LANE':'Pit lane'} as Record<string,string>)[value];
- if(mapped)return mapped;if(!raw||['CLASSIFIED','FINISHED','FIN','OK'].includes(value)||/^[+\d:—-]/.test(raw))return null;return raw;
+ if(mapped)return mapped;if(!raw||['INSTND','CLASSIFIED','FINISHED','FIN','OK'].includes(value)||/^[+\d:—-]/.test(raw))return null;return raw;
 }
 export function classificationDetail(row:ClassificationRow,mode:'results'|'grid'|'standings',leaderLaps?:number|null){
  if(mode==='standings')return null;const status=classificationStatus(row.status);if(status)return status;

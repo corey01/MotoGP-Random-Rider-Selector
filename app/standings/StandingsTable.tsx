@@ -27,7 +27,8 @@ export function StandingsTable({ entries,competitorLabel="Rider" }: { entries: S
   return <div className={style.container}>
     <table className={style.table}>
       <caption className={style.srOnly}>{competitorLabel} championship standings, ordered by position</caption>
-      <thead><tr><th scope="col" className={style.position}>Pos</th><th scope="col">{competitorLabel}</th><th scope="col" className={style.team}>Team</th><th scope="col" className={style.gap}>Gap</th><th scope="col" className={style.points}>Points</th></tr></thead>
+      <colgroup><col className={style.positionColumn} /><col /><col className={style.teamColumn} /><col className={style.gapColumn} /><col className={style.pointsColumn} /></colgroup>
+      <thead><tr><th scope="col" className={style.position}>Pos</th><th scope="col" className={style.competitorHeading}>{competitorLabel}</th><th scope="col" className={style.team}>Team</th><th scope="col" className={style.gap}>Gap</th><th scope="col" className={style.points}>Points</th></tr></thead>
       <tbody>{entries.map(entry => <tr key={entry.rider.id} data-position={entry.position}>
         <td className={style.position} style={entry.teamColor && /^#?[0-9a-f]{6}$/i.test(entry.teamColor) ? {boxShadow:`inset 3px 0 #${entry.teamColor.replace("#","")}`} : undefined}>{entry.position}</td>
         <td><Rider entry={entry} /></td>

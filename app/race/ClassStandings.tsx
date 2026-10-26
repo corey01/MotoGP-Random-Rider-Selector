@@ -22,7 +22,7 @@ export function ClassStandings({ year, subSeries, series = "motogp", roundId, st
     {roundId && snapshot.asOfDate && <p>As of {new Date(snapshot.asOfDate + "T12:00:00").toLocaleDateString("en-GB", {day:"numeric",month:"short",year:"numeric"})}{snapshot.unchanged ? " · No points awarded this round" : ""}</p>}
     {!roundId && entries && snapshot.fetchedAt && <p className={style.standingsFreshness}>
       Updated {new Date(snapshot.fetchedAt).toLocaleString("en-GB")}
-      {snapshot.stale ? " · Refresh delayed. Showing the last successful update." : ""}
+      {snapshot.refreshFailed ? " · The latest refresh failed. Showing the last successful update." : snapshot.stale ? " · The next standings update is overdue." : ""}
     </p>}
     {failed ? <p>{roundId ? "Historical standings are not available for this round." : "Standings unavailable. Please try again later."}</p> : !entries ? <p>Loading standings…</p> : !entries.length ? <p>Standings not yet published.</p> :
     standalone ? <StandingsTable entries={entries} competitorLabel={series === "f1" ? subSeries === "f1-constructors" ? "Team" : "Driver" : "Rider"} /> : <table className={style.standingsTable}><thead><tr><th scope="col">Pos</th><th scope="col">Rider</th><th scope="col">Points</th></tr></thead><tbody>
