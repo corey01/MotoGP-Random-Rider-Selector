@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { ScheduledTime, SessionStatus } from '../SessionStatus';
+import { sessionDisruption } from '@/utils/sessionStatus';
 import { format, parseISO } from "date-fns";
 import { type ApiCalendarEvent } from "@/utils/getCalendarData";
 import { getSeriesDisplayLabel, getSessionSeriesDisplayLabel } from "@/utils/series";
@@ -23,14 +25,16 @@ function formatTimeRemaining(seconds: number): string {
 }
 
 function RaceCard({ race }: { race: ApiCalendarEvent }) {
+  const disrupted = !!sessionDisruption(race.status);
   const [secondsLeft, setSecondsLeft] = useState<number>(getSecondsLeft(race.start));
 
   useEffect(() => {
+    if (disrupted) return;
     const tick = () => setSecondsLeft(getSecondsLeft(race.start));
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, [race.start]);
+  }, [race.start, disrupted]);
 
   const isToday = new Date(race.start).toDateString() === new Date().toDateString();
   const hasSubSeries = race.subSeries !== race.series;
@@ -56,11 +60,11 @@ function RaceCard({ race }: { race: ApiCalendarEvent }) {
       <p className={style.sessionRow}>
         <span className={style.sessionName}>{sessionLabel}</span>
         <span className={style.dot}>·</span>
-        <span className={style.timeStr}>{timeStr}</span>
+        <span className={style.timeStr}><ScheduledTime status={race.status} start={race.start}>{timeStr}</ScheduledTime></span>
       </p>
 
       <div className={style.countdown}>
-        {secondsLeft > 0 ? (
+        {disrupted ? <SessionStatus status={race.status} /> : secondsLeft > 0 ? (
           <>
             <span className={style.countdownLabel}>Starts in</span>
             <span className={style.countdownValue}>{formatTimeRemaining(secondsLeft)}</span>

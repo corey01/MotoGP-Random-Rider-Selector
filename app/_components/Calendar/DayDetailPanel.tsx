@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ScheduledTime, SessionStatus } from '../SessionStatus';
 import { useMemo } from "react";
 import { format, parseISO } from "date-fns";
 import type { CalendarRound, CalendarSession } from "@/utils/getCalendarData";
@@ -272,7 +273,8 @@ export function DayDetailPanel({
                         <div className={style.sessionInfo}>
                           <span className={style.sessionType}>{session.type}</span>
                           <span className={style.sessionName}>{getSessionDisplayName(session)}</span>
-                          <span className={style.sessionTime}>{formatSessionTimeRange(session)}</span>
+                          <span className={style.sessionTime}><ScheduledTime status={session.status} start={session.start}>{formatSessionTimeRange(session)}</ScheduledTime></span>
+                          <SessionStatus status={session.status} />
                         </div>
                       </div>
                     ))}

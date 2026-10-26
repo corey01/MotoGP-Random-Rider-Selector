@@ -113,6 +113,8 @@ export interface CalendarRoundEvent {
   extendedProps?: {
     session?: string;
     sessionId?: string;
+    status?: string;
+    timeKnown?: boolean;
     type?: string;
     subSeries?: string;
     meta?: {
@@ -625,6 +627,8 @@ export function toFullCalendarSessionEvent(
     extendedProps: {
       session: session.sessionName,
       sessionId: session.id,
+      status: session.status,
+      timeKnown: session.start.includes('T'),
       type: session.type,
       subSeries: subSeries || series,
       meta: {

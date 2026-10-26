@@ -1,5 +1,6 @@
 "use client";
 import {WeekendClassification} from "./WeekendClassification";
+import { ScheduledTime, SessionStatus } from '../_components/SessionStatus';
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -366,7 +367,6 @@ function RacePage() {
                         const toneClass = TYPE_TONE_CLASS[typeKey] ?? "";
                         const isLive = event.status === "LIVE";
                         const isDone = event.status === "COMPLETED";
-                        const isCancelled = event.status === "CANCELLED";
                         const sessionTimes = getSessionTimes(event);
 
                         return (
@@ -378,18 +378,18 @@ function RacePage() {
                                 <span className={style.sessionName}>{cleanSessionName(event)}</span>
                                 <div className={style.sessionTimes}>
                                 <span className={style.sessionTime}>
-                                  {sessionTimes.primary} {sessionTimes.primaryLabel}
+                                  <ScheduledTime status={event.status} start={event.start}>{sessionTimes.primary} {sessionTimes.primaryLabel}</ScheduledTime>
                                 </span>
                                 {sessionTimes.secondary && sessionTimes.secondaryLabel ? (
                                   <span className={style.sessionTimeSecondary}>
-                                    {sessionTimes.secondary} {sessionTimes.secondaryLabel}
+                                    <ScheduledTime status={event.status} start={event.start}>{sessionTimes.secondary} {sessionTimes.secondaryLabel}</ScheduledTime>
                                   </span>
                                 ) : null}
                               </div>
                             </div>
                             {isLive && <span className={style.liveState}>Live</span>}
                             {isDone && <span className={style.doneState}>Done</span>}
-                            {isCancelled && <span className={style.cancelledState}>Cancelled</span>}
+                            <SessionStatus status={event.status} />
                           </div>
                         );
                       })}
