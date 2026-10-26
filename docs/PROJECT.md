@@ -50,3 +50,12 @@ do not imply that selecting one creates schedule/results coverage.
 - Native client: https://github.com/corey01/racecal-app
 
 Build with `npm run build`; inspect deployment in the repo's GitHub Actions.
+
+## Shared classifications
+
+`app/race/WeekendClassification.tsx` is the detail-page entry for MotoGP-family,
+F1, BSB and WorldSBK. `app/_components/Classification/` supplies competitor cards,
+portraits and styles; `utils/classification.ts` normalises API payloads, statuses,
+historical guards and document/session scope. The native repo has an identical
+pure adapter: keep both copies aligned. Historical reads never fall back to current
+standings. Current championship tables reuse the portrait component and team colours.

@@ -25,7 +25,7 @@ export function ClassStandings({ year, subSeries, series = "motogp", roundId, st
       {snapshot.stale ? " · Refresh delayed. Showing the last successful update." : ""}
     </p>}
     {failed ? <p>{roundId ? "Historical standings are not available for this round." : "Standings unavailable. Please try again later."}</p> : !entries ? <p>Loading standings…</p> : !entries.length ? <p>Standings not yet published.</p> :
-    standalone ? <StandingsTable entries={entries} /> : <table className={style.standingsTable}><thead><tr><th scope="col">Pos</th><th scope="col">Rider</th><th scope="col">Points</th></tr></thead><tbody>
+    standalone ? <StandingsTable entries={entries} competitorLabel={series === "f1" ? subSeries === "f1-constructors" ? "Team" : "Driver" : "Rider"} /> : <table className={style.standingsTable}><thead><tr><th scope="col">Pos</th><th scope="col">Rider</th><th scope="col">Points</th></tr></thead><tbody>
       {entries.map(entry => <tr key={entry.rider.id}><td>{entry.position}</td><td>{entry.rider.fullName || "Unknown rider"}</td><td>{entry.points}</td></tr>)}
     </tbody></table>}
   </section>;

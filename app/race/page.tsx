@@ -1,7 +1,5 @@
 "use client";
-import {F1Classification} from "./F1Classification";
-import {WsbkClassification} from "./WsbkClassification";
-import {BsbClassification} from "./BsbClassification";
+import {WeekendClassification} from "./WeekendClassification";
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -14,9 +12,6 @@ import {
 } from "@/utils/getCalendarData";
 import { getSeriesDisplayLabel } from "@/utils/series";
 import { getDeviceTimezoneLabel } from "@/utils/timezone";
-import { RaceGrid } from "@/app/_components/Grid/RaceGrid";
-import { RaceResults } from "@/app/_components/Results/RaceResults";
-import { ClassStandings } from "./ClassStandings";
 import style from "./RacePage.module.scss";
 
 const SESSION_ORDER: Record<string, number> = {
@@ -188,7 +183,6 @@ function RacePage() {
   const roundIdParam = searchParams.get("roundId");
   const roundId = roundIdParam ? parseInt(roundIdParam, 10) : null;
 
-  const [selectedClass, setSelectedClass] = useState("motogp");
   const [round, setRound] = useState<CalendarRound | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -330,32 +324,7 @@ function RacePage() {
         </div>
       </section>
 
-      {round?.series === "motogp" && <div className={style.classSelector} role="group" aria-label="Championship class">
-        {["motogp", "moto2", "moto3"].map(cls => <button key={cls} type="button" aria-pressed={selectedClass === cls} onClick={() => setSelectedClass(cls)}>{getSeriesDisplayLabel(cls)}</button>)}
-      </div>}
-      {round?.series === "f1" ? <F1Classification key={roundId} roundId={roundId} /> : round?.series === "wsbk" ? <WsbkClassification key={roundId} roundId={roundId} /> : round?.series === "bsb" ? <BsbClassification key={roundId} roundId={roundId} /> : <div className={style.sectionGrid}>
-        <section className={style.primarySection}>
-          <div className={style.sectionHeader}>
-            <div>
-              <p className={style.sectionEyebrow}>Results</p>
-              <h2 className={style.sectionTitle}>Race classification</h2>
-            </div>
-          </div>
-          {events.some(e => e.subSeries === selectedClass && e.type === "RACE" && e.status === "CANCELLED") && !events.some(e => e.subSeries === selectedClass && e.type === "RACE" && e.status === "COMPLETED") ? <p>Race cancelled. No classification was issued.</p> : <RaceResults key={roundId + selectedClass} roundId={roundId} subSeries={selectedClass} />}
-        </section>
-
-        <section className={style.secondarySection}>
-          <div className={style.sectionHeader}>
-            <div>
-              <p className={style.sectionEyebrow}>Grid</p>
-              <h2 className={style.sectionTitle}>Starting order</h2>
-            </div>
-          </div>
-          <RaceGrid key={roundId + selectedClass} roundId={roundId} subSeries={selectedClass} />
-        </section>
-      </div>}
-
-      {round?.series === "motogp" && <ClassStandings roundId={roundId} key={roundId + selectedClass} subSeries={selectedClass} year={Number(round.startDate.slice(0, 4)) || new Date().getFullYear()} />}
+      {round && ["motogp","f1","wsbk","bsb"].includes(round.series) && <WeekendClassification key={roundId + round.series} roundId={roundId} year={Number(round.startDate.slice(0,4))} series={round.series} events={events} />}
       <section className={style.scheduleSection}>
         <div className={style.sectionHeader}>
           <div>
