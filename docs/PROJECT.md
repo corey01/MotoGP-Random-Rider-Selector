@@ -59,3 +59,13 @@ portraits and styles; `utils/classification.ts` normalises API payloads, statuse
 historical guards and document/session scope. The native repo has an identical
 pure adapter: keep both copies aligned. Historical reads never fall back to current
 standings. Current championship tables reuse the portrait component and team colours.
+
+## MotoGP competition standings
+
+Championship selection and WeekendClassification expose rider, team and constructor
+championships for MotoGP/Moto2/Moto3. Choice values add a third competition segment,
+e.g. motogp:motogp:teams; these are views of a class, not new subscriptions. Both
+ClassStandings and the shared adapter send competition to /standings and validate
+its scope. Official stored year/class/round XML totals are authoritative; never
+sum rider points to construct another championship. Team/manufacturer tables hide
+the redundant secondary Team column and retain source/as-of metadata.

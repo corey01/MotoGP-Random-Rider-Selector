@@ -8,7 +8,7 @@ const championships = [
   {label: "Formula 1", options: [["f1:f1", "F1 Drivers"], ["f1:f1-constructors", "F1 Constructors"]]},
   {label: "WorldSBK", options: [["wsbk:worldsbk", "WorldSBK"], ["wsbk:worldssp", "WorldSSP"], ["wsbk:worldspb", "WorldSPB"], ["wsbk:worldwcr", "WorldWCR"]]},
   { label: "British Superbike", options: [["bsb:bsb", "British Superbike"], ["bsb:bsb-supersport", "British Supersport"]] },
-  { label: "MotoGP", options: [["motogp:motogp", "MotoGP"], ["motogp:moto2", "Moto2"], ["motogp:moto3", "Moto3"]] },
+  { label: "MotoGP", options: ["motogp", "moto2", "moto3"].flatMap((cls, index) => [[`motogp:${cls}`, `${["MotoGP", "Moto2", "Moto3"][index]} Riders`], [`motogp:${cls}:teams`, `${["MotoGP", "Moto2", "Moto3"][index]} Teams`], [`motogp:${cls}:constructors`, `${["MotoGP", "Moto2", "Moto3"][index]} Constructors`]]) },
   { label: "Red Bull Rookies Cup", options: [["rookiescup:rookiescup", "Red Bull Rookies Cup"]] },
   { label: "MotoAmerica", options: [
     ["superbike", "Superbike"], ["superbike-cup", "Superbike Cup"], ["supersport", "Supersport"],
@@ -21,7 +21,7 @@ export default function StandingsPage() {
   const currentYear = new Date().getFullYear();
   const [choice, setChoice] = useState("motogp:motogp");
   const [year, setYear] = useState(currentYear);
-  const [series, subSeries] = choice.split(":");
+  const [series, subSeries, competition = "riders"] = choice.split(":");
   const group = championships.find(group => group.options.some(([key]) => key === choice))!;
   const label = group.options.find(([key]) => key === choice)![1];
   const title = series === "motoamerica" ? `MotoAmerica ${label}` : label;
@@ -50,9 +50,9 @@ export default function StandingsPage() {
     <div className={style.results}>
       <div className={style.resultHeading}>
         <div><p className={style.eyebrow}>{year} season</p><h2>{title}</h2></div>
-        <span className={style.badge}>{series === "f1" ? subSeries === "f1-constructors" ? "Constructor standings" : "Driver standings" : "Rider standings"}</span>
+        <span className={style.badge}>{competition === "teams" ? "Team standings" : competition === "constructors" ? "Constructor standings" : series === "f1" ? subSeries === "f1-constructors" ? "Constructor standings" : "Driver standings" : "Rider standings"}</span>
       </div>
-      <ClassStandings key={choice + year} series={series} subSeries={subSeries} year={year} standalone />
+      <ClassStandings key={choice + year} series={series} subSeries={subSeries} year={year} competition={competition} standalone />
     </div>
   </main>;
 }

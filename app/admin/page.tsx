@@ -266,7 +266,7 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       key: "standings-refresh",
       label: "MotoGP / Moto2 / Moto3 Standings",
       path: "/admin/sync/standings",
-      hint: "motogp:standings-sync",
+      hint: "Whole season · riders, teams and constructors · all three classes · every 6 hours and after new race results",
     },
     {
       key: "rookies-standings",
