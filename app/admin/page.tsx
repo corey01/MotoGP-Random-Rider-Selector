@@ -6,6 +6,7 @@ import { useAuth } from "@/app/_components/AuthProvider";
 import { fetchWithAuth } from "@/utils/auth";
 import { buildPathWithReturnTo, getCurrentPath } from "@/utils/returnTo";
 import style from "./Admin.module.scss";
+import PollingSchedule, { type PollingResponse } from "./PollingSchedule";
 
 // --- Types ---
 
@@ -32,19 +33,6 @@ interface JobsResponse {
   ok: boolean;
   jobs: JobRun[];
   recent: JobRun[];
-}
-
-interface PollingJob {
-  jobName: string;
-  series: string;
-  mode: "race-weekend" | "quiet";
-  intervalMs: number;
-  calendarAvailable: boolean;
-  lastAttemptAt: string | null;
-  lastSuccessAt: string | null;
-  lastStatus: string | null;
-  lastError: string | null;
-  nextCheckAt: string;
 }
 
 // --- Helpers ---
@@ -89,7 +77,7 @@ function JobTable({ runs, cols }: { runs: JobRun[]; cols: number }) {
         <tbody>
           {runs.map((run) => (
             <tr key={run.id}>
-              <td><code>{run.jobName}</code>{["timing:bsb","timing:wsbk","timing:f1"].includes(run.jobName) && run.meta && <details className={style.timingSummary}>
+              <td><code>{run.jobName}</code>{["timing:bsb","timing:wsbk","timing:f1","timing:rookiescup","timing:motoamerica"].includes(run.jobName) && run.meta && <details className={style.timingSummary}>
                 <summary>{run.meta.snapshotsWritten ?? 0} snapshots written · {run.meta.resultRows ?? 0} results · {run.meta.gridRows ?? 0} grid rows · {run.meta.standingsRows ?? 0} standings rows</summary>
                 <p>Scope: {run.meta.scope ?? "unknown"}{run.meta.roundId ? ` · Round ID ${run.meta.roundId}` : ""}{run.meta.subSeries ? ` · ${run.meta.subSeries}` : ""}</p>
                 <ul>{run.meta.results?.map((entry,index)=><li key={index}>Round {entry.roundNumber ?? entry.roundId ?? "?"} · {entry.subSeries ?? "all classes"} · {entry.status}{entry.error ? `: ${entry.error}` : `: ${entry.resultRows ?? 0} results, ${entry.gridRows ?? 0} grid rows, ${entry.standingsRows ?? 0} standings rows`}</li>)}</ul>
@@ -231,6 +219,8 @@ type ButtonKey =
   | "bsb-timing"
   | "wsbk-timing"
   | "f1-timing"
+  | "rookies-timing"
+  | "motoamerica-timing"
   | "scrape-bsb"
   | "scrape-wsbk"
   | "wsbk-riders"
@@ -294,8 +284,10 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       hint: "Whole season · all 8 classes · daily until calendar coverage is available",
     },
     { key: "f1-timing", label: "F1 Results, Grids & Standings", path: "/admin/sync/f1-timing", hint: "Whole season · races and sprints · hourly around race weekends, daily between events" },
-    { key: "wsbk-timing", label: "WorldSBK / Support Results", path: "/admin/sync/wsbk-timing", hint: "Full season results and championship standings · all four classes · hourly around race weekends, daily between events" },
-    { key: "bsb-timing", label: "BSB / Supersport Timing", path: "/admin/sync/bsb-timing", hint: "Full season grids, race results and standings · hourly around race weekends, daily between events" },
+    { key: "wsbk-timing", label: "WorldSBK / Support Timing", path: "/admin/sync/wsbk-timing", hint: "Full season results, published grids and championship standings · all four classes · hourly around race weekends, daily between events" },
+    { key: "rookies-timing", label: "Rookies Cup Results", path: "/admin/sync/rookies-timing", hint: "Full season published race classifications · hourly around race weekends, daily between events" },
+    { key: "motoamerica-timing", label: "MotoAmerica Results & Grids", path: "/admin/sync/motoamerica-timing", hint: "Published race reports and grids · completed event dates only · seven classes; Superbike Cup standings remain separate" },
+    { key: "bsb-timing", label: "BSB / Support Timing", path: "/admin/sync/bsb-timing", hint: "Full season grids, race results and standings · hourly around race weekends, daily between events" },
     { key: "scrape-bsb", label: "BSB", path: "/admin/scrape/bsb", hint: "scrape:bsb" },
     {
       key: "scrape-wsbk",
@@ -360,7 +352,8 @@ export default function AdminPage() {
   const [jobs, setJobs] = useState<JobRun[]>([]);
   const [recent, setRecent] = useState<JobRun[]>([]);
   const [jobsError, setJobsError] = useState("");
-  const [polling, setPolling] = useState<PollingJob[]>([]);
+  const [polling, setPolling] = useState<PollingResponse | null>(null);
+  const [pollingLoading, setPollingLoading] = useState(false);
   const [pollingError, setPollingError] = useState("");
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null);
@@ -382,14 +375,18 @@ export default function AdminPage() {
   }, []);
 
   const loadPolling = useCallback(async () => {
+    setPollingLoading(true);
     try {
       const res = await fetchWithAuth("/admin/polling");
       if (!res.ok) throw new Error("Polling status unavailable");
-      const data = await res.json();
-      setPolling(data.jobs);
+      const data: PollingResponse = await res.json();
+      if (!data.ok || !Array.isArray(data.jobs) || !data.checkedAt) throw new Error("Invalid polling status");
+      setPolling(data);
       setPollingError("");
     } catch {
       setPollingError("Unable to load planned sync times.");
+    } finally {
+      setPollingLoading(false);
     }
   }, []);
 
@@ -422,12 +419,12 @@ export default function AdminPage() {
           method: "POST",
         });
         const data = await res.json();
-        if (!res.ok || (["bsb-timing","wsbk-timing","f1-timing"].includes(key) && (data.job?.status !== "success" || !(data.job?.meta?.snapshotsWritten > 0)))) {
+        if (!res.ok || (["bsb-timing","wsbk-timing","f1-timing","rookies-timing","motoamerica-timing"].includes(key) && (data.job?.status !== "success" || !(data.job?.meta?.snapshotsWritten > 0)))) {
           const msg = data.error ?? data.message ?? res.status;
           showToast(`${label} failed: ${msg}`, false);
           setLastResult((prev) => ({ ...prev, [key]: "failed" }));
         } else {
-          showToast(["bsb-timing","wsbk-timing","f1-timing"].includes(key) ? `${label}: ${data.job.meta.snapshotsWritten} snapshots written, ${data.job.meta.resultRows} results, ${data.job.meta.gridRows ?? 0} grid rows` : `${label} completed (${year})`, true);
+          showToast(["bsb-timing","wsbk-timing","f1-timing","rookies-timing","motoamerica-timing"].includes(key) ? `${label}: ${data.job.meta.snapshotsWritten} snapshots written, ${data.job.meta.resultRows} results, ${data.job.meta.gridRows ?? 0} grid rows` : `${label} completed (${year})`, true);
           setLastResult((prev) => ({ ...prev, [key]: "ok" }));
         }
       } catch (e) {
@@ -511,25 +508,7 @@ export default function AdminPage() {
       {/* User management */}
       <UserLookup showToast={showToast} />
 
-      <section className={style.section}>
-        <h2 className={style.sectionTitle}>Automatic Sync Schedule</h2>
-        <p className={style.subtitle}>Race weekends use each series’ calendar, including the day before and two days after. Between events, imports run daily. Manual syncs run immediately for the selected year.</p>
-        {pollingError && <p className={style.errorText}>{pollingError}</p>}
-        <div className={style.pollingGrid}>
-          {polling.map(job => <article className={style.pollingCard} key={job.jobName}>
-            <strong>{job.series.toUpperCase()}</strong>
-            <code>{job.jobName}</code>
-            <p>{job.mode === "race-weekend" ? "Race weekend" : "Between events"} · every {job.intervalMs < 3600000 ? `${job.intervalMs / 60000} minutes` : `${job.intervalMs / 3600000} hours`}</p>
-            {!job.calendarAvailable && <p>No calendar available. Using the quiet schedule.</p>}
-            <dl>
-              <dt>Last attempt</dt><dd>{fmtDate(job.lastAttemptAt)}</dd>
-              <dt>Last success</dt><dd>{fmtDate(job.lastSuccessAt)}</dd>
-              <dt>Next check</dt><dd>{fmtDate(job.nextCheckAt)}</dd>
-            </dl>
-            {job.lastError && <p className={style.errorText}>{job.lastError} · Failed imports retry {job.mode === "race-weekend" ? "hourly" : "every 6 hours"}.</p>}
-          </article>)}
-        </div>
-      </section>
+      <PollingSchedule data={polling} error={pollingError} loading={pollingLoading} onRefresh={loadPolling} />
 
       {/* Job status */}
       <section className={style.section}>
@@ -554,7 +533,7 @@ export default function AdminPage() {
 
       {/* Toast */}
       {toast && (
-        <div className={`${style.toast} ${toast.ok ? style.toastOk : style.toastError}`}>
+        <div role={toast.ok ? "status" : "alert"} className={`${style.toast} ${toast.ok ? style.toastOk : style.toastError}`}>
           {toast.msg}
         </div>
       )}
