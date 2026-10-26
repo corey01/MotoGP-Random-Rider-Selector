@@ -16,6 +16,7 @@ export interface StandingsRider {
 }
 
 export interface StandingsEntry {
+  teamColor?: string | null;
   position: number;
   points: number;
   rider: StandingsRider;
