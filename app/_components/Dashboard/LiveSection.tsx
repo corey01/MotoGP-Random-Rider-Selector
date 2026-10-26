@@ -5,6 +5,7 @@ import { type ApiCalendarEvent } from "@/utils/getCalendarData";
 import { fetchLiveSession, type LiveSessionData } from "@/utils/getLiveSession";
 import { getSeriesColor, getSeriesDisplayLabel } from "@/utils/series";
 import { LiveRaceCard } from "./LiveRaceCard";
+import { sessionDisruption } from '@/utils/sessionStatus';
 
 const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
 const NINETY_MINS_MS = 90 * 60 * 1000;
@@ -52,7 +53,7 @@ export function LiveSection({ events }: TodaySectionProps) {
   }, []);
 
   const raceEvents = useMemo(
-    () => events.filter((ev) => ev.type === "RACE"),
+    () => events.filter((ev) => ev.type === "RACE" && !sessionDisruption(ev.status)),
     [events]
   );
 
@@ -94,7 +95,7 @@ export function LiveSection({ events }: TodaySectionProps) {
 
     const candidates = events.filter((ev) => {
       const eventSubSeries = categoryToSubSeries(ev.subSeries || ev.series);
-      return ev.type === "RACE" && eventSubSeries === liveSubSeries;
+      return ev.type === "RACE" && !sessionDisruption(ev.status) && eventSubSeries === liveSubSeries;
     });
     if (candidates.length === 0) return null;
 

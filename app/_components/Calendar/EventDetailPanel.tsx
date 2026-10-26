@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ScheduledTime, SessionStatus } from '../SessionStatus';
 import { format, parseISO } from "date-fns";
 import type { CalendarRound, CalendarSession } from "@/utils/getCalendarData";
 import { getSeriesColor, getSessionSeriesDisplayLabel } from "@/utils/series";
@@ -154,6 +155,7 @@ export function EventDetailPanel({ session, round, onClose }: EventDetailPanelPr
             <span className={`${style.typeBadge} ${isRace ? style.typeBadgeRace : ""}`}>
               {typeLabel}
             </span>
+            <SessionStatus status={session.status} />
           </div>
         </div>
         <button className={style.closeBtn} onClick={onClose} aria-label="Close panel">✕</button>
@@ -177,12 +179,12 @@ export function EventDetailPanel({ session, round, onClose }: EventDetailPanelPr
           <p className={style.sectionLabel}>Time</p>
           <div className={style.timeRow}>
             <div className={style.timeItem}>
-              <span className={style.timeValue}>{userTime}</span>
+              <span className={style.timeValue}><ScheduledTime status={session.status} start={session.start}>{userTime}</ScheduledTime></span>
               <span className={style.timeLabel}>Your time {userTzLabel && `· ${userTzLabel}`}</span>
               {showTrackTime && trackTime && trackTzLabel && (
                 <>
                   <span className={style.secondaryTime}>
-                    Circuit local: {trackTime} · {trackTzLabel}
+                    Circuit local: <ScheduledTime status={session.status} start={session.start}>{trackTime} · {trackTzLabel}</ScheduledTime>
                   </span>
                   {trackDayLabel && trackDayLabel !== userDayLabel && (
                     <span className={style.secondaryTime}>{trackDayLabel}</span>

@@ -1,6 +1,7 @@
 "use client";
 
 import FullCalendar from "@fullcalendar/react";
+import { sessionDisruption, strikeSessionTime } from '@/utils/sessionStatus';
 import { EventClickArg } from "@fullcalendar/core";
 import { DateClickArg } from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -509,15 +510,19 @@ export const Calendar = ({
               }}
               eventContent={(eventInfo) => {
                 const displayTitle = escapeCalendarHtml(getCompactEventTitle(eventInfo.event));
-                const timeText = eventInfo.event.allDay ? "" : escapeCalendarHtml(eventInfo.timeText);
+                const timeKnown = eventInfo.event.extendedProps.timeKnown !== false;
+                const timeText = eventInfo.event.allDay ? "" : timeKnown ? escapeCalendarHtml(eventInfo.timeText) : 'Time TBC';
                 const hasTime = timeText.length > 0;
+                const status = eventInfo.event.extendedProps.status;
+                const disruption = sessionDisruption(status);
+                const strikeTime = timeKnown && strikeSessionTime(status, eventInfo.event.startStr);
 
                 return {
                   html: `<div class="event-content ${
                     hasTime ? "event-content-with-time" : ""
                   }">${
-                    hasTime ? `<span class="event-time">${timeText}</span>` : ""
-                  }<div class="event-title">${displayTitle}</div></div>`,
+                    hasTime ? `<span class="event-time ${strikeTime ? 'event-time-cancelled' : ''}">${timeText}</span>` : ""
+                  }<div class="event-title">${disruption ? `<strong class="event-disruption">${disruption} · </strong>` : ''}${displayTitle}</div></div>`,
                 };
               }}
               dayCellClassNames={(arg) => {

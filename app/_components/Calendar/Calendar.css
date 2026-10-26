@@ -808,3 +808,6 @@
     letter-spacing: 0.08em;
   }
 }
+/* Keep cancellations explicit in the session grid without marking the whole weekend. */
+.event-time-cancelled { text-decoration: line-through; text-decoration-thickness: 1.5px; }
+.event-disruption { font-weight: 800; }

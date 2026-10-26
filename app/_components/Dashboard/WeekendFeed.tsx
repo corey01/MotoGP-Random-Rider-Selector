@@ -1,6 +1,8 @@
 "use client";
 
 import { Fragment, useEffect, useRef, useMemo, useState } from "react";
+import { ScheduledTime, SessionStatus } from '../SessionStatus';
+import { sessionDisruption } from '@/utils/sessionStatus';
 import { format, parseISO } from "date-fns";
 import {
   groupApiCalendarEventsByRound,
@@ -48,6 +50,7 @@ function isEventOver(ev: ApiCalendarEvent, now: Date): boolean {
 }
 
 function isEventActive(ev: ApiCalendarEvent, now: Date): boolean {
+  if (sessionDisruption(ev.status)) return false;
   if (/^\d{4}-\d{2}-\d{2}$/.test(ev.start)) return false;
   return new Date(ev.start).getTime() <= now.getTime() && !isEventOver(ev, now);
 }
@@ -240,7 +243,8 @@ export function WeekendFeed({ events }: WeekendFeedProps) {
                 <div className={style.sessions}>
                   {day.events.map((ev, index) => {
                     const isToday = day.date === todayStr;
-                    const past = isToday && isEventOver(ev, now);
+                    const disrupted = !!sessionDisruption(ev.status);
+                    const past = !disrupted && isToday && isEventOver(ev, now);
                     const active = isToday && isEventActive(ev, now);
                     const prevPast = isToday && index > 0 && isEventOver(day.events[index - 1], now);
                     const showNowLine = prevPast && !past && !active;
@@ -288,9 +292,10 @@ export function WeekendFeed({ events }: WeekendFeedProps) {
                             </div>
                             <div className={style.sessionRight}>
                               <span className={style.sessionTime}>
-                                {/^\d{4}-\d{2}-\d{2}$/.test(ev.start) ? "Time TBC" : format(parseISO(ev.start), "HH:mm")}
+                                <ScheduledTime status={ev.status} start={ev.start}>{/^\d{4}-\d{2}-\d{2}$/.test(ev.start) ? "Time TBC" : format(parseISO(ev.start), "HH:mm")}</ScheduledTime>
                               </span>
-                              {!past && (isLive ? (
+                              <SessionStatus status={ev.status} />
+                              {!disrupted && !past && (isLive ? (
                                 <span className={style.sessionSub} style={{ color: seriesColor }}>
                                   Live
                                 </span>
