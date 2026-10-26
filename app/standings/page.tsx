@@ -7,7 +7,7 @@ import style from "./Standings.module.scss";
 const championships = [
   {label: "Formula 1", options: [["f1:f1", "F1 Drivers"], ["f1:f1-constructors", "F1 Constructors"]]},
   {label: "WorldSBK", options: [["wsbk:worldsbk", "WorldSBK"], ["wsbk:worldssp", "WorldSSP"], ["wsbk:worldspb", "WorldSPB"], ["wsbk:worldwcr", "WorldWCR"]]},
-  { label: "British Superbike", options: [["bsb:bsb", "British Superbike"], ["bsb:bsb-supersport", "British Supersport"]] },
+  { label: "British Superbike", options: [["bsb:bsb", "British Superbike"], ["bsb:bsb-supersport", "British Supersport"], ["bsb:bsb-superstock", "National Superstock"], ["bsb:bsb-sportbike", "British Sportbike"]] },
   { label: "MotoGP", options: ["motogp", "moto2", "moto3"].flatMap((cls, index) => [[`motogp:${cls}`, `${["MotoGP", "Moto2", "Moto3"][index]} Riders`], [`motogp:${cls}:teams`, `${["MotoGP", "Moto2", "Moto3"][index]} Teams`], [`motogp:${cls}:constructors`, `${["MotoGP", "Moto2", "Moto3"][index]} Constructors`]]) },
   { label: "Red Bull Rookies Cup", options: [["rookiescup:rookiescup", "Red Bull Rookies Cup"]] },
   { label: "MotoAmerica", options: [

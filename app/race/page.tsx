@@ -325,7 +325,7 @@ function RacePage() {
         </div>
       </section>
 
-      {round && ["motogp","f1","wsbk","bsb"].includes(round.series) && <WeekendClassification key={roundId + round.series} roundId={roundId} year={Number(round.startDate.slice(0,4))} series={round.series} events={events} />}
+      {round && ["motogp","f1","wsbk","bsb","rookiescup","motoamerica"].includes(round.series) && <WeekendClassification key={roundId + round.series} roundId={roundId} year={Number(round.startDate.slice(0,4))} series={round.series} events={events} />}
       <section className={style.scheduleSection}>
         <div className={style.sectionHeader}>
           <div>

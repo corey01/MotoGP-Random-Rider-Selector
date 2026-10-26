@@ -158,7 +158,8 @@ export default function CalendarPage() {
 
   useEffect(() => {
     if (!subscriptionsLoaded) return;
-    const baseVisibility = visibilityWithinSeries({ ...DEFAULT_SUB_SERIES_VISIBILITY }, subscribedSeries);
+    const accountVisibility = Object.fromEntries(Object.keys(DEFAULT_SUB_SERIES_VISIBILITY).map(key => [key, true])) as Record<SubSeriesKey, boolean>;
+    const baseVisibility = visibilityWithinSeries(accountVisibility, subscribedSeries);
     disabledSubSeries.forEach((key) => { if (key in baseVisibility) baseVisibility[key] = false; });
     setAvailableSeries(subscribedSeries);
     setVisibleSubSeries(baseVisibility);

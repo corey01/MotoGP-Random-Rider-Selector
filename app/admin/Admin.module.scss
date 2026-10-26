@@ -452,3 +452,43 @@
 }
 
 .timingSummary {margin-top:8px;font-size:12px;line-height:1.5;max-width:520px;summary{cursor:pointer;color:var(--kc-text-2);} p{margin:8px 0;}ul{padding-left:16px;}li{margin-top:6px;}}
+
+.pollingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.pollingCard {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--kc-border);
+  border-radius: 12px;
+  background: var(--kc-surface-1);
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+  h3, code { display: block; }
+  h3 { font-weight: 600; color: var(--kc-text-1); }
+  .badge { margin-top: 10px; }
+  .errorText { color: #fca5a5; }
+  code, p { color: var(--kc-text-2); margin-top: 8px; }
+  dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 12px; }
+  dt { color: var(--kc-text-2); }
+  dd { margin: 0; text-align: right; }
+}
+
+.pending {
+  background: var(--kc-surface-3);
+  color: var(--kc-text-2);
+}
+
+.refreshBtn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+@media (max-width: 480px) {
+  .sectionHeader { flex-wrap: wrap; gap: 8px; }
+  .pollingCard dl { grid-template-columns: 1fr; gap: 2px; }
+  .pollingCard dd { text-align: left; margin-bottom: 8px; }
+}
