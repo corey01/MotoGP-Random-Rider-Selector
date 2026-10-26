@@ -26,12 +26,12 @@ export function documentForView(d:ClassificationDocument,view:string,session:str
  return (view==='grid'?/grid/i.test(d.label):!/grid/i.test(d.label))&&(!/Race \d+/i.test(d.label)||d.label.includes(session));
 }
 export type ClassificationFetcher=(path:string,options:{signal:AbortSignal})=>Promise<Response>;
-export async function loadClassification(fetcher:ClassificationFetcher,roundId:number,year:number,series:string,cls:string,signal:AbortSignal):Promise<ClassificationData>{
+export async function loadClassification(fetcher:ClassificationFetcher,roundId:number,year:number,series:string,cls:string,signal:AbortSignal,competition='riders'):Promise<ClassificationData>{
  const empty:ClassificationData={results:{},grids:{},standings:[],sessions:[],documents:[],errors:{}};
- const get=async(path:string,historical=false)=>{const res=await fetcher(path,{signal}),data=await res.json();if(!res.ok)throw new Error(typeof data.error==='string'?data.error:'Classification is unavailable. Please try again later.');if(data.roundId!==roundId||data.subSeries!==cls||(historical&&(!data.asOfSession||data.year!==year)))throw new Error('The classification does not match this round, class and season.');return data;};
+ const get=async(path:string,historical=false)=>{const res=await fetcher(path,{signal}),data=await res.json();if(!res.ok)throw new Error(typeof data.error==='string'?data.error:'Classification is unavailable. Please try again later.');if(data.roundId!==roundId||data.subSeries!==cls||(historical&&(!data.asOfSession||data.year!==year||(competition!=='riders'&&data.competition!==competition))))throw new Error('The classification does not match this round, class and season.');return data;};
  if(series==='motogp'){
   const query=`roundId=${roundId}&subSeries=${encodeURIComponent(cls)}`;
-  const [r,g,s]=await Promise.allSettled([get('/results?'+query),get('/grid?'+query),get(`/standings?${query}&series=motogp&year=${year}`,true)]);
+  const [r,g,s]=await Promise.allSettled([get('/results?'+query),get('/grid?'+query),get(`/standings?${query}&series=motogp&year=${year}&competition=${encodeURIComponent(competition)}`,true)]);
   if(r.status==='fulfilled')empty.results=r.value.sessions??{};else empty.errors.results=r.reason.message;
   if(g.status==='fulfilled'&&g.value.grid?.length)empty.grids.RAC=g.value.grid;else if(g.status==='rejected')empty.errors.grid=g.reason.message;
   if(s.status==='fulfilled'){const d=s.value;empty.standings=d.standings??[];empty.asOfDate=d.asOfDate;empty.asOfSession=d.asOfSession;empty.unchanged=d.unchanged;empty.stale=d.stale;if(d.sourceUrl)empty.documents.push({label:'Championship standings',url:d.sourceUrl});}else empty.errors.standings='Historical standings are unavailable for this round.';
