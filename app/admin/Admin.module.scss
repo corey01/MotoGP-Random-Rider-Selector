@@ -452,3 +452,24 @@
 }
 
 .timingSummary {margin-top:8px;font-size:12px;line-height:1.5;max-width:520px;summary{cursor:pointer;color:var(--kc-text-2);} p{margin:8px 0;}ul{padding-left:16px;}li{margin-top:6px;}}
+
+.pollingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.pollingCard {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--kc-border);
+  border-radius: 12px;
+  background: var(--kc-surface-1);
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+  strong, code { display: block; }
+  code, p { color: var(--kc-text-2); margin-top: 8px; }
+  dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 12px; }
+  dt { color: var(--kc-text-2); }
+  dd { margin: 0; text-align: right; }
+}

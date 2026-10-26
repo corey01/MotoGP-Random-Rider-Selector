@@ -34,6 +34,19 @@ interface JobsResponse {
   recent: JobRun[];
 }
 
+interface PollingJob {
+  jobName: string;
+  series: string;
+  mode: "race-weekend" | "quiet";
+  intervalMs: number;
+  calendarAvailable: boolean;
+  lastAttemptAt: string | null;
+  lastSuccessAt: string | null;
+  lastStatus: string | null;
+  lastError: string | null;
+  nextCheckAt: string;
+}
+
 // --- Helpers ---
 
 function fmtDate(iso: string | null): string {
@@ -266,23 +279,23 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       key: "standings-refresh",
       label: "MotoGP / Moto2 / Moto3 Standings",
       path: "/admin/sync/standings",
-      hint: "Whole season · riders, teams and constructors · all three classes · every 6 hours and after new race results",
+      hint: "Whole season · riders, teams and constructors · all three classes · hourly around race weekends, daily between events and after new race results",
     },
     {
       key: "rookies-standings",
       label: "Rookies Cup Standings",
       path: "/admin/sync/rookiescup-standings",
-      hint: "Force refresh · hourly at :15 UTC",
+      hint: "Whole season · hourly around race weekends, daily between events",
     },
     {
       key: "motoamerica-standings",
       label: "MotoAmerica Standings",
       path: "/admin/sync/motoamerica-standings",
-      hint: "Force all 8 classes · hourly at :35 UTC",
+      hint: "Whole season · all 8 classes · daily until calendar coverage is available",
     },
-    { key: "f1-timing", label: "F1 Results, Grids & Standings", path: "/admin/sync/f1-timing", hint: "Whole season · races and sprints · every 6 hours" },
-    { key: "wsbk-timing", label: "WorldSBK / Support Results", path: "/admin/sync/wsbk-timing", hint: "Full season results and championship standings · all four classes · every 6 hours" },
-    { key: "bsb-timing", label: "BSB / Supersport Timing", path: "/admin/sync/bsb-timing", hint: "Full season grids, race results and standings · every 6 hours" },
+    { key: "f1-timing", label: "F1 Results, Grids & Standings", path: "/admin/sync/f1-timing", hint: "Whole season · races and sprints · hourly around race weekends, daily between events" },
+    { key: "wsbk-timing", label: "WorldSBK / Support Results", path: "/admin/sync/wsbk-timing", hint: "Full season results and championship standings · all four classes · hourly around race weekends, daily between events" },
+    { key: "bsb-timing", label: "BSB / Supersport Timing", path: "/admin/sync/bsb-timing", hint: "Full season grids, race results and standings · hourly around race weekends, daily between events" },
     { key: "scrape-bsb", label: "BSB", path: "/admin/scrape/bsb", hint: "scrape:bsb" },
     {
       key: "scrape-wsbk",
@@ -347,6 +360,8 @@ export default function AdminPage() {
   const [jobs, setJobs] = useState<JobRun[]>([]);
   const [recent, setRecent] = useState<JobRun[]>([]);
   const [jobsError, setJobsError] = useState("");
+  const [polling, setPolling] = useState<PollingJob[]>([]);
+  const [pollingError, setPollingError] = useState("");
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null);
 
@@ -366,7 +381,20 @@ export default function AdminPage() {
     toastTimer.current = setTimeout(() => setToast(null), 4000);
   }, []);
 
+  const loadPolling = useCallback(async () => {
+    try {
+      const res = await fetchWithAuth("/admin/polling");
+      if (!res.ok) throw new Error("Polling status unavailable");
+      const data = await res.json();
+      setPolling(data.jobs);
+      setPollingError("");
+    } catch {
+      setPollingError("Unable to load planned sync times.");
+    }
+  }, []);
+
   const loadJobs = useCallback(async () => {
+    void loadPolling();
     setJobsError("");
     try {
       const res = await fetchWithAuth("/admin/jobs");
@@ -377,7 +405,7 @@ export default function AdminPage() {
     } catch {
       setJobsError("Failed to load job status");
     }
-  }, []);
+  }, [loadPolling]);
 
   useEffect(() => {
     if (isAdmin) void loadJobs();
@@ -482,6 +510,26 @@ export default function AdminPage() {
 
       {/* User management */}
       <UserLookup showToast={showToast} />
+
+      <section className={style.section}>
+        <h2 className={style.sectionTitle}>Automatic Sync Schedule</h2>
+        <p className={style.subtitle}>Race weekends use each series’ calendar, including the day before and two days after. Between events, imports run daily. Manual syncs run immediately for the selected year.</p>
+        {pollingError && <p className={style.errorText}>{pollingError}</p>}
+        <div className={style.pollingGrid}>
+          {polling.map(job => <article className={style.pollingCard} key={job.jobName}>
+            <strong>{job.series.toUpperCase()}</strong>
+            <code>{job.jobName}</code>
+            <p>{job.mode === "race-weekend" ? "Race weekend" : "Between events"} · every {job.intervalMs < 3600000 ? `${job.intervalMs / 60000} minutes` : `${job.intervalMs / 3600000} hours`}</p>
+            {!job.calendarAvailable && <p>No calendar available. Using the quiet schedule.</p>}
+            <dl>
+              <dt>Last attempt</dt><dd>{fmtDate(job.lastAttemptAt)}</dd>
+              <dt>Last success</dt><dd>{fmtDate(job.lastSuccessAt)}</dd>
+              <dt>Next check</dt><dd>{fmtDate(job.nextCheckAt)}</dd>
+            </dl>
+            {job.lastError && <p className={style.errorText}>{job.lastError} · Failed imports retry {job.mode === "race-weekend" ? "hourly" : "every 6 hours"}.</p>}
+          </article>)}
+        </div>
+      </section>
 
       {/* Job status */}
       <section className={style.section}>
