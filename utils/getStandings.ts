@@ -29,21 +29,35 @@ export interface StandingsData {
   year: number;
   count: number;
   standings: StandingsEntry[];
+  asOfDate?: string;
+  stale?: boolean;
+  refreshFailed?: boolean;
+  error?: string;
 }
 
 const EMPTY: StandingsData = { ok: false, year: 0, count: 0, standings: [] };
 
 export async function getStandings(
   series: SeriesKey,
-  year?: number
+  year?: number,
+  subSeries: string = series,
+  competition = "riders",
+  signal?: AbortSignal,
 ): Promise<StandingsData> {
   try {
-    const params = new URLSearchParams({ series });
-    if (year) params.set("year", String(year));
-    const res = await fetchWithAuth(`/standings?${params}`);
-    if (!res.ok) return EMPTY;
-    return res.json() as Promise<StandingsData>;
+    const targetYear = year ?? new Date().getFullYear();
+    const params = new URLSearchParams({ series, subSeries, competition, year: String(targetYear) });
+    const res = await fetchWithAuth(`/standings?${params}`, { signal });
+    const data = await res.json();
+    if (!res.ok) return { ...EMPTY, error: typeof data.error === "string" ? data.error : "Standings are currently unavailable." };
+    if (data.subSeries !== subSeries || data.year !== targetYear ||
+      (data.series !== undefined && data.series !== series) ||
+      (competition !== "riders" ? data.competition !== competition : data.competition !== undefined && data.competition !== "riders") ||
+      !Array.isArray(data.standings)) {
+      return { ...EMPTY, error: "The standings do not match this championship and season." };
+    }
+    return data as StandingsData;
   } catch {
-    return EMPTY;
+    return { ...EMPTY, error: "Standings are currently unavailable. Please try again later." };
   }
 }

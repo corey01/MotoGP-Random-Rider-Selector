@@ -17,6 +17,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            set -eu
             cd /home/ubuntu/racecal-frontend
 
             git pull origin main

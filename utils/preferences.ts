@@ -6,6 +6,7 @@ export interface UserPreferences {
   calendarView?: "rounds" | "events";
   disabledSubSeries?: SubSeriesKey[];
   showMotoGPChampionship?: boolean;
+  favouriteChampionship?: string | null;
 }
 
 export async function fetchPreferences(): Promise<UserPreferences> {

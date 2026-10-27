@@ -69,3 +69,18 @@ ClassStandings and the shared adapter send competition to /standings and validat
 its scope. Official stored year/class/round XML totals are authoritative; never
 sum rider points to construct another championship. Team/manufacturer tables hide
 the redundant secondary Team column and retain source/as-of metadata.
+
+## Saved home championship
+
+Onboarding/settings save `favouriteChampionship` in shared account preferences.
+`utils/championships.ts` maps supported `series:class[:competition]` values to
+explicit labels, API scope and the subscribed class (both F1 competitions use
+the `f1` subscription). Missing legacy preferences retain MotoGP only while that
+class is followed; explicit null means no favourite. A saved class that is later
+unfollowed remains labelled with a settings prompt and does not fetch another
+championship. `showMotoGPChampionship` is retained as the compatible visibility
+flag for the favourite card. It is no longer a MotoGP-only control.
+
+Home standings requests validate year, class and competition and cancel obsolete
+requests. Provider failures remain unavailable or display the last verified
+import's freshness notice. Choosing a favourite does not add subscriptions.

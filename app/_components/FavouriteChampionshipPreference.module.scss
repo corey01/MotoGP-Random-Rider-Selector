@@ -1,0 +1,21 @@
+.preference {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+
+  label { font-weight: 700; color: var(--kc-text-1); font-size: var(--kc-text-sm); }
+  p { color: var(--kc-text-3); font-size: var(--kc-text-xs); line-height: 1.5; }
+  select {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    background: var(--kc-surface-1);
+    color: var(--kc-text-1);
+    border: 1px solid var(--kc-border);
+    border-radius: var(--kc-radius-md);
+    font: inherit;
+    font-size: var(--kc-text-sm);
+    text-overflow: ellipsis;
+    &:focus-visible { outline: 2px solid var(--kc-primary); outline-offset: 2px; }
+  }
+}

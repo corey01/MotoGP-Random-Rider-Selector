@@ -1,5 +1,6 @@
 import { type ApiCalendarEvent } from "./getCalendarData";
 import { fetchWithAuth } from "./auth";
+import { resolveFavouriteChampionship } from "./championships";
 
 export interface DashboardData {
   nextRace: ApiCalendarEvent | null;
@@ -8,6 +9,7 @@ export interface DashboardData {
   thisWeekend: ApiCalendarEvent[];
   subscribedSeries: string[];
   showMotoGPChampionship: boolean;
+  favouriteChampionship: string | null;
 }
 
 const EMPTY: DashboardData = {
@@ -17,6 +19,7 @@ const EMPTY: DashboardData = {
   thisWeekend: [],
   subscribedSeries: [],
   showMotoGPChampionship: true,
+  favouriteChampionship: null,
 };
 
 export async function getDashboardData(): Promise<DashboardData> {
@@ -31,6 +34,7 @@ export async function getDashboardData(): Promise<DashboardData> {
       thisWeekend: data.thisWeekend ?? [],
       subscribedSeries: data.subscribedSeries ?? [],
       showMotoGPChampionship: data.showMotoGPChampionship ?? true,
+      favouriteChampionship: resolveFavouriteChampionship(data.favouriteChampionship, data.subscribedSeries ?? [], data.disabledSubSeries ?? []),
     };
   } catch {
     return EMPTY;
