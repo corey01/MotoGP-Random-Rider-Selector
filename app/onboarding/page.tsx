@@ -9,6 +9,8 @@ import { savePreferences } from "@/utils/preferences";
 import { normalizeReturnTo, RETURN_TO_PARAM } from "@/utils/returnTo";
 import { useSubscriptions } from "@/utils/SubscriptionsContext";
 import style from "./Onboarding.module.scss";
+import { followedChampionships } from "@/utils/championships";
+import { FavouriteChampionshipPreference } from "@/app/_components/FavouriteChampionshipPreference";
 
 
 
@@ -35,6 +37,7 @@ export default function OnboardingPage() {
   const [selectedSubSeries, setSelectedSubSeries] = useState<Set<SubSeriesKey>>(DEFAULT_SELECTED);
   const [calendarView, setCalendarView] = useState<"rounds" | "events">("rounds");
   const [showMotoGPChampionship, setShowMotoGPChampionship] = useState(true);
+  const [favouriteChampionship, setFavouriteChampionship] = useState<string | null>("motogp:motogp");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -53,6 +56,8 @@ export default function OnboardingPage() {
         .map((child) => child.key);
     }) as SubSeriesKey[];
   }, [selectedSubSeries]);
+
+  const favouriteOptions = followedChampionships(selectedSeries, disabledSubSeries);
 
   const toggleCard = (subKey: SubSeriesKey) => {
     setSelectedSubSeries((prev) => {
@@ -79,6 +84,7 @@ export default function OnboardingPage() {
         calendarView,
         disabledSubSeries,
         showMotoGPChampionship,
+        favouriteChampionship,
       });
       await reload();
       updateUser({ onboardingComplete: true });
@@ -124,12 +130,12 @@ export default function OnboardingPage() {
             </button>
           </div>
 
-          {selectedSeries.includes("motogp") && (
+          {(
             <div className={style.prefRow}>
               <div className={style.prefLabel}>
-                <span className={style.prefLabelText}>MotoGP Championship</span>
+                <span className={style.prefLabelText}>Home championship</span>
                 <span className={style.prefLabelSub}>
-                  Show or hide the MotoGP standings card on your dashboard
+                  Show or hide your favourite championship on the home screen
                 </span>
               </div>
               <button
@@ -147,6 +153,7 @@ export default function OnboardingPage() {
               </button>
             </div>
           )}
+          <FavouriteChampionshipPreference value={favouriteChampionship} options={favouriteOptions} onChange={setFavouriteChampionship} disabled={submitting} />
         </section>
 
         <section className={style.section}>

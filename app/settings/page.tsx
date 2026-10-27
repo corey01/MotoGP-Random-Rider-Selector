@@ -9,6 +9,8 @@ import { useSubscriptions } from "@/utils/SubscriptionsContext";
 import type { CalendarView } from "@/utils/getCalendarData";
 import style from "./Settings.module.scss";
 import { useRouter } from "next/dist/client/components/navigation";
+import { followedChampionships, resolveFavouriteChampionship } from "@/utils/championships";
+import { FavouriteChampionshipPreference } from "@/app/_components/FavouriteChampionshipPreference";
 
 
 
@@ -30,6 +32,7 @@ export default function SettingsPage() {
   const [disabledSubSeries, setDisabledSubSeries] = useState<Set<SubSeriesKey>>(new Set());
   const [calendarView, setCalendarView] = useState<CalendarView>("rounds");
   const [showMotoGPChampionship, setShowMotoGPChampionship] = useState(true);
+  const [favouriteChampionship, setFavouriteChampionship] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null);
@@ -46,6 +49,7 @@ export default function SettingsPage() {
       ([series, disabled, prefs]) => {
         setSubscribed(new Set(series));
         setDisabledSubSeries(new Set(disabled));
+        setFavouriteChampionship(resolveFavouriteChampionship(prefs.favouriteChampionship, series, disabled));
         if (prefs.calendarView) setCalendarView(prefs.calendarView);
         if (typeof prefs.showMotoGPChampionship === "boolean") {
           setShowMotoGPChampionship(prefs.showMotoGPChampionship);
@@ -57,7 +61,7 @@ export default function SettingsPage() {
 
   const isCardSelected = (parentKey: SeriesKey, subKey: SubSeriesKey) =>
     subscribed.has(parentKey) && !disabledSubSeries.has(subKey);
-  const showMotoGPChampionshipPreference = subscribed.has("motogp");
+  const favouriteOptions = followedChampionships([...subscribed], [...disabledSubSeries]);
 
   const toggleCard = (parentKey: SeriesKey, subKey: SubSeriesKey) => {
     const selected = isCardSelected(parentKey, subKey);
@@ -98,6 +102,7 @@ export default function SettingsPage() {
           calendarView,
           disabledSubSeries: Array.from(disabledSubSeries) as SubSeriesKey[],
           showMotoGPChampionship,
+          favouriteChampionship,
         }),
       ]);
       showToast("Settings saved.", true);
@@ -155,12 +160,12 @@ export default function SettingsPage() {
             </button>
           </div>
 
-          {showMotoGPChampionshipPreference && (
+          {(
             <div className={style.prefRow}>
               <div className={style.prefLabel}>
-                <span className={style.prefLabelText}>MotoGP Championship</span>
+                <span className={style.prefLabelText}>Home championship</span>
                 <span className={style.prefLabelSub}>
-                  Show or hide the MotoGP standings card on your dashboard
+                  Show or hide your favourite championship on the home screen
                 </span>
               </div>
               <button
@@ -178,6 +183,7 @@ export default function SettingsPage() {
               </button>
             </div>
           )}
+          <FavouriteChampionshipPreference value={favouriteChampionship} options={favouriteOptions} onChange={setFavouriteChampionship} disabled={saving} />
         </section>
 
         <section className={style.section}>

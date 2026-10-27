@@ -16,6 +16,7 @@ const EMPTY: DashboardData = {
   thisWeekend: [],
   subscribedSeries: [],
   showMotoGPChampionship: true,
+  favouriteChampionship: null,
 };
 
 export default function DashboardPage() {
@@ -42,7 +43,7 @@ export default function DashboardPage() {
     <div className={style.page}>
       <LiveSection events={data.today} />
       <NextRaceStrip races={data.nextPerSeries} />
-      {data.showMotoGPChampionship && <ChampionshipStandings series="motogp" />}
+      {data.showMotoGPChampionship && data.favouriteChampionship && <ChampionshipStandings key={data.favouriteChampionship} championship={data.favouriteChampionship} />}
       <WeekendFeed events={data.thisWeekend} />
     </div>
   );

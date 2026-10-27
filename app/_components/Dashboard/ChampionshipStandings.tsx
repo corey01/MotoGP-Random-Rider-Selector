@@ -2,116 +2,51 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import type { SeriesKey } from "@/consts/series";
 import { useSubscriptions } from "@/utils/SubscriptionsContext";
-import { getStandings, type StandingsData, type StandingsEntry } from "@/utils/getStandings";
-import { getSeriesDisplayLabel } from "@/utils/series";
+import { getStandings, type StandingsData } from "@/utils/getStandings";
+import { championshipForValue, followedChampionships } from "@/utils/championships";
+import { standingsRows } from "@/utils/classification";
+import { ClassificationList } from "../Classification/ClassificationList";
 import style from "./ChampionshipStandings.module.scss";
 
-const PREVIEW_COUNT = 5;
-
-interface ChampionshipStandingsProps {
-  series: SeriesKey;
-  year?: number;
-}
-
-function SkeletonRow() {
-  return (
-    <div className={style.row}>
-      <span className={style.pos}>&mdash;</span>
-      <span className={`${style.name} ${style.skeleton}`} />
-      <span className={`${style.points} ${style.skeleton}`} />
-    </div>
-  );
-}
-
-function RiderRow({ entry }: { entry: StandingsEntry }) {
-  const portrait = entry.rider.pictures?.portrait || entry.rider.pictures?.profile || null;
-  const [failedPortrait, setFailedPortrait] = useState<string | null>(null);
-  const fullName = entry.rider.fullName?.trim() || "Unknown rider";
-  const nameParts = entry.rider.fullName?.trim().split(/\s+/).filter(Boolean) ?? [];
-  const initials = nameParts.length
-    ? (nameParts[0][0] + (nameParts.length > 1 ? nameParts[nameParts.length - 1][0] : "")).toUpperCase()
-    : "?";
-  const flag = entry.rider.country?.iso
-    ? `https://flagcdn.com/24x18/${entry.rider.country.iso.toLowerCase()}.png`
-    : null;
-
-  return (
-    <div className={style.row}>
-      <span className={style.pos}>{entry.position}</span>
-      <span className={style.portraitSlot} aria-hidden="true">
-        {portrait && failedPortrait !== portrait ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img className={style.portrait} src={portrait} alt="" onError={() => setFailedPortrait(portrait)} />
-        ) : <span className={style.portraitFallback}>{initials}</span>}
-      </span>
-      <span className={style.name}>
-        {flag && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img className={style.flag} src={flag} alt={entry.rider.country?.name ?? ""} />
-        )}
-        <span className={style.fullName}>{fullName}</span>
-        {entry.rider.number != null && (
-          <span className={style.number}>#{entry.rider.number}</span>
-        )}
-      </span>
-      <span className={style.team}>{entry.team}</span>
-      <span className={style.points}>{entry.points} pts</span>
-    </div>
-  );
-}
-
-export function ChampionshipStandings({ series, year }: ChampionshipStandingsProps) {
-  const { subscribedSeries, isLoaded } = useSubscriptions();
+export function ChampionshipStandings({ championship, year }: { championship: string; year?: number }) {
+  const { subscribedSeries, disabledSubSeries, isLoaded } = useSubscriptions();
   const [data, setData] = useState<StandingsData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [showAll, setShowAll] = useState(false);
-
-  const isSubscribed = subscribedSeries.includes(series);
+  const option = championshipForValue(championship);
+  const followed = followedChampionships(subscribedSeries, disabledSubSeries).some((value) => value.value === championship);
 
   useEffect(() => {
-    if (!isLoaded || !isSubscribed) return;
-    getStandings(series, year)
-      .then(setData)
-      .finally(() => setLoading(false));
-  }, [series, year, isLoaded, isSubscribed]);
+    const controller = new AbortController();
+    setData(null);
+    if (isLoaded && followed && option) {
+      void getStandings(option.series, year, option.subSeries, option.competition, controller.signal)
+        .then((result) => { if (!controller.signal.aborted) setData(result); });
+    }
+    return () => controller.abort();
+  }, [championship, year, isLoaded, followed, option]);
 
-  if (!isLoaded || !isSubscribed) return null;
+  if (!isLoaded || !option) return null;
 
-  const label = getSeriesDisplayLabel(series);
-  const allStandings = data?.standings ?? [];
-  const visibleStandings = showAll ? allStandings : allStandings.slice(0, PREVIEW_COUNT);
-  const hasMore = allStandings.length > PREVIEW_COUNT;
+  const rows = standingsRows(data?.standings ?? []).map((row) => ({
+    ...row,
+    teamName: option.competition !== "riders" || option.subSeries === "f1-constructors" ? null : row.teamName,
+  }));
 
-  return (
-    <section className={`${style.section} ${style[`series_${series}`] ?? ""}`}>
-      <div className={style.header}>
-        <div className={style.headingBlock}>
-          <span className={style.heading}>{label} Championship</span>
-          {data?.year && <span className={style.season}>{data.year}</span>}
-        </div>
-        <Link href="/standings" className={style.browseLink}>Browse championships <span aria-hidden="true">→</span></Link>
+  return <section className={`${style.section} ${style[`series_${option.series}`] ?? ""}`} aria-label={`${option.label} championship`}>
+    <div className={style.header}>
+      <div className={style.headingBlock}>
+        <span className={style.heading}>{option.label}</span>
+        <span className={style.season}>Favourite championship{data?.year ? ` · ${data.year}` : ""}</span>
       </div>
-
-      <div className={style.list}>
-        {loading ? (
-          Array.from({ length: PREVIEW_COUNT }, (_, i) => <SkeletonRow key={i} />)
-        ) : !allStandings.length ? (
-          <p className={style.empty}>No standings available</p>
-        ) : (
-          <>
-            {visibleStandings.map((entry) => (
-              <RiderRow key={entry.rider.id} entry={entry} />
-            ))}
-            {hasMore && (
-              <button className={style.toggle} onClick={() => setShowAll((v) => !v)}>
-                {showAll ? "Show less" : `Show all ${allStandings.length} riders`}
-              </button>
-            )}
-          </>
-        )}
-      </div>
-    </section>
-  );
+      <Link href="/standings" className={style.browseLink}>Browse championships <span aria-hidden="true">→</span></Link>
+    </div>
+    {!followed ? <p className={style.empty}>You no longer follow this class. <Link href="/settings">Choose a favourite in settings</Link> or follow it again.</p>
+      : !data ? <p className={style.empty} role="status">Loading standings…</p>
+      : !data.ok ? <p className={style.empty}>{data.error ?? "Standings are currently unavailable."}</p>
+      : !rows.length ? <p className={style.empty}>Standings not yet published for this championship.</p>
+      : <>
+        {data.stale || data.refreshFailed ? <p className={style.empty}>Refresh delayed; showing the last verified import.</p> : data.asOfDate ? <p className={style.empty}>As of {data.asOfDate}</p> : null}
+        <ClassificationList key={championship} rows={rows} mode="standings" label={`${option.label} standings`} />
+      </>}
+  </section>;
 }
