@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/app/_components/AuthProvider";
-import { SERIES_COLORS, SERIES_GROUPS, SERIES_CARD_META, type SeriesKey, type SubSeriesKey } from "@/consts/series";
+import { SERIES_GROUPS, type SeriesKey, type SubSeriesKey } from "@/consts/series";
 import { apiOnboarding } from "@/utils/auth";
 import { savePreferences } from "@/utils/preferences";
 import { normalizeReturnTo, RETURN_TO_PARAM } from "@/utils/returnTo";
@@ -11,18 +11,9 @@ import { useSubscriptions } from "@/utils/SubscriptionsContext";
 import style from "./Onboarding.module.scss";
 import { followedChampionships } from "@/utils/championships";
 import { FavouriteChampionshipPreference } from "@/app/_components/FavouriteChampionshipPreference";
+import { SeriesCategorySelection } from "@/app/_components/SeriesCategorySelection";
 
 
-
-const ALL_CARDS = SERIES_GROUPS.flatMap((group) =>
-  group.children.map((child) => ({
-    parentKey: group.key,
-    subKey: child.key,
-    label: child.label,
-    color: SERIES_COLORS[group.key],
-    ...SERIES_CARD_META[child.key],
-  }))
-);
 
 const DEFAULT_SELECTED = new Set<SubSeriesKey>(
   SERIES_GROUPS.find((group) => group.key === "motogp")?.children.map((child) => child.key) ?? ["motogp"]
@@ -58,18 +49,6 @@ export default function OnboardingPage() {
   }, [selectedSubSeries]);
 
   const favouriteOptions = followedChampionships(selectedSeries, disabledSubSeries);
-
-  const toggleCard = (subKey: SubSeriesKey) => {
-    setSelectedSubSeries((prev) => {
-      const next = new Set(prev);
-      if (next.has(subKey)) {
-        next.delete(subKey);
-      } else {
-        next.add(subKey);
-      }
-      return next;
-    });
-  };
 
   const handleSubmit = async () => {
     if (selectedSeries.length === 0) {
@@ -158,35 +137,9 @@ export default function OnboardingPage() {
 
         <section className={style.section}>
           <h2 className={style.sectionTitle}>Series Subscriptions</h2>
-          <p className={style.sectionDesc}>Choose which series and classes appear in your calendar.</p>
+          <p className={style.sectionDesc}>Explore categories, then choose which championships and classes appear in your calendar.</p>
 
-        <div className={style.grid}>
-          {ALL_CARDS.map(({ parentKey, subKey, label, abbr, subtitle, color }) => {
-            const isSelected = selectedSubSeries.has(subKey);
-            return (
-              <button
-                key={subKey}
-                type="button"
-                className={`${style.card} ${isSelected ? style.cardSelected : ""}`}
-                style={{ "--series-color": color } as React.CSSProperties}
-                onClick={() => toggleCard(subKey)}
-                aria-pressed={isSelected}
-              >
-                <div className={style.cardTop}>
-                  <span className={style.abbr}>{abbr}</span>
-                  <span className={`${style.checkbox} ${isSelected ? style.checkboxChecked : ""}`} aria-hidden="true">
-                    {isSelected && "✓"}
-                  </span>
-                </div>
-                <div className={style.cardBottom}>
-                  <span className={style.cardLabel}>{label}</span>
-                  <span className={style.cardSub}>{subtitle}</span>
-                  <span className={style.cardSeries}>{SERIES_GROUPS.find((group) => group.key === parentKey)?.label}</span>
-                </div>
-              </button>
-            );
-          })}
-        </div>
+          <SeriesCategorySelection selected={selectedSubSeries} onChange={setSelectedSubSeries} disabled={submitting} />
         </section>
 
         {error && <p className={style.error}>{error}</p>}

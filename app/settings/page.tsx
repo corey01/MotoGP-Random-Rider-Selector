@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/app/_components/AuthProvider";
-import { SERIES_COLORS, SERIES_GROUPS, SERIES_CARD_META, type SeriesKey, type SubSeriesKey } from "@/consts/series";
+import { SERIES_GROUPS, type SeriesKey, type SubSeriesKey } from "@/consts/series";
 import { fetchSubscriptions, saveSubscriptions, fetchDisabledSubSeries } from "@/utils/subscriptions";
 import { fetchPreferences, savePreferences } from "@/utils/preferences";
 import { useSubscriptions } from "@/utils/SubscriptionsContext";
@@ -11,18 +11,10 @@ import style from "./Settings.module.scss";
 import { useRouter } from "next/dist/client/components/navigation";
 import { followedChampionships, resolveFavouriteChampionship } from "@/utils/championships";
 import { FavouriteChampionshipPreference } from "@/app/_components/FavouriteChampionshipPreference";
+import { SeriesCategorySelection } from "@/app/_components/SeriesCategorySelection";
+import { preferencesForClassSelection } from "@/utils/seriesCategories";
 
 
-
-const ALL_CARDS = SERIES_GROUPS.flatMap((group) =>
-  group.children.map((child) => ({
-    parentKey: group.key as SeriesKey,
-    subKey: child.key,
-    label: child.label,
-    color: SERIES_COLORS[group.key],
-    ...SERIES_CARD_META[child.key],
-  }))
-);
 
 export default function SettingsPage() {
   const { user, logout } = useAuth();
@@ -63,30 +55,11 @@ export default function SettingsPage() {
     subscribed.has(parentKey) && !disabledSubSeries.has(subKey);
   const favouriteOptions = followedChampionships([...subscribed], [...disabledSubSeries]);
 
-  const toggleCard = (parentKey: SeriesKey, subKey: SubSeriesKey) => {
-    const selected = isCardSelected(parentKey, subKey);
-    const siblings = SERIES_GROUPS.find((g) => g.key === parentKey)?.children ?? [];
-
-    setDisabledSubSeries((prev) => {
-      const next = new Set(prev);
-      if (!subscribed.has(parentKey)) siblings.forEach(child => next.add(child.key));
-      if (selected) next.add(subKey);
-      else next.delete(subKey);
-      return next;
-    });
-
-    setSubscribed((prev) => {
-      const next = new Set(prev);
-      if (selected) {
-        const nextDisabled = new Set(disabledSubSeries);
-        nextDisabled.add(subKey);
-        const allDisabled = siblings.every((c) => nextDisabled.has(c.key));
-        if (allDisabled) next.delete(parentKey);
-      } else {
-        next.add(parentKey);
-      }
-      return next;
-    });
+  const selectedClasses = new Set(SERIES_GROUPS.flatMap((group) => group.children.filter((child) => isCardSelected(group.key, child.key)).map((child) => child.key)));
+  const changeClassSelection = (selected: Set<SubSeriesKey>) => {
+    const next = preferencesForClassSelection(selected, [...subscribed], [...disabledSubSeries]);
+    setSubscribed(new Set(next.series));
+    setDisabledSubSeries(new Set(next.disabledSubSeries));
   };
 
   const handleSave = async () => {
@@ -188,34 +161,9 @@ export default function SettingsPage() {
 
         <section className={style.section}>
           <h2 className={style.sectionTitle}>Series Subscriptions</h2>
-          <p className={style.sectionDesc}>Choose championships and classes to follow. Some currently offer standings and timing data only.</p>
+          <p className={style.sectionDesc}>Explore categories, then choose championships and classes to follow. Some currently offer standings and timing data only.</p>
 
-          <div className={style.grid}>
-            {ALL_CARDS.map(({ parentKey, subKey, label, abbr, subtitle, color }) => {
-              const selected = isCardSelected(parentKey, subKey);
-              return (
-                <button
-                  key={subKey}
-                  type="button"
-                  className={`${style.card} ${selected ? style.cardSelected : ""}`}
-                  style={{ "--series-color": color } as React.CSSProperties}
-                  onClick={() => toggleCard(parentKey, subKey)}
-                  aria-pressed={selected}
-                >
-                  <div className={style.cardTop}>
-                    <span className={style.abbr}>{abbr}</span>
-                    <span className={`${style.checkbox} ${selected ? style.checkboxChecked : ""}`} aria-hidden="true">
-                      {selected && "✓"}
-                    </span>
-                  </div>
-                  <div className={style.cardBottom}>
-                    <span className={style.cardLabel}>{label}</span>
-                    <span className={style.cardSub}>{subtitle}</span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+          <SeriesCategorySelection selected={selectedClasses} onChange={changeClassSelection} disabled={saving} />
 
           <button
             type="button"

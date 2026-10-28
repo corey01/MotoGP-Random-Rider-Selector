@@ -84,3 +84,17 @@ flag for the favourite card. It is no longer a MotoGP-only control.
 Home standings requests validate year, class and competition and cancel obsolete
 requests. Provider failures remain unavailable or display the last verified
 import's freshness notice. Choosing a favourite does not add subscriptions.
+
+## Categories in onboarding and settings
+
+Both screens use `SeriesCategorySelection` and `utils/seriesCategories.ts`:
+Motorcycles contains MotoGP, WorldSBK, BSB, Speedway, IoMTT, Rookies and MotoAmerica;
+Cars contains F1, GT World Challenge Europe and NLS. Expand/collapse only changes
+presentation. Follow all/Unfollow all explicitly changes the known classes in that
+category; none/some/all states and class counts reflect partial selections.
+Series headings and individual class cards remain inside each category.
+
+Selections remain drafts until the screen's existing save action succeeds.
+Category changes preserve the other category, unrecognised stored preferences,
+class exclusions and the saved favourite. New series still require their own
+opt-in defaults/migration; categories do not automatically follow future entries.
