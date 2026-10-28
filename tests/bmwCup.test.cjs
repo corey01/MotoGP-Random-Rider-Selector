@@ -39,7 +39,7 @@ const categories = load('utils/seriesCategories.ts');
 const choices = load('utils/championships.ts');
 const adapter = load('utils/classification.ts');
 
-test('BMW is an optional BSB class under Motorcycles and explicit selection preserves prior choices', () => {
+test('BMW is an optional BSB class under Bikes and explicit selection preserves prior choices', () => {
   assert(categories.seriesCategories.find(category => category.key === 'motorcycles').series.includes('bsb'));
   assert(registry.SERIES_GROUPS.find(group => group.key === 'bsb').children.some(child => child.key === 'bsb-bmw' && child.label === 'BMW F 900 R Cup'));
   assert.equal(registry.DEFAULT_SUB_SERIES_VISIBILITY['bsb-bmw'], false);

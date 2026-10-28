@@ -88,13 +88,14 @@ function findElements(element, predicate, result = []) {
   return result;
 }
 
-test('categories show mixed selection and expandable series groups with explicit bulk actions', () => {
-  const { html } = renderSelector(new Set(['motogp']));
-  assert.match(html, /aria-label="Motorcycles"/);
+test('Bikes and Cars start collapsed even with saved follows, with explicit bulk actions', () => {
+  const { html } = renderSelector(new Set(['motogp', 'f1']));
+  assert.match(html, /aria-label="Bikes"/);
   assert.match(html, /aria-label="Cars"/);
   assert.match(html, /aria-checked="mixed"/);
-  assert.match(html, /aria-label="Follow all motorcycles"/);
-  assert.match(html, /aria-expanded="true"/);
+  assert.match(html, /aria-label="Follow all bikes"/);
+  assert.equal((html.match(/aria-expanded="false"/g) ?? []).length, 2);
+  assert.match(html, /id="category-motorcycles" hidden=""/);
   assert.match(html, /id="category-cars" hidden=""/);
   assert.match(html, /<h3 class="groupLabel">MotoGP<\/h3>/);
 });

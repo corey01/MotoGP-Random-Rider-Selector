@@ -10,9 +10,7 @@ export function SeriesCategorySelection({ selected, onChange, disabled = false }
   onChange: (selected: Set<SubSeriesKey>) => void;
   disabled?: boolean;
 }) {
-  const [expanded, setExpanded] = useState<Record<string, boolean>>(() => Object.fromEntries(
-    seriesCategories.map((category) => [category.key, categorySelection(category, selected).selected > 0]),
-  ));
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   return <div className={style.categories}>
     {seriesCategories.map((category) => {

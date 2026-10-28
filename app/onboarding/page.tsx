@@ -137,7 +137,7 @@ export default function OnboardingPage() {
 
         <section className={style.section}>
           <h2 className={style.sectionTitle}>Series Subscriptions</h2>
-          <p className={style.sectionDesc}>Explore categories, then choose which championships and classes appear in your calendar.</p>
+          <p className={style.sectionDesc}>Open Bikes or Cars to choose which championships and classes to follow.</p>
 
           <SeriesCategorySelection selected={selectedSubSeries} onChange={setSelectedSubSeries} disabled={submitting} />
         </section>

@@ -161,7 +161,7 @@ export default function SettingsPage() {
 
         <section className={style.section}>
           <h2 className={style.sectionTitle}>Series Subscriptions</h2>
-          <p className={style.sectionDesc}>Explore categories, then choose championships and classes to follow. Some currently offer standings and timing data only.</p>
+          <p className={style.sectionDesc}>Open Bikes or Cars to choose championships and classes to follow. Some currently offer standings and timing data only.</p>
 
           <SeriesCategorySelection selected={selectedClasses} onChange={changeClassSelection} disabled={saving} />
 
