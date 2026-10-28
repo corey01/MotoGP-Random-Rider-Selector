@@ -87,7 +87,7 @@ test('explicit BMW phase scope takes precedence over numbered report labels and 
 test('BMW exact-round adapter retains named phases, unknown printed rank, fractions and partial errors', async () => {
   const unknownRank = { position: null, riderName: 'Source rider', points: null };
   const payload = { ok: true, series: 'bsb', subSeries: 'bsb-bmw', year: 2026, roundId: 200,
-    results: { 'Heat 1': [unknownRank], Main: [unknownRank] }, grids: { Main: [{ ...unknownRank, position: 1 }] },
+    results: { LCQ: [unknownRank], Main: [unknownRank], 'Heat 1': [unknownRank], 'Heat 2': [unknownRank], Sprint: [unknownRank] }, grids: { Main: [{ ...unknownRank, position: 1 }], 'Heat 1': [unknownRank] },
     standings: [{ position: 1, points: 216.5, rider: { id: 'source-rider', fullName: 'Source rider' } }],
     asOfSession: 'Main', asOfDate: '2026-10-18', coverageErrors: ['Official grid unavailable'], historicalError: 'Official championship unavailable', stale: true };
   let request;
@@ -96,6 +96,8 @@ test('BMW exact-round adapter retains named phases, unknown printed rank, fracti
   const data = await adapter.loadClassification(fetcher, 200, 2026, 'bsb', 'bsb-bmw', signal);
   assert.equal(request.url, '/classifications?roundId=200&subSeries=bsb-bmw');
   assert.equal(request.options.signal, signal);
+  assert.deepEqual(Array.from(Object.keys(data.results)), ['Heat 1', 'Heat 2', 'LCQ', 'Sprint', 'Main']);
+  assert.deepEqual(Array.from(Object.keys(data.grids)), ['Heat 1', 'Main']);
   assert.equal(data.results.Main[0].position, null);
   assert.equal(data.results.Main[0].points, null);
   assert.equal(data.standings[0].points, 216.5);

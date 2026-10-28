@@ -30,6 +30,13 @@ export function documentForView(d:ClassificationDocument,view:string,session:str
  if(/championship|standings/i.test(d.label))return false;
  return (view==='grid'?/grid/i.test(d.label):!/grid/i.test(d.label))&&(!!d.session||!/Race \d+/i.test(d.label)||d.label.includes(session));
 }
+// Persisted JSON objects do not preserve publication order. Keep named phases
+// chronological without adding phases that the source did not publish.
+function orderedBmwPhases(rows:Record<string,ClassificationRow[]>){
+ const phases=['Heat 1','Heat 2','LCQ','Sprint','Main'];
+ const rank=(label:string)=>{const index=phases.indexOf(label);return index<0?phases.length:index;};
+ return Object.fromEntries(Object.entries(rows).sort(([a],[b])=>rank(a)-rank(b)));
+}
 export type ClassificationFetcher=(path:string,options:{signal:AbortSignal})=>Promise<Response>;
 export async function loadClassification(fetcher:ClassificationFetcher,roundId:number,year:number,series:string,cls:string,signal:AbortSignal,competition='riders'):Promise<ClassificationData>{
  const empty:ClassificationData={results:{},grids:{},standings:[],sessions:[],documents:[],errors:{}};
@@ -43,5 +50,5 @@ export async function loadClassification(fetcher:ClassificationFetcher,roundId:n
   return empty;
  }
  const d=await get(`/classifications?roundId=${roundId}&subSeries=${encodeURIComponent(cls)}`);if(d.series!==series||d.year!==year)throw new Error('The classification does not match this championship and season.');
- return {...empty,results:d.results??{},grids:d.grids??{},standings:d.standings??[],sessions:d.sessions??[],documents:d.documents??[],asOfDate:d.asOfDate,asOfSession:d.asOfSession,stale:d.stale,warnings:d.coverageErrors?.length?['Some official data could not be refreshed. Showing verified data where available.']:[],errors:d.historicalError?{standings:'Historical standings could not be refreshed. Showing a verified earlier import where available.'}:{}};
+ return {...empty,results:cls==='bsb-bmw'?orderedBmwPhases(d.results??{}):d.results??{},grids:cls==='bsb-bmw'?orderedBmwPhases(d.grids??{}):d.grids??{},standings:d.standings??[],sessions:d.sessions??[],documents:d.documents??[],asOfDate:d.asOfDate,asOfSession:d.asOfSession,stale:d.stale,warnings:d.coverageErrors?.length?['Some official data could not be refreshed. Showing verified data where available.']:[],errors:d.historicalError?{standings:'Historical standings could not be refreshed. Showing a verified earlier import where available.'}:{}};
 }
