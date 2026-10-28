@@ -3,7 +3,7 @@ export type ClassificationRow={position:number|null;riderExternalId?:string|null
 export type ChampionshipEntry={position:number;points:number;rider:{id:string;fullName:string|null;number?:number|null;pictures?:Pictures|null};team?:string|null;teamColor?:string|null};
 export type ClassificationDocument={label:string;url:string;session?:string;provisional?:boolean};
 export type ClassificationData={results:Record<string,ClassificationRow[]>;grids:Record<string,ClassificationRow[]>;standings:ChampionshipEntry[];sessions:Array<{id:string;label:string;status:string}>;documents:ClassificationDocument[];asOfDate?:string;asOfSession?:string;stale?:boolean;unchanged?:boolean;warnings?:string[];errors:Partial<Record<'results'|'grid'|'standings',string>>};
-export const classificationClasses:Record<string,Array<[string,string]>>={motogp:[['motogp','MotoGP'],['moto2','Moto2'],['moto3','Moto3']],bsb:[['bsb','Superbike'],['bsb-supersport','Supersport'],['bsb-superstock','National Superstock'],['bsb-sportbike','British Sportbike']],wsbk:[['worldsbk','WorldSBK'],['worldssp','WorldSSP'],['worldspb','WorldSPB'],['worldwcr','WorldWCR']],f1:[['f1','Formula 1']],rookiescup:[['rookiescup','Rookies Cup']],motoamerica:[['superbike','Superbike'],['supersport','Supersport'],['talent-cup','Talent Cup'],['king-of-the-baggers','King of the Baggers'],['twins-cup','Twins Cup'],['super-hooligan','Super Hooligan'],['build-train-race','Build.Train.Race']]};
+export const classificationClasses:Record<string,Array<[string,string]>>={motogp:[['motogp','MotoGP'],['moto2','Moto2'],['moto3','Moto3']],bsb:[['bsb','Superbike'],['bsb-supersport','Supersport'],['bsb-superstock','National Superstock'],['bsb-sportbike','British Sportbike'],['bsb-bmw','BMW F 900 R Cup']],wsbk:[['worldsbk','WorldSBK'],['worldssp','WorldSSP'],['worldspb','WorldSPB'],['worldwcr','WorldWCR']],f1:[['f1','Formula 1']],rookiescup:[['rookiescup','Rookies Cup']],motoamerica:[['superbike','Superbike'],['supersport','Supersport'],['talent-cup','Talent Cup'],['king-of-the-baggers','King of the Baggers'],['twins-cup','Twins Cup'],['super-hooligan','Super Hooligan'],['build-train-race','Build.Train.Race']]};
 export const sessionLabel=(key:string)=>(({RAC:'Race',SPR:'Sprint'} as Record<string,string>)[key]??key);
 export function classificationStatus(status?:string|null){
  if(!status)return null;const raw=status.trim(),value=raw.toUpperCase();
@@ -20,10 +20,15 @@ export function classificationDetail(row:ClassificationRow,mode:'results'|'grid'
 export const standingsRows=(entries:ChampionshipEntry[]):ClassificationRow[]=>entries.map(e=>({position:e.position,riderExternalId:e.rider.id,riderName:e.rider.fullName||'Unknown competitor',riderNumber:e.rider.number,teamName:e.team,teamColor:e.teamColor,pictures:e.rider.pictures,points:e.points}));
 export function documentForView(d:ClassificationDocument,view:string,session:string){
  if(d.session&&d.session!==session)return false;
- if(/^sprint[- ]/i.test(d.label)&&!['Sprint','SPR'].includes(session))return false;
- if(/^(race-result|starting-grid)$/i.test(d.label)&&!['Race','RAC'].includes(session))return false;if(view==='standings')return /championship|standings/i.test(d.label);
+ // An explicit API session is authoritative. BMW's numbered reports can describe
+ // heats, LCQ, Sprint or Main; their file/race numbers do not identify the phase.
+ if(!d.session){
+  if(/^sprint[- ]/i.test(d.label)&&!['Sprint','SPR'].includes(session))return false;
+  if(/^(race-result|starting-grid)$/i.test(d.label)&&!['Race','RAC'].includes(session))return false;
+ }
+ if(view==='standings')return /championship|standings/i.test(d.label);
  if(/championship|standings/i.test(d.label))return false;
- return (view==='grid'?/grid/i.test(d.label):!/grid/i.test(d.label))&&(!/Race \d+/i.test(d.label)||d.label.includes(session));
+ return (view==='grid'?/grid/i.test(d.label):!/grid/i.test(d.label))&&(!!d.session||!/Race \d+/i.test(d.label)||d.label.includes(session));
 }
 export type ClassificationFetcher=(path:string,options:{signal:AbortSignal})=>Promise<Response>;
 export async function loadClassification(fetcher:ClassificationFetcher,roundId:number,year:number,series:string,cls:string,signal:AbortSignal,competition='riders'):Promise<ClassificationData>{
