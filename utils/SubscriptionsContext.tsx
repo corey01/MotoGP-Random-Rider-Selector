@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { SERIES_GROUPS, type SeriesKey, type SubSeriesKey } from "@/consts/series";
+import { DEFAULT_SERIES_KEYS, type SeriesKey, type SubSeriesKey } from "@/consts/series";
 import { fetchSubscriptions, fetchDisabledSubSeries } from "@/utils/subscriptions";
 import { useAuth } from "@/app/_components/AuthProvider";
 
@@ -13,7 +13,7 @@ interface SubscriptionsContextValue {
 }
 
 const SubscriptionsContext = createContext<SubscriptionsContextValue>({
-  subscribedSeries: SERIES_GROUPS.map((g) => g.key),
+  subscribedSeries: DEFAULT_SERIES_KEYS,
   disabledSubSeries: [],
   isLoaded: false,
   reload: async () => {},
@@ -22,7 +22,7 @@ const SubscriptionsContext = createContext<SubscriptionsContextValue>({
 export function SubscriptionsProvider({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
   const [subscribedSeries, setSubscribedSeries] = useState<SeriesKey[]>(
-    SERIES_GROUPS.map((g) => g.key)
+    DEFAULT_SERIES_KEYS
   );
   const [disabledSubSeries, setDisabledSubSeries] = useState<SubSeriesKey[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -34,7 +34,7 @@ export function SubscriptionsProvider({ children }: { children: React.ReactNode 
         fetchSubscriptions(),
         fetchDisabledSubSeries(),
       ]);
-      setSubscribedSeries(series.length > 0 ? series : SERIES_GROUPS.map((g) => g.key));
+      setSubscribedSeries(series.length > 0 ? series : DEFAULT_SERIES_KEYS);
       setDisabledSubSeries(disabled);
     } catch {
       // keep defaults

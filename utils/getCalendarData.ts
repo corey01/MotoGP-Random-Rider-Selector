@@ -143,6 +143,7 @@ const SESSION_SERIES_PREFIX: Record<string, string> = {
   gtwce: "GT WCE",
   iomtt: "IoMTT",
   nls: "NLS",
+  wec: "FIA WEC",
   rookiescup: "Rookies Cup",
 };
 
@@ -161,6 +162,7 @@ const ROUND_SERIES_PREFIX: Record<string, string> = {
   gtwce: "GT WCE",
   iomtt: "IoMTT",
   nls: "NLS",
+  wec: "FIA WEC",
   rookiescup: "Rookies Cup",
 };
 
@@ -218,6 +220,7 @@ const CLASS_MAP: Record<string, string> = {
   gtwce: "gtwce-event",
   iomtt: "iomtt-event",
   nls: "nls-event",
+  wec: "wec-event",
   rookiescup: "rookiescup-event",
 };
 

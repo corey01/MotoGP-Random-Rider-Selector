@@ -89,7 +89,7 @@ import's freshness notice. Choosing a favourite does not add subscriptions.
 
 Both screens use `SeriesCategorySelection` and `utils/seriesCategories.ts`:
 Motorcycles contains MotoGP, WorldSBK, BSB, Speedway, IoMTT, Rookies and MotoAmerica;
-Cars contains F1, GT World Challenge Europe and NLS. Expand/collapse only changes
+Cars contains F1, GT World Challenge Europe, NLS and optional FIA WEC. Expand/collapse only changes
 presentation. Follow all/Unfollow all explicitly changes the known classes in that
 category; none/some/all states and class counts reflect partial selections.
 Series headings and individual class cards remain inside each category.
@@ -98,3 +98,14 @@ Selections remain drafts until the screen's existing save action succeeds.
 Category changes preserve the other category, unrecognised stored preferences,
 class exclusions and the saved favourite. New series still require their own
 opt-in defaults/migration; categories do not automatically follow future entries.
+
+## FIA WEC calendar
+
+FIA WEC is an optional Cars championship with one `wec` calendar selection.
+The official timetable includes endurance races and Prologue tests; published
+unknown or contradictory starts remain Time TBC. Existing selections and guest
+defaults do not automatically follow WEC. Both onboarding and settings expose its
+calendar-only scope; it is not offered as a standings or home favourite choice.
+Admin has one shared-year `/admin/scrape/wec` action and `scrape:wec` polling status.
+Round pages retain numeric IDs and official source links, with an explicit notice
+that results and championship standings are not available yet.

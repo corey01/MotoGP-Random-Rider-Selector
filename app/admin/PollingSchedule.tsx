@@ -31,6 +31,7 @@ const SERIES_LABELS: Record<string, string> = {
   bsb: "British championships",
   rookiescup: "Rookies Cup",
   motoamerica: "MotoAmerica",
+  wec: "FIA WEC",
 };
 
 function timestamp(value: string | null) {

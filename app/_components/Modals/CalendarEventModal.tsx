@@ -84,6 +84,9 @@ export const CalendarEventModal = ({ onClose, event, onCreateSweepstake }: Calen
   } else if (event.classNames?.includes('nls-event')) {
     seriesLabel = 'NLS';
     seriesClass = style.nlsTag;
+  } else if (event.classNames?.includes('wec-event')) {
+    seriesLabel = 'FIA WEC';
+    seriesClass = style.wecTag;
   } else if (event.classNames?.includes('rookiescup-event')) {
     seriesLabel = 'Rookies Cup';
     seriesClass = style.rookiescupTag;

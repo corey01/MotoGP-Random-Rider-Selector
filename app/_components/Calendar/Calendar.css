@@ -811,3 +811,15 @@
 /* Keep cancellations explicit in the session grid without marking the whole weekend. */
 .event-time-cancelled { text-decoration: line-through; text-decoration-thickness: 1.5px; }
 .event-disruption { font-weight: 800; }
+
+.round-calendar-bar.wec-event {
+  background: var(--wec-blue);
+  --event-accent: color-mix(in srgb, var(--wec-blue) 72%, white);
+  --event-text: #171717;
+}
+
+.fc-event.wec-event {
+  background: var(--wec-blue) !important;
+  --event-accent: color-mix(in srgb, var(--wec-blue) 72%, white);
+  --event-text: #171717;
+}

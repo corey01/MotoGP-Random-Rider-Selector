@@ -1,4 +1,4 @@
-export type SeriesKey = "motogp" | "wsbk" | "bsb" | "speedway" | "f1" | "gtwce" | "iomtt" | "nls" | "rookiescup" | "motoamerica";
+export type SeriesKey = "motogp" | "wsbk" | "bsb" | "speedway" | "f1" | "gtwce" | "iomtt" | "nls" | "wec" | "rookiescup" | "motoamerica";
 
 export type SubSeriesKey =
   | "motogp"
@@ -14,6 +14,7 @@ export type SubSeriesKey =
   | "gtwce"
   | "iomtt"
   | "nls"
+  | "wec"
   | "rookiescup"
   | "superbike"
   | "superbike-cup"
@@ -99,11 +100,19 @@ export const SERIES_GROUPS: SeriesGroup[] = [
     children: [{ key: "nls", label: "NLS" }],
   },
   {
+    key: "wec",
+    label: "FIA WEC",
+    children: [{ key: "wec", label: "FIA WEC" }],
+  },
+  {
     key: "rookiescup",
     label: "Rookies Cup",
     children: [{ key: "rookiescup", label: "Red Bull Rookies Cup" }],
   },
 ];
+
+// New championships are opt-in, including the guest/loading fallback.
+export const DEFAULT_SERIES_KEYS = SERIES_GROUPS.filter((group) => group.key !== "wec").map((group) => group.key);
 
 export const DEFAULT_SUB_SERIES_VISIBILITY: Record<SubSeriesKey, boolean> = {
   motogp: true,
@@ -119,6 +128,7 @@ export const DEFAULT_SUB_SERIES_VISIBILITY: Record<SubSeriesKey, boolean> = {
   gtwce: true,
   iomtt: true,
   nls: true,
+  wec: false,
   rookiescup: true,
   "bsb-supersport": true,
   "bsb-superstock": false,
@@ -144,6 +154,7 @@ export const SERIES_LABELS: Record<string, string> = {
   gtwce: "GT World Challenge",
   iomtt: "Isle of Man TT",
   nls: "Nürburgring Langstrecken-Serie",
+  wec: "FIA WEC",
   rookiescup: "Red Bull Rookies Cup",
 };
 
@@ -157,6 +168,7 @@ export const SERIES_SHORT_LABELS: Record<string, string> = {
   gtwce: "GTWCE",
   iomtt: "IoMTT",
   nls: "NLS",
+  wec: "FIA WEC",
   rookiescup: "Rookies Cup",
 };
 
@@ -191,6 +203,7 @@ export const SUB_SERIES_LABELS: Record<string, string> = {
   gtwce: "GT World Challenge",
   iomtt: "Isle of Man TT",
   nls: "NLS",
+  wec: "FIA WEC",
   rookiescup: "Red Bull Rookies Cup",
 };
 
@@ -212,6 +225,7 @@ export const SUB_SERIES_SHORT_LABELS: Record<string, string> = {
   gtwce: "GTWCE",
   iomtt: "IoMTT",
   nls: "NLS",
+  wec: "FIA WEC",
   rookiescup: "Redbull Rookies",
 };
 
@@ -248,6 +262,7 @@ export const ROUND_SERIES_LABELS: Record<string, string> = {
   gtwce: "GTWCE",
   iomtt: "IoMTT",
   nls: "NLS",
+  wec: "FIA WEC",
   rookiescup: "Rookies",
 };
 
@@ -261,6 +276,7 @@ export const SERIES_COLORS: Record<string, string> = {
   gtwce: "var(--gtwce-gold)",
   iomtt: "var(--iomtt-amber)",
   nls: "var(--nls-green)",
+  wec: "var(--wec-blue)",
   rookiescup: "var(--rookiescup-teal)",
 };
 
@@ -310,6 +326,7 @@ export const SERIES_CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: st
   gtwce:    { abbr: "GT",  subtitle: "GT3 / GT4" },
   iomtt:    { abbr: "IoMTT",  subtitle: "Road Racing" },
   nls:      { abbr: "NLS", subtitle: "Endurance" },
+  wec:      { abbr: "WEC", subtitle: "Endurance · Calendar only" },
   rookiescup: { abbr: "RRC", subtitle: "Junior Grand Prix" },
   "bsb-supersport": { abbr: "BSS", subtitle: "British Supersport" },
   "bsb-superstock": { abbr: "STK", subtitle: "National Superstock" },

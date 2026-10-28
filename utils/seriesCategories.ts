@@ -8,7 +8,7 @@ export interface SeriesCategory {
 
 export const seriesCategories: SeriesCategory[] = [
   { key: "motorcycles", label: "Motorcycles", series: ["motogp", "wsbk", "bsb", "speedway", "iomtt", "rookiescup", "motoamerica"] },
-  { key: "cars", label: "Cars", series: ["f1", "gtwce", "nls"] },
+  { key: "cars", label: "Cars", series: ["f1", "gtwce", "nls", "wec"] },
 ];
 
 export function categorySubSeries(category: SeriesCategory): SubSeriesKey[] {
