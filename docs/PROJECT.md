@@ -88,11 +88,13 @@ import's freshness notice. Choosing a favourite does not add subscriptions.
 ## Categories in onboarding and settings
 
 Both screens use `SeriesCategorySelection` and `utils/seriesCategories.ts`:
-Motorcycles contains MotoGP, WorldSBK, BSB, Speedway, IoMTT, Rookies and MotoAmerica;
+Bikes contains MotoGP, WorldSBK, BSB, Speedway, IoMTT, Rookies and MotoAmerica;
 Cars contains F1, GT World Challenge Europe, NLS and optional FIA WEC. Expand/collapse only changes
 presentation. Follow all/Unfollow all explicitly changes the known classes in that
 category; none/some/all states and class counts reflect partial selections.
-Series headings and individual class cards remain inside each category.
+Series headings and individual class cards remain inside each category. Both
+Bikes and Cars start collapsed, including when they contain saved follows, so the
+two groups and their follow counts are visible before browsing the full lists.
 
 Selections remain drafts until the screen's existing save action succeeds.
 Category changes preserve the other category, unrecognised stored preferences,
@@ -113,7 +115,7 @@ that results and championship standings are not available yet.
 ## BMW F 900 R Cup
 
 Optional BSB class `bsb-bmw` offers official phase grids/results and exact-round
-main championship totals. It appears in Motorcycles/BSB selection, calendar
+main championship totals. It appears in Bikes/BSB selection, calendar
 filters, current standings and home favourites as `bsb:bsb-bmw`. Guest defaults
 leave it off; existing account opt-in is maintained by the API preference
 migration. Choosing a favourite does not enable its subscription.
