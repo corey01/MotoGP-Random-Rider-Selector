@@ -228,6 +228,7 @@ type ButtonKey =
   | "scrape-speedway"
   | "scrape-gtwce"
   | "scrape-iomtt"
+  | "scrape-wec"
   | "scrape-nls"
   | "scrape-rookiescup"
   | "scrape-all"
@@ -321,6 +322,12 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       hint: "scrape:iomtt",
     },
     {
+      key: "scrape-wec",
+      label: "FIA WEC Calendar",
+      path: "/admin/scrape/wec",
+      hint: "scrape:wec · Official session times and Prologue tests · calendar only",
+    },
+    {
       key: "scrape-nls",
       label: "NLS",
       path: "/admin/scrape/nls",
@@ -336,7 +343,7 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       key: "scrape-all",
       label: "Scrape All",
       path: "/admin/scrape/all",
-      hint: "bsb + wsbk + f1 + speedway + gtwce + iomtt + nls + rookiescup",
+      hint: "bsb + wsbk + f1 + speedway + gtwce + iomtt + nls + wec + rookiescup",
     },
   ];
 

@@ -189,6 +189,7 @@
 .gtwce {}
 .iomtt {}
 .nls {}
+.wec {}
 .rookiescup {}
 
 .groupButtonActive {
@@ -229,6 +230,12 @@
 .groupButtonActive.iomtt {
   background: var(--iomtt-amber);
   border-color: var(--iomtt-amber);
+  color: #171717;
+}
+
+.groupButtonActive.wec {
+  background: var(--wec-blue);
+  border-color: var(--wec-blue);
   color: #171717;
 }
 

@@ -357,3 +357,17 @@
   font-size: 0.85rem;
   line-height: 1.5;
 }
+
+.coverageNotice {
+  margin-bottom: 20px;
+  color: var(--kc-text-2);
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--kc-primary);
+  }
+}

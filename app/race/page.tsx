@@ -16,14 +16,16 @@ import { getDeviceTimezoneLabel } from "@/utils/timezone";
 import style from "./RacePage.module.scss";
 
 const SESSION_ORDER: Record<string, number> = {
+  TEST: 0,
   PRACTICE: 0,
   QUALIFYING: 1,
   RACE: 2,
 };
 
-const RACING_TYPES = new Set(["PRACTICE", "QUALIFYING", "RACE"]);
+const RACING_TYPES = new Set(["TEST", "PRACTICE", "QUALIFYING", "RACE"]);
 
 const TYPE_TONE_CLASS: Record<string, string> = {
+  TEST: style.practiceTone,
   PRACTICE: style.practiceTone,
   QUALIFYING: style.qualifyingTone,
   RACE: style.raceTone,
@@ -333,6 +335,11 @@ function RacePage() {
             <h2 className={style.sectionTitle}>Session timetable</h2>
           </div>
         </div>
+
+        {round?.series === "wec" && <div className={style.coverageNotice}>
+          <p>Calendar and session times only. Results and championship standings are not available here yet.</p>
+          {round.sourceUrl && <a href={round.sourceUrl} target="_blank" rel="noopener noreferrer">Official event timetable ↗</a>}
+        </div>}
 
         <div className={style.scheduleBlocks}>
           {sortedSubSeries.map((subSeries) => {
