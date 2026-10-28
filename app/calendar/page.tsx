@@ -139,11 +139,14 @@ export default function CalendarPage() {
   );
 
   const syncVisibleSubSeries = useCallback((filters: EffectiveCalendarFilters) => {
+    // The parent series can be included to retrieve a shared meeting timetable.
+    // It must not expand explicit class choices when those filters are echoed.
+    if (!useBackendDefaults) return;
     setVisibleSubSeries((prev) => {
       const next = visibilityWithinSeries(visibilityFromFilters(filters), availableSeries);
       return sameVisibility(prev, next) ? prev : next;
     });
-  }, [availableSeries]);
+  }, [availableSeries, useBackendDefaults]);
 
   useEffect(() => {
     if (!isAuthenticated) return;

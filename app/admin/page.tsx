@@ -288,7 +288,7 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
     { key: "wsbk-timing", label: "WorldSBK / Support Timing", path: "/admin/sync/wsbk-timing", hint: "Full season results, published grids and championship standings · all four classes · hourly around race weekends, daily between events" },
     { key: "rookies-timing", label: "Rookies Cup Results", path: "/admin/sync/rookies-timing", hint: "Full season published race classifications · hourly around race weekends, daily between events" },
     { key: "motoamerica-timing", label: "MotoAmerica Results & Grids", path: "/admin/sync/motoamerica-timing", hint: "Published race reports and grids · completed event dates only · seven classes; Superbike Cup standings remain separate" },
-    { key: "bsb-timing", label: "BSB / Support Timing", path: "/admin/sync/bsb-timing", hint: "Full season grids, race results and standings · hourly around race weekends, daily between events" },
+    { key: "bsb-timing", label: "BSB / Support Timing", path: "/admin/sync/bsb-timing", hint: "Full season grids, race results and standings, including BMW heats, LCQ, Sprint and Main · hourly around race weekends, daily between events" },
     { key: "scrape-bsb", label: "BSB", path: "/admin/scrape/bsb", hint: "scrape:bsb" },
     {
       key: "scrape-wsbk",

@@ -109,3 +109,19 @@ calendar-only scope; it is not offered as a standings or home favourite choice.
 Admin has one shared-year `/admin/scrape/wec` action and `scrape:wec` polling status.
 Round pages retain numeric IDs and official source links, with an explicit notice
 that results and championship standings are not available yet.
+
+## BMW F 900 R Cup
+
+Optional BSB class `bsb-bmw` offers official phase grids/results and exact-round
+main championship totals. It appears in Motorcycles/BSB selection, calendar
+filters, current standings and home favourites as `bsb:bsb-bmw`. Guest defaults
+leave it off; existing account opt-in is maintained by the API preference
+migration. Choosing a favourite does not enable its subscription.
+
+Weekend phase names are supplied by the API: Heat 1, Heat 2, optional LCQ,
+Sprint and Main. Explicit document session scope takes precedence over legacy
+numbered-report labels. Published blank ranks remain unknown and fractional
+championship totals are displayed unchanged. Race-awarded points remain unknown.
+The shared-year BSB timing import includes BMW; no additional import action is
+needed. Existing BSB calendar sessions remain generic, with no claim of a
+class-specific BMW timetable.
