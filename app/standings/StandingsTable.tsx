@@ -1,5 +1,5 @@
 "use client";
-import {CompetitorPortrait} from "../_components/Classification/ClassificationList";
+import {CompetitorPortrait,CompetitorName,CrewPortrait} from "../_components/Classification/ClassificationList";
 import type { StandingsEntry } from "@/utils/getStandings";
 import style from "./StandingsTable.module.scss";
 
@@ -8,16 +8,16 @@ function Rider({ entry }: { entry: StandingsEntry }) {
   const name = rider.fullName?.trim() || "Unknown rider";
   const iso = rider.country?.iso;
   return <div className={style.rider}>
-    <CompetitorPortrait name={name} pictures={rider.pictures} compact />
+    {entry.crew?.length?<CrewPortrait/>:<CompetitorPortrait name={name} pictures={rider.pictures} compact />}
     <div className={style.identity}>
       <div className={style.nameLine}>
-        {iso && /^[a-z]{2}$/i.test(iso) &&
+        {!entry.crew?.length && iso && /^[a-z]{2}$/i.test(iso) &&
           // eslint-disable-next-line @next/next/no-img-element
           <img className={style.flag} src={`https://flagcdn.com/24x18/${iso.toLowerCase()}.png`} alt={rider.country?.name || iso} />}
-        <span className={style.fullName}>{name}</span>
+        <span className={style.fullName}><CompetitorName name={name} crew={entry.crew}/></span>
         {rider.number != null && <span className={style.number}>#{rider.number}</span>}
       </div>
-      {entry.team && <span className={style.mobileTeam}>{entry.team}</span>}
+      {entry.team && <span className={style.mobileTeam}>{entry.team}</span>}{entry.machine&&<span className={style.crewDetail}>{entry.machine}</span>}{entry.category&&<span className={style.crewDetail}>{entry.category}{entry.classPosition!=null?` · Class position ${entry.classPosition}`:""}</span>}
     </div>
   </div>;
 }

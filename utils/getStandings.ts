@@ -1,4 +1,5 @@
 import { fetchWithAuth } from "./auth";
+import type { CrewMember } from "./classification";
 import type { SeriesKey } from "@/consts/series";
 
 export interface StandingsRider {
@@ -16,6 +17,10 @@ export interface StandingsRider {
 }
 
 export interface StandingsEntry {
+  crew?: CrewMember[];
+  machine?: string | null;
+  category?: string | null;
+  classPosition?: number | null;
   teamColor?: string | null;
   position: number;
   points: number;
@@ -30,6 +35,7 @@ export interface StandingsData {
   count: number;
   standings: StandingsEntry[];
   asOfDate?: string;
+  historicalWarnings?: string[];
   stale?: boolean;
   refreshFailed?: boolean;
   error?: string;

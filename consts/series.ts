@@ -27,7 +27,8 @@ export type SubSeriesKey =
   | "bsb-supersport"
   | "bsb-superstock"
   | "bsb-sportbike"
-  | "bsb-bmw";
+  | "bsb-bmw"
+  | "bsb-sidecar";
 
 export type SeriesGroup = {
   key: SeriesKey;
@@ -73,7 +74,7 @@ export const SERIES_GROUPS: SeriesGroup[] = [
   {
     key: "bsb",
     label: "BSB",
-    children: [{ key: "bsb", label: "Superbike" }, { key: "bsb-supersport", label: "British Supersport" }, { key: "bsb-superstock", label: "National Superstock" }, { key: "bsb-sportbike", label: "British Sportbike" }, { key: "bsb-bmw", label: "BMW F 900 R Cup" }],
+    children: [{ key: "bsb", label: "Superbike" }, { key: "bsb-supersport", label: "British Supersport" }, { key: "bsb-superstock", label: "National Superstock" }, { key: "bsb-sportbike", label: "British Sportbike" }, { key: "bsb-bmw", label: "BMW F 900 R Cup" }, { key: "bsb-sidecar", label: "British Sidecar (overall crews)" }],
   },
   {
     key: "speedway",
@@ -135,6 +136,7 @@ export const DEFAULT_SUB_SERIES_VISIBILITY: Record<SubSeriesKey, boolean> = {
   "bsb-superstock": false,
   "bsb-sportbike": false,
   "bsb-bmw": false,
+  "bsb-sidecar": false,
   "superbike": true,
   "superbike-cup": true,
   "supersport": true,
@@ -179,6 +181,7 @@ export const SUB_SERIES_LABELS: Record<string, string> = {
   "bsb-superstock": "National Superstock",
   "bsb-sportbike": "British Sportbike",
   "bsb-bmw": "BMW F 900 R Cup",
+  "bsb-sidecar": "British Sidecar (overall crews)",
   "superbike": "Superbike",
   "superbike-cup": "Superbike Cup",
   "supersport": "Supersport",
@@ -215,6 +218,7 @@ export const SUB_SERIES_SHORT_LABELS: Record<string, string> = {
   "bsb-superstock": "National Superstock",
   "bsb-sportbike": "British Sportbike",
   "bsb-bmw": "BMW F 900 R Cup",
+  "bsb-sidecar": "British Sidecar (overall crews)",
   "superbike": "Superbike",
   "superbike-cup": "Superbike Cup",
   "supersport": "Supersport",
@@ -239,6 +243,7 @@ export const ROUND_SERIES_LABELS: Record<string, string> = {
   "bsb-superstock": "BSB",
   "bsb-sportbike": "BSB",
   "bsb-bmw": "BSB",
+  "bsb-sidecar": "BSB",
   "superbike": "MotoAmerica",
   "superbike-cup": "MotoAmerica",
   "supersport": "MotoAmerica",
@@ -337,6 +342,7 @@ export const SERIES_CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: st
   "bsb-superstock": { abbr: "STK", subtitle: "National Superstock" },
   "bsb-sportbike": { abbr: "SPB", subtitle: "British Sportbike" },
   "bsb-bmw": { abbr: "BMW", subtitle: "Heats · LCQ · Main / Sprint" },
+  "bsb-sidecar": { abbr: "SC", subtitle: "Crews · Overall standings" },
   "superbike": { abbr: "MA", subtitle: "MotoAmerica standings" },
   "superbike-cup": { abbr: "MA", subtitle: "MotoAmerica standings" },
   "supersport": { abbr: "MA", subtitle: "MotoAmerica standings" },

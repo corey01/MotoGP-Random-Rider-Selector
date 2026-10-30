@@ -25,7 +25,7 @@ export const championshipOptions: ChampionshipOption[] = [
   option("f1", "f1", "F1 Drivers"),
   option("f1", "f1-constructors", "F1 Constructors", "riders", "f1"),
   ...[["worldsbk", "WorldSBK"], ["worldssp", "WorldSSP"], ["worldspb", "WorldSPB"], ["worldwcr", "WorldWCR"]].map(([cls, label]) => option("wsbk", cls, label)),
-  ...[["bsb", "British Superbike"], ["bsb-supersport", "British Supersport"], ["bsb-superstock", "National Superstock"], ["bsb-sportbike", "British Sportbike"], ["bsb-bmw", "BMW F 900 R Cup"]].map(([cls, label]) => option("bsb", cls, label)),
+  ...[["bsb", "British Superbike"], ["bsb-supersport", "British Supersport"], ["bsb-superstock", "National Superstock"], ["bsb-sportbike", "British Sportbike"], ["bsb-bmw", "BMW F 900 R Cup"], ["bsb-sidecar", "British Sidecar (overall crews)"]].map(([cls, label]) => option("bsb", cls, label)),
   option("rookiescup", "rookiescup", "Red Bull Rookies Cup"),
   ...[["superbike", "Superbike"], ["superbike-cup", "Superbike Cup"], ["supersport", "Supersport"], ["talent-cup", "Talent Cup"], ["king-of-the-baggers", "King of the Baggers"], ["twins-cup", "Twins Cup"], ["super-hooligan", "Super Hooligan"], ["build-train-race", "Build. Train. Race."]].map(([cls, label]) => option("motoamerica", cls, `MotoAmerica ${label}`)),
 ];
