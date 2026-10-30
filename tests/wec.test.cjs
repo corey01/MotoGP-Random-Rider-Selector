@@ -187,6 +187,9 @@ test('WEC weekend views contain only Results and Grid, retain partial/stale stat
   assert.match(grid, /href="https:\/\/official.example\/grid.pdf"/);
   assert.doesNotMatch(grid, /href="https:\/\/official.example\/race.pdf"|>Standings<\/button>/);
   assert.match(renderWecWeekend({ tab: 'standings' }).html, /Published race report/);
+  const provisionalGrid = { ...wecPayload, sessions: [], errors: {}, provisional: true, documents: [{ ...gridReport, provisional: true }, { ...raceReport, provisional: false }] };
+  assert.match(renderWecWeekend({ tab: 'grid', data: provisionalGrid }).html, /Provisional ·/);
+  assert.doesNotMatch(renderWecWeekend({ tab: 'results', data: provisionalGrid }).html, /Provisional ·/);
   const delayed = renderWecWeekend({ data: { ...wecPayload, sessions: [], results: {}, warnings: ['Some official data could not be refreshed.'], stale: true, errors: {} } }).html;
   assert.match(delayed, /could not be refreshed/);
   assert.match(delayed, /Refresh delayed/);

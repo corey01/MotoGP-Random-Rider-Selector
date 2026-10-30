@@ -119,8 +119,9 @@ are not invented. Document kind/session controls each official report link.
 The Prologue's TEST-only timetable skips race-classification requests and shows
 explicit test-event scope. Future/unpublished race reports remain unavailable;
 partial imports retain source warnings and any verified sibling report.
-Final-report caveats stay visible as source notes without falsely marking the
-classification provisional. Championship standings and home favourites remain
+Final race-report caveats stay visible as source notes without falsely marking the
+race classification provisional. A provisional starting-grid label belongs only
+to the Grid view, as in the 2026 Circuit of the Americas source. Championship standings and home favourites remain
 unsupported for WEC. Admin has
 separate shared-year `/admin/scrape/wec` and `/admin/sync/wec-timing` actions,
 with calendar and timing polling status. Calendar session IDs and Le Mans' 12

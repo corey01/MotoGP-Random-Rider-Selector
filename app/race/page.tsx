@@ -337,7 +337,7 @@ function RacePage() {
         </div>
 
         {round?.series === "wec" && <div className={style.coverageNotice}>
-          <p>Official race results and final grids are available when published. Championship standings are not included. Unconfirmed session times remain Time TBC.</p>
+          <p>Official race results and starting grids are available when published. Championship standings are not included. Unconfirmed session times remain Time TBC.</p>
           {round.sourceUrl && <a href={round.sourceUrl} target="_blank" rel="noopener noreferrer">Official event timetable ↗</a>}
         </div>}
 

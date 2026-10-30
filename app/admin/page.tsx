@@ -326,7 +326,7 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       key: "wec-timing",
       label: "FIA WEC Timing",
       path: "/admin/sync/wec-timing",
-      hint: "timing:wec · Whole-season official race results and final grids · car entries and published drivers",
+      hint: "timing:wec · Whole-season official race results and published starting grids · car entries and published drivers",
     },
     {
       key: "scrape-wec",
