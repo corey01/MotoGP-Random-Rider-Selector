@@ -3,10 +3,12 @@ import {useState,type CSSProperties} from 'react';
 import {classificationDetail,classificationStatus,type ClassificationRow} from '@/utils/classification';
 import style from './Classification.module.scss';
 export function CompetitorPortrait({name,pictures,compact=false}:{name:string;pictures?:ClassificationRow['pictures'];compact?:boolean}){
- const url=pictures?.portrait||pictures?.profile,[failed,setFailed]=useState<string|null>(null);const parts=name.trim().split(/\s+/),initials=[parts[0]?.[0],parts.length>1?parts.at(-1)?.[0]:''].join('');
- return <span className={`${style.portrait} ${compact?style.compact:""}`} aria-hidden="true">{url&&url!==failed?
+ const [failed,setFailed]=useState<string[]>([]);
+ const url=[pictures?.portrait,pictures?.profile].find(candidate=>candidate&&!failed.includes(candidate));
+ const parts=name.trim().split(/\s+/),initials=[parts[0]?.[0],parts.length>1?parts.at(-1)?.[0]:''].join('');
+ return <span className={`${style.portrait} ${compact?style.compact:""}`} aria-hidden="true">{url?
   // eslint-disable-next-line @next/next/no-img-element
-  <img src={url} alt="" loading="lazy" onError={()=>setFailed(url)}/>:<span>{initials||'?'}</span>}</span>;
+  <img key={url} src={url} alt="" loading="lazy" onError={()=>setFailed(previous=>previous.includes(url)?previous:[...previous,url])}/>:<span>{initials||'?'}</span>}</span>;
 }
 export function CompetitorName({name,crew,crewLabel='Crew'}:{name:string;crew?:ClassificationRow['crew'];crewLabel?:ClassificationRow['crewLabel']}){
  return crew?.length?<span className={style.crewNames}><span className={style.crewLabel}>{crewLabel}</span>{crew.map((member,index)=><span key={`${member.name}:${index}`}>{member.name}{member.role&&<span className={style.crewRole}> · {member.role}</span>}</span>)}</span>:<>{name}</>;
