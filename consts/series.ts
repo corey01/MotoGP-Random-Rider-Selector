@@ -336,7 +336,7 @@ export const SERIES_CARD_META: Record<SubSeriesKey, { abbr: string; subtitle: st
   gtwce:    { abbr: "GT",  subtitle: "GT3 / GT4" },
   iomtt:    { abbr: "IoMTT",  subtitle: "Road Racing" },
   nls:      { abbr: "NLS", subtitle: "Endurance" },
-  wec:      { abbr: "WEC", subtitle: "Endurance · Calendar only" },
+  wec:      { abbr: "WEC", subtitle: "Endurance · Race results & grids" },
   rookiescup: { abbr: "RRC", subtitle: "Junior Grand Prix" },
   "bsb-supersport": { abbr: "BSS", subtitle: "British Supersport" },
   "bsb-superstock": { abbr: "STK", subtitle: "National Superstock" },

@@ -101,16 +101,30 @@ Category changes preserve the other category, unrecognised stored preferences,
 class exclusions and the saved favourite. New series still require their own
 opt-in defaults/migration; categories do not automatically follow future entries.
 
-## FIA WEC calendar
+## FIA WEC calendar and race reports
 
-FIA WEC is an optional Cars championship with one `wec` calendar selection.
-The official timetable includes endurance races and Prologue tests; published
-unknown or contradictory starts remain Time TBC. Existing selections and guest
-defaults do not automatically follow WEC. Both onboarding and settings expose its
-calendar-only scope; it is not offered as a standings or home favourite choice.
-Admin has one shared-year `/admin/scrape/wec` action and `scrape:wec` polling status.
-Round pages retain numeric IDs and official source links, with an explicit notice
-that results and championship standings are not available yet.
+FIA WEC is an optional Cars championship with one existing `wec` selection.
+The timetable keeps numeric round/session IDs, endurance durations, Prologue tests
+and unknown/contradictory starts as Time TBC. No preference migration or new
+favourite is introduced; the 30 existing championship choices remain unchanged.
+
+Race pages load exact round/year/series `wec` classifications with Results and
+Grid views only. Overall car order, original printed entry numbers (including
+`007` versus `7`), team/machine/category and all supplied race crew members remain
+separate. The official grid lists only its printed driver, labelled Listed driver;
+it never borrows a full crew from the race. Crew placeholders reflect the number
+of supplied names, and individual portraits/roles, class ranks and race awards
+are not invented. Document kind/session controls each official report link.
+
+The Prologue's TEST-only timetable skips race-classification requests and shows
+explicit test-event scope. Future/unpublished race reports remain unavailable;
+partial imports retain source warnings and any verified sibling report.
+Final-report caveats stay visible as source notes without falsely marking the
+classification provisional. Championship standings and home favourites remain
+unsupported for WEC. Admin has
+separate shared-year `/admin/scrape/wec` and `/admin/sync/wec-timing` actions,
+with calendar and timing polling status. Calendar session IDs and Le Mans' 12
+unconfirmed times are unchanged.
 
 ## BMW F 900 R Cup
 

@@ -18,6 +18,8 @@ export interface StandingsRider {
 
 export interface StandingsEntry {
   crew?: CrewMember[];
+  crewLabel?: 'Crew' | 'Listed driver';
+  entryNumber?: string;
   machine?: string | null;
   category?: string | null;
   classPosition?: number | null;
