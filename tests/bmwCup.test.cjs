@@ -54,7 +54,7 @@ test('BMW is an optional BSB class under Bikes and explicit selection preserves 
 });
 
 test('BMW favourite is available only when followed and an unfollowed saved choice remains explicit', () => {
-  assert.equal(choices.championshipOptions.length, 29);
+  assert.equal(choices.championshipOptions.length, 30);
   assert.equal(choices.championshipForValue('bsb:bsb-bmw').label, 'BMW F 900 R Cup');
   assert(choices.followedChampionships(['bsb'], []).some(option => option.value === 'bsb:bsb-bmw'));
   assert(!choices.followedChampionships(['bsb'], ['bsb-bmw']).some(option => option.value === 'bsb:bsb-bmw'));

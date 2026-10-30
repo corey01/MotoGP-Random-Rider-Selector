@@ -46,6 +46,8 @@ export function ChampionshipStandings({ championship, year }: { championship: st
       : !rows.length ? <p className={style.empty}>Standings not yet published for this championship.</p>
       : <>
         {data.stale || data.refreshFailed ? <p className={style.empty}>Refresh delayed; showing the last verified import.</p> : data.asOfDate ? <p className={style.empty}>As of {data.asOfDate}</p> : null}
+        {option.subSeries==='bsb-sidecar'&&<p className={style.empty}>Overall crew standings. Race and grid reports cover four BSB meetings. Overall championship totals are the published cumulative totals, including other meetings.</p>}
+        {data.historicalWarnings?.map(warning=><p key={warning} role="status" className={style.empty}>{warning}</p>)}
         <ClassificationList key={championship} rows={rows} mode="standings" label={`${option.label} standings`} />
       </>}
   </section>;

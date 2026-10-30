@@ -1,9 +1,11 @@
 export type Pictures={portrait?:string|null;profile?:string|null};
-export type ClassificationRow={position:number|null;riderExternalId?:string|null;riderName:string;riderNumber?:number|null;teamName?:string|null;teamColor?:string|null;pictures?:Pictures|null;points?:number|null;status?:string|null;gapFirst?:string|null;bestLapTime?:string|null;totalLaps?:number|null};
-export type ChampionshipEntry={position:number;points:number;rider:{id:string;fullName:string|null;number?:number|null;pictures?:Pictures|null};team?:string|null;teamColor?:string|null};
+export type CrewMember={name:string;role?:string};
+export type CrewFields={crew?:CrewMember[];machine?:string|null;category?:string|null;classPosition?:number|null};
+export type ClassificationRow=CrewFields&{position:number|null;riderExternalId?:string|null;riderName:string;riderNumber?:number|null;teamName?:string|null;teamColor?:string|null;pictures?:Pictures|null;points?:number|null;status?:string|null;gapFirst?:string|null;bestLapTime?:string|null;totalLaps?:number|null};
+export type ChampionshipEntry=CrewFields&{position:number;points:number;rider:{id:string;fullName:string|null;number?:number|null;pictures?:Pictures|null};team?:string|null;teamColor?:string|null};
 export type ClassificationDocument={label:string;url:string;session?:string;provisional?:boolean};
-export type ClassificationData={results:Record<string,ClassificationRow[]>;grids:Record<string,ClassificationRow[]>;standings:ChampionshipEntry[];sessions:Array<{id:string;label:string;status:string}>;documents:ClassificationDocument[];asOfDate?:string;asOfSession?:string;stale?:boolean;unchanged?:boolean;warnings?:string[];errors:Partial<Record<'results'|'grid'|'standings',string>>};
-export const classificationClasses:Record<string,Array<[string,string]>>={motogp:[['motogp','MotoGP'],['moto2','Moto2'],['moto3','Moto3']],bsb:[['bsb','Superbike'],['bsb-supersport','Supersport'],['bsb-superstock','National Superstock'],['bsb-sportbike','British Sportbike'],['bsb-bmw','BMW F 900 R Cup']],wsbk:[['worldsbk','WorldSBK'],['worldssp','WorldSSP'],['worldspb','WorldSPB'],['worldwcr','WorldWCR']],f1:[['f1','Formula 1']],rookiescup:[['rookiescup','Rookies Cup']],motoamerica:[['superbike','Superbike'],['supersport','Supersport'],['talent-cup','Talent Cup'],['king-of-the-baggers','King of the Baggers'],['twins-cup','Twins Cup'],['super-hooligan','Super Hooligan'],['build-train-race','Build.Train.Race']]};
+export type ClassificationData={results:Record<string,ClassificationRow[]>;grids:Record<string,ClassificationRow[]>;standings:ChampionshipEntry[];sessions:Array<{id:string;label:string;status:string}>;documents:ClassificationDocument[];asOfDate?:string;asOfSession?:string;stale?:boolean;unchanged?:boolean;warnings?:string[];historicalWarnings?:string[];gridPositionKind?:'slot';errors:Partial<Record<'results'|'grid'|'standings',string>>};
+export const classificationClasses:Record<string,Array<[string,string]>>={motogp:[['motogp','MotoGP'],['moto2','Moto2'],['moto3','Moto3']],bsb:[['bsb','Superbike'],['bsb-supersport','Supersport'],['bsb-superstock','National Superstock'],['bsb-sportbike','British Sportbike'],['bsb-bmw','BMW F 900 R Cup'],['bsb-sidecar','British Sidecar (overall crews)']],wsbk:[['worldsbk','WorldSBK'],['worldssp','WorldSSP'],['worldspb','WorldSPB'],['worldwcr','WorldWCR']],f1:[['f1','Formula 1']],rookiescup:[['rookiescup','Rookies Cup']],motoamerica:[['superbike','Superbike'],['supersport','Supersport'],['talent-cup','Talent Cup'],['king-of-the-baggers','King of the Baggers'],['twins-cup','Twins Cup'],['super-hooligan','Super Hooligan'],['build-train-race','Build.Train.Race']]};
 export const sessionLabel=(key:string)=>(({RAC:'Race',SPR:'Sprint'} as Record<string,string>)[key]??key);
 export function classificationStatus(status?:string|null){
  if(!status)return null;const raw=status.trim(),value=raw.toUpperCase();
@@ -12,12 +14,12 @@ export function classificationStatus(status?:string|null){
 }
 export function classificationDetail(row:ClassificationRow,mode:'results'|'grid'|'standings',leaderLaps?:number|null){
  if(mode==='standings')return null;const status=classificationStatus(row.status);if(status)return status;
- if(mode==='grid')return row.bestLapTime?`Qualifying ${row.bestLapTime}`:null;
+ if(mode==='grid')return row.bestLapTime?`${row.crew?.length?'Time':'Qualifying'} ${row.bestLapTime}`:null;
  if(row.position===1)return 'Winner';
  if(row.gapFirst){const gap=row.gapFirst.trim();return /^\d+(?:\.\d+)?(?:s|\s+laps?)?$/.test(gap)?'+'+gap:gap;}
  if(row.position!==null&&row.totalLaps!=null&&leaderLaps!=null&&row.totalLaps<leaderLaps){const laps=leaderLaps-row.totalLaps;return `+${laps} lap${laps===1?'':'s'}`;}return null;
 }
-export const standingsRows=(entries:ChampionshipEntry[]):ClassificationRow[]=>entries.map(e=>({position:e.position,riderExternalId:e.rider.id,riderName:e.rider.fullName||'Unknown competitor',riderNumber:e.rider.number,teamName:e.team,teamColor:e.teamColor,pictures:e.rider.pictures,points:e.points}));
+export const standingsRows=(entries:ChampionshipEntry[]):ClassificationRow[]=>entries.map(e=>({position:e.position,riderExternalId:e.rider.id,riderName:e.rider.fullName||'Unknown competitor',riderNumber:e.rider.number,teamName:e.team,teamColor:e.teamColor,pictures:e.rider.pictures,points:e.points,crew:e.crew,machine:e.machine,category:e.category,classPosition:e.classPosition}));
 export function documentForView(d:ClassificationDocument,view:string,session:string){
  if(d.session&&d.session!==session)return false;
  // An explicit API session is authoritative. BMW's numbered reports can describe
@@ -50,5 +52,5 @@ export async function loadClassification(fetcher:ClassificationFetcher,roundId:n
   return empty;
  }
  const d=await get(`/classifications?roundId=${roundId}&subSeries=${encodeURIComponent(cls)}`);if(d.series!==series||d.year!==year)throw new Error('The classification does not match this championship and season.');
- return {...empty,results:cls==='bsb-bmw'?orderedBmwPhases(d.results??{}):d.results??{},grids:cls==='bsb-bmw'?orderedBmwPhases(d.grids??{}):d.grids??{},standings:d.standings??[],sessions:d.sessions??[],documents:d.documents??[],asOfDate:d.asOfDate,asOfSession:d.asOfSession,stale:d.stale,warnings:d.coverageErrors?.length?['Some official data could not be refreshed. Showing verified data where available.']:[],errors:d.historicalError?{standings:'Historical standings could not be refreshed. Showing a verified earlier import where available.'}:{}};
+ return {...empty,results:cls==='bsb-bmw'?orderedBmwPhases(d.results??{}):d.results??{},grids:cls==='bsb-bmw'?orderedBmwPhases(d.grids??{}):d.grids??{},standings:d.standings??[],sessions:d.sessions??[],documents:d.documents??[],asOfDate:d.asOfDate,asOfSession:d.asOfSession,stale:d.stale,gridPositionKind:d.gridPositionKind,historicalWarnings:d.historicalWarnings,warnings:d.coverageErrors?.length?['Some official data could not be refreshed. Showing verified data where available.']:[],errors:d.historicalError?{standings:'Historical standings could not be refreshed. Showing a verified earlier import where available.'}:{}};
 }

@@ -127,3 +127,22 @@ championship totals are displayed unchanged. Race-awarded points remain unknown.
 The shared-year BSB timing import includes BMW; no additional import action is
 needed. Existing BSB calendar sessions remain generic, with no claim of a
 class-specific BMW timetable.
+
+## British Sidecar crews
+
+`bsb-sidecar` is an explicit opt-in class under Bikes/BSB. Its favourite is
+`bsb:bsb-sidecar`, selecting the overall crew championship. New defaults leave
+it disabled and the shared category controls preserve existing choices.
+
+Both published crew names render separately, without individual portraits or
+inferred driver/passenger roles. GP/CUP/F2 and class position remain distinct
+from the overall rank. Standalone grids retain the sparse printed slot numbers
+and are labelled Grid slots. Race-awarded points stay unknown.
+
+Race and grid reports cover four BSB meetings. Overall championship totals are
+the published cumulative totals, including other meetings. Separate class tables
+and the FIM championship are excluded. Source-date warnings are shown in weekend
+standings, the current table and the favourite card; refresh errors remain separate.
+Historical reads stay scoped to the requested year/class/round with no current
+standings fallback. The existing whole-year BSB Admin import includes Sidecars;
+shared calendar sessions do not claim a Sidecar-specific timetable.
