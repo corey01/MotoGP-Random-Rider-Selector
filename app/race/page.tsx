@@ -327,7 +327,7 @@ function RacePage() {
         </div>
       </section>
 
-      {round && ["motogp","f1","wsbk","bsb","rookiescup","motoamerica"].includes(round.series) && <WeekendClassification key={roundId + round.series} roundId={roundId} year={Number(round.startDate.slice(0,4))} series={round.series} events={events} />}
+      {round && ["motogp","f1","wsbk","bsb","rookiescup","motoamerica","wec"].includes(round.series) && <WeekendClassification key={roundId + round.series} roundId={roundId} year={Number(round.startDate.slice(0,4))} series={round.series} events={events} />}
       <section className={style.scheduleSection}>
         <div className={style.sectionHeader}>
           <div>
@@ -337,7 +337,7 @@ function RacePage() {
         </div>
 
         {round?.series === "wec" && <div className={style.coverageNotice}>
-          <p>Calendar and session times only. Results and championship standings are not available here yet.</p>
+          <p>Official race results and starting grids are available when published. Championship standings are not included. Unconfirmed session times remain Time TBC.</p>
           {round.sourceUrl && <a href={round.sourceUrl} target="_blank" rel="noopener noreferrer">Official event timetable ↗</a>}
         </div>}
 

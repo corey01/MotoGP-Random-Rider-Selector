@@ -228,6 +228,7 @@ type ButtonKey =
   | "scrape-speedway"
   | "scrape-gtwce"
   | "scrape-iomtt"
+  | "wec-timing"
   | "scrape-wec"
   | "scrape-nls"
   | "scrape-rookiescup"
@@ -320,6 +321,12 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       label: "Isle of Man TT",
       path: "/admin/scrape/iomtt",
       hint: "scrape:iomtt",
+    },
+    {
+      key: "wec-timing",
+      label: "FIA WEC Timing",
+      path: "/admin/sync/wec-timing",
+      hint: "timing:wec · Whole-season official race results and published starting grids · car entries and published drivers",
     },
     {
       key: "scrape-wec",
@@ -426,12 +433,12 @@ export default function AdminPage() {
           method: "POST",
         });
         const data = await res.json();
-        if (!res.ok || (["bsb-timing","wsbk-timing","f1-timing","rookies-timing","motoamerica-timing"].includes(key) && (data.job?.status !== "success" || !(data.job?.meta?.snapshotsWritten > 0)))) {
+        if (!res.ok || (["bsb-timing","wsbk-timing","f1-timing","rookies-timing","motoamerica-timing","wec-timing"].includes(key) && (data.job?.status !== "success" || !(data.job?.meta?.snapshotsWritten > 0)))) {
           const msg = data.error ?? data.message ?? res.status;
           showToast(`${label} failed: ${msg}`, false);
           setLastResult((prev) => ({ ...prev, [key]: "failed" }));
         } else {
-          showToast(["bsb-timing","wsbk-timing","f1-timing","rookies-timing","motoamerica-timing"].includes(key) ? `${label}: ${data.job.meta.snapshotsWritten} snapshots written, ${data.job.meta.resultRows} results, ${data.job.meta.gridRows ?? 0} grid rows` : `${label} completed (${year})`, true);
+          showToast(["bsb-timing","wsbk-timing","f1-timing","rookies-timing","motoamerica-timing","wec-timing"].includes(key) ? `${label}: ${data.job.meta.snapshotsWritten} snapshots written, ${data.job.meta.resultRows} results, ${data.job.meta.gridRows ?? 0} grid rows` : `${label} completed (${year})`, true);
           setLastResult((prev) => ({ ...prev, [key]: "ok" }));
         }
       } catch (e) {
