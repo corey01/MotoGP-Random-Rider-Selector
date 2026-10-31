@@ -15,6 +15,7 @@ function load(file) {
     jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true,
   }}).outputText;
   const localRequire = name => {
+    if (name === './SessionTimes') return { SessionTimes: () => null };
     if (name.endsWith('.scss')) return { __esModule: true, default: new Proxy({}, { get: (_, key) => String(key) }) };
     if (name === 'react') return { ...React, useState: () => [state.shift(), () => {}], useEffect() {} };
     if (name.includes('ClassificationList')) return { ClassificationList: ({ rows, label }) => React.createElement('div', { 'aria-label': label }, rows.map(row => row.riderName).join(', ')) };
@@ -72,3 +73,4 @@ test('partial official document refresh remains visible while verified results s
   assert.match(html, /Some official data could not be refreshed/);
   assert.match(html, /Verified rider/);
 });
+

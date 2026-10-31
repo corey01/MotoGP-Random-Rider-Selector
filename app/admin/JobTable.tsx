@@ -7,6 +7,7 @@ type RoundOutcome = {
   status?: string;
   error?: string;
   resultRows?: number;
+  reportsWritten?: number;
   gridRows?: number;
   standingsRows?: number;
   teamRows?: number;
@@ -29,7 +30,9 @@ export interface JobRun {
     snapshotsWritten?: number;
     gridRows?: number;
     resultRows?: number;
+  reportsWritten?: number;
     standingsRows?: number;
+    sessionReportsWritten?: number;
     teamRows?: number;
     constructorRows?: number;
     results?: RoundOutcome[];
@@ -37,7 +40,7 @@ export interface JobRun {
   } | null;
 }
 
-const TIMING_JOBS = ['timing:bsb', 'timing:wsbk', 'timing:f1', 'timing:rookiescup', 'timing:motoamerica', 'timing:wec'];
+const TIMING_JOBS = ['timing:bsb', 'timing:wsbk', 'timing:f1', 'timing:rookiescup', 'timing:motoamerica', 'timing:wec', 'timing:motogp-sessions'];
 
 function fmtDate(iso: string | null): string {
   if (!iso) return '—';
@@ -66,17 +69,18 @@ function outcomeDetail(entry: RoundOutcome, motoGP: boolean): string {
 function ImportDetails({run}: {run: JobRun}) {
   const meta = run.meta;
   const motoGP = run.jobName === 'motogp:standings-sync';
+  const sessionTimes = run.jobName === 'timing:motogp-sessions';
   if (!meta || (!motoGP && !TIMING_JOBS.includes(run.jobName))) return null;
   return <details className={style.timingSummary}>
     <summary>{meta.snapshotsWritten ?? 0} snapshots written · {motoGP
       ? `${meta.teamRows ?? 0} team rows · ${meta.constructorRows ?? 0} constructor rows`
-      : `${meta.resultRows ?? 0} results · ${meta.gridRows ?? 0} grid rows · ${meta.standingsRows ?? 0} standings rows`}</summary>
+      : sessionTimes ? `${meta.sessionReportsWritten ?? 0} session classifications · ${meta.resultRows ?? 0} rider rows` : `${meta.resultRows ?? 0} results · ${meta.gridRows ?? 0} grid rows · ${meta.standingsRows ?? 0} standings rows`}</summary>
     <p>Scope: {meta.scope ?? 'unknown'}{meta.year != null ? ` · Year ${meta.year}` : ''}{meta.roundId != null ? ` · Round ID ${meta.roundId}` : ''}{meta.subSeries ? ` · ${meta.subSeries}` : ''}</p>
     {motoGP && !!meta.riderClasses?.length && <>
       <p>Rider standings refresh</p>
       <ul>{meta.riderClasses.map((entry, index) => <li key={index}>{entry.subSeries ?? 'Unknown class'}: {entry.error ?? (entry.count != null ? `${entry.count} rider entries` : 'No rider count reported')}</li>)}</ul>
     </>}
-    <ul>{meta.results?.map((entry, index) => <li key={index}>{roundLabel(entry)} · {entry.subSeries ?? 'all classes'} · {entry.status}{outcomeDetail(entry, motoGP)}</li>)}</ul>
+    <ul>{meta.results?.map((entry, index) => <li key={index}>{roundLabel(entry)} · {entry.subSeries ?? (sessionTimes ? 'MotoGP' : 'all classes')} · {entry.status}{sessionTimes && entry.status === 'success' ? `: ${entry.reportsWritten ?? 0} session classifications, ${entry.resultRows ?? 0} rider rows` : outcomeDetail(entry, motoGP)}</li>)}</ul>
   </details>;
 }
 
@@ -100,3 +104,4 @@ export default function JobTable({runs, cols}: {runs: JobRun[]; cols: number}) {
     </table>
   </div>;
 }
+
