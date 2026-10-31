@@ -159,6 +159,7 @@ type ButtonKey =
   | "scrape-gtwce"
   | "scrape-iomtt"
   | "wec-timing"
+  | "motogp-sessions"
   | "scrape-wec"
   | "scrape-nls"
   | "scrape-rookiescup"
@@ -251,6 +252,12 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
       label: "Isle of Man TT",
       path: "/admin/scrape/iomtt",
       hint: "scrape:iomtt",
+    },
+    {
+      key: "motogp-sessions",
+      label: "MotoGP Session Times",
+      path: "/admin/sync/motogp-sessions",
+      hint: "timing:motogp-sessions · Whole-season practice, qualifying and warm-up classifications · MotoGP class",
     },
     {
       key: "wec-timing",
@@ -363,12 +370,12 @@ export default function AdminPage() {
           method: "POST",
         });
         const data = await res.json();
-        if (!res.ok || (["bsb-timing","wsbk-timing","f1-timing","rookies-timing","motoamerica-timing","wec-timing"].includes(key) && (data.job?.status !== "success" || !(data.job?.meta?.snapshotsWritten > 0)))) {
+        if (!res.ok || (["bsb-timing","wsbk-timing","f1-timing","rookies-timing","motoamerica-timing","wec-timing","motogp-sessions"].includes(key) && (data.job?.status !== "success" || !(data.job?.meta?.snapshotsWritten > 0)))) {
           const msg = data.error ?? data.message ?? res.status;
           showToast(`${label} failed: ${msg}`, false);
           setLastResult((prev) => ({ ...prev, [key]: "failed" }));
         } else {
-          showToast(["bsb-timing","wsbk-timing","f1-timing","rookies-timing","motoamerica-timing","wec-timing"].includes(key) ? `${label}: ${data.job.meta.snapshotsWritten} snapshots written, ${data.job.meta.resultRows} results, ${data.job.meta.gridRows ?? 0} grid rows` : `${label} completed (${year})`, true);
+          showToast(key === "motogp-sessions" ? `${label}: ${data.job.meta.sessionReportsWritten} session classifications, ${data.job.meta.resultRows} rider rows` : ["bsb-timing","wsbk-timing","f1-timing","rookies-timing","motoamerica-timing","wec-timing","motogp-sessions"].includes(key) ? `${label}: ${data.job.meta.snapshotsWritten} snapshots written, ${data.job.meta.resultRows} results, ${data.job.meta.gridRows ?? 0} grid rows` : `${label} completed (${year})`, true);
           setLastResult((prev) => ({ ...prev, [key]: "ok" }));
         }
       } catch (e) {
@@ -484,3 +491,4 @@ export default function AdminPage() {
     </div>
   );
 }
+

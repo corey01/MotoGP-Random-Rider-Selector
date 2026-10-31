@@ -175,3 +175,16 @@ WEC joins the existing timing jobs with expandable snapshot/report counts.
 
 This is presentation of the recorded import result. It does not retry a job,
 change provider availability or treat unpublished reports as successful imports.
+
+
+## MotoGP session times
+
+`app/race/SessionTimes.tsx` adds a timed-classification section while MotoGP is
+selected. `utils/sessionTimes.ts` validates exact round/year/class scope, numeric
+session IDs, status and official links; it is identical to native. Session-mode
+cards display Fastest, published best laps and gaps without race lap deficits.
+Qualifying reports remain separate from final grids. Missing/cancelled/withdrawn
+sessions stay explicit, and failed refresh warnings apply to the selected report.
+The shared-year Admin action `/admin/sync/motogp-sessions` imports the eligible
+MotoGP season through `timing:motogp-sessions`; job details show session and rider
+row counts. Moto2/Moto3 session classifications remain the next increment.

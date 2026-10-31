@@ -12,12 +12,12 @@ export function classificationStatus(status?:string|null){
  const mapped=({OUTSTND:'DNF',RETIRED:'DNF',RET:'DNF','NOT FINISHED':'DNF','DID NOT FINISH':'DNF',NS:'DNS','NOT STARTED':'DNS','DID NOT START':'DNS',DSQ:'DSQ',DQ:'DSQ',DISQUALIFIED:'DSQ',DNF:'DNF',DNS:'DNS',NC:'NC','NOT CLASSIFIED':'NC','PIT LANE':'Pit lane'} as Record<string,string>)[value];
  if(mapped)return mapped;if(!raw||['INSTND','CLASSIFIED','FINISHED','FIN','OK'].includes(value)||/^[+\d:—-]/.test(raw))return null;return raw;
 }
-export function classificationDetail(row:ClassificationRow,mode:'results'|'grid'|'standings',leaderLaps?:number|null){
+export function classificationDetail(row:ClassificationRow,mode:'results'|'grid'|'standings'|'session',leaderLaps?:number|null){
  if(mode==='standings')return null;const status=classificationStatus(row.status);if(status)return status;
  if(mode==='grid')return row.bestLapTime?`${row.crew?.length?'Time':'Qualifying'} ${row.bestLapTime}`:null;
- if(row.position===1)return 'Winner';
+ if(row.position===1)return mode==='session'?'Fastest':'Winner';
  if(row.gapFirst){const gap=row.gapFirst.trim();return /^\d+(?:\.\d+)?(?:s|\s+laps?)?$/.test(gap)?'+'+gap:gap;}
- if(row.position!==null&&row.totalLaps!=null&&leaderLaps!=null&&row.totalLaps<leaderLaps){const laps=leaderLaps-row.totalLaps;return `+${laps} lap${laps===1?'':'s'}`;}return null;
+ if(mode!=='session'&&row.position!==null&&row.totalLaps!=null&&leaderLaps!=null&&row.totalLaps<leaderLaps){const laps=leaderLaps-row.totalLaps;return `+${laps} lap${laps===1?'':'s'}`;}return null;
 }
 export const standingsRows=(entries:ChampionshipEntry[]):ClassificationRow[]=>entries.map(e=>({position:e.position,riderExternalId:e.rider.id,riderName:e.rider.fullName||'Unknown competitor',riderNumber:e.rider.number,teamName:e.team,teamColor:e.teamColor,pictures:e.rider.pictures,points:e.points,crew:e.crew,crewLabel:e.crewLabel,entryNumber:e.entryNumber,machine:e.machine,category:e.category,classPosition:e.classPosition}));
 export function documentForView(d:ClassificationDocument,view:string,session:string){
@@ -55,3 +55,4 @@ export async function loadClassification(fetcher:ClassificationFetcher,roundId:n
  const d=await get(`/classifications?roundId=${roundId}&subSeries=${encodeURIComponent(cls)}`);if(d.series!==series||d.year!==year)throw new Error('The classification does not match this championship and season.');
  return {...empty,results:cls==='bsb-bmw'?orderedBmwPhases(d.results??{}):d.results??{},grids:cls==='bsb-bmw'?orderedBmwPhases(d.grids??{}):d.grids??{},standings:series==='wec'?[]:d.standings??[],sessions:d.sessions??[],documents:d.documents??[],asOfDate:d.asOfDate,asOfSession:d.asOfSession,stale:d.stale,gridPositionKind:d.gridPositionKind,historicalWarnings:d.historicalWarnings,warnings:[...(d.sourceWarnings??[]),...(d.coverageErrors?.length?['Some official data could not be refreshed. Showing verified data where available.']:[])],errors:d.historicalError?{standings:'Historical standings could not be refreshed. Showing a verified earlier import where available.'}:{}};
 }
+

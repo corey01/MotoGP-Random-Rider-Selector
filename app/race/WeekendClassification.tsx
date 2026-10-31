@@ -1,5 +1,7 @@
 "use client";
 import {useEffect,useState} from 'react';
+import {SessionTimes} from './SessionTimes';
+import {hasMotoSessionTimes} from '@/utils/sessionTimes';
 import {ClassificationList} from '../_components/Classification/ClassificationList';
 import {classificationClasses,loadClassification,sessionLabel,standingsRows,documentForView,type ClassificationData} from '@/utils/classification';
 import style from './RacePage.module.scss';
@@ -19,7 +21,7 @@ export function WeekendClassification({roundId,year,series,events=[]}:{roundId:n
  const selected=available.includes(race)?race:available[0]??'',isCancelled=cancelled.includes(selected)||data?.sessions.some(s=>s.label===selected&&s.status==='CANCELLED');
  const documents=data?.documents.filter(d=>documentForView(d,activeTab,activeTab==='standings'?(data?.asOfSession??selected):selected))??[],rows=activeTab==='standings'?standingsRows(data?.standings??[]):activeTab==='grid'?data?.grids[selected]:data?.results[selected];
  if(isTestEvent)return <section className={style.scheduleSection} aria-label="Weekend classifications"><h2 className={style.sectionTitle}>Test event</h2><p className={style.standingsFreshness}>Race results and grids are not available for this test event. The official timetable is shown below.</p></section>;
- return <section className={style.scheduleSection} aria-label="Weekend classifications">
+ return <><section className={style.scheduleSection} aria-label="Weekend classifications">
   <p className={style.sectionEyebrow}>{series==='wec'?'FIA WEC':series==='f1'?'Formula 1':series==='bsb'?'British championship':series==='motoamerica'?'MotoAmerica':series==='rookiescup'?'Rookies Cup':'World championship'}</p><h2 className={style.sectionTitle}>{views.map(([,label])=>label.toLowerCase()).join(', ').replace(/^./,s=>s.toUpperCase())}</h2>
   {classes.length>1&&<div className={style.classSelector} role="group" aria-label="Championship class">{classes.map(([key,label])=><button key={key} type="button" aria-pressed={cls===key} onClick={()=>setClass(key)}>{label}</button>)}</div>}
   {series==='wec'&&<p className={style.standingsFreshness}>Overall car classifications retain the published class labels and race crews. Grid reports show only the driver printed for each car. Championship standings and race-awarded points are not available.</p>}
@@ -36,5 +38,6 @@ export function WeekendClassification({roundId,year,series,events=[]}:{roundId:n
    {isCancelled&&activeTab==='results'?<p role="status">Race cancelled. No classification was issued.</p>:rows?.length?<>{data.errors[activeTab]&&<p role="status" className={style.standingsFreshness}>{data.errors[activeTab]}</p>}<ClassificationList key={`${cls}:${activeTab}:${selected}:${competition}`} rows={rows} mode={activeTab} gridPositionKind={data.gridPositionKind} label={activeTab==='standings'?'Championship standings':`${sessionLabel(selected)} ${activeTab==='grid'?(data.gridPositionKind==='slot'?'grid slots':'starting grid'):'classification'}`}/></>:<p role="status">{data.errors[activeTab]??(activeTab==='standings'?'No verified championship snapshot is available for this round.':`No ${activeTab==='grid'?'grid':'results'} are available for this session.`)}</p>}
    {documents.map(d=><p key={d.url}><a href={d.url} target="_blank" rel="noopener noreferrer" className={style.backLink}>{activeTab==='standings'?'Official championship standings':d.label==='Championship standings'?`Standings after ${sessionLabel(selected)}`:d.label} ↗</a></p>)}
   </>}
- </section>;
+ </section>{series==='motogp'&&cls==='motogp'&&hasMotoSessionTimes(events)&&<SessionTimes key={roundId} roundId={roundId} year={year}/>}</>;
 }
+
