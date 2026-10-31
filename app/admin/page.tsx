@@ -7,6 +7,7 @@ import { fetchWithAuth } from "@/utils/auth";
 import { buildPathWithReturnTo, getCurrentPath } from "@/utils/returnTo";
 import style from "./Admin.module.scss";
 import PollingSchedule, { type PollingResponse } from "./PollingSchedule";
+import JobTable, { type JobRun } from "./JobTable";
 
 // --- Types ---
 
@@ -19,81 +20,10 @@ interface AdminUser {
   role: UserRole;
 }
 
-interface JobRun {
-  id: string;
-  jobName: string;
-  status: "success" | "error" | "failed" | "running";
-  startedAt: string | null;
-  completedAt: string | null;
-  errorMessage: string | null;
-  meta?: {scope?:string;roundId?:number;subSeries?:string;snapshotsWritten?:number;gridRows?:number;resultRows?:number;standingsRows?:number;results?:Array<{roundId?:number;roundNumber?:number;subSeries?:string;status?:string;error?:string;gridRows?:number;resultRows?:number;standingsRows?:number}>};
-}
-
 interface JobsResponse {
   ok: boolean;
   jobs: JobRun[];
   recent: JobRun[];
-}
-
-// --- Helpers ---
-
-function fmtDate(iso: string | null): string {
-  if (!iso) return "—";
-  return new Date(iso).toLocaleString();
-}
-
-function fmtDuration(start: string | null, end: string | null): string {
-  if (!start || !end) return "—";
-  const ms = new Date(end).getTime() - new Date(start).getTime();
-  if (ms < 1000) return `${ms}ms`;
-  return `${(ms / 1000).toFixed(1)}s`;
-}
-
-// --- Components ---
-
-function StatusBadge({ status }: { status: JobRun["status"] }) {
-  return <span className={`${style.badge} ${style[status === "error" ? "failed" : status]}`}>{status}</span>;
-}
-
-function JobTable({ runs, cols }: { runs: JobRun[]; cols: number }) {
-  if (!runs.length) {
-    return (
-      <p className={style.empty}>No runs yet</p>
-    );
-  }
-
-  return (
-    <div className={style.tableWrap}>
-      <table className={style.table}>
-        <thead>
-          <tr>
-            <th>Job</th>
-            <th>Status</th>
-            <th>Started</th>
-            <th>Duration</th>
-            {cols > 4 && <th>Error</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {runs.map((run) => (
-            <tr key={run.id}>
-              <td><code>{run.jobName}</code>{["timing:bsb","timing:wsbk","timing:f1","timing:rookiescup","timing:motoamerica"].includes(run.jobName) && run.meta && <details className={style.timingSummary}>
-                <summary>{run.meta.snapshotsWritten ?? 0} snapshots written · {run.meta.resultRows ?? 0} results · {run.meta.gridRows ?? 0} grid rows · {run.meta.standingsRows ?? 0} standings rows</summary>
-                <p>Scope: {run.meta.scope ?? "unknown"}{run.meta.roundId ? ` · Round ID ${run.meta.roundId}` : ""}{run.meta.subSeries ? ` · ${run.meta.subSeries}` : ""}</p>
-                <ul>{run.meta.results?.map((entry,index)=><li key={index}>Round {entry.roundNumber ?? entry.roundId ?? "?"} · {entry.subSeries ?? "all classes"} · {entry.status}{entry.error ? `: ${entry.error}` : `: ${entry.resultRows ?? 0} results, ${entry.gridRows ?? 0} grid rows, ${entry.standingsRows ?? 0} standings rows`}</li>)}</ul>
-              </details>}</td>
-              <td><StatusBadge status={run.status} /></td>
-              <td>{fmtDate(run.startedAt)}</td>
-              <td>{fmtDuration(run.startedAt, run.completedAt)}</td>
-              {cols > 4 && (
-                <td className={style.errorCell}>{run.errorMessage ?? ""}</td>
-              )}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
 }
 
 // --- User lookup ---

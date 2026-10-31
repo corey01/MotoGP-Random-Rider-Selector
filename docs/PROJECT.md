@@ -161,3 +161,17 @@ standings, the current table and the favourite card; refresh errors remain separ
 Historical reads stay scoped to the requested year/class/round with no current
 standings fallback. The existing whole-year BSB Admin import includes Sidecars;
 shared calendar sessions do not claim a Sidecar-specific timetable.
+
+
+## Admin job details
+
+`app/admin/JobTable.tsx` renders both latest status and recent runs. Every stored
+error is available in an expandable Error details section, including recent rows
+without a dedicated Error column. Long source messages wrap and remain copyable.
+MotoGP standings jobs expose supplied per-round/class outcomes, team/constructor
+row counts, rider-refresh counts/errors and awaiting-publication states. Numeric
+API IDs are labelled Round ID unless the source supplies a separate round number.
+WEC joins the existing timing jobs with expandable snapshot/report counts.
+
+This is presentation of the recorded import result. It does not retry a job,
+change provider availability or treat unpublished reports as successful imports.
