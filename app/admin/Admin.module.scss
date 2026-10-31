@@ -451,7 +451,7 @@
   }
 }
 
-.timingSummary {margin-top:8px;font-size:12px;line-height:1.5;max-width:520px;summary{cursor:pointer;color:var(--kc-text-2);} p{margin:8px 0;}ul{padding-left:16px;}li{margin-top:6px;}}
+.timingSummary {overflow-wrap:anywhere;white-space:normal;margin-top:8px;font-size:12px;line-height:1.5;max-width:520px;summary{cursor:pointer;color:var(--kc-text-2);} p{margin:8px 0;}ul{padding-left:16px;}li{margin-top:6px;}}
 
 .pollingGrid {
   display: grid;
@@ -492,3 +492,7 @@
   .pollingCard dl { grid-template-columns: 1fr; gap: 2px; }
   .pollingCard dd { text-align: left; margin-bottom: 8px; }
 }
+
+.jobError { color: #fca5a5; white-space: pre-wrap; }
+
+.jobCell { min-width: 220px; }
