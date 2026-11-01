@@ -255,9 +255,9 @@ const ACTIONS: { key: ButtonKey; label: string; path: string; hint: string }[] =
     },
     {
       key: "motogp-sessions",
-      label: "MotoGP Session Times",
+      label: "MotoGP / Moto2 / Moto3 Session Times",
       path: "/admin/sync/motogp-sessions",
-      hint: "timing:motogp-sessions · Whole-season practice, qualifying and warm-up classifications · MotoGP class",
+      hint: "timing:motogp-sessions · Whole-season practice/qualifying · MotoGP, Moto2 and Moto3 · MotoGP warm-up",
     },
     {
       key: "wec-timing",
