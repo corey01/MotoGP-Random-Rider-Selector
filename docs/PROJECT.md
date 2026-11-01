@@ -177,14 +177,21 @@ This is presentation of the recorded import result. It does not retry a job,
 change provider availability or treat unpublished reports as successful imports.
 
 
-## MotoGP session times
+## MotoGP-family session times
 
-`app/race/SessionTimes.tsx` adds a timed-classification section while MotoGP is
-selected. `utils/sessionTimes.ts` validates exact round/year/class scope, numeric
-session IDs, status and official links; it is identical to native. Session-mode
-cards display Fastest, published best laps and gaps without race lap deficits.
-Qualifying reports remain separate from final grids. Missing/cancelled/withdrawn
-sessions stay explicit, and failed refresh warnings apply to the selected report.
-The shared-year Admin action `/admin/sync/motogp-sessions` imports the eligible
-MotoGP season through `timing:motogp-sessions`; job details show session and rider
-row counts. Moto2/Moto3 session classifications remain the next increment.
+`app/race/SessionTimes.tsx` shows the selected MotoGP, Moto2 or Moto3 class's
+practice/qualifying classifications. MotoGP also retains its published warm-up.
+`utils/sessionTimes.ts` validates exact round/year/class scope, numeric session IDs,
+report states and the class-specific official PDF folder. The section is keyed
+by round and class, and switches abort obsolete reads. Moto2/Moto3 have no warm-up
+control or text in the audited calendar. Qualifying remains separate from grids.
+
+Timed cards keep unranked/no-lap OUTSTND source entries as No recorded time,
+without the race card's DNF interpretation. The raw API status remains available.
+Full-field controls, source links and report-specific refresh warnings are retained.
+The shared pure classification adapter is unchanged; Android adaptation of the
+extended session-times loader and view is deferred under the Web-first priority.
+
+The existing shared-year `/admin/sync/motogp-sessions` action imports the eligible
+season for all three classes through `timing:motogp-sessions` (source version 2).
+Per-class snapshot/report/row counts and partial errors stay visible in Admin.

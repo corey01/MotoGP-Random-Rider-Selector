@@ -1,7 +1,7 @@
 "use client";
 import {useEffect,useState} from 'react';
 import {SessionTimes} from './SessionTimes';
-import {hasMotoSessionTimes} from '@/utils/sessionTimes';
+import {hasMotoSessionTimes,isMotoSessionClass} from '@/utils/sessionTimes';
 import {ClassificationList} from '../_components/Classification/ClassificationList';
 import {classificationClasses,loadClassification,sessionLabel,standingsRows,documentForView,type ClassificationData} from '@/utils/classification';
 import style from './RacePage.module.scss';
@@ -38,6 +38,6 @@ export function WeekendClassification({roundId,year,series,events=[]}:{roundId:n
    {isCancelled&&activeTab==='results'?<p role="status">Race cancelled. No classification was issued.</p>:rows?.length?<>{data.errors[activeTab]&&<p role="status" className={style.standingsFreshness}>{data.errors[activeTab]}</p>}<ClassificationList key={`${cls}:${activeTab}:${selected}:${competition}`} rows={rows} mode={activeTab} gridPositionKind={data.gridPositionKind} label={activeTab==='standings'?'Championship standings':`${sessionLabel(selected)} ${activeTab==='grid'?(data.gridPositionKind==='slot'?'grid slots':'starting grid'):'classification'}`}/></>:<p role="status">{data.errors[activeTab]??(activeTab==='standings'?'No verified championship snapshot is available for this round.':`No ${activeTab==='grid'?'grid':'results'} are available for this session.`)}</p>}
    {documents.map(d=><p key={d.url}><a href={d.url} target="_blank" rel="noopener noreferrer" className={style.backLink}>{activeTab==='standings'?'Official championship standings':d.label==='Championship standings'?`Standings after ${sessionLabel(selected)}`:d.label} ↗</a></p>)}
   </>}
- </section>{series==='motogp'&&cls==='motogp'&&hasMotoSessionTimes(events)&&<SessionTimes key={roundId} roundId={roundId} year={year}/>}</>;
+ </section>{series==='motogp'&&isMotoSessionClass(cls)&&hasMotoSessionTimes(events,cls)&&<SessionTimes key={`${roundId}:${cls}`} roundId={roundId} year={year} subSeries={cls}/>}</>;
 }
 
